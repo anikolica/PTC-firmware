@@ -1,0 +1,318 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:35 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Wed Aug 17 15:16:27 2022
+# Process ID: 31279
+# Current directory: /home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.runs/Mercury_XU5_ddr4_sys_rst_0_synth_1
+# Command line: vivado -log Mercury_XU5_ddr4_sys_rst_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Mercury_XU5_ddr4_sys_rst_0.tcl
+# Log file: /home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.runs/Mercury_XU5_ddr4_sys_rst_0_synth_1/Mercury_XU5_ddr4_sys_rst_0.vds
+# Journal file: /home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.runs/Mercury_XU5_ddr4_sys_rst_0_synth_1/vivado.jou
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Synthesis Defaults' from file '/home/lxeng99/.Xilinx/Vivado/strategies/Vivado Synthesis Defaults.Vivado Synthesis 2019.psg' discarded because strategy with same name already parsed from '/opt/Xilinx/Vivado/2020.1/strategies/VDS2019.psg'
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file '/home/lxeng99/.Xilinx/Vivado/strategies/Vivado Implementation Defaults.Vivado Implementation 2019.psg' discarded because strategy with same name already parsed from '/opt/Xilinx/Vivado/2020.1/strategies/VDI2019.psg'
+source Mercury_XU5_ddr4_sys_rst_0.tcl -notrace
+create_project: Time (s): cpu = 00:00:02 ; elapsed = 00:00:07 . Memory (MB): peak = 2128.438 ; gain = 2.016 ; free physical = 3814 ; free virtual = 19667
+Command: synth_design -top Mercury_XU5_ddr4_sys_rst_0 -part xczu5ev-sfvc784-2-i -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu5ev'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu5ev'
+INFO: [Device 21-403] Loading part xczu5ev-sfvc784-2-i
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 31398
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:06 . Memory (MB): peak = 2607.918 ; gain = 7.801 ; free physical = 1604 ; free virtual = 17668
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'Mercury_XU5_ddr4_sys_rst_0' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/synth/Mercury_XU5_ddr4_sys_rst_0.vhd:74]
+WARNING: [Synth 8-3819] Generic 'BG_WIDTH' not present in instantiated entity will be ignored
+	Parameter C_FAMILY bound to: zynquplus - type: string 
+	Parameter C_EXT_RST_WIDTH bound to: 4 - type: integer 
+	Parameter C_AUX_RST_WIDTH bound to: 4 - type: integer 
+	Parameter C_EXT_RESET_HIGH bound to: 1'b0 
+	Parameter C_AUX_RESET_HIGH bound to: 1'b0 
+	Parameter C_NUM_BUS_RST bound to: 1 - type: integer 
+	Parameter C_NUM_PERP_RST bound to: 1 - type: integer 
+	Parameter C_NUM_INTERCONNECT_ARESETN bound to: 1 - type: integer 
+	Parameter C_NUM_PERP_ARESETN bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'proc_sys_reset' declared at '/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1264' bound to instance 'U0' of component 'proc_sys_reset' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/synth/Mercury_XU5_ddr4_sys_rst_0.vhd:129]
+INFO: [Synth 8-638] synthesizing module 'proc_sys_reset' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1323]
+	Parameter C_FAMILY bound to: zynquplus - type: string 
+	Parameter C_EXT_RST_WIDTH bound to: 4 - type: integer 
+	Parameter C_AUX_RST_WIDTH bound to: 4 - type: integer 
+	Parameter C_EXT_RESET_HIGH bound to: 1'b0 
+	Parameter C_AUX_RESET_HIGH bound to: 1'b0 
+	Parameter C_NUM_BUS_RST bound to: 1 - type: integer 
+	Parameter C_NUM_PERP_RST bound to: 1 - type: integer 
+	Parameter C_NUM_INTERCONNECT_ARESETN bound to: 1 - type: integer 
+	Parameter C_NUM_PERP_ARESETN bound to: 1 - type: integer 
+	Parameter INIT bound to: 1'b1 
+	Parameter IS_C_INVERTED bound to: 1'b0 
+	Parameter IS_D_INVERTED bound to: 1'b0 
+	Parameter IS_R_INVERTED bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'FDRE_inst' to cell 'FDRE' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1392]
+	Parameter INIT bound to: 1'b1 
+	Parameter IS_C_INVERTED bound to: 1'b0 
+	Parameter IS_D_INVERTED bound to: 1'b0 
+	Parameter IS_R_INVERTED bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'FDRE_BSR' to cell 'FDRE' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1408]
+	Parameter INIT bound to: 1'b0 
+	Parameter IS_C_INVERTED bound to: 1'b0 
+	Parameter IS_D_INVERTED bound to: 1'b0 
+	Parameter IS_R_INVERTED bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'FDRE_BSR_N' to cell 'FDRE' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1434]
+	Parameter INIT bound to: 1'b1 
+	Parameter IS_C_INVERTED bound to: 1'b0 
+	Parameter IS_D_INVERTED bound to: 1'b0 
+	Parameter IS_R_INVERTED bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'FDRE_PER' to cell 'FDRE' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1457]
+	Parameter INIT bound to: 1'b0 
+	Parameter IS_C_INVERTED bound to: 1'b0 
+	Parameter IS_D_INVERTED bound to: 1'b0 
+	Parameter IS_R_INVERTED bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'FDRE_PER_N' to cell 'FDRE' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1481]
+INFO: [Synth 8-638] synthesizing module 'lpf' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:816]
+	Parameter C_EXT_RST_WIDTH bound to: 4 - type: integer 
+	Parameter C_AUX_RST_WIDTH bound to: 4 - type: integer 
+	Parameter C_EXT_RESET_HIGH bound to: 1'b0 
+	Parameter C_AUX_RESET_HIGH bound to: 1'b0 
+INFO: [Synth 8-3491] module 'SRL16' declared at '/opt/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:78043' bound to instance 'POR_SRL_I' of component 'SRL16' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:868]
+INFO: [Synth 8-6157] synthesizing module 'SRL16' [/opt/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:78043]
+	Parameter INIT bound to: 16'b0000000000000000 
+INFO: [Synth 8-6155] done synthesizing module 'SRL16' (1#1) [/opt/Xilinx/Vivado/2020.1/scripts/rt/data/unisim_comp.v:78043]
+INFO: [Synth 8-638] synthesizing module 'cdc_sync' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:106]
+	Parameter C_CDC_TYPE bound to: 1 - type: integer 
+	Parameter C_RESET_STATE bound to: 0 - type: integer 
+	Parameter C_SINGLE_BIT bound to: 1 - type: integer 
+	Parameter C_FLOP_INPUT bound to: 0 - type: integer 
+	Parameter C_VECTOR_WIDTH bound to: 2 - type: integer 
+	Parameter C_MTBF_STAGES bound to: 4 - type: integer 
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_IN_cdc_to' to cell 'FDR' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:514]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d2' to cell 'FDR' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:545]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d3' to cell 'FDR' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:554]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d4' to cell 'FDR' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:564]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5' to cell 'FDR' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:574]
+	Parameter INIT bound to: 1'b0 
+INFO: [Synth 8-113] binding component instance 'CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6' to cell 'FDR' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:584]
+INFO: [Synth 8-256] done synthesizing module 'cdc_sync' (2#1) [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd:106]
+INFO: [Synth 8-256] done synthesizing module 'lpf' (3#1) [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:816]
+INFO: [Synth 8-638] synthesizing module 'sequence_psr' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:301]
+INFO: [Synth 8-638] synthesizing module 'upcnt_n' [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:125]
+	Parameter C_SIZE bound to: 6 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'upcnt_n' (4#1) [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:125]
+INFO: [Synth 8-256] done synthesizing module 'sequence_psr' (5#1) [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:301]
+INFO: [Synth 8-256] done synthesizing module 'proc_sys_reset' (6#1) [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:1323]
+INFO: [Synth 8-256] done synthesizing module 'Mercury_XU5_ddr4_sys_rst_0' (7#1) [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/synth/Mercury_XU5_ddr4_sys_rst_0.vhd:74]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 2651.824 ; gain = 51.707 ; free physical = 1544 ; free virtual = 17609
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:08 . Memory (MB): peak = 2669.668 ; gain = 69.551 ; free physical = 846 ; free virtual = 16912
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:08 . Memory (MB): peak = 2669.668 ; gain = 69.551 ; free physical = 846 ; free virtual = 16912
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2681.574 ; gain = 0.000 ; free physical = 818 ; free virtual = 16884
+INFO: [Netlist 29-17] Analyzing 13 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/Mercury_XU5_ddr4_sys_rst_0_ooc.xdc] for cell 'U0'
+Finished Parsing XDC File [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/Mercury_XU5_ddr4_sys_rst_0_ooc.xdc] for cell 'U0'
+Parsing XDC File [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/Mercury_XU5_ddr4_sys_rst_0_board.xdc] for cell 'U0'
+Finished Parsing XDC File [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/Mercury_XU5_ddr4_sys_rst_0_board.xdc] for cell 'U0'
+Parsing XDC File [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/Mercury_XU5_ddr4_sys_rst_0.xdc] for cell 'U0'
+Finished Parsing XDC File [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/bd/Mercury_XU5/ip/Mercury_XU5_ddr4_sys_rst_0/Mercury_XU5_ddr4_sys_rst_0.xdc] for cell 'U0'
+Parsing XDC File [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.runs/Mercury_XU5_ddr4_sys_rst_0_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.runs/Mercury_XU5_ddr4_sys_rst_0_synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2811.371 ; gain = 0.000 ; free physical = 1263 ; free virtual = 17334
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 13 instances were transformed.
+  FDR => FDRE: 12 instances
+  SRL16 => SRL16E: 1 instance 
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2811.371 ; gain = 0.000 ; free physical = 1263 ; free virtual = 17334
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:15 ; elapsed = 00:00:22 . Memory (MB): peak = 2811.371 ; gain = 211.254 ; free physical = 1273 ; free virtual = 17336
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xczu5ev-sfvc784-2-i
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:15 ; elapsed = 00:00:22 . Memory (MB): peak = 2811.371 ; gain = 211.254 ; free physical = 1273 ; free virtual = 17336
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property DONT_TOUCH = true for U0. (constraint file  /home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.runs/Mercury_XU5_ddr4_sys_rst_0_synth_1/dont_touch.xdc, line 9).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:22 . Memory (MB): peak = 2811.371 ; gain = 211.254 ; free physical = 1276 ; free virtual = 17339
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:22 . Memory (MB): peak = 2811.371 ; gain = 211.254 ; free physical = 1246 ; free virtual = 17310
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    6 Bit       Adders := 1     
++---Registers : 
+	                6 Bit    Registers := 1     
+	                3 Bit    Registers := 3     
+	                1 Bit    Registers := 8     
++---Muxes : 
+	   2 Input    6 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 1248 (col length:96)
+BRAMs: 288 (col length: RAMB18 96 RAMB36 48)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:23 . Memory (MB): peak = 2811.371 ; gain = 211.254 ; free physical = 1207 ; free virtual = 17273
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:44 ; elapsed = 00:01:13 . Memory (MB): peak = 3234.340 ; gain = 634.223 ; free physical = 414 ; free virtual = 16577
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:45 ; elapsed = 00:01:13 . Memory (MB): peak = 3234.340 ; gain = 634.223 ; free physical = 414 ; free virtual = 16576
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:45 ; elapsed = 00:01:13 . Memory (MB): peak = 3263.387 ; gain = 663.270 ; free physical = 413 ; free virtual = 16576
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:47 ; elapsed = 00:01:16 . Memory (MB): peak = 3263.387 ; gain = 663.270 ; free physical = 391 ; free virtual = 16554
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:47 ; elapsed = 00:01:16 . Memory (MB): peak = 3263.387 ; gain = 663.270 ; free physical = 391 ; free virtual = 16554
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:47 ; elapsed = 00:01:16 . Memory (MB): peak = 3263.387 ; gain = 663.270 ; free physical = 399 ; free virtual = 16562
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:47 ; elapsed = 00:01:16 . Memory (MB): peak = 3263.387 ; gain = 663.270 ; free physical = 399 ; free virtual = 16562
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:47 ; elapsed = 00:01:16 . Memory (MB): peak = 3263.387 ; gain = 663.270 ; free physical = 399 ; free virtual = 16562
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:47 ; elapsed = 00:01:16 . Memory (MB): peak = 3263.387 ; gain = 663.270 ; free physical = 399 ; free virtual = 16562
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+------+------+
+|      |Cell  |Count |
++------+------+------+
+|1     |LUT1  |     5|
+|2     |LUT2  |     9|
+|3     |LUT3  |     1|
+|4     |LUT4  |     6|
+|5     |LUT5  |     3|
+|6     |LUT6  |     1|
+|7     |SRL16 |     1|
+|8     |FDR   |     8|
+|9     |FDRE  |    28|
+|10    |FDSE  |     4|
++------+------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:47 ; elapsed = 00:01:16 . Memory (MB): peak = 3263.387 ; gain = 663.270 ; free physical = 399 ; free virtual = 16562
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:41 ; elapsed = 00:01:07 . Memory (MB): peak = 3263.387 ; gain = 521.566 ; free physical = 438 ; free virtual = 16601
+Synthesis Optimization Complete : Time (s): cpu = 00:00:47 ; elapsed = 00:01:16 . Memory (MB): peak = 3263.395 ; gain = 663.270 ; free physical = 438 ; free virtual = 16601
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3263.395 ; gain = 0.000 ; free physical = 431 ; free virtual = 16594
+INFO: [Netlist 29-17] Analyzing 9 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3286.168 ; gain = 0.000 ; free physical = 438 ; free virtual = 16601
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 9 instances were transformed.
+  FDR => FDRE: 8 instances
+  SRL16 => SRL16E: 1 instance 
+
+INFO: [Common 17-83] Releasing license: Synthesis
+44 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:04 ; elapsed = 00:01:37 . Memory (MB): peak = 3286.168 ; gain = 1157.730 ; free physical = 576 ; free virtual = 16738
+INFO: [Common 17-1381] The checkpoint '/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.runs/Mercury_XU5_ddr4_sys_rst_0_synth_1/Mercury_XU5_ddr4_sys_rst_0.dcp' has been generated.
+WARNING: [Common 17-576] 'use_project_ipc' is deprecated. This option is deprecated and no longer used.
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP Mercury_XU5_ddr4_sys_rst_0, cache-ID = 29c86dee22d3a608
+INFO: [Coretcl 2-1174] Renamed 6 cell refs.
+INFO: [Common 17-1381] The checkpoint '/home/lxeng99/PTC/ptc-firmware/reference_design/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.runs/Mercury_XU5_ddr4_sys_rst_0_synth_1/Mercury_XU5_ddr4_sys_rst_0.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file Mercury_XU5_ddr4_sys_rst_0_utilization_synth.rpt -pb Mercury_XU5_ddr4_sys_rst_0_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Wed Aug 17 15:18:52 2022...

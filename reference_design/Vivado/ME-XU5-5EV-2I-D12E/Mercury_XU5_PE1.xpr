@@ -79,6 +79,33 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_zynq_ultra_ps_e_0/Mercury_XU5_zynq_ultra_ps_e_0.xci">
+          <Proxy FileSetName="Mercury_XU5_zynq_ultra_ps_e_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_led_0/Mercury_XU5_led_0.xci">
+          <Proxy FileSetName="Mercury_XU5_led_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_system_management_wiz_0/Mercury_XU5_system_management_wiz_0.xci">
+          <Proxy FileSetName="Mercury_XU5_system_management_wiz_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_ddr4_0/Mercury_XU5_ddr4_0.xci">
+          <Proxy FileSetName="Mercury_XU5_ddr4_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_smartconnect_1_0/Mercury_XU5_smartconnect_1_0.xci">
+          <Proxy FileSetName="Mercury_XU5_smartconnect_1_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_ps_sys_rst_0/Mercury_XU5_ps_sys_rst_0.xci">
+          <Proxy FileSetName="Mercury_XU5_ps_sys_rst_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_clk_wiz_0_0/Mercury_XU5_clk_wiz_0_0.xci">
+          <Proxy FileSetName="Mercury_XU5_clk_wiz_0_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_smartconnect_0_0/Mercury_XU5_smartconnect_0_0.xci">
+          <Proxy FileSetName="Mercury_XU5_smartconnect_0_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="Mercury_XU5.bd" FileRelPathName="ip/Mercury_XU5_ddr4_sys_rst_0/Mercury_XU5_ddr4_sys_rst_0.xci">
+          <Proxy FileSetName="Mercury_XU5_ddr4_sys_rst_0"/>
+        </CompFileExtendedInfo>
       </File>
       <File Path="$PPRDIR/../../src/Mercury_XU5_PE1.vhd">
         <FileInfo>
@@ -117,6 +144,7 @@
       </Config>
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
+      <Filter Type="Srcs"/>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
         <Option Name="TopModule" Val="Mercury_XU5_PE1"/>
@@ -147,6 +175,69 @@
         <Option Name="TopAutoSet" Val="TRUE"/>
       </Config>
     </FileSet>
+    <FileSet Name="Mercury_XU5_zynq_ultra_ps_e_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_zynq_ultra_ps_e_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_zynq_ultra_ps_e_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="Mercury_XU5_led_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_led_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_led_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="Mercury_XU5_system_management_wiz_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_system_management_wiz_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_system_management_wiz_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="Mercury_XU5_ddr4_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_ddr4_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_ddr4_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="Mercury_XU5_smartconnect_1_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_smartconnect_1_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_smartconnect_1_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="Mercury_XU5_ps_sys_rst_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_ps_sys_rst_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_ps_sys_rst_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="Mercury_XU5_clk_wiz_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_clk_wiz_0_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_clk_wiz_0_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="Mercury_XU5_smartconnect_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_smartconnect_0_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_smartconnect_0_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="Mercury_XU5_ddr4_sys_rst_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/Mercury_XU5_ddr4_sys_rst_0">
+      <Config>
+        <Option Name="TopModule" Val="Mercury_XU5_ddr4_sys_rst_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+        <Generic Name="BG_WIDTH" Val="1"/>
+      </Config>
+    </FileSet>
   </FileSets>
   <Simulators>
     <Simulator Name="XSim">
@@ -173,23 +264,300 @@
     </Simulator>
   </Simulators>
   <Runs Version="1" Minor="11">
-    <Run Id="synth_1" Type="Ft3:Synth" SrcSet="sources_1" Part="xczu5ev-sfvc784-2-i" ConstrsSet="constrs_1" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" IncludeInArchive="true">
+    <Run Id="synth_1" Type="Ft3:Synth" SrcSet="sources_1" Part="xczu5ev-sfvc784-2-i" ConstrsSet="constrs_1" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020"/>
         <Step Id="synth_design" PreStepTclHook="$PPRDIR/../../scripts/settings.tcl"/>
       </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="constrs_1" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" SynthRun="synth_1" IncludeInArchive="true" GenFullBitstream="true">
+    <Run Id="Mercury_XU5_zynq_ultra_ps_e_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_zynq_ultra_ps_e_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_zynq_ultra_ps_e_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_zynq_ultra_ps_e_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_led_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_led_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_led_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_led_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_system_management_wiz_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_system_management_wiz_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_system_management_wiz_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_system_management_wiz_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_ddr4_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_ddr4_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_ddr4_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_ddr4_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_smartconnect_1_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_smartconnect_1_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_smartconnect_1_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_smartconnect_1_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_ps_sys_rst_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_ps_sys_rst_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_ps_sys_rst_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_ps_sys_rst_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_clk_wiz_0_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_clk_wiz_0_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_clk_wiz_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_clk_wiz_0_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_smartconnect_0_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_smartconnect_0_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_smartconnect_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_smartconnect_0_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_ddr4_sys_rst_0_synth_1" Type="Ft3:Synth" SrcSet="Mercury_XU5_ddr4_sys_rst_0" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_ddr4_sys_rst_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/Mercury_XU5_ddr4_sys_rst_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2020">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="constrs_1" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020"/>
+        <Step Id="init_design" PreStepTclHook="$PPRDIR/../../scripts/settings.tcl"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_zynq_ultra_ps_e_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_zynq_ultra_ps_e_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_zynq_ultra_ps_e_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
           <Desc>Default settings for Implementation.</Desc>
         </StratHandle>
-        <Step Id="init_design" PreStepTclHook="$PPRDIR/../../scripts/settings.tcl"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_led_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_led_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_led_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_system_management_wiz_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_system_management_wiz_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_system_management_wiz_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_ddr4_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_ddr4_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_ddr4_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_smartconnect_1_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_smartconnect_1_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_smartconnect_1_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_ps_sys_rst_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_ps_sys_rst_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_ps_sys_rst_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_clk_wiz_0_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_clk_wiz_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_clk_wiz_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_smartconnect_0_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_smartconnect_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_smartconnect_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2020"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="Mercury_XU5_ddr4_sys_rst_0_impl_1" Type="Ft2:EntireDesign" Part="xczu5ev-sfvc784-2-i" ConstrsSet="Mercury_XU5_ddr4_sys_rst_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="Mercury_XU5_ddr4_sys_rst_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
+        <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
         <Step Id="place_design"/>
