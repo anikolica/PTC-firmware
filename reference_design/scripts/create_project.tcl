@@ -165,7 +165,7 @@ add_files -norecurse -fileset $obj $files
 
 # Import local files from the original project
 set files [list \
- [file normalize "${origin_dir}/Vivado/ME-XU5-5EV-2I-D12E/Mercury_XU5_PE1.srcs/sources_1/new/top_RTL.v" ]\
+ [file normalize "${origin_dir}/src/top_RTL.v" ]\
 ]
 set imported_files [import_files -fileset sources_1 $files]
 
