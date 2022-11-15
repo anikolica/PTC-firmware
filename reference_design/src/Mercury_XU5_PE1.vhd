@@ -170,31 +170,31 @@ entity Mercury_XU5_PE1 is
     I2C_SCL_PL                     : inout   std_logic;
     I2C_SDA_PL                     : inout   std_logic;
     
-    -- IOC
-    IOC_D0_P                       : inout   std_logic; -- Only available on G1 modules
-    IOC_D1_N                       : inout   std_logic; -- Only available on G1 modules
-    IOC_D2_P                       : inout   std_logic; -- Only available on G1 modules
-    IOC_D3_N                       : inout   std_logic; -- Only available on G1 modules
-    IOC_D4_P                       : inout   std_logic; -- Only available on G1 modules
-    IOC_D5_N                       : inout   std_logic; -- Only available on G1 modules
-    IOC_D6_P                       : inout   std_logic; -- Only available on G1 modules
-    IOC_D7_N                       : inout   std_logic; -- Only available on G1 modules
+--    -- IOC
+--    IOC_D0_P                       : inout   std_logic; -- Only available on G1 modules
+--    IOC_D1_N                       : inout   std_logic; -- Only available on G1 modules
+--    IOC_D2_P                       : inout   std_logic; -- Only available on G1 modules
+--    IOC_D3_N                       : inout   std_logic; -- Only available on G1 modules
+--    IOC_D4_P                       : inout   std_logic; -- Only available on G1 modules
+--    IOC_D5_N                       : inout   std_logic; -- Only available on G1 modules
+--    IOC_D6_P                       : inout   std_logic; -- Only available on G1 modules
+--    IOC_D7_N                       : inout   std_logic; -- Only available on G1 modules
     
-    -- IOD
-    IOD_D0_P                       : inout   std_logic; -- Only available on G1 modules
-    IOD_D1_N                       : inout   std_logic; -- Only available on G1 modules
-    IOD_D2_P                       : inout   std_logic; -- Only available on G1 modules
-    IOD_D3_N                       : inout   std_logic; -- Only available on G1 modules
-    IOD_D4_P                       : inout   std_logic; -- Only available on G1 modules
-    IOD_D5_N                       : inout   std_logic; -- Only available on G1 modules
-    IOD_D6_P                       : inout   std_logic; -- Only available on G1 modules
-    IOD_D7_N                       : inout   std_logic; -- Only available on G1 modules
+--    -- IOD
+--    IOD_D0_P                       : inout   std_logic; -- Only available on G1 modules
+--    IOD_D1_N                       : inout   std_logic; -- Only available on G1 modules
+--    IOD_D2_P                       : inout   std_logic; -- Only available on G1 modules
+--    IOD_D3_N                       : inout   std_logic; -- Only available on G1 modules
+--    IOD_D4_P                       : inout   std_logic; -- Only available on G1 modules
+--    IOD_D5_N                       : inout   std_logic; -- Only available on G1 modules
+--    IOD_D6_P                       : inout   std_logic; -- Only available on G1 modules
+--    IOD_D7_N                       : inout   std_logic; -- Only available on G1 modules
     
-    -- IOE
-    IOE_D0_LED0_N                  : inout   std_logic; -- Only available on G1 modules
-    IOE_D1_LED1_N                  : inout   std_logic; -- Only available on G1 modules
-    IOE_D2_LED2_N                  : inout   std_logic; -- Only available on G1 modules
-    IOE_D3_LED3_N                  : inout   std_logic; -- Only available on G1 modules
+--    -- IOE
+--    IOE_D0_LED0_N                  : inout   std_logic; -- Only available on G1 modules
+--    IOE_D1_LED1_N                  : inout   std_logic; -- Only available on G1 modules
+--    IOE_D2_LED2_N                  : inout   std_logic; -- Only available on G1 modules
+--    IOE_D3_LED3_N                  : inout   std_logic; -- Only available on G1 modules
     
     -- LED
     LED1_N                         : out     std_logic;
