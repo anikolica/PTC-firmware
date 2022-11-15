@@ -197,7 +197,7 @@ set_property -name "used_in_synthesis" -value "1" -objects $file_obj
 
 
 # Set 'sources_1' fileset file properties for local files
-set file "new/top_RTL.v"
+set file "top_RTL.v"
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "Verilog" -objects $file_obj
 set_property -name "is_enabled" -value "1" -objects $file_obj
