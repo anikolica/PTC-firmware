@@ -1204,7 +1204,7 @@ set_property -name "include_in_archive" -value "1" -objects $obj
 set_property -name "gen_full_bitstream" -value "1" -objects $obj
 set_property -name "write_incremental_synth_checkpoint" -value "0" -objects $obj
 set_property -name "strategy" -value "Vivado Synthesis Defaults" -objects $obj
-set_property -name "steps.synth_design.tcl.pre" -value "[file normalize "$origin_dir/settings.tcl"]" -objects $obj
+set_property -name "steps.synth_design.tcl.pre" -value "[file normalize "$origin_dir/scripts/settings.tcl"]" -objects $obj
 set_property -name "steps.synth_design.tcl.post" -value "" -objects $obj
 set_property -name "steps.synth_design.args.flatten_hierarchy" -value "rebuilt" -objects $obj
 set_property -name "steps.synth_design.args.gated_clock_conversion" -value "off" -objects $obj
@@ -1637,7 +1637,7 @@ set_property -name "incremental_checkpoint.more_options" -value "" -objects $obj
 set_property -name "include_in_archive" -value "1" -objects $obj
 set_property -name "gen_full_bitstream" -value "1" -objects $obj
 set_property -name "strategy" -value "Vivado Implementation Defaults" -objects $obj
-set_property -name "steps.init_design.tcl.pre" -value "[file normalize "$origin_dir/settings.tcl"]" -objects $obj
+set_property -name "steps.init_design.tcl.pre" -value "[file normalize "$origin_dir/scripts/settings.tcl"]" -objects $obj
 set_property -name "steps.init_design.tcl.post" -value "" -objects $obj
 set_property -name "steps.opt_design.is_enabled" -value "1" -objects $obj
 set_property -name "steps.opt_design.tcl.pre" -value "" -objects $obj
@@ -2089,7 +2089,7 @@ set_property -name "incremental_checkpoint.more_options" -value "" -objects $obj
 set_property -name "include_in_archive" -value "1" -objects $obj
 set_property -name "gen_full_bitstream" -value "1" -objects $obj
 set_property -name "strategy" -value "Vivado Implementation Defaults" -objects $obj
-set_property -name "steps.init_design.tcl.pre" -value "[file normalize "$origin_dir/settings.tcl"]" -objects $obj
+set_property -name "steps.init_design.tcl.pre" -value "[file normalize "$origin_dir/scripts/settings.tcl"]" -objects $obj
 set_property -name "steps.init_design.tcl.post" -value "" -objects $obj
 set_property -name "steps.opt_design.is_enabled" -value "1" -objects $obj
 set_property -name "steps.opt_design.tcl.pre" -value "" -objects $obj
