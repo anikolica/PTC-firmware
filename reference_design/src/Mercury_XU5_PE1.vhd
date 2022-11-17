@@ -219,19 +219,19 @@ entity Mercury_XU5_PE1 is
     DDR4PL_CS_N                    : out     std_logic_vector(0 downto 0);
     DDR4PL_DM                      : inout   std_logic_vector(1 downto 0);
     DDR4PL_DQS_N                   : inout   std_logic_vector(1 downto 0);
-    DDR4PL_DQS_P                   : inout   std_logic_vector(1 downto 0);
+    DDR4PL_DQS_P                   : inout   std_logic_vector(1 downto 0)
     
     -- PL_Gigabit_Ethernet
-    ETH1_MDC                       : out     std_logic;
-    ETH1_RXCLK                     : in      std_logic;
-    ETH1_TXCLK                     : out     std_logic;
-    ETH1_MDIO                      : inout   std_logic;
-    ETH1_INT_N                     : in      std_logic;
-    ETH1_RESET_N                   : out     std_logic;
-    ETH1_RXCTL                     : in      std_logic;
-    ETH1_TXCTL                     : out     std_logic;
-    ETH1_RXD                       : in      std_logic_vector(3 downto 0);
-    ETH1_TXD                       : out     std_logic_vector(3 downto 0)
+--    ETH1_MDC                       : out     std_logic;
+--    ETH1_RXCLK                     : in      std_logic;
+--    ETH1_TXCLK                     : out     std_logic;
+--    ETH1_MDIO                      : inout   std_logic;
+--    ETH1_INT_N                     : in      std_logic;
+--    ETH1_RESET_N                   : out     std_logic;
+--    ETH1_RXCTL                     : in      std_logic;
+--    ETH1_TXCTL                     : out     std_logic;
+--    ETH1_RXD                       : in      std_logic_vector(3 downto 0);
+--    ETH1_TXD                       : out     std_logic_vector(3 downto 0)
   );
 end Mercury_XU5_PE1;
 
@@ -261,71 +261,71 @@ architecture rtl of Mercury_XU5_PE1 is
       C0_DDR4_cs_n        : out    std_logic_vector(0 downto 0);
       C0_DDR4_dm_n        : inout  std_logic_vector(1 downto 0);
       C0_DDR4_dqs_c       : inout  std_logic_vector(1 downto 0);
-      C0_DDR4_dqs_t       : inout  std_logic_vector(1 downto 0);
-      MDIO_mdc            : out    std_logic;
-      MDIO_mdio_i         : in     std_logic;
-      MDIO_mdio_o         : out    std_logic;
-      MDIO_mdio_t         : out    std_logic;
-      ETH_CLK125          : out    std_logic;
-      ETH_CLK125_90       : out    std_logic;
-      ETH_CLK25           : out    std_logic;
-      ETH_CLK10           : out    std_logic;
-      ETH_resetn          : out    std_logic;
-      GMII_col            : in     std_logic;
-      GMII_crs            : in     std_logic;
-      GMII_rx_clk         : in     std_logic;
-      GMII_rx_dv          : in     std_logic;
-      GMII_rx_er          : in     std_logic;
-      GMII_rxd            : in     std_logic_vector(7 downto 0);
-      GMII_speed_mode     : out    std_logic_vector(2 downto 0);
-      GMII_tx_clk         : in     std_logic;
-      GMII_tx_en          : out    std_logic;
-      GMII_tx_er          : out    std_logic;
-      GMII_txd            : out    std_logic_vector(7 downto 0)
+      C0_DDR4_dqs_t       : inout  std_logic_vector(1 downto 0)
+--      MDIO_mdc            : out    std_logic;
+--      MDIO_mdio_i         : in     std_logic;
+--      MDIO_mdio_o         : out    std_logic;
+--      MDIO_mdio_t         : out    std_logic;
+--      ETH_CLK125          : out    std_logic;
+--      ETH_CLK125_90       : out    std_logic;
+--      ETH_CLK25           : out    std_logic;
+--      ETH_CLK10           : out    std_logic;
+--      ETH_resetn          : out    std_logic;
+--      GMII_col            : in     std_logic;
+--      GMII_crs            : in     std_logic;
+--      GMII_rx_clk         : in     std_logic;
+--      GMII_rx_dv          : in     std_logic;
+--      GMII_rx_er          : in     std_logic;
+--      GMII_rxd            : in     std_logic_vector(7 downto 0);
+--      GMII_speed_mode     : out    std_logic_vector(2 downto 0);
+--      GMII_tx_clk         : in     std_logic;
+--      GMII_tx_en          : out    std_logic;
+--      GMII_tx_er          : out    std_logic;
+--      GMII_txd            : out    std_logic_vector(7 downto 0)
     );
     
   end component Mercury_XU5;
-  component IOBUF is
-  port (
-    I : in STD_LOGIC;
-    O : out STD_LOGIC;
-    T : in STD_LOGIC;
-    IO : inout STD_LOGIC
-  );
-  end component IOBUF;
+--  component IOBUF is
+--  port (
+--    I : in STD_LOGIC;
+--    O : out STD_LOGIC;
+--    T : in STD_LOGIC;
+--    IO : inout STD_LOGIC
+--  );
+--  end component IOBUF;
   
-  component Mercury_XU5_GMII2RGMII is
-  port (
-    Clk125          : in  std_logic;
-    Clk125_90       : in  std_logic;
-    Clk25           : in  std_logic;
-    Clk10           : in  std_logic;
-    Resetn          : in  std_logic;
+--  component Mercury_XU5_GMII2RGMII is
+--  port (
+--    Clk125          : in  std_logic;
+--    Clk125_90       : in  std_logic;
+--    Clk25           : in  std_logic;
+--    Clk10           : in  std_logic;
+--    Resetn          : in  std_logic;
   
-    GMII_col        : out std_logic;
-    GMII_crs        : out std_logic;
-    GMII_rx_clk     : out std_logic;
-    GMII_rx_dv      : out std_logic;
-    GMII_rx_er      : out std_logic;
-    GMII_rxd        : out std_logic_vector(7 downto 0);
-    GMII_speed_mode : in  std_logic_vector(2 downto 0);
-    GMII_tx_clk     : out std_logic;
-    GMII_tx_en      : in  std_logic;
-    GMII_tx_er      : in  std_logic;
-    GMII_txd        : in  std_logic_vector(7 downto 0);
+--    GMII_col        : out std_logic;
+--    GMII_crs        : out std_logic;
+--    GMII_rx_clk     : out std_logic;
+--    GMII_rx_dv      : out std_logic;
+--    GMII_rx_er      : out std_logic;
+--    GMII_rxd        : out std_logic_vector(7 downto 0);
+--    GMII_speed_mode : in  std_logic_vector(2 downto 0);
+--    GMII_tx_clk     : out std_logic;
+--    GMII_tx_en      : in  std_logic;
+--    GMII_tx_er      : in  std_logic;
+--    GMII_txd        : in  std_logic_vector(7 downto 0);
   
-    RGMII_rxd       : in  std_logic_vector(3 downto 0);
-    RGMII_rxclk     : in  std_logic;
-    RGMII_rxctl     : in  std_logic;
-    RGMII_txd       : out std_logic_vector(3 downto 0);
-    RGMII_txclk     : out std_logic;
-    RGMII_txctl     : out std_logic;
+--    RGMII_rxd       : in  std_logic_vector(3 downto 0);
+--    RGMII_rxclk     : in  std_logic;
+--    RGMII_rxctl     : in  std_logic;
+--    RGMII_txd       : out std_logic_vector(3 downto 0);
+--    RGMII_txclk     : out std_logic;
+--    RGMII_txctl     : out std_logic;
   
-    Speed1000En     : out std_logic;
-    Speed100En      : out std_logic;
-    Speed10En       : out std_logic
-  );
-  end component Mercury_XU5_GMII2RGMII;
+--    Speed1000En     : out std_logic;
+--    Speed100En      : out std_logic;
+--    Speed10En       : out std_logic
+--  );
+--  end component Mercury_XU5_GMII2RGMII;
 
   ---------------------------------------------------------------------------------------------------
   -- signal declarations
@@ -337,22 +337,22 @@ architecture rtl of Mercury_XU5_PE1 is
   signal MDIO_mdio_i      : std_logic;
   signal MDIO_mdio_o      : std_logic;
   signal MDIO_mdio_t      : std_logic;
-  signal ETH_CLK125       : std_logic;
-  signal ETH_CLK125_90    : std_logic;
-  signal ETH_CLK25        : std_logic;
-  signal ETH_CLK10        : std_logic;
-  signal ETH_resetn       : std_logic;
-  signal GMII_col         : std_logic;
-  signal GMII_crs         : std_logic;
-  signal GMII_rx_clk      : std_logic;
-  signal GMII_rx_dv       : std_logic;
-  signal GMII_rx_er       : std_logic;
-  signal GMII_rxd         : std_logic_vector(7 downto 0);
-  signal GMII_speed_mode  : std_logic_vector(2 downto 0);
-  signal GMII_tx_clk      : std_logic;
-  signal GMII_tx_en       : std_logic;
-  signal GMII_tx_er       : std_logic;
-  signal GMII_txd         : std_logic_vector(7 downto 0);
+--  signal ETH_CLK125       : std_logic;
+--  signal ETH_CLK125_90    : std_logic;
+--  signal ETH_CLK25        : std_logic;
+--  signal ETH_CLK10        : std_logic;
+--  signal ETH_resetn       : std_logic;
+--  signal GMII_col         : std_logic;
+--  signal GMII_crs         : std_logic;
+--  signal GMII_rx_clk      : std_logic;
+--  signal GMII_rx_dv       : std_logic;
+--  signal GMII_rx_er       : std_logic;
+--  signal GMII_rxd         : std_logic_vector(7 downto 0);
+--  signal GMII_speed_mode  : std_logic_vector(2 downto 0);
+--  signal GMII_tx_clk      : std_logic;
+--  signal GMII_tx_en       : std_logic;
+--  signal GMII_tx_er       : std_logic;
+--  signal GMII_txd         : std_logic_vector(7 downto 0);
   signal LedCount         : unsigned(23 downto 0);
 
 begin
@@ -381,27 +381,27 @@ begin
       C0_DDR4_cs_n         => DDR4PL_CS_N,
       C0_DDR4_dm_n         => DDR4PL_DM,
       C0_DDR4_dqs_c        => DDR4PL_DQS_N,
-      C0_DDR4_dqs_t        => DDR4PL_DQS_P,
-      MDIO_mdc             => ETH1_MDC,
-      MDIO_mdio_i          => MDIO_mdio_i,
-      MDIO_mdio_o          => MDIO_mdio_o,
-      MDIO_mdio_t          => MDIO_mdio_t,
-      ETH_CLK125           => ETH_CLK125,
-      ETH_CLK125_90        => ETH_CLK125_90,
-      ETH_CLK25            => ETH_CLK25,
-      ETH_CLK10            => ETH_CLK10,
-      ETH_resetn           => ETH_resetn,
-      GMII_col             => GMII_col,
-      GMII_crs             => GMII_crs,
-      GMII_rx_clk          => GMII_rx_clk,
-      GMII_rx_dv           => GMII_rx_dv,
-      GMII_rx_er           => GMII_rx_er,
-      GMII_rxd             => GMII_rxd,
-      GMII_speed_mode      => GMII_speed_mode,
-      GMII_tx_clk          => GMII_tx_clk,
-      GMII_tx_en           => GMII_tx_en,
-      GMII_tx_er           => GMII_tx_er,
-      GMII_txd             => GMII_txd
+      C0_DDR4_dqs_t        => DDR4PL_DQS_P
+--      MDIO_mdc             => ETH1_MDC,
+--      MDIO_mdio_i          => MDIO_mdio_i,
+--      MDIO_mdio_o          => MDIO_mdio_o,
+--      MDIO_mdio_t          => MDIO_mdio_t,
+--      ETH_CLK125           => ETH_CLK125,
+--      ETH_CLK125_90        => ETH_CLK125_90,
+--      ETH_CLK25            => ETH_CLK25,
+--      ETH_CLK10            => ETH_CLK10,
+--      ETH_resetn           => ETH_resetn,
+--      GMII_col             => GMII_col,
+--      GMII_crs             => GMII_crs,
+--      GMII_rx_clk          => GMII_rx_clk,
+--      GMII_rx_dv           => GMII_rx_dv,
+--      GMII_rx_er           => GMII_rx_er,
+--      GMII_rxd             => GMII_rxd,
+--      GMII_speed_mode      => GMII_speed_mode,
+--      GMII_tx_clk          => GMII_tx_clk,
+--      GMII_tx_en           => GMII_tx_en,
+--      GMII_tx_er           => GMII_tx_er,
+--      GMII_txd             => GMII_txd
     );
   
   process (Clk50)
@@ -417,46 +417,46 @@ begin
   Led1_N <= '0' when LedCount(LedCount'high) = '0' else 'Z';
   Led2_N <= '0' when LED_N(0) = '0' else 'Z';
   Led3_N <= '0' when LED_N(1) = '0' else 'Z';
-  MDIO_mdio_iobuf: component IOBUF
-    port map (
-      I => MDIO_mdio_o,
-      IO => ETH1_MDIO,
-      O => MDIO_mdio_i,
-      T => MDIO_mdio_t
-    );
+--  MDIO_mdio_iobuf: component IOBUF
+--    port map (
+--      I => MDIO_mdio_o,
+--      IO => ETH1_MDIO,
+--      O => MDIO_mdio_i,
+--      T => MDIO_mdio_t
+--    );
   
-  i_gmii2rgmii : Mercury_XU5_GMII2RGMII
-    port map (
-      Clk125          => ETH_CLK125,
-      Clk125_90       => ETH_CLK125_90,
-      Clk25           => ETH_Clk25,
-      Clk10           => ETH_Clk10,
-      Resetn          => ETH_resetn,
+--  i_gmii2rgmii : Mercury_XU5_GMII2RGMII
+--    port map (
+--      Clk125          => ETH_CLK125,
+--      Clk125_90       => ETH_CLK125_90,
+--      Clk25           => ETH_Clk25,
+--      Clk10           => ETH_Clk10,
+--      Resetn          => ETH_resetn,
   
-      GMII_col        => GMII_col,
-      GMII_crs        => GMII_crs,
-      GMII_rx_clk     => GMII_rx_clk,
-      GMII_rx_dv      => GMII_rx_dv,
-      GMII_rx_er      => GMII_rx_er,
-      GMII_rxd        => GMII_rxd,
-      GMII_speed_mode => GMII_speed_mode,
-      GMII_tx_clk     => GMII_tx_clk,
-      GMII_tx_en      => GMII_tx_en,
-      GMII_tx_er      => GMII_tx_er,
-      GMII_txd        => GMII_txd,
+--      GMII_col        => GMII_col,
+--      GMII_crs        => GMII_crs,
+--      GMII_rx_clk     => GMII_rx_clk,
+--      GMII_rx_dv      => GMII_rx_dv,
+--      GMII_rx_er      => GMII_rx_er,
+--      GMII_rxd        => GMII_rxd,
+--      GMII_speed_mode => GMII_speed_mode,
+--      GMII_tx_clk     => GMII_tx_clk,
+--      GMII_tx_en      => GMII_tx_en,
+--      GMII_tx_er      => GMII_tx_er,
+--      GMII_txd        => GMII_txd,
   
-      RGMII_rxd       => ETH1_RXD,
-      RGMII_rxclk     => ETH1_RXCLK,
-      RGMII_rxctl     => ETH1_RXCTL,
-      RGMII_txd       => ETH1_TXD,
-      RGMII_txclk     => ETH1_TXCLK,
-      RGMII_txctl     => ETH1_TXCTL,
+--      RGMII_rxd       => ETH1_RXD,
+--      RGMII_rxclk     => ETH1_RXCLK,
+--      RGMII_rxctl     => ETH1_RXCTL,
+--      RGMII_txd       => ETH1_TXD,
+--      RGMII_txclk     => ETH1_TXCLK,
+--      RGMII_txctl     => ETH1_TXCTL,
   
-      Speed1000En     => open,
-      Speed100En      => open,
-      Speed10En       => open
-    );
+--      Speed1000En     => open,
+--      Speed100En      => open,
+--      Speed10En       => open
+--    );
   
-  ETH1_RESET_N        <= ETH_resetn;
+--  ETH1_RESET_N        <= ETH_resetn;
 
 end rtl;
