@@ -39,7 +39,7 @@ entity Mercury_XU5_PE1 is
     XMC_JTAG_TMS                    : out   std_logic;
     XMC_JTAG_TCK                    : out   std_logic;
     XMC_JTAG_TDO                    : in    std_logic;
-    XMC_RESET                       : out   std_logic;
+    XMC_JTAG_RST                    : out   std_logic;
     OVER_TEMP_LED                   : out   std_logic;
     VP2V5_PG                        : in    std_logic;
     VP3V3_PG                        : in    std_logic;
