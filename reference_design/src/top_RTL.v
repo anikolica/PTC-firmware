@@ -39,7 +39,7 @@ module top_RTL(
     output reg [64*32-1:0] reg_ro_out          
     );
     
-    // test code ...
+    /* test code ...
     wire    [64*32-1:0] net0;
     wire                net1;
     wire    [7:0]       net2, net3, net4;
@@ -49,9 +49,12 @@ module top_RTL(
     IBUF ibuf2 (.I(dip_mac_addr_in), .O(net2));
     IBUF ibuf3 (.I(dip_crate_addr_i), .O(net3));
     IBUF ibuf4 (.I(uC_data_in), .O(net4));
+    */
     
+    reg test_reg;
     always @ (clk_axi) begin
-        uC_data_out = ~uC_data_out;
+        test_reg <= timing_data_in;
+        local_2v5_en_out <= test_reg;
     end
     
 endmodule

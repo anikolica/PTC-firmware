@@ -26,6 +26,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+Library UNISIM;
+use UNISIM.vcomponents.all;
 ---------------------------------------------------------------------------------------------------
 -- entity declaration
 ---------------------------------------------------------------------------------------------------
@@ -35,7 +37,6 @@ entity Mercury_XU5_PE1 is
   );
   
   port (
-    
     XMC_JTAG_TMS                    : out   std_logic;
     XMC_JTAG_TCK                    : out   std_logic;
     XMC_JTAG_TDO                    : in    std_logic;
@@ -84,7 +85,8 @@ entity Mercury_XU5_PE1 is
     WIB_SCL                         : inout   std_logic;
     WIB_SDA                         : inout   std_logic;
     WIB_CLK_SEL                     : out   std_logic;
-    SYS_CMD                         : in    std_logic;
+    SYS_CMD_P                       : in    std_logic;
+    SYS_CMD_N                       : in    std_logic;
     BP_IO0                          : in    std_logic;
     BP_IO1                          : in    std_logic;
     BP_IO2                          : in    std_logic;
@@ -95,7 +97,8 @@ entity Mercury_XU5_PE1 is
     WIB_TX_BACK                     : out   std_logic;
     EN_3V3                          : out   std_logic;
     EN_2V5                          : out   std_logic;
-    SYS_CLK                         : in    std_logic;
+    SYS_CLK_P                       : in    std_logic;
+    SYS_CLK_N                       : in    std_logic;
     
 --    -- Anios_A
 --    IOA_D0_P                       : inout   std_logic;
@@ -388,6 +391,28 @@ architecture rtl of Mercury_XU5_PE1 is
 --  );
 --  end component Mercury_XU5_GMII2RGMII;
 
+
+  component top_RTL is
+    port (
+      clk_axi             : in    std_logic;
+      clk_ext             : in    std_logic;
+      reg_rw_in           : in    std_logic_vector(2047 downto 0);
+      timing_data_in      : in    std_logic;
+      dip_mac_addr_in     : in    std_logic_vector(7 downto 0);
+      dip_crate_addr_in   : in    std_logic_vector(7 downto 0);
+      uC_data_in          : in    std_logic_vector(7 downto 0);
+        
+      timing_ok_led_out   : out    std_logic;
+      wib_en_out          : out    std_logic_vector(5 downto 0);
+      wib_on_led_out      : out    std_logic_vector(5 downto 0);
+      local_2v5_en_out    : out    std_logic;
+      local_3v3_en_out    : out    std_logic;
+      timing_clk_sel_out  : out    std_logic;
+      uC_data_out         : out    std_logic_vector(7 downto 0);
+      reg_ro_out          : out    std_logic_vector(2047 downto 0)
+    );
+    end component top_RTL;
+    
   ---------------------------------------------------------------------------------------------------
   -- signal declarations
   ---------------------------------------------------------------------------------------------------
@@ -395,9 +420,25 @@ architecture rtl of Mercury_XU5_PE1 is
   signal Clk50            : std_logic;
   signal Rst_N            : std_logic;
   signal LED_N            : std_logic_vector(1 downto 0);
-  signal MDIO_mdio_i      : std_logic;
-  signal MDIO_mdio_o      : std_logic;
-  signal MDIO_mdio_t      : std_logic;
+  signal reg_ro           : std_logic_vector(2047 downto 0);
+  signal reg_rw           : std_logic_vector(2047 downto 0);
+  signal SYS_CLK_SE       : std_logic;
+  signal SYS_CMD_SE       : std_logic;
+  signal iic_ptc_scl_i    : std_logic;
+  signal iic_ptc_scl_o    : std_logic;
+  signal iic_ptc_scl_t    : std_logic;
+  signal iic_ptc_sda_i    : std_logic;
+  signal iic_ptc_sda_o    : std_logic;
+  signal iic_ptc_sda_t    : std_logic;
+  signal iic_wib_scl_i    : std_logic;
+  signal iic_wib_scl_o    : std_logic;
+  signal iic_wib_scl_t    : std_logic;
+  signal iic_wib_sda_i    : std_logic;
+  signal iic_wib_sda_o    : std_logic;
+  signal iic_wib_sda_t    : std_logic;
+--  signal MDIO_mdio_i      : std_logic;
+--  signal MDIO_mdio_o      : std_logic;
+--  signal MDIO_mdio_t      : std_logic;
 --  signal ETH_CLK125       : std_logic;
 --  signal ETH_CLK125_90    : std_logic;
 --  signal ETH_CLK25        : std_logic;
@@ -519,5 +560,78 @@ begin
 --    );
   
 --  ETH1_RESET_N        <= ETH_resetn;
+
+  ---------------------------------------------------------------------------------------------------
+  -- main top level code instance
+  ---------------------------------------------------------------------------------------------------
+
+   IBUFDS_cmd : IBUFDS
+   port map (
+      O => SYS_CMD_SE,
+      I => SYS_CMD_P,
+      IB => SYS_CMD_N
+   );
+   
+   IBUFDS_clk : IBUFDS
+   port map (
+      O => SYS_CLK_SE,
+      I => SYS_CLK_P,
+      IB => SYS_CLK_N
+   );   
+
+  top: component top_RTL
+    port map (
+    clk_axi             => Clk100,
+    clk_ext             => Clk100,
+    reg_rw_in           => reg_rw,
+    timing_data_in      => SYS_CMD_SE,
+    dip_mac_addr_in     => "00000000",
+    dip_crate_addr_in   => "00000000",
+    uC_data_in          => "00000000",
+        
+    timing_ok_led_out   => open,
+    wib_en_out          => open,
+    wib_on_led_out      => open,
+    local_2v5_en_out    => EN_2V5,
+    local_3v3_en_out    => EN_3V3,
+    timing_clk_sel_out  => open,
+    uC_data_out         => open,
+    reg_ro_out          => reg_ro
+    );
+    
+  ---------------------------------------------------------------------------------------------------
+  -- I2C passthtough for PL side I2C
+  ---------------------------------------------------------------------------------------------------
+   IOBUF_ptc_scl : IOBUF
+   port map (
+      O => iic_ptc_scl_o,
+      I => iic_ptc_scl_i,
+      IO => I2C_SCL_PL,
+      T => iic_ptc_scl_t
+   );
+
+   IOBUF_ptc_sda : IOBUF
+   port map (
+      O => iic_ptc_sda_o,
+      I => iic_ptc_sda_i,
+      IO => I2C_SDA_PL,
+      T => iic_ptc_sda_t
+   );
+
+   IOBUF_wib_scl : IOBUF
+   port map (
+      O => iic_wib_scl_o,
+      I => iic_wib_scl_i,
+      IO => WIB_SCL,
+      T => iic_wib_scl_t
+   );
+
+   IOBUF_wib_sda : IOBUF
+   port map (
+      O => iic_wib_sda_o,
+      I => iic_wib_sda_i,
+      IO => WIB_SDA,
+      T => iic_wib_sda_t
+   );
 
 end rtl;
