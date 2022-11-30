@@ -301,7 +301,6 @@ set_property -dict {PACKAGE_PIN J4    IOSTANDARD LVCMOS18  } [get_ports {WIB_CLK
 #set_property -dict {PACKAGE_PIN J5    IOSTANDARD LVCMOS18  } [get_ports {FMC_LA10_P}]
 set_property -dict {PACKAGE_PIN H3    IOSTANDARD LVDS      } [get_ports {SYS_CMD_N}]
 set_property -dict {PACKAGE_PIN H4    IOSTANDARD LVDS      } [get_ports {SYS_CMD_P}]
-set_property -dict {DIFF_TERM_ADV     TERM_100             } [get_ports {SYS_CMD_P}]
 #set_property -dict {PACKAGE_PIN P6    IOSTANDARD LVCMOS18  } [get_ports {FMC_LA12_N}]
 #set_property -dict {PACKAGE_PIN P7    IOSTANDARD LVCMOS18  } [get_ports {FMC_LA12_P}]
 set_property -dict {PACKAGE_PIN J2    IOSTANDARD LVCMOS18  } [get_ports {BP_IO0}]
