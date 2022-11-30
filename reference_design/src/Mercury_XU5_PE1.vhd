@@ -325,7 +325,19 @@ architecture rtl of Mercury_XU5_PE1 is
       C0_DDR4_cs_n        : out    std_logic_vector(0 downto 0);
       C0_DDR4_dm_n        : inout  std_logic_vector(1 downto 0);
       C0_DDR4_dqs_c       : inout  std_logic_vector(1 downto 0);
-      C0_DDR4_dqs_t       : inout  std_logic_vector(1 downto 0)
+      C0_DDR4_dqs_t       : inout  std_logic_vector(1 downto 0);
+      iic_ptc_scl_i       : in     std_logic;
+      iic_ptc_scl_o       : out    std_logic;
+      iic_ptc_scl_t       : out    std_logic;
+      iic_ptc_sda_i       : in     std_logic;
+      iic_ptc_sda_o       : out    std_logic;
+      iic_ptc_sda_t       : out    std_logic;
+      iic_wib_scl_i       : in     std_logic;
+      iic_wib_scl_o       : out    std_logic;
+      iic_wib_scl_t       : out    std_logic;
+      iic_wib_sda_i       : in     std_logic;
+      iic_wib_sda_o       : out    std_logic;
+      iic_wib_sda_t       : out    std_logic
 --      MDIO_mdc            : out    std_logic;
 --      MDIO_mdio_i         : in     std_logic;
 --      MDIO_mdio_o         : out    std_logic;
@@ -483,7 +495,19 @@ begin
       C0_DDR4_cs_n         => DDR4PL_CS_N,
       C0_DDR4_dm_n         => DDR4PL_DM,
       C0_DDR4_dqs_c        => DDR4PL_DQS_N,
-      C0_DDR4_dqs_t        => DDR4PL_DQS_P
+      C0_DDR4_dqs_t        => DDR4PL_DQS_P,
+      iic_ptc_scl_i        => iic_ptc_scl_i,
+      iic_ptc_scl_o        => iic_ptc_scl_o,
+      iic_ptc_scl_t        => iic_ptc_scl_t,
+      iic_ptc_sda_i        => iic_ptc_sda_i,
+      iic_ptc_sda_o        => iic_ptc_sda_o,
+      iic_ptc_sda_t        => iic_ptc_sda_t,
+      iic_wib_scl_i        => iic_wib_scl_i,
+      iic_wib_scl_o        => iic_wib_scl_o,
+      iic_wib_scl_t        => iic_wib_scl_t,
+      iic_wib_sda_i        => iic_wib_sda_i,
+      iic_wib_sda_o        => iic_wib_sda_o,
+      iic_wib_sda_t        => iic_wib_sda_t
 --      MDIO_mdc             => ETH1_MDC,
 --      MDIO_mdio_i          => MDIO_mdio_i,
 --      MDIO_mdio_o          => MDIO_mdio_o,
@@ -604,32 +628,32 @@ begin
   ---------------------------------------------------------------------------------------------------
    IOBUF_ptc_scl : IOBUF
    port map (
-      O => iic_ptc_scl_o,
-      I => iic_ptc_scl_i,
+      O => iic_ptc_scl_i,
+      I => iic_ptc_scl_o,
       IO => I2C_SCL_PL,
       T => iic_ptc_scl_t
    );
 
    IOBUF_ptc_sda : IOBUF
    port map (
-      O => iic_ptc_sda_o,
-      I => iic_ptc_sda_i,
+      O => iic_ptc_sda_i,
+      I => iic_ptc_sda_o,
       IO => I2C_SDA_PL,
       T => iic_ptc_sda_t
    );
 
    IOBUF_wib_scl : IOBUF
    port map (
-      O => iic_wib_scl_o,
-      I => iic_wib_scl_i,
+      O => iic_wib_scl_i,
+      I => iic_wib_scl_o,
       IO => WIB_SCL,
       T => iic_wib_scl_t
    );
 
    IOBUF_wib_sda : IOBUF
    port map (
-      O => iic_wib_sda_o,
-      I => iic_wib_sda_i,
+      O => iic_wib_sda_i,
+      I => iic_wib_sda_o,
       IO => WIB_SDA,
       T => iic_wib_sda_t
    );
