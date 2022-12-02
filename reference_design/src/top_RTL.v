@@ -74,8 +74,8 @@ module top_RTL(
     output reg          VP12_SYNC5,
     output reg          VP12_SYNC6,
         
-    input               VP2V5_PG,
-    input               VP3V3_PG,
+    //input               VP2V5_PG,
+    //input               VP3V3_PG,
     input               VP2V5_ALERT,
     input               VP3V3_ALERT,
     input               VP12_IV_ALERT0,

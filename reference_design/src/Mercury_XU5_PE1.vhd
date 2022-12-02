@@ -42,8 +42,8 @@ entity Mercury_XU5_PE1 is
     XMC_JTAG_TDO                    : in    std_logic;
     XMC_JTAG_RST                    : out   std_logic;
     OVER_TEMP_LED                   : out   std_logic;
-    VP2V5_PG                        : in    std_logic;
-    VP3V3_PG                        : in    std_logic;
+    ECAT_UART_TX                    : out   std_logic;
+    ECAT_UART_RX                    : in    std_logic;
     VP12_EN3                        : out   std_logic;
     VP12_EN2                        : out   std_logic;
     VP12_SYNC0                      : out   std_logic;
@@ -338,6 +338,8 @@ architecture rtl of Mercury_XU5_PE1 is
       iic_wib_sda_i       : in     std_logic;
       iic_wib_sda_o       : out    std_logic;
       iic_wib_sda_t       : out    std_logic;
+      ECAT_UART_txd       : out    std_logic;
+      ECAT_UART_rxd       : in     std_logic;
       reg_ro              : in     std_logic_vector(2047 downto 0);
       reg_rw              : out    std_logic_vector(2047 downto 0)
 --      MDIO_mdc            : out    std_logic;
@@ -419,8 +421,8 @@ architecture rtl of Mercury_XU5_PE1 is
       XMC_JTAG_TDO        : in    std_logic;
       XMC_JTAG_RST        : out   std_logic;
       OVER_TEMP_LED       : out   std_logic;
-      VP2V5_PG            : in    std_logic;
-      VP3V3_PG            : in    std_logic;
+      --VP2V5_PG            : in    std_logic;
+      --VP3V3_PG            : in    std_logic;
       VP12_EN3            : out   std_logic;
       VP12_EN2            : out   std_logic;
       VP12_SYNC0          : out   std_logic;
@@ -561,6 +563,8 @@ begin
       iic_wib_sda_i        => iic_wib_sda_i,
       iic_wib_sda_o        => iic_wib_sda_o,
       iic_wib_sda_t        => iic_wib_sda_t,
+      ECAT_UART_txd        => ECAT_UART_TX,
+      ECAT_UART_rxd        => ECAT_UART_RX,
       reg_ro               => reg_ro,
       reg_rw               => reg_rw
 --      MDIO_mdc             => ETH1_MDC,
@@ -678,8 +682,8 @@ begin
     XMC_JTAG_TDO        => XMC_JTAG_TDO,
     XMC_JTAG_RST        => XMC_JTAG_RST,
     OVER_TEMP_LED       => OVER_TEMP_LED,
-    VP2V5_PG            => VP2V5_PG,
-    VP3V3_PG            => VP3V3_PG,
+    --VP2V5_PG            => VP2V5_PG,
+    --VP3V3_PG            => VP3V3_PG,
     VP12_EN3            => VP12_EN3,
     VP12_EN2            => VP12_EN2,
     VP12_SYNC0          => VP12_SYNC0,
