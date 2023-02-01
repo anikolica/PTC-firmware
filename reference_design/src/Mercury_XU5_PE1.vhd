@@ -39,11 +39,14 @@ entity Mercury_XU5_PE1 is
   port (
     XMC_JTAG_TMS                    : out   std_logic;
     XMC_JTAG_TCK                    : out   std_logic;
+    XMC_JTAG_TDI                    : out   std_logic;
     XMC_JTAG_TDO                    : in    std_logic;
     XMC_JTAG_RST                    : out   std_logic;
     OVER_TEMP_LED                   : out   std_logic;
     ECAT_UART_TX                    : out   std_logic;
     ECAT_UART_RX                    : in    std_logic;
+    DEBUG_UART_TX                   : out   std_logic;
+    DEBUG_UART_RX                   : in    std_logic;
     VP12_EN3                        : out   std_logic;
     VP12_EN2                        : out   std_logic;
     VP12_SYNC0                      : out   std_logic;
@@ -65,28 +68,37 @@ entity Mercury_XU5_PE1 is
     VP12_EN1                        : out   std_logic;
     VP12_EN0                        : out   std_logic;
     SFP2_LOS                        : in    std_logic;
+    SFP2_PRESENT                    : in    std_logic;
     WIB_RX_SEL0                     : out   std_logic;
     WIB_RX_SEL1                     : out   std_logic;
     WIB_RX_SEL2                     : out   std_logic;
     SFP0_LOS                        : in    std_logic;
     SFP0_TX_FAULT                   : in    std_logic;
+    SFP0_PRESENT                    : in    std_logic;
+    SFP0_SPARE_LED                  : out   std_logic;
     VP12_IV_ALERT2                  : in    std_logic;
     VP12_IV_ALERT3                  : in    std_logic;
     VP12_IV_ALERT4                  : in    std_logic;
     VP12_IV_ALERT5                  : in    std_logic;
     VP12_IV_ALERT6                  : in    std_logic;
+    VP48_IV_ALERT                   : in    std_logic;
     SOC_I2C_SW_RST                  : out   std_logic;
     SFP1_TX_FAULT                   : in    std_logic;
     SFP2_TX_FAULT                   : in    std_logic;
     SFP2_TX_DISABLE                 : out   std_logic;
     SFP1_LOS                        : in    std_logic;
+    SFP1_PRESENT                    : in    std_logic;
     VP12_EN4                        : out   std_logic;
     VP12_EN5                        : out   std_logic;
     WIB_SCL                         : inout   std_logic;
     WIB_SDA                         : inout   std_logic;
+    WIB_I2C_OE                      : out   std_logic;
+    MCU_I2C_OE                      : out   std_logic;
     WIB_CLK_SEL                     : out   std_logic;
     SYS_CMD_P                       : out   std_logic;
     SYS_CMD_N                       : out   std_logic;
+    SOC_AUX_CLK_P                   : out   std_logic;
+    SOC_AUX_CLK_N                   : out   std_logic;
     BP_IO0                          : in    std_logic;
     BP_IO1                          : in    std_logic;
     BP_IO2                          : in    std_logic;
@@ -94,11 +106,20 @@ entity Mercury_XU5_PE1 is
     BP_IO4                          : in    std_logic;
     BP_IO5                          : in    std_logic;
     BP_IO_OE                        : out   std_logic;
-    WIB_TX_BACK                     : out   std_logic;
+    TIMING_GOOD                     : out   std_logic;
     EN_3V3                          : out   std_logic;
     EN_2V5                          : out   std_logic;
     SYS_CLK_P                       : in    std_logic;
     SYS_CLK_N                       : in    std_logic;
+    CRATE_ADDR_OE                   : out   std_logic;
+    CRATE_ADDR0                     : in    std_logic;
+    CRATE_ADDR1                     : in    std_logic;
+    CRATE_ADDR2                     : in    std_logic;
+    CRATE_ADDR3                     : in    std_logic;
+    CRATE_ADDR4                     : in    std_logic;
+    CRATE_ADDR5                     : in    std_logic;
+    CRATE_ADDR6                     : in    std_logic;
+    CRATE_ADDR7                     : in    std_logic;
     
 --    -- Anios_A
 --    IOA_D0_P                       : inout   std_logic;
@@ -231,8 +252,8 @@ entity Mercury_XU5_PE1 is
 --    FMC_CLK1_M2C_P                 : inout   std_logic;
     
     -- I2C_PL
-    I2C_SCL_PL                     : inout   std_logic;
-    I2C_SDA_PL                     : inout   std_logic;
+    SOC_I2C_SCL                     : inout   std_logic;
+    SOC_I2C_SDA                     : inout   std_logic;
     
 --    -- IOC
 --    IOC_D0_P                       : inout   std_logic; -- Only available on G1 modules
@@ -412,14 +433,16 @@ architecture rtl of Mercury_XU5_PE1 is
     port (
       clk_axi             : in    std_logic;
       reg_rw_in           : in    std_logic_vector(2047 downto 0);
-      timing_data_in      : in    std_logic;
-      dip_crate_addr_in   : in    std_logic_vector(7 downto 0);
-      --uC_data_in          : in    std_logic_vector(7 downto 0);
       
       XMC_JTAG_TMS        : out   std_logic;
       XMC_JTAG_TCK        : out   std_logic;
       XMC_JTAG_TDO        : in    std_logic;
+      XMC_JTAG_TDI        : out   std_logic;
       XMC_JTAG_RST        : out   std_logic;
+      DEBUG_UART_TX       : out   std_logic;
+      DEBUG_UART_RX       : in    std_logic;
+      --ECAT_UART_TX        : out   std_logic;
+      --ECAT_UART_RX        : in    std_logic;
       OVER_TEMP_LED       : out   std_logic;
       --VP2V5_PG            : in    std_logic;
       --VP3V3_PG            : in    std_logic;
@@ -444,24 +467,35 @@ architecture rtl of Mercury_XU5_PE1 is
       VP12_EN1            : out   std_logic;
       VP12_EN0            : out   std_logic;
       SFP2_LOS            : in    std_logic;
+      SFP2_PRESENT        : in    std_logic;
       WIB_RX_SEL0         : out   std_logic;
       WIB_RX_SEL1         : out   std_logic;
       WIB_RX_SEL2         : out   std_logic;
       SFP0_LOS            : in    std_logic;
+      SFP0_PRESENT        : in    std_logic;
       SFP0_TX_FAULT       : in    std_logic;
+      SFP0_SPARE_LED      : out   std_logic;
       VP12_IV_ALERT2      : in    std_logic;
       VP12_IV_ALERT3      : in    std_logic;
       VP12_IV_ALERT4      : in    std_logic;
       VP12_IV_ALERT5      : in    std_logic;
       VP12_IV_ALERT6      : in    std_logic;
+      VP48_IV_ALERT       : in    std_logic;
       SOC_I2C_SW_RST      : out   std_logic;
       SFP1_TX_FAULT       : in    std_logic;
       SFP2_TX_FAULT       : in    std_logic;
       SFP2_TX_DISABLE     : out   std_logic;
       SFP1_LOS            : in    std_logic;
+      SFP1_PRESENT        : in    std_logic;
       VP12_EN4            : out   std_logic;
       VP12_EN5            : out   std_logic;
+      --WIB_SCL             : inout   std_logic;
+      --WIB_SDA             : inout   std_logic;
+      WIB_I2C_OE          : out   std_logic;
+      MCU_I2C_OE          : out   std_logic;
       WIB_CLK_SEL         : out   std_logic;
+      SYS_CMD             : out   std_logic;
+      SOC_AUX_CLK         : out   std_logic;
       BP_IO0              : in    std_logic;
       BP_IO1              : in    std_logic;
       BP_IO2              : in    std_logic;
@@ -469,12 +503,21 @@ architecture rtl of Mercury_XU5_PE1 is
       BP_IO4              : in    std_logic;
       BP_IO5              : in    std_logic;
       BP_IO_OE            : out   std_logic;
-      WIB_TX_BACK         : out   std_logic;
+      TIMING_GOOD         : out   std_logic;
       EN_3V3              : out   std_logic;
       EN_2V5              : out   std_logic;
-        
-      timing_data_out     : out    std_logic;
-      --uC_data_out         : out    std_logic_vector(7 downto 0);
+      CRATE_ADDR_OE       : out   std_logic;
+      CRATE_ADDR0         : in    std_logic;
+      CRATE_ADDR1         : in    std_logic;
+      CRATE_ADDR2         : in    std_logic;
+      CRATE_ADDR3         : in    std_logic;
+      CRATE_ADDR4         : in    std_logic;
+      CRATE_ADDR5         : in    std_logic;
+      CRATE_ADDR6         : in    std_logic;
+      CRATE_ADDR7         : in    std_logic;
+      --SOC_I2C_SCL         :inout    std_logic;
+      --SOC_I2C_SDA         :inout    std_logic;
+
       reg_ro_out          : out    std_logic_vector(2047 downto 0)
     );
     end component top_RTL;
@@ -489,8 +532,9 @@ architecture rtl of Mercury_XU5_PE1 is
   signal LED_N            : std_logic_vector(1 downto 0);
   signal reg_ro           : std_logic_vector(2047 downto 0);
   signal reg_rw           : std_logic_vector(2047 downto 0);
-  signal SYS_CLK_SE       : std_logic;
-  signal SYS_CMD_SE       : std_logic;
+  signal SYS_CLK          : std_logic;
+  signal SYS_CMD          : std_logic;
+  signal SOC_AUX_CLK      : std_logic;
   signal iic_ptc_scl_i    : std_logic;
   signal iic_ptc_scl_o    : std_logic;
   signal iic_ptc_scl_t    : std_logic;
@@ -652,12 +696,19 @@ begin
    port map (
       O => SYS_CMD_P,
       OB => SYS_CMD_N,
-      I => SYS_CMD_SE
+      I => SYS_CMD
    );
+   
+   OBUFDS_socclk : OBUFDS
+   port map (
+      O => SOC_AUX_CLK_P,
+      OB => SOC_AUX_CLK_N,
+      I => SOC_AUX_CLK
+   );  
    
    IBUFDS_clk : IBUFDS
    port map (
-      O => SYS_CLK_SE,
+      O => SYS_CLK,
       I => SYS_CLK_P,
       IB => SYS_CLK_N
    );   
@@ -673,17 +724,19 @@ begin
     port map (
     clk_axi             => Clk100,
     reg_rw_in           => reg_rw,
-    timing_data_in      => SYS_CLK_SE,
-    dip_crate_addr_in   => "00000000",
-    --uC_data_in          => "00000000",
     
     XMC_JTAG_TMS        => XMC_JTAG_TMS,
     XMC_JTAG_TCK        => XMC_JTAG_TCK,
     XMC_JTAG_TDO        => XMC_JTAG_TDO,
+    XMC_JTAG_TDI        => XMC_JTAG_TDI,
     XMC_JTAG_RST        => XMC_JTAG_RST,
     OVER_TEMP_LED       => OVER_TEMP_LED,
     --VP2V5_PG            => VP2V5_PG,
     --VP3V3_PG            => VP3V3_PG,
+    --ECAT_UART_RX        => ECAT_UART_TX,
+    --ECAT_UART_RX        => ECAT_UART_RX,
+    DEBUG_UART_TX       => DEBUG_UART_TX,
+    DEBUG_UART_RX       => DEBUG_UART_RX,
     VP12_EN3            => VP12_EN3,
     VP12_EN2            => VP12_EN2,
     VP12_SYNC0          => VP12_SYNC0,
@@ -705,24 +758,34 @@ begin
     VP12_EN1            => VP12_EN1,
     VP12_EN0            => VP12_EN0,
     SFP2_LOS            => SFP2_LOS,
+    SFP2_PRESENT        => SFP2_PRESENT,
     WIB_RX_SEL0         => WIB_RX_SEL0,
     WIB_RX_SEL1         => WIB_RX_SEL1,
     WIB_RX_SEL2         => WIB_RX_SEL2,
     SFP0_LOS            => SFP0_LOS,
     SFP0_TX_FAULT       => SFP0_TX_FAULT,
+    SFP0_PRESENT        => SFP0_PRESENT,
     VP12_IV_ALERT2      => VP12_IV_ALERT2,
     VP12_IV_ALERT3      => VP12_IV_ALERT3,
     VP12_IV_ALERT4      => VP12_IV_ALERT4,
     VP12_IV_ALERT5      => VP12_IV_ALERT5,
     VP12_IV_ALERT6      => VP12_IV_ALERT6,
+    VP48_IV_ALERT       => VP48_IV_ALERT,
     SOC_I2C_SW_RST      => SOC_I2C_SW_RST,
     SFP1_TX_FAULT       => SFP1_TX_FAULT,
     SFP2_TX_FAULT       => SFP2_TX_FAULT,
     SFP2_TX_DISABLE     => SFP2_TX_DISABLE,
     SFP1_LOS            => SFP1_LOS,
+    SFP1_PRESENT        => SFP1_PRESENT,
     VP12_EN4            => VP12_EN4,
     VP12_EN5            => VP12_EN5,
+    --WIB_SCL             => WIB_SCL,
+    --WIB_SDA             => WIB_SDA,
+    WIB_I2C_OE          => WIB_I2C_OE,
+    MCU_I2C_OE          => MCU_I2C_OE,
     WIB_CLK_SEL         => WIB_CLK_SEL,
+    SYS_CMD             => SYS_CMD,
+    SOC_AUX_CLK         => SOC_AUX_CLK,
     BP_IO0              => BP_IO0,
     BP_IO1              => BP_IO1,
     BP_IO2              => BP_IO2,
@@ -730,12 +793,19 @@ begin
     BP_IO4              => BP_IO4,
     BP_IO5              => BP_IO5,
     BP_IO_OE            => BP_IO_OE,
-    WIB_TX_BACK         => WIB_TX_BACK,
+    TIMING_GOOD         => TIMING_GOOD,
     EN_3V3              => EN_3V3,
     EN_2V5              => EN_2V5,
+    CRATE_ADDR_OE       => CRATE_ADDR_OE,
+    CRATE_ADDR0         => CRATE_ADDR0,
+    CRATE_ADDR1         => CRATE_ADDR1,
+    CRATE_ADDR2         => CRATE_ADDR2,
+    CRATE_ADDR3         => CRATE_ADDR3,
+    CRATE_ADDR4         => CRATE_ADDR4,
+    CRATE_ADDR5         => CRATE_ADDR5,
+    CRATE_ADDR6         => CRATE_ADDR6,
+    CRATE_ADDR7         => CRATE_ADDR7,
         
-    timing_data_out     => SYS_CMD_SE,
-    --uC_data_out         => open,
     reg_ro_out          => reg_ro
     );
     
@@ -746,7 +816,7 @@ begin
    port map (
       O => iic_ptc_scl_i,
       I => iic_ptc_scl_o,
-      IO => I2C_SCL_PL,
+      IO => SOC_I2C_SCL,
       T => iic_ptc_scl_t
    );
 
@@ -754,7 +824,7 @@ begin
    port map (
       O => iic_ptc_sda_i,
       I => iic_ptc_sda_o,
-      IO => I2C_SDA_PL,
+      IO => SOC_I2C_SDA,
       T => iic_ptc_sda_t
    );
 
