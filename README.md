@@ -66,7 +66,7 @@ From the reference_design/ directory:
 ### Booting software
 1. Using your favorite partition editor (e.g. `gparted`), create two partitions on an SDHC micro-SD card: a 256MB FAT32 partition named `BOOT`, and the remainder of the disk should be an EXT4 partition called `ROOT`.
 2. Copy the following files from `ptc-linux/images/linux/` to the `BOOT` partition: `BOOT.bin`, `image.ub`, `boot.scr`
-3. Copy the file `rootfs.tar.gz` to the `ROOT` partition.
+3. Copy the file `rootfs.tar.gz` to the `ROOT` partition. `gunzip` and then `tar -xvf` the file to uncompress the entire contents.
 4. Install the SD card, and install the Enclustra XU5 module into the PTC. Ensure default jumper settings are as per schematic. Ensure a microUSB cable is attached to the front panel UART connector, and open a connection to the COM port at 115kbaud.
 5. Apply 48V to the main power connector, and stop the boot when the message `Hit any key to stop autoboot` appears. This will show the `ZynqMP` prompt.
 6. `setenv bootargs root=/dev/mmcblk1p2`
