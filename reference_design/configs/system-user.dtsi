@@ -1,0 +1,30 @@
+/include/ "system-conf.dtsi"
+/ {
+};
+
+&gem1 {
+        status = "okay";
+        is-internal-pcspma;
+        phy-mode = "moca";
+        fixed-link {
+                speed = <1000>;
+                full-duplex;
+        };
+};
+
+&sdhci1 {
+        status = "okay";
+        no-1-8-v;
+        xlnx,mio_bank = <1>;
+        //disable-wp;
+        wp-inverted;
+};
+
+&i2c0 {
+    at24: at24@56 {
+    compatible = "atmel ,24 c32";
+    reg = <0x57 >;
+    pagesize = <32>;
+    };
+};
+
