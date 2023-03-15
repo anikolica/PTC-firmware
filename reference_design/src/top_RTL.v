@@ -133,6 +133,10 @@ module top_RTL(
     assign TIMING_GOOD      = reg_rw_in[11 * 32 +  1];
     assign OVER_TEMP_LED    = reg_rw_in[11 * 32 +  2];
     
+    // *** TEMP ***
+    assign SPARE0           = reg_rw_in[12 * 32 +  0];
+    assign SPARE1           = reg_rw_in[12 * 32 +  1];
+    
     // *** RO Register map ***
     // Reg 64, SFP status
     assign reg_ro_out [ 0 * 32 +  0] = SFP0_TX_FAULT; // low = no fault
@@ -191,6 +195,29 @@ module top_RTL(
     IOBUF bpoe_buf (.T(~bp_io_en), .I(1'b0), .O(), .IO(BP_IO_OE));
     IOBUF addroe_buf (.T(~crate_addr_en), .I(1'b0), .O(), .IO(CRATE_ADDR_OE));
     
+    // MUX between endpoint output (default) and PLL-based clocks (reg sel when no timing system)
+    BUFGMUX ts_clk_mux2x (.I0(clk125_from_ts), .I1(), .S(1'b0), .O(clk125));   
+    
+    pdts_endpoint_wrapper ts_ep_wrp
+    (
+        .addr       (16'h0000),
+        .clk        (),
+        .clk2x      (clk125_from_ts),
+        .rdy        (),
+        .rec_clk    (),
+        .rec_d      (SYS_CLK),
+        .rst        (),
+        .sclk       (clk_axi),
+        .srst       (SPARE0),
+        .stat       (),
+        .sync       (),
+        .sync_stb   (),
+        .ts_clk_sel (SPARE1),
+        .tstamp     (),
+        .tx_dis     (),
+        .txd        (SYS_CMD)
+    );
+    
     // *** Main code ***
     
     // Powerup
@@ -209,8 +236,8 @@ module top_RTL(
     //assign WIB_RX_SEL   = 3'b000; // Select SoC stream to MUX (default)
     //assign sfp2_en      = 1'b1; // keep timing SFP disabled (tri-state)
     //assign TIMING_GOOD  = 1'b0; // assignn to lock bit
-    assign SYS_CMD      = 1'b0; // output to MUX ch0, test TX to timing master
-    assign SOC_AUX_CLK  = 1'b0; // test fanout to WIBs, for test
+    //assign SYS_CMD      = 1'b0; // output to MUX ch0, test TX to timing master
+    //assign SOC_AUX_CLK  = 1'b0; // test fanout to WIBs, for test
     //assign TEST_SIG     = SYS_CLK; // timing master signal into SoC 
         
 endmodule

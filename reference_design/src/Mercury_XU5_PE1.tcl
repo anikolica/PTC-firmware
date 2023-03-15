@@ -220,6 +220,9 @@ set_property BITSTREAM.CONFIG.UNUSEDPIN PULLNONE [current_design]
 #set_property -dict {PACKAGE_PIN Y2 IOSTANDARD LVCMOS18} [get_ports {B224_RXP_Y2}]
 ## END RIXU
 
+create_clock -period 16.000 -name SYS_CLK [get_ports SYS_CLK_P]
+set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks SYS_CLK]
+set_false_path -from [get_ports SYS_CLK_P]
 
 # Anios_A
 set_property -dict {PACKAGE_PIN W12   IOSTANDARD LVCMOS33  } [get_ports {XMC_JTAG_TMS}]

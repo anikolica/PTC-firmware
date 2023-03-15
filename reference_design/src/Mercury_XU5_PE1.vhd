@@ -475,6 +475,7 @@ architecture rtl of Mercury_XU5_PE1 is
       WIB_CLK_SEL         : out   std_logic;
       SYS_CMD             : out   std_logic;
       SOC_AUX_CLK         : out   std_logic;
+      SYS_CLK             : in    std_logic;
       BP_IO               : in    std_logic_vector(5 downto 0);
       BP_IO_OE            : out   std_logic;
       TIMING_GOOD         : out   std_logic;
@@ -753,6 +754,7 @@ begin
     WIB_CLK_SEL         => WIB_CLK_SEL,
     SYS_CMD             => SYS_CMD,
     SOC_AUX_CLK         => SOC_AUX_CLK,
+    SYS_CLK             => SYS_CLK,
     BP_IO(0)            => BP_IO0,
     BP_IO(1)            => BP_IO1,
     BP_IO(2)            => BP_IO2,
