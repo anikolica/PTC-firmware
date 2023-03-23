@@ -57,7 +57,7 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 5. `petalinux-config -p ptc.linux/ --get-hw-description Mercury_XU5_PE1/`. This will grab the exported .xsa and .bit files from before. In the graphical menu that pops up, select **Image Packaging Configuration - Root filesystem type - EXT4**. (This ensures the image will boot from an ext4 partition on the SD card.) This option should have been read from the `config` file copied earlier.
 6. `petalinux-config -p ptc.linux/ -c rootfs` will bring up a graphical menu, and you can confirm that the choices in the `rootfs_config` file are reflected here. (There are several filesystem utilities that will be marked for install based on the file.)
 7. Copy `system-user.dtsi` file in this repo to `project-spec/meta-user/recipes-bsp/device-tree/files/`. This ensures that the SD card controller, GEM (gigabit ethernet MAC that the PS uses for the SFP connection), and the I2C device on the PS, all get configured correctly.
-8. From the `petalinux/recipes/` directory, copy the `reg_test/` directory to `ptc.linux/project-spec/meta-user/recipes-apps/`. This adds user applications to the build.
+8. From the `petalinux/recipes/` directory, copy the `regtest/` directory to `ptc.linux/project-spec/meta-user/recipes-apps/`. This adds a simple user application to the build <sup>1<sup>. Also copy `user-rootfsconfig` to `project-spec/meta-user/conf/` (this ensures that user applications are included in the root filesystem).
 9. `petalinux-build -p ptc.linux` will take many tens of minutes to build the first time.
 10. `petalinux-package -p ptc.linux/ --boot --u-boot --fsbl ptc.linux/images/linux/zynqmp_fsbl.elf --fpga ptc.linux/images/linux/system.bit -o ptc.linux/images/linux/BOOT.bin` will package the output into a bootable image
 11. From the `ptc.linux/` directory, you can test the build by using `petalinux-boot --qemu --u-boot`. The image will boot virtually, and you can login with password `root` (change this in the config menu from step 5). You can test if simple command line utilities -- like `peek` and `i2cdetect` -- were built into the image correctly by typing them at the prompt after logging in. CTRL+A, and then X, will exit a QEMU session.
@@ -72,4 +72,5 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 7. `saveenv`
 8. `boot` will continue the boot process. A `ptc login:` prompt should appear.
 
-
+## Footnotes
+1. This is done by creating an app template as in the [PetaLinux Yocto documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842475/PetaLinux+Yocto+Tips#PetaLinuxYoctoTips-CreatingApps(whichuseslibraries)inPetaLinuxProject)
