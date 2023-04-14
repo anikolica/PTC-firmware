@@ -470,6 +470,8 @@ architecture rtl of Mercury_XU5_PE1 is
       SFP1_PRESENT        : in    std_logic;
       --WIB_SCL             : inout   std_logic;
       --WIB_SDA             : inout   std_logic;
+      SOC_I2C_SCL_TEST    : inout std_logic;
+      SOC_I2C_SDA_TEST    : inout std_logic;
       WIB_I2C_OE          : out   std_logic;
       MCU_I2C_OE          : out   std_logic;
       WIB_CLK_SEL         : out   std_logic;
@@ -483,8 +485,6 @@ architecture rtl of Mercury_XU5_PE1 is
       EN_2V5              : out   std_logic;
       CRATE_ADDR_OE       : out   std_logic;
       CRATE_ADDR          : in    std_logic_vector(7 downto 0);
-      --SOC_I2C_SCL         :inout    std_logic;
-      --SOC_I2C_SDA         :inout    std_logic;
 
       reg_ro_out          : out    std_logic_vector(2047 downto 0)
     );
@@ -515,6 +515,8 @@ architecture rtl of Mercury_XU5_PE1 is
   signal iic_wib_sda_i    : std_logic;
   signal iic_wib_sda_o    : std_logic;
   signal iic_wib_sda_t    : std_logic;
+  signal SOC_I2C_SCL_TEST : std_logic;
+  signal SOC_I2C_SDA_TEST : std_logic;
 --  signal MDIO_mdio_i      : std_logic;
 --  signal MDIO_mdio_o      : std_logic;
 --  signal MDIO_mdio_t      : std_logic;
@@ -749,6 +751,8 @@ begin
     SFP1_PRESENT        => SFP1_PRESENT,
     --WIB_SCL             => WIB_SCL,
     --WIB_SDA             => WIB_SDA,
+    SOC_I2C_SCL_TEST    => SOC_I2C_SCL_TEST,
+    SOC_I2C_SDA_TEST    => SOC_I2C_SDA_TEST,
     WIB_I2C_OE          => WIB_I2C_OE,
     MCU_I2C_OE          => MCU_I2C_OE,
     WIB_CLK_SEL         => WIB_CLK_SEL,
@@ -783,18 +787,22 @@ begin
   ---------------------------------------------------------------------------------------------------
    IOBUF_ptc_scl : IOBUF
    port map (
-      O => iic_ptc_scl_i,
-      I => iic_ptc_scl_o,
+--      O => iic_ptc_scl_i,
+--      I => iic_ptc_scl_o,
+      I => '0',
       IO => SOC_I2C_SCL,
-      T => iic_ptc_scl_t
+--      T => iic_ptc_scl_t
+      T => SOC_I2C_SCL_TEST
    );
 
    IOBUF_ptc_sda : IOBUF
    port map (
-      O => iic_ptc_sda_i,
-      I => iic_ptc_sda_o,
+--      O => iic_ptc_sda_i,
+--      I => iic_ptc_sda_o,
+      I => '0',
       IO => SOC_I2C_SDA,
-      T => iic_ptc_sda_t
+--      T => iic_ptc_sda_t
+      T => SOC_I2C_SDA_TEST
    );
 
    IOBUF_wib_scl : IOBUF

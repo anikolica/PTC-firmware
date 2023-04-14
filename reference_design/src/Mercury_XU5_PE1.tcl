@@ -223,6 +223,9 @@ set_property BITSTREAM.CONFIG.UNUSEDPIN PULLNONE [current_design]
 create_clock -period 16.000 -name SYS_CLK [get_ports SYS_CLK_P]
 set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks SYS_CLK]
 set_false_path -from [get_ports SYS_CLK_P]
+#set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets IBUFDS_clk/O]
+#create_clock -period 16 -name rxd [get_pins top/ts_ep_wrp/ts_ep/rxcdr/sm/iff/D]
+#set_clock_groups -physically_exclusive -group SYS_CLK -group rxd 
 
 # Anios_A
 set_property -dict {PACKAGE_PIN W12   IOSTANDARD LVCMOS33  } [get_ports {XMC_JTAG_TMS}]

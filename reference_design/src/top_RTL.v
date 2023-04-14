@@ -44,8 +44,8 @@ module top_RTL(
     // I2C is from two AXI peripherals
     //WIB_SDA
     //WIB_SCL
-    //SOC_I2C_SCL
-    //SOC_I2C_SDA
+    inout               SOC_I2C_SCL_TEST,
+    inout               SOC_I2C_SDA_TEST,
     
     // SFPs
     input               SFP0_LOS,       // Slow Control (GbE)
@@ -101,6 +101,13 @@ module top_RTL(
     wire            xmc_jtag_en;
     wire            wib_pe_soc_en_n;
     wire            sfp2_tx_en;
+    wire [7:0]      timing_stat;
+    wire            ep_stst;
+    wire            ep_clk_sel;
+    wire            mmcm0_rst_n;
+    wire            mmcm0_locked;
+    
+    reg             timing_lock;
     
     // *** R/W Register map ***
     // Reg 0, I2C and level translator control
@@ -110,10 +117,13 @@ module top_RTL(
     assign bp_io_en         = reg_rw_in[ 0 * 32 + 24];
     assign crate_addr_en    = reg_rw_in[ 0 * 32 + 25];
     // Reg 1, timing control
-    assign wib_pe_soc_en    = reg_rw_in[ 1 * 32 +  4];
     assign WIB_RX_SEL       = reg_rw_in[ 1 * 32 +  3 : 1 * 32 +  0];
+    assign wib_pe_soc_en    = reg_rw_in[ 1 * 32 +  4];
     assign sfp2_tx_en       = reg_rw_in[ 1 * 32 +  8];
+    assign ep_srst          = reg_rw_in[ 1 * 32 +  9];
+    assign ep_clk_sel       = reg_rw_in[ 1 * 32 + 10];
     assign WIB_CLK_SEL      = reg_rw_in[ 1 * 32 + 16];
+    assign mmcm0_rst_n      = reg_rw_in[ 1 * 32 + 17];
     // Reg 2 - 10, power regulator control
     assign EN_3V3           = reg_rw_in[ 2 * 32 +  0]; // TEST: FMC_LA33_P, pin G37 on FMC J1200-A, 1.8V
     assign EN_2V5           = reg_rw_in[ 3 * 32 +  0];
@@ -130,12 +140,14 @@ module top_RTL(
     assign xmc_reset_n      = reg_rw_in[11 * 32 +  8];
     // Reg 12, LED TEST
     assign SFP0_SPARE_LED   = reg_rw_in[11 * 32 +  0]; // wire to PS for GbE indicator?
-    assign TIMING_GOOD      = reg_rw_in[11 * 32 +  1];
-    assign OVER_TEMP_LED    = reg_rw_in[11 * 32 +  2];
+    assign OVER_TEMP_LED    = reg_rw_in[11 * 32 +  1];
     
     // *** TEMP ***
     assign SPARE0           = reg_rw_in[12 * 32 +  0];
     assign SPARE1           = reg_rw_in[12 * 32 +  1];
+    assign SOC_I2C_SCL_TEST  = ~reg_rw_in[13 * 32 +  0];
+    assign SOC_I2C_SDA_TEST  = ~reg_rw_in[13 * 32 +  1];
+    // *************
     
     // *** RO Register map ***
     // Reg 64, SFP status
@@ -151,6 +163,8 @@ module top_RTL(
     // Reg 65, crate addres and WIB TX assert status
     assign reg_ro_out [ 1 * 32 +  7 :  1 * 32 +  0] = CRATE_ADDR;
     assign reg_ro_out [ 1 * 32 + 13 :  1 * 32 +  8] = BP_IO;
+    assign reg_ro_out [ 1 * 32 + 16] = timing_lock;
+    assign reg_ro_out [ 1 * 32 + 27 :  1 * 32 + 24] = timing_stat;
     // Reg 66, power and temperature alerts
     assign reg_ro_out [ 2 * 32 +  6 :  2 * 32 +  0] = ~VP12_IV_ALERT; // low = alert
     assign reg_ro_out [ 2 * 32 +  8] = ~VP2V5_ALERT;                  // low = alert
@@ -158,7 +172,8 @@ module top_RTL(
     assign reg_ro_out [ 2 * 32 + 18 :  2 * 32 + 16] = ~OVER_TEMP;     // low = alert
     assign reg_ro_out [ 2 * 32 + 24] = ~VP48_IV_ALERT;                // low = alert
     //
-    assign reg_ro_out [ 63 * 32 +  0] = 32'hdeadbeef; // TEST
+    assign reg_ro_out [ 62 * 32 +  0] = mmcm0_locked; // TEST
+    assign reg_ro_out [ 63 * 32 +  31 : 63 * 32 +  0] = 32'hdeadbeef; // TEST
     
     // *** Buffers ***
     // Keep SYNC lines to LTM8064 tri-stated if not using (requires resistor stuffing option)
@@ -174,10 +189,10 @@ module top_RTL(
     IOBUF lvsync_buf (.T(~lvsync_en     ), .I(1'b0), .O(), .IO(LV_SYNC));
     
     // Keep XMC4300 JTAG interface tri-stated to use on-board 10-pin connector
-    IOBUF rst_buf (.T(1'b0), .I(xmc_reset_n), .O(), .IO(XMC_JTAG_RST)); // Actually PORST_N
+    IOBUF rst_buf (.T(~xmc_jtag_en), .I(xmc_reset_n), .O(), .IO(XMC_JTAG_RST)); // Actually PORST_N
     IOBUF tms_buf (.T(~xmc_jtag_en), .I(1'b1), .O(), .IO(XMC_JTAG_TMS)); // controls boot mode
     IOBUF tck_buf (.T(~xmc_jtag_en), .I(1'b0), .O(), .IO(XMC_JTAG_TCK)); // controls boot mode
-    IOBUF tdo_buf (.T(~xmc_jtag_en), .I(    ), .O(), .IO(XMC_JTAG_TDO)); // FIXME: wire Output to code block
+    IOBUF tdo_buf (.T(~xmc_jtag_en), .I(), .O(    ), .IO(XMC_JTAG_TDO)); // FIXME: wire Output to code block
     IOBUF tdi_buf (.T(~xmc_jtag_en), .I(1'b0), .O(), .IO(XMC_JTAG_TDI)); // FIXME: wire Input to code block
     
     // WIB priority encoder select
@@ -208,11 +223,11 @@ module top_RTL(
         .rec_d      (SYS_CLK),
         .rst        (),
         .sclk       (clk_axi),
-        .srst       (SPARE0),
-        .stat       (),
+        .srst       (ep_srst),
+        .stat       (timing_stat),
         .sync       (),
         .sync_stb   (),
-        .ts_clk_sel (SPARE1),
+        .ts_clk_sel (ep_clk_sel),
         .tstamp     (),
         .tx_dis     (),
         .txd        (SYS_CMD)
@@ -231,13 +246,23 @@ module top_RTL(
     // --4) assert xmc_reset_n (not reset)
     // --then XMC boots normally (as per p2512 of XMC4300 manual
     
-    // Timing MUX control
-    // FIXME: wire to timing module decoder
-    //assign WIB_RX_SEL   = 3'b000; // Select SoC stream to MUX (default)
-    //assign sfp2_en      = 1'b1; // keep timing SFP disabled (tri-state)
-    //assign TIMING_GOOD  = 1'b0; // assignn to lock bit
-    //assign SYS_CMD      = 1'b0; // output to MUX ch0, test TX to timing master
-    //assign SOC_AUX_CLK  = 1'b0; // test fanout to WIBs, for test
-    //assign TEST_SIG     = SYS_CLK; // timing master signal into SoC 
+    // *** TIMING ***
+        mmcm0 fake_clk
+    (
+        .clk_out1 (SOC_AUX_CLK),            
+        .resetn   (mmcm0_rst_n),
+        .locked   (mmcm0_locked),
+        .clk_in1  (clk_axi)
+    );
+    
+    always @ (posedge clk_axi)
+    begin
+        if (timing_stat == 4'h8)
+            timing_lock = 1'b1;
+        else
+            timing_lock = 1'b0;
+    end
+    assign TIMING_GOOD = timing_lock;
+
         
 endmodule
