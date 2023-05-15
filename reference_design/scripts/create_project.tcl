@@ -829,9 +829,9 @@ set_property -name "used_in_synthesis" -value "0" -objects $file_obj
 set obj [get_filesets constrs_1]
 set_property -name "constrs_type" -value "XDC" -objects $obj
 set_property -name "name" -value "constrs_1" -objects $obj
-set_property -name "target_constrs_file" -value "$proj_dir/${_xil_proj_name_}/src/Mercury_XU5_LED_timing.xdc" -objects $obj
+set_property -name "target_constrs_file" -value "$origin_dir/src/Mercury_XU5_LED_timing.xdc" -objects $obj
 set_property -name "target_part" -value "xczu5ev-sfvc784-2-i" -objects $obj
-set_property -name "target_ucf" -value "$proj_dir/${_xil_proj_name_}/src/Mercury_XU5_LED_timing.xdc" -objects $obj
+set_property -name "target_ucf" -value "$origin_dir/src/Mercury_XU5_LED_timing.xdc" -objects $obj
 
 # Create 'sim_1' fileset (if not found)
 if {[string equal [get_filesets -quiet sim_1] ""]} {
@@ -902,7 +902,7 @@ set_property -name "verilog_uppercase" -value "0" -objects $obj
 set obj [get_filesets utils_1]
 # Import local files from the original project
 set files [list \
- [file normalize "${origin_dir}/../Mercury_XU5_PE1/Mercury_XU5_PE1.srcs/utils_1/imports/scripts/settings.tcl"]\
+ [file normalize "${origin_dir}/scripts/settings.tcl"]\
 ]
 set imported_files [import_files -fileset utils_1 $files]
 
