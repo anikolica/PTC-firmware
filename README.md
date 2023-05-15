@@ -72,5 +72,17 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 7. `saveenv`
 8. `boot` will continue the boot process. A `ptc login:` prompt should appear.
 
+### Starting PTC in a WEIC
+1. Ensure lower nibble of SW is set to preferred backplane address (defauls is 0xF; all pulled up), and all default jumpers are installed on PTC. Connect microUSB to the front panel to a terminal emulator. Connect 1000Base-BX from SFP2 to a Bristol timing master. Connect a 1000Base-LX SFP from SFP0 to a fiber to topical converter (like 10GTek A7S2-33-1GX1GT-SFP/GT3) and then to the PC.
+3. After applying 48V, it will take a few seconds for the FPGA to power. You’ll see 3 green LEDs on the front go on: 12V_LOCAL, SOC_PG, and FPGA_DONE. You may see a red OVER_TEMP LED go on at powerup, but it will turn off after the FPGA powers on. You’ll also see a blinking amber LED on the Enclustra FPGA mezzanine after a few seconds.
+4. Connect to the front panel UART at 115,200 baud, 8-bit data, 1 stop bit, no parity or flow control. You may need to install the MaxLinear XR21V1410 drivers: https://www.maxlinear.com/product/interface/uarts/usb-uarts/xr21v1410
+5. Run the following scripts:
+`python3 power_on_wib [wib] [on|off]`
+Where `[wib]` is the slot 0 through 5 that your WIB(s) are plugged into.
+`python3 setup_timing`
+You should see a green TIMING_GOOD LED go on the PTC front panel.
+`python3 start_i2c`
+You should printouts on the PTC terminal that show the state of various sensors.
+
 ## Footnotes
 1. This is done by creating an app template as in the [PetaLinux Yocto documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842475/PetaLinux+Yocto+Tips#PetaLinuxYoctoTips-CreatingApps(whichuseslibraries)inPetaLinuxProject)
