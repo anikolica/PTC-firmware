@@ -1,0 +1,11 @@
+13:49:38 **** Incremental Build of configuration Debug for project xmc4300_proj ****
+"\"C:\\Infineon\\Tools\\DAVE IDE\\4.5.0.202105191637\\eclipse\\ARM-GCC-49\\bin\\make\"" --output-sync -j16 all 
+'Invoking: ARM-GCC Print Size'
+"C:/Infineon/Tools/DAVE IDE/4.5.0.202105191637/eclipse/ARM-GCC-49/bin/arm-none-eabi-size" --format=berkeley "xmc4300_proj.elf"
+   text	   data	    bss	    dec	    hex	filename
+  44252	   3384	   6764	  54400	   d480	xmc4300_proj.elf
+'Finished building: xmc4300_proj.siz'
+
+
+13:49:38 Build Finished (took 551ms)
+
