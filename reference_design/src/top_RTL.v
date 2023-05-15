@@ -44,8 +44,6 @@ module top_RTL(
     // I2C is from two AXI peripherals
     //WIB_SDA
     //WIB_SCL
-    inout               SOC_I2C_SCL_TEST,
-    inout               SOC_I2C_SDA_TEST,
     
     // SFPs
     input               SFP0_LOS,       // Slow Control (GbE)
@@ -59,20 +57,20 @@ module top_RTL(
     input               SFP2_PRESENT,
     
     output              SFP0_SPARE_LED, // GbE indicator
-    output              SFP2_TX_DISABLE,// timing system TX
+    inout               SFP2_TX_DISABLE,// timing system TX
     output              WIB_CLK_SEL,    // select timing system of SoC clock source
     output              TIMING_GOOD,    // LED to indicate timing lock
     output              WIB_PE_SEL,     // priority encode on PCB or SoC
-    output [2:0]        WIB_RX_SEL,     // control timing TX MUX on PCN or SoC
+    inout [2:0]         WIB_RX_SEL,     // control timing TX MUX on PCN or SoC
     output              SYS_CMD,        // SoC test command out to timing master
     output              SOC_AUX_CLK,    // SoC test clock out to WIBs
     input               SYS_CLK,        // timing system master clock in
     
     input [5:0]         BP_IO,          // WIB "spare" IO for timing TX assert
-    output              BP_IO_OE,       // level translator enable (N)
+    inout               BP_IO_OE,       // level translator enable (N)
     
-    input [7:0]         CRATE_ADDR,     // backplane slow
-    input               CRATE_ADDR_OE,  // level translator enable (N)
+    inout [7:0]         CRATE_ADDR,     // backplane address to WIB
+    output              CRATE_ADDR_OE,  // level translator enable (N)
         
     // Regulator enables and clock out to SYNC pins
     output              EN_3V3,
@@ -101,11 +99,17 @@ module top_RTL(
     wire            xmc_jtag_en;
     wire            wib_pe_soc_en_n;
     wire            sfp2_tx_en;
+    wire            sfp2_tx_en_reg;
+    wire            sfp2_tx_mux_ovr;
+    wire            sfp2_tx_en_from_muxbits;
     wire [7:0]      timing_stat;
     wire            ep_stst;
     wire            ep_clk_sel;
     wire            mmcm0_rst_n;
     wire            mmcm0_locked;
+    wire [2:0]      wib_rx_sel_out;
+    wire [2:0]      wib_rx_sel_in;
+    wire [7:0]      crate_addr_out;
     
     reg             timing_lock;
     
@@ -113,20 +117,22 @@ module top_RTL(
     // Reg 0, I2C and level translator control
     assign SOC_I2C_SW_RST   = reg_rw_in[ 0 * 32 +  0];
     assign MCU_I2C_OE       = reg_rw_in[ 0 * 32 +  8];
-    assign WIB_I2C_OE       = reg_rw_in[ 0 * 32 + 16];
-    assign bp_io_en         = reg_rw_in[ 0 * 32 + 24];
-    assign crate_addr_en    = reg_rw_in[ 0 * 32 + 25];
+    assign WIB_I2C_OE       = reg_rw_in[ 0 * 32 +  9];
+    assign bp_io_en         = reg_rw_in[ 0 * 32 + 16];
+    assign crate_addr_en    = reg_rw_in[ 0 * 32 + 23];
+    assign crate_addr_out   = reg_rw_in[ 0 * 32 +  31 : 0 * 32 +  24];
     // Reg 1, timing control
-    assign WIB_RX_SEL       = reg_rw_in[ 1 * 32 +  3 : 1 * 32 +  0];
-    assign wib_pe_soc_en    = reg_rw_in[ 1 * 32 +  4];
-    assign sfp2_tx_en       = reg_rw_in[ 1 * 32 +  8];
-    assign ep_srst          = reg_rw_in[ 1 * 32 +  9];
-    assign ep_clk_sel       = reg_rw_in[ 1 * 32 + 10];
+    assign wib_rx_sel_out   = reg_rw_in[ 1 * 32 +  2 : 1 * 32 +  0];
+    assign wib_pe_soc_en    = reg_rw_in[ 1 * 32 +  3];
+    assign sfp2_tx_en_reg   = reg_rw_in[ 1 * 32 +  8];
+    assign sfp2_tx_mux_ovr  = reg_rw_in[ 1 * 32 +  9];
+    assign ep_srst          = reg_rw_in[ 1 * 32 + 10];
+    assign ep_clk_sel       = reg_rw_in[ 1 * 32 + 11];
     assign WIB_CLK_SEL      = reg_rw_in[ 1 * 32 + 16];
     assign mmcm0_rst_n      = reg_rw_in[ 1 * 32 + 17];
     // Reg 2 - 10, power regulator control
-    assign EN_3V3           = reg_rw_in[ 2 * 32 +  0]; // TEST: FMC_LA33_P, pin G37 on FMC J1200-A, 1.8V
-    assign EN_2V5           = reg_rw_in[ 3 * 32 +  0];
+    assign EN_3V3           = ~reg_rw_in[ 2 * 32 +  0]; // TEST: FMC_LA33_P, pin G37 on FMC J1200-A, 1.8V
+    assign EN_2V5           = ~reg_rw_in[ 3 * 32 +  0];
     assign VP12_EN[0]       = reg_rw_in[ 4 * 32 +  0]; // TEST: IOB_D1_N, pin 32 on Anios J1403, 3.3V
     assign VP12_EN[1]       = reg_rw_in[ 5 * 32 +  0];
     assign VP12_EN[2]       = reg_rw_in[ 6 * 32 +  0];
@@ -145,8 +151,6 @@ module top_RTL(
     // *** TEMP ***
     assign SPARE0           = reg_rw_in[12 * 32 +  0];
     assign SPARE1           = reg_rw_in[12 * 32 +  1];
-    assign SOC_I2C_SCL_TEST  = ~reg_rw_in[13 * 32 +  0];
-    assign SOC_I2C_SDA_TEST  = ~reg_rw_in[13 * 32 +  1];
     // *************
     
     // *** RO Register map ***
@@ -161,10 +165,10 @@ module top_RTL(
     assign reg_ro_out [ 0 * 32 + 17] = SFP2_LOS;
     assign reg_ro_out [ 0 * 32 + 18] = SFP2_PRESENT;
     // Reg 65, crate addres and WIB TX assert status
-    assign reg_ro_out [ 1 * 32 +  7 :  1 * 32 +  0] = CRATE_ADDR;
     assign reg_ro_out [ 1 * 32 + 13 :  1 * 32 +  8] = BP_IO;
-    assign reg_ro_out [ 1 * 32 + 16] = timing_lock;
+    assign reg_ro_out [ 1 * 32 + 18 :  1 * 32 + 16] = wib_rx_sel_in;
     assign reg_ro_out [ 1 * 32 + 27 :  1 * 32 + 24] = timing_stat;
+    assign reg_ro_out [ 1 * 32 + 28] = timing_lock;
     // Reg 66, power and temperature alerts
     assign reg_ro_out [ 2 * 32 +  6 :  2 * 32 +  0] = ~VP12_IV_ALERT; // low = alert
     assign reg_ro_out [ 2 * 32 +  8] = ~VP2V5_ALERT;                  // low = alert
@@ -199,16 +203,31 @@ module top_RTL(
     // tri-state = TXB0104 controls MUX (default)
     // low = SoC controls MUX through WIB_RX_SEL lines (do not drive high!)
     IOBUF pesel_buf (.T(~wib_pe_soc_en), .I(1'b0), .O(), .IO(WIB_PE_SEL));
+    IOBUF wib_rx_buf0 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[0]), .O(wib_rx_sel_in[0]), .IO(WIB_RX_SEL[0]));
+    IOBUF wib_rx_buf1 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[1]), .O(wib_rx_sel_in[1]), .IO(WIB_RX_SEL[1]));
+    IOBUF wib_rx_buf2 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[2]), .O(wib_rx_sel_in[2]), .IO(WIB_RX_SEL[2]));
     // timing SFP
     // tri-state = transmitter disabled
     // low = transmitter enabled (do not drive high!)
-    IOBUF sfp2_buf (.T(~sfp2_tx_en), .I(1'b0), .O(), .IO(SFP2_TX_DISABLE));
-    
+    IOBUF sfp2_buf (.T(sfp2_tx_en), .I(1'b0), .O(), .IO(SFP2_TX_DISABLE));
+
     // Level translators from WIB 2.5V to SoC 1.8V
     // tri-state = disable (pullup on PCB)
     // low = enable (do not drive high!)
+
     IOBUF bpoe_buf (.T(~bp_io_en), .I(1'b0), .O(), .IO(BP_IO_OE));
+    
+    // NOTE: Jan 2023 PTCv4 only reads DIP settings in by default
+    //       Future versions may have ability to drive address onto PTB
     IOBUF addroe_buf (.T(~crate_addr_en), .I(1'b0), .O(), .IO(CRATE_ADDR_OE));
+    IOBUF addr_buf0 (.T(~crate_addr_en), .I(crate_addr_out[0]), .O(), .IO(CRATE_ADDR[0]));
+    IOBUF addr_buf1 (.T(~crate_addr_en), .I(crate_addr_out[1]), .O(), .IO(CRATE_ADDR[1]));
+    IOBUF addr_buf2 (.T(~crate_addr_en), .I(crate_addr_out[2]), .O(), .IO(CRATE_ADDR[2]));
+    IOBUF addr_buf3 (.T(~crate_addr_en), .I(crate_addr_out[3]), .O(), .IO(CRATE_ADDR[3]));
+    IOBUF addr_buf4 (.T(~crate_addr_en), .I(crate_addr_out[4]), .O(), .IO(CRATE_ADDR[4]));
+    IOBUF addr_buf5 (.T(~crate_addr_en), .I(crate_addr_out[5]), .O(), .IO(CRATE_ADDR[5]));
+    IOBUF addr_buf6 (.T(~crate_addr_en), .I(crate_addr_out[6]), .O(), .IO(CRATE_ADDR[6]));
+    IOBUF addr_buf7 (.T(~crate_addr_en), .I(crate_addr_out[7]), .O(), .IO(CRATE_ADDR[7]));
     
     // MUX between endpoint output (default) and PLL-based clocks (reg sel when no timing system)
     BUFGMUX ts_clk_mux2x (.I0(clk125_from_ts), .I1(), .S(1'b0), .O(clk125));   
@@ -262,7 +281,12 @@ module top_RTL(
         else
             timing_lock = 1'b0;
     end
-    assign TIMING_GOOD = timing_lock;
-
+    assign TIMING_GOOD = timing_lock; // to LED
+    
+    // SFP2 TX control
+    // If MUX override bit is set, pull down when any of 6 prio encode lines go low
+    assign sfp2_tx_en_from_muxbits = (sfp2_tx_mux_ovr == 1'b1) ? &BP_IO: 1'b1;
+    // pull TX_EN low when either: reg force bit is set, or MUX override is set
+    assign sfp2_tx_en = ~sfp2_tx_en_reg && sfp2_tx_en_from_muxbits;
         
 endmodule

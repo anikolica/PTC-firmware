@@ -69,9 +69,9 @@ entity Mercury_XU5_PE1 is
     VP12_EN0                        : out   std_logic;
     SFP2_LOS                        : in    std_logic;
     SFP2_PRESENT                    : in    std_logic;
-    WIB_RX_SEL0                     : out   std_logic;
-    WIB_RX_SEL1                     : out   std_logic;
-    WIB_RX_SEL2                     : out   std_logic;
+    WIB_RX_SEL0                     : inout std_logic;
+    WIB_RX_SEL1                     : inout std_logic;
+    WIB_RX_SEL2                     : inout std_logic;
     SFP0_LOS                        : in    std_logic;
     SFP0_TX_FAULT                   : in    std_logic;
     SFP0_PRESENT                    : in    std_logic;
@@ -85,7 +85,7 @@ entity Mercury_XU5_PE1 is
     SOC_I2C_SW_RST                  : out   std_logic;
     SFP1_TX_FAULT                   : in    std_logic;
     SFP2_TX_FAULT                   : in    std_logic;
-    SFP2_TX_DISABLE                 : out   std_logic;
+    SFP2_TX_DISABLE                 : inout std_logic;
     SFP1_LOS                        : in    std_logic;
     SFP1_PRESENT                    : in    std_logic;
     VP12_EN4                        : out   std_logic;
@@ -105,21 +105,21 @@ entity Mercury_XU5_PE1 is
     BP_IO3                          : in    std_logic;
     BP_IO4                          : in    std_logic;
     BP_IO5                          : in    std_logic;
-    BP_IO_OE                        : out   std_logic;
+    BP_IO_OE                        : inout std_logic;
     TIMING_GOOD                     : out   std_logic;
     EN_3V3                          : out   std_logic;
     EN_2V5                          : out   std_logic;
     SYS_CLK_P                       : in    std_logic;
     SYS_CLK_N                       : in    std_logic;
     CRATE_ADDR_OE                   : out   std_logic;
-    CRATE_ADDR0                     : in    std_logic;
-    CRATE_ADDR1                     : in    std_logic;
-    CRATE_ADDR2                     : in    std_logic;
-    CRATE_ADDR3                     : in    std_logic;
-    CRATE_ADDR4                     : in    std_logic;
-    CRATE_ADDR5                     : in    std_logic;
-    CRATE_ADDR6                     : in    std_logic;
-    CRATE_ADDR7                     : in    std_logic;
+    CRATE_ADDR0                     : inout std_logic;
+    CRATE_ADDR1                     : inout std_logic;
+    CRATE_ADDR2                     : inout std_logic;
+    CRATE_ADDR3                     : inout std_logic;
+    CRATE_ADDR4                     : inout std_logic;
+    CRATE_ADDR5                     : inout std_logic;
+    CRATE_ADDR6                     : inout std_logic;
+    CRATE_ADDR7                     : inout std_logic;
     
 --    -- Anios_A
 --    IOA_D0_P                       : inout   std_logic;
@@ -456,7 +456,7 @@ architecture rtl of Mercury_XU5_PE1 is
       LV_SYNC             : out   std_logic;
       SFP2_LOS            : in    std_logic;
       SFP2_PRESENT        : in    std_logic;
-      WIB_RX_SEL          : out   std_logic_vector(2 downto 0);
+      WIB_RX_SEL          : inout std_logic_vector(2 downto 0);
       SFP0_LOS            : in    std_logic;
       SFP0_PRESENT        : in    std_logic;
       SFP0_TX_FAULT       : in    std_logic;
@@ -465,13 +465,11 @@ architecture rtl of Mercury_XU5_PE1 is
       SOC_I2C_SW_RST      : out   std_logic;
       SFP1_TX_FAULT       : in    std_logic;
       SFP2_TX_FAULT       : in    std_logic;
-      SFP2_TX_DISABLE     : out   std_logic;
+      SFP2_TX_DISABLE     : inout std_logic;
       SFP1_LOS            : in    std_logic;
       SFP1_PRESENT        : in    std_logic;
       --WIB_SCL             : inout   std_logic;
       --WIB_SDA             : inout   std_logic;
-      SOC_I2C_SCL_TEST    : inout std_logic;
-      SOC_I2C_SDA_TEST    : inout std_logic;
       WIB_I2C_OE          : out   std_logic;
       MCU_I2C_OE          : out   std_logic;
       WIB_CLK_SEL         : out   std_logic;
@@ -479,12 +477,12 @@ architecture rtl of Mercury_XU5_PE1 is
       SOC_AUX_CLK         : out   std_logic;
       SYS_CLK             : in    std_logic;
       BP_IO               : in    std_logic_vector(5 downto 0);
-      BP_IO_OE            : out   std_logic;
+      BP_IO_OE            : inout std_logic;
       TIMING_GOOD         : out   std_logic;
       EN_3V3              : out   std_logic;
       EN_2V5              : out   std_logic;
       CRATE_ADDR_OE       : out   std_logic;
-      CRATE_ADDR          : in    std_logic_vector(7 downto 0);
+      CRATE_ADDR          : inout std_logic_vector(7 downto 0);
 
       reg_ro_out          : out    std_logic_vector(2047 downto 0)
     );
@@ -515,8 +513,6 @@ architecture rtl of Mercury_XU5_PE1 is
   signal iic_wib_sda_i    : std_logic;
   signal iic_wib_sda_o    : std_logic;
   signal iic_wib_sda_t    : std_logic;
-  signal SOC_I2C_SCL_TEST : std_logic;
-  signal SOC_I2C_SDA_TEST : std_logic;
 --  signal MDIO_mdio_i      : std_logic;
 --  signal MDIO_mdio_o      : std_logic;
 --  signal MDIO_mdio_t      : std_logic;
@@ -751,8 +747,6 @@ begin
     SFP1_PRESENT        => SFP1_PRESENT,
     --WIB_SCL             => WIB_SCL,
     --WIB_SDA             => WIB_SDA,
-    SOC_I2C_SCL_TEST    => SOC_I2C_SCL_TEST,
-    SOC_I2C_SDA_TEST    => SOC_I2C_SDA_TEST,
     WIB_I2C_OE          => WIB_I2C_OE,
     MCU_I2C_OE          => MCU_I2C_OE,
     WIB_CLK_SEL         => WIB_CLK_SEL,
@@ -787,22 +781,18 @@ begin
   ---------------------------------------------------------------------------------------------------
    IOBUF_ptc_scl : IOBUF
    port map (
---      O => iic_ptc_scl_i,
---      I => iic_ptc_scl_o,
-      I => '0',
+      O => iic_ptc_scl_i,
+      I => iic_ptc_scl_o,
       IO => SOC_I2C_SCL,
---      T => iic_ptc_scl_t
-      T => SOC_I2C_SCL_TEST
+      T => iic_ptc_scl_t
    );
 
    IOBUF_ptc_sda : IOBUF
    port map (
---      O => iic_ptc_sda_i,
---      I => iic_ptc_sda_o,
-      I => '0',
+      O => iic_ptc_sda_i,
+      I => iic_ptc_sda_o,
       IO => SOC_I2C_SDA,
---      T => iic_ptc_sda_t
-      T => SOC_I2C_SDA_TEST
+      T => iic_ptc_sda_t
    );
 
    IOBUF_wib_scl : IOBUF
