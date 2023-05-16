@@ -55,26 +55,16 @@ proc checkRequiredFiles { origin_dir} {
  "[file normalize "$origin_dir/src/ep_src_dcsk/pdts_mod.vhd"]"\
  "[file normalize "$origin_dir/src/ep_src_dcsk/pdts_endpoint.vhd"]"\
  "[file normalize "$origin_dir/src/Mercury_XU5_PE1.vhd"]"\
+ "[file normalize "$origin_dir/src/Mercury_XU5_gmii2rgmii.edn"]"\
  "[file normalize "$origin_dir/src/ep_src_dcsk/pdts_chklock.vhd"]"\
  "[file normalize "$origin_dir/ip_repo/mmcm0/mmcm0.xci"]"\
- "[file normalize "$origin_dir/src/Mercury_XU5_gmii2rgmii_timing.tcl"]"\
+ "[file normalize "$origin_dir/src/Mercury_XU5_gmii2rgmii_timing.xdc"]"\
  "[file normalize "$origin_dir/src/Mercury_XU5_LED_timing.xdc"]"\
  "[file normalize "$origin_dir/src/Mercury_XU5_PE1.tcl"]"\
   ]
   foreach ifile $files {
     if { ![file isfile $ifile] } {
       puts " Could not find local file $ifile "
-      set status false
-    }
-  }
-
-  set files [list \
- "[file normalize "$origin_dir/src/Mercury_XU5_gmii2rgmii.edn"]"\
- "[file normalize "$origin_dir/scripts/settings.tcl"]"\
-  ]
-  foreach ifile $files {
-    if { ![file isfile $ifile] } {
-      puts " Could not find remote file $ifile "
       set status false
     }
   }
@@ -307,14 +297,14 @@ set files [list \
  [file normalize "${origin_dir}/src/ep_src_dcsk/pdts_ep_core.vhd"]\
  [file normalize "${origin_dir}/src/ep_src_dcsk/pdts_mod.vhd"]\
  [file normalize "${origin_dir}/src/ep_src_dcsk/pdts_endpoint.vhd"]\
+  [file normalize "${origin_dir}/src/Mercury_XU5_gmii2rgmii.edn"]\
  [file normalize "${origin_dir}/src/Mercury_XU5_PE1.vhd"]\
  [file normalize "${origin_dir}/src/ep_src_dcsk/pdts_chklock.vhd"]\
 ]
 set imported_files [import_files -fileset sources_1 $files]
 
 # Set 'sources_1' fileset file properties for remote files
-set file "$origin_dir/src/Mercury_XU5_gmii2rgmii.edn"
-set file [file normalize $file]
+set file "src/Mercury_XU5_gmii2rgmii.edn"
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "EDIF" -objects $file_obj
 set_property -name "is_enabled" -value "1" -objects $file_obj
@@ -715,6 +705,18 @@ set_property -name "used_in" -value "synthesis simulation" -objects $file_obj
 set_property -name "used_in_simulation" -value "1" -objects $file_obj
 set_property -name "used_in_synthesis" -value "1" -objects $file_obj
 
+set file "src/Mercury_XU5_gmii2rgmii.edn"
+set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
+set_property -name "file_type" -value "EDIF" -objects $file_obj
+set_property -name "is_enabled" -value "1" -objects $file_obj
+set_property -name "is_global_include" -value "0" -objects $file_obj
+set_property -name "library" -value "xil_defaultlib" -objects $file_obj
+set_property -name "path_mode" -value "RelativeFirst" -objects $file_obj
+set_property -name "scoped_to_cells" -value "" -objects $file_obj
+set_property -name "used_in" -value "synthesis implementation" -objects $file_obj
+set_property -name "used_in_implementation" -value "1" -objects $file_obj
+set_property -name "used_in_synthesis" -value "1" -objects $file_obj
+
 set file "ep_src_dcsk/pdts_chklock.vhd"
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "VHDL" -objects $file_obj
@@ -788,11 +790,10 @@ if {[string equal [get_filesets -quiet constrs_1] ""]} {
 set obj [get_filesets constrs_1]
 
 # Add/Import constrs file and set constrs file properties
-set file "[file normalize ${origin_dir}/src/Mercury_XU5_gmii2rgmii_timing.tcl]"
+set file "[file normalize ${origin_dir}/src/Mercury_XU5_gmii2rgmii_timing.xdc]"
 set file_imported [import_files -fileset constrs_1 [list $file]]
-set file "src/Mercury_XU5_gmii2rgmii_timing.tcl"
+set file "src/Mercury_XU5_gmii2rgmii_timing.xdc"
 set file_obj [get_files -of_objects [get_filesets constrs_1] [list "*$file"]]
-set_property -name "file_type" -value "TCL" -objects $file_obj
 set_property -name "is_enabled" -value "0" -objects $file_obj
 set_property -name "is_global_include" -value "0" -objects $file_obj
 set_property -name "library" -value "xil_defaultlib" -objects $file_obj
@@ -802,7 +803,6 @@ set_property -name "scoped_to_cells" -value "" -objects $file_obj
 set_property -name "scoped_to_ref" -value "" -objects $file_obj
 set_property -name "used_in" -value "implementation simulation" -objects $file_obj
 set_property -name "used_in_implementation" -value "1" -objects $file_obj
-set_property -name "used_in_simulation" -value "1" -objects $file_obj
 set_property -name "used_in_synthesis" -value "0" -objects $file_obj
 
 # Add/Import constrs file and set constrs file properties
@@ -929,13 +929,10 @@ set obj [get_filesets utils_1]
 set files [list \
  [file normalize "${origin_dir}/scripts/settings.tcl"] \
 ]
-add_files -norecurse -fileset $obj $files
-
 set imported_files [import_files -fileset utils_1 $files]
 
 # Set 'utils_1' fileset file properties for remote files
-set file "$origin_dir/scripts/settings.tcl"
-set file [file normalize $file]
+set file "scripts/settings.tcl"
 set file_obj [get_files -of_objects [get_filesets utils_1] [list "*$file"]]
 set_property -name "file_type" -value "TCL" -objects $file_obj
 set_property -name "is_enabled" -value "1" -objects $file_obj
@@ -1958,7 +1955,7 @@ set_property -name "gen_full_bitstream" -value "1" -objects $obj
 set_property -name "auto_incremental_checkpoint.directory" -value "$proj_dir/Mercury_XU5_PE1.srcs/utils_1/imports/impl_1" -objects $obj
 set_property -name "min_rqa_score" -value "0" -objects $obj
 set_property -name "strategy" -value "Vivado Implementation Defaults" -objects $obj
-set_property -name "steps.init_design.tcl.pre" -value "[file normalize "$origin_dir/../../../SCRAP/Mercury_XU5_PE1_Reference_Design/reference_design/scripts/settings.tcl"]" -objects $obj
+set_property -name "steps.init_design.tcl.pre" -value "[file normalize "$origin_dir/scripts/settings.tcl"]" -objects $obj
 set_property -name "steps.init_design.tcl.post" -value "" -objects $obj
 set_property -name "steps.init_design.args.more options" -value "" -objects $obj
 set_property -name "steps.opt_design.is_enabled" -value "1" -objects $obj
