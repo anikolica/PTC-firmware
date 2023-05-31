@@ -38,13 +38,13 @@ This respository contains firmware and software source for PTCv4. Firmware runs 
 | reference_design/scripts/ | Build scripts |
 | reference_design/ip_repo/ | User-generated IP |
 
-### Git Instructions
+### Git instructions and building firmware
 This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubuntu 20.04.1 is used for development).
 
 1. `git pull` changes from remote.
 2. Open `vivado` from reference_design directory.
-3. In tcl console, run `source ./scripts/create_project.tcl`
-4. Work on project using IDE.
+3. In tcl console, run `source ./scripts/create_project.tcl`. This recreated the project with block diagram.
+4. Work on project using IDE. Build bitstream using the Vivado GUI.
 5. Go to **File - Project - Write Tcl**. Set the output file to `create_project.tcl`. Check *Write all properties*, *Recreate Block Designs using Tcl*, and *Write object values*. Uncheck *Copy sources to new project*. Check the `git diff` output and ensure no files path names are corrupted before comitting changes.
 6. All other HDL files should be kept in the src/ directory.
 7. `git commit` all changes and `git push`.
@@ -75,7 +75,7 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 ### Starting PTC in a WEIC
 1. Ensure lower nibble of SW is set to preferred backplane address (defauls is 0xF; all pulled up), and all default jumpers are installed on PTC. Connect microUSB to the front panel to a terminal emulator. Connect 1000Base-BX from SFP2 to a Bristol timing master. Connect a 1000Base-LX SFP from SFP0 to a fiber to topical converter (like 10GTek A7S2-33-1GX1GT-SFP/GT3) and then to the PC.
 3. After applying 48V, it will take a few seconds for the FPGA to power. You’ll see 3 green LEDs on the front go on: 12V_LOCAL, SOC_PG, and FPGA_DONE. You may see a red OVER_TEMP LED go on at powerup, but it will turn off after the FPGA powers on. You’ll also see a blinking amber LED on the Enclustra FPGA mezzanine after a few seconds.
-4. Connect to the front panel UART at 115,200 baud, 8-bit data, 1 stop bit, no parity or flow control. You may need to install the MaxLinear XR21V1410 drivers: https://www.maxlinear.com/product/interface/uarts/usb-uarts/xr21v1410
+4. Connect to the front panel UART at 115,200 baud, 8-bit data, 1 stop bit, no parity or flow control. You may need to install the [MaxLinear XR21V1410 drivers]( https://www.maxlinear.com/product/interface/uarts/usb-uarts/xr21v1410).
 5. Run the following scripts:
 `python3 power_on_wib [wib] [on|off]`
 Where `[wib]` is the slot 0 through 5 that your WIB(s) are plugged into.
@@ -83,6 +83,24 @@ Where `[wib]` is the slot 0 through 5 that your WIB(s) are plugged into.
 You should see a green TIMING_GOOD LED go on the PTC front panel.
 `python3 start_i2c`
 You should printouts on the PTC terminal that show the state of various sensors.
+
+### Setting up EtherCAT
+1. The EtherCAT microcontroller project is based on the [Infineon reference design](https://www.infineon.com/dgdl/Infineon-XMC4300_Relax_EtherCat_APP_Slave_SSC-GettingStarted-v04_02-EN.pdf?fileId=5546d46254e133b401554f4951cc6447). Ensure that the same version of tools are installed. Beckhoff TwinCAT3 is needed to initiate a connection to PTC. Infineon DAVE v4.1.4 or higher and the Beckhoff SSC tool v5.12 are used for creating the initial project, but is only needed for development. 
+2. The first time the link is set up, or if any configuration changes, copy the `XMC_ESC.xml` file (the "ESI file") to `C:\TwinCAT\3.1\Config\Io\EtherCAT` on the host PC. 
+3. Connect a 100Base-FX SFP to SFP1, with an LC-to-SC fiber connection. For bench testing, this can be connected to a optical-to-fiber converter (like the tp-link MC100CM). For DDSS connection, this will be connected to the Beckhoff EK1521 terminal. In the case of the EK1521, a second RJ-45 connection from an EK1100 to the host PC is needed.
+4. Open up the TwinCAT project in the `ethercat/` directory.
+5. Double click on "Device 1 (EtherCAT)" and click on the "Adapter" panel. Ensure that the correct PTC Ethernet interface is selected. 
+6. Right click on Device 1, and click "Scan". A message saying "Configuration matched" should appear. 
+7. Now click on the "Online" tab. PTC should appear as a "Box" and be labelled "XMC_ESC". 
+8. In the top menu bar, click on the "Toggle Free-Run State" icon (a red circular arrow). 
+9. Now the PTC can be changed to "Op" mode in the Online panel. There will be constant frame counters in this panel, and no lost frames. This means PTC is maintaining an EtherCAT link. On the EK1521, the "RUN" LED will be constantly illuminated. The PTC Debug LEDs will show: ERR=GREEN, LINKB=GREEN, PHY_KED2=BLINK GREEN. 
+
+### Developing with EtherCAT
+1. Open DAVE and open the project at `ethercat/xmc_4300_proj/`. This is an Eclipse-like environment where the code can be modified asnd re-built.
+2. The EtherCAT block is implemented in a DAVE "App" and has minimal configuration.
+3. To change the data exchange types that PTC uses, the `XMC_ESC.xlsx` Excel file definitions need to be changed using SSC OD tool.exe. See the [Beckhoff ET9300 app note](https://download.beckhoff.com/download/document/io/ethercat-development-products/an_et9300_v1i8.pdf). 
+4. If the DAVE project is modified, it must be reloaded onto the XMC4300 using the [KITXMCLINKSEGGERV1TOBO1 JTAG pod](https://www.digikey.com/en/products/detail/infineon-technologies/KITXMCLINKSEGGERV1TOBO1/5970448?s=N4IgTCBcDaIB4FsDGACANgSwHYGsQF0BfIA) connected to J6 on the PTC. (There is a provision to reprogram from the FPGA, but this is not implemented at the time of this writing). This only needs to be done once, and successive power-ups will retian the programming.
+5. Provision to exhange further data between the FPGA an XMC4300 via UART is not implemented at the time of this writing.
 
 ## Footnotes
 1. This is done by creating an app template as in the [PetaLinux Yocto documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842475/PetaLinux+Yocto+Tips#PetaLinuxYoctoTips-CreatingApps(whichuseslibraries)inPetaLinuxProject)
