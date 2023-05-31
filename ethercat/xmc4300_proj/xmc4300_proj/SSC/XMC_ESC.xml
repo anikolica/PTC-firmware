@@ -14,7 +14,7 @@
 			</Group>
 		</Groups>
 		<Devices>
-			<Device Physics="YY">
+			<Device Physics="Y">
 				<Type ProductCode="#x00000000" RevisionNo="#x0">XMC_ESC</Type>
 				<Name>XMC_ESC</Name>
 				<Info>

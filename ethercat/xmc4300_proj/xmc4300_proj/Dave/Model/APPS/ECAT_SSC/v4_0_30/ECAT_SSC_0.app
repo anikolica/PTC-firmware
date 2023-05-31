@@ -6,7 +6,7 @@
   <virtualSignals name="port_pad_led_run" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_run" hwSignal="pad" hwResource="//@hwResources.5"/>
   <virtualSignals name="port_pad_led_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_err" hwSignal="pad" hwResource="//@hwResources.6"/>
   <virtualSignals name="port_pad_led_link_act_p0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_link_act_p0" hwSignal="pad" hwResource="//@hwResources.7"/>
-  <virtualSignals name="port_pad_led_link_act_p1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_link_act_p1" hwSignal="pad" hwResource="//@hwResources.8"/>
+  <virtualSignals name="port_pad_led_link_act_p1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_link_act_p1" hwSignal="pad" hwResource="//@hwResources.8" required="false"/>
   <virtualSignals name="port_pad_mdio" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_mdio" hwSignal="pad" hwResource="//@hwResources.3"/>
   <virtualSignals name="port_pad_mdio_hw_o" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_mdio_hw_o" hwSignal="hw_o" hwResource="//@hwResources.3"/>
   <virtualSignals name="port_pad_mdc" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_mdc" hwSignal="pad" hwResource="//@hwResources.4"/>
@@ -18,13 +18,13 @@
   <virtualSignals name="port_pad_p0_rx-err" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_rx_err" hwSignal="pad" hwResource="//@hwResources.16"/>
   <virtualSignals name="port_pad_p0_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_rx_clk" hwSignal="pad" hwResource="//@hwResources.10"/>
   <virtualSignals name="port_pad_p0_link" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_link" hwSignal="pad" hwResource="//@hwResources.9"/>
-  <virtualSignals name="port_pad_p1_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd0" hwSignal="pad" hwResource="//@hwResources.26"/>
-  <virtualSignals name="port_pad_p1_rxd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd1" hwSignal="pad" hwResource="//@hwResources.27"/>
-  <virtualSignals name="port_pad_p1_rxd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd2" hwSignal="pad" hwResource="//@hwResources.28"/>
-  <virtualSignals name="port_pad_p1_rxd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd3" hwSignal="pad" hwResource="//@hwResources.29"/>
-  <virtualSignals name="port_pad_p1_rx_dv" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_dv" hwSignal="pad" hwResource="//@hwResources.25"/>
-  <virtualSignals name="port_pad_p1_rx-err" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_err" hwSignal="pad" hwResource="//@hwResources.30"/>
-  <virtualSignals name="port_pad_p1_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_clk" hwSignal="pad" hwResource="//@hwResources.24"/>
+  <virtualSignals name="port_pad_p1_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd0" hwSignal="pad" hwResource="//@hwResources.26" required="false"/>
+  <virtualSignals name="port_pad_p1_rxd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd1" hwSignal="pad" hwResource="//@hwResources.27" required="false"/>
+  <virtualSignals name="port_pad_p1_rxd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd2" hwSignal="pad" hwResource="//@hwResources.28" required="false"/>
+  <virtualSignals name="port_pad_p1_rxd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd3" hwSignal="pad" hwResource="//@hwResources.29" required="false"/>
+  <virtualSignals name="port_pad_p1_rx_dv" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_dv" hwSignal="pad" hwResource="//@hwResources.25" required="false"/>
+  <virtualSignals name="port_pad_p1_rx-err" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_err" hwSignal="pad" hwResource="//@hwResources.30" required="false"/>
+  <virtualSignals name="port_pad_p1_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_clk" hwSignal="pad" hwResource="//@hwResources.24" required="false"/>
   <virtualSignals name="port_pad_p1_link" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_link" hwSignal="pad" hwResource="//@hwResources.23"/>
   <virtualSignals name="port_pad_p0_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_txd0" hwSignal="pad" hwResource="//@hwResources.17"/>
   <virtualSignals name="port_pad_p0_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_txd1" hwSignal="pad" hwResource="//@hwResources.18"/>
@@ -32,18 +32,18 @@
   <virtualSignals name="port_pad_p0_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_txd3" hwSignal="pad" hwResource="//@hwResources.20"/>
   <virtualSignals name="port_pad_p0_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_tx_clk" hwSignal="pad" hwResource="//@hwResources.22"/>
   <virtualSignals name="port_pad_p0_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_tx_ena" hwSignal="pad" hwResource="//@hwResources.21"/>
-  <virtualSignals name="port_pad_p1_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd0" hwSignal="pad" hwResource="//@hwResources.31"/>
-  <virtualSignals name="port_pad_p1_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd1" hwSignal="pad" hwResource="//@hwResources.32"/>
-  <virtualSignals name="port_pad_p1_txd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd2" hwSignal="pad" hwResource="//@hwResources.33"/>
-  <virtualSignals name="port_pad_p1_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd3" hwSignal="pad" hwResource="//@hwResources.34"/>
-  <virtualSignals name="port_pad_p1_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_tx_clk" hwSignal="pad" hwResource="//@hwResources.36"/>
-  <virtualSignals name="port_pad_p1_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_tx_ena" hwSignal="pad" hwResource="//@hwResources.35"/>
+  <virtualSignals name="port_pad_p1_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd0" hwSignal="pad" hwResource="//@hwResources.31" required="false"/>
+  <virtualSignals name="port_pad_p1_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd1" hwSignal="pad" hwResource="//@hwResources.32" required="false"/>
+  <virtualSignals name="port_pad_p1_txd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd2" hwSignal="pad" hwResource="//@hwResources.33" required="false"/>
+  <virtualSignals name="port_pad_p1_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd3" hwSignal="pad" hwResource="//@hwResources.34" required="false"/>
+  <virtualSignals name="port_pad_p1_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_tx_clk" hwSignal="pad" hwResource="//@hwResources.36" required="false"/>
+  <virtualSignals name="port_pad_p1_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_tx_ena" hwSignal="pad" hwResource="//@hwResources.35" required="false"/>
   <virtualSignals name="ecat_phy_clk25" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_phy_clk25" hwSignal="phy_clk25" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_phy_reset" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_phy_reset" hwSignal="phy_reset" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_led_run" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_run" hwSignal="led_run" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_led_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_err" hwSignal="led_err" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_p0_led_link_act" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_link_act_p0" hwSignal="p0_led_link_act" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_led_link_act" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_link_act_p1" hwSignal="p1_led_link_act" hwResource="//@hwResources.0"/>
+  <virtualSignals name="ecat_p1_led_link_act" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_link_act_p1" hwSignal="p1_led_link_act" hwResource="//@hwResources.0" required="false"/>
   <virtualSignals name="ecat_mdio" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_mdio" hwSignal="mdio" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_mdio" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_mdo" hwSignal="mdo" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_mdc" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_mdc" hwSignal="mclk" hwResource="//@hwResources.0"/>
@@ -59,13 +59,13 @@
   <virtualSignals name="ecat_p0_rx_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_rx_err" hwSignal="p0_rx_err" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_p0_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_rx_clk" hwSignal="p0_rx_clk" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_p0_link" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_link" hwSignal="p0_link" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd0" hwSignal="p1_rxd0" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_rxd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd1" hwSignal="p1_rxd1" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_rxd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd2" hwSignal="p1_rxd2" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_rxd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd3" hwSignal="p1_rxd3" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_rx_dv" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_dv" hwSignal="p1_rx_dv" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_rx_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_err" hwSignal="p1_rx_err" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_clk" hwSignal="p1_rx_clk" hwResource="//@hwResources.0"/>
+  <virtualSignals name="ecat_p1_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd0" hwSignal="p1_rxd0" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_rxd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd1" hwSignal="p1_rxd1" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_rxd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd2" hwSignal="p1_rxd2" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_rxd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd3" hwSignal="p1_rxd3" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_rx_dv" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_dv" hwSignal="p1_rx_dv" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_rx_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_err" hwSignal="p1_rx_err" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_clk" hwSignal="p1_rx_clk" hwResource="//@hwResources.0" required="false"/>
   <virtualSignals name="ecat_p1_link" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_link" hwSignal="p1_link" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_p0_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_txd0" hwSignal="p0_txd0" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_p0_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_txd1" hwSignal="p0_txd1" hwResource="//@hwResources.0"/>
@@ -73,12 +73,12 @@
   <virtualSignals name="ecat_p0_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_txd3" hwSignal="p0_txd3" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_p0_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_tx_clk" hwSignal="p0_tx_clk" hwResource="//@hwResources.0"/>
   <virtualSignals name="ecat_p0_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_tx_ena" hwSignal="p0_tx_ena" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd0" hwSignal="p1_txd0" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd1" hwSignal="p1_txd1" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_txd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd2" hwSignal="p1_txd2" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd3" hwSignal="p1_txd3" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_tx_clk" hwSignal="p1_tx_clk" hwResource="//@hwResources.0"/>
-  <virtualSignals name="ecat_p1_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_tx_ena" hwSignal="p1_tx_ena" hwResource="//@hwResources.0"/>
+  <virtualSignals name="ecat_p1_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd0" hwSignal="p1_txd0" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd1" hwSignal="p1_txd1" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_txd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd2" hwSignal="p1_txd2" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd3" hwSignal="p1_txd3" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_tx_clk" hwSignal="p1_tx_clk" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="ecat_p1_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_tx_ena" hwSignal="p1_tx_ena" hwResource="//@hwResources.0" required="false"/>
   <virtualSignals name="phy_clk25_signal" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_vs_port_pad_phy_clk25" hwSignal="pin" hwResource="//@hwResources.37"/>
   <virtualSignals name="phy_reset_signal" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_vs_port_pad_phy_reset" hwSignal="pin" hwResource="//@hwResources.38"/>
   <virtualSignals name="mdio_signal" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_vs_port_pad_mdio" hwSignal="pin" hwResource="//@hwResources.39"/>
@@ -154,9 +154,7 @@
   <hwResources name="led_link_act_p0" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_led_link_act_p0" resourceGroupUri="port/p/*/pad/*" mResGrpUri="port/p/*/pad/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port1/port1_1.dd#//@provided.48"/>
   </hwResources>
-  <hwResources name="led_link_act_p1" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_led_link_act_p1" resourceGroupUri="resources/48.1.0/port/p/0/pad/11" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port0/port0_0.dd#//@provided.16"/>
-  </hwResources>
+  <hwResources name="led_link_act_p1" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_led_link_act_p1" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
   <hwResources name="p0_link" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p0_link" resourceGroupUri="port/p/*/pad/*" mResGrpUri="port/p/*/pad/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port1/port1_1.dd#//@provided.57"/>
   </hwResources>
@@ -202,45 +200,19 @@
   <hwResources name="p1_link" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_link" resourceGroupUri="port/p/*/pad/*" mResGrpUri="port/p/*/pad/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port15/port15_15.dd#//@provided.0"/>
   </hwResources>
-  <hwResources name="p1_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rx_clk" resourceGroupUri="resources/48.1.0/port/p/14/pad/6" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port14/port14_14.dd#//@provided.5"/>
-  </hwResources>
-  <hwResources name="p1_rx_dv" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rx_dv" resourceGroupUri="resources/48.1.0/port/p/14/pad/15" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port14/port14_14.dd#//@provided.8"/>
-  </hwResources>
-  <hwResources name="p1_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rxd0" resourceGroupUri="resources/48.1.0/port/p/14/pad/7" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port14/port14_14.dd#//@provided.0"/>
-  </hwResources>
-  <hwResources name="p1_rxd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rxd1" resourceGroupUri="resources/48.1.0/port/p/14/pad/12" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port14/port14_14.dd#//@provided.18"/>
-  </hwResources>
-  <hwResources name="p1_rxd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rxd2" resourceGroupUri="resources/48.1.0/port/p/14/pad/13" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port14/port14_14.dd#//@provided.12"/>
-  </hwResources>
-  <hwResources name="p1_rxd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rxd3" resourceGroupUri="resources/48.1.0/port/p/14/pad/14" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port14/port14_14.dd#//@provided.15"/>
-  </hwResources>
-  <hwResources name="p1_rx_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rx_err" resourceGroupUri="resources/48.1.0/port/p/15/pad/2" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port15/port15_15.dd#//@provided.5"/>
-  </hwResources>
-  <hwResources name="p1_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_txd0" resourceGroupUri="resources/48.1.0/port/p/3/pad/1" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port3/port3_3.dd#//@provided.10"/>
-  </hwResources>
-  <hwResources name="p1_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_txd1" resourceGroupUri="resources/48.1.0/port/p/3/pad/2" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port3/port3_3.dd#//@provided.6"/>
-  </hwResources>
-  <hwResources name="p1_txd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_txd2" resourceGroupUri="resources/48.1.0/port/p/0/pad/2" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port0/port0_0.dd#//@provided.0"/>
-  </hwResources>
-  <hwResources name="p1_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_txd3" resourceGroupUri="resources/48.1.0/port/p/0/pad/3" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port0/port0_0.dd#//@provided.25"/>
-  </hwResources>
-  <hwResources name="p1_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_tx_ena" resourceGroupUri="resources/48.1.0/port/p/3/pad/0" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port3/port3_3.dd#//@provided.14"/>
-  </hwResources>
-  <hwResources name="p1_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_tx_clk" resourceGroupUri="resources/48.1.0/port/p/0/pad/10" mResGrpUri="port/p/*/pad/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/port0/port0_0.dd#//@provided.21"/>
-  </hwResources>
+  <hwResources name="p1_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rx_clk" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_rx_dv" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rx_dv" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rxd0" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_rxd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rxd1" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_rxd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rxd2" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_rxd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rxd3" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_rx_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_rx_err" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_txd0" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_txd1" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_txd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_txd2" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_txd3" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_tx_ena" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
+  <hwResources name="p1_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/hwres_port_pad_p1_tx_clk" resourceGroupUri="" required="false" mResGrpUri="port/p/*/pad/*"/>
   <hwResources name="phy_clk25" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_phy_clk25" resourceGroupUri="devicepackage/0/70" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.38"/>
   </hwResources>
@@ -262,9 +234,7 @@
   <hwResources name="led_link_act_p0" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_led_link_act_p0" resourceGroupUri="devicepackage/0/71" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.37"/>
   </hwResources>
-  <hwResources name="led_link_act_p1" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_led_link_act_p1" resourceGroupUri="devicepackage/0/95" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.3"/>
-  </hwResources>
+  <hwResources name="led_link_act_p1" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_led_link_act_p1" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
   <hwResources name="p0_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p0_rxd0" resourceGroupUri="devicepackage/0/75" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.39"/>
   </hwResources>
@@ -289,27 +259,13 @@
   <hwResources name="p0_link" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p0_link" resourceGroupUri="devicepackage/0/68" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.40"/>
   </hwResources>
-  <hwResources name="p1_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rxd0" resourceGroupUri="devicepackage/0/24" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.9"/>
-  </hwResources>
-  <hwResources name="p1_rxd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rxd1" resourceGroupUri="devicepackage/0/23" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.10"/>
-  </hwResources>
-  <hwResources name="p1_rxd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rxd2" resourceGroupUri="devicepackage/0/22" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.6"/>
-  </hwResources>
-  <hwResources name="p1_rxd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rxd3" resourceGroupUri="devicepackage/0/21" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.7"/>
-  </hwResources>
-  <hwResources name="p1_rx_dv" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rx_dv" resourceGroupUri="devicepackage/0/20" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.11"/>
-  </hwResources>
-  <hwResources name="p1_rx_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rx_err" resourceGroupUri="devicepackage/0/19" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.0"/>
-  </hwResources>
-  <hwResources name="p1_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rx_clk" resourceGroupUri="devicepackage/0/25" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.5"/>
-  </hwResources>
+  <hwResources name="p1_rxd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rxd0" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_rxd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rxd1" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_rxd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rxd2" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_rxd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rxd3" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_rx_dv" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rx_dv" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_rx_err" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rx_err" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_rx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_rx_clk" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
   <hwResources name="p1_link" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_link" resourceGroupUri="devicepackage/0/18" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.1"/>
   </hwResources>
@@ -331,24 +287,12 @@
   <hwResources name="p0_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p0_tx_ena" resourceGroupUri="devicepackage/0/76" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
     <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.13"/>
   </hwResources>
-  <hwResources name="p1_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_txd0" resourceGroupUri="devicepackage/0/6" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.32"/>
-  </hwResources>
-  <hwResources name="p1_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_txd1" resourceGroupUri="devicepackage/0/5" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.33"/>
-  </hwResources>
-  <hwResources name="p1_txd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_txd2" resourceGroupUri="devicepackage/0/100" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.8"/>
-  </hwResources>
-  <hwResources name="p1_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_txd3" resourceGroupUri="devicepackage/0/99" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.36"/>
-  </hwResources>
-  <hwResources name="p1_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_tx_clk" resourceGroupUri="devicepackage/0/3" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.30"/>
-  </hwResources>
-  <hwResources name="p1_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_tx_ena" resourceGroupUri="devicepackage/0/7" constraintType="GLOBAL_RESOURCE" mResGrpUri="devicepackage/0/*">
-    <downwardMapList xsi:type="ResourceModel:ResourceGroup" href="../../../HW_RESOURCES/DEVICEPACKAGE/DEVICEPACKAGE_0.dd#//@provided.31"/>
-  </hwResources>
+  <hwResources name="p1_txd0" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_txd0" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_txd1" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_txd1" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_txd2" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_txd2" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_txd3" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_txd3" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_tx_clk" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_tx_clk" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
+  <hwResources name="p1_tx_ena" URI="http://resources/4.0.30/app/ECAT_SSC/0/__pin_hwres_port_pad_p1_tx_ena" resourceGroupUri="" required="false" mResGrpUri="devicepackage/0/*"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_phy_clk25/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_phy_clk25" systemDefined="true" sourceSignal="ecat_phy_clk25" targetSignal="port_pad_phy_clk25" srcVirtualSignal="//@virtualSignals.37" targetVirtualSignal="//@virtualSignals.0"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_phy_reset/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_phy_reset" systemDefined="true" sourceSignal="ecat_phy_reset" targetSignal="port_pad_phy_reset" srcVirtualSignal="//@virtualSignals.38" targetVirtualSignal="//@virtualSignals.1"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_mdio/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_mdio" systemDefined="true" sourceSignal="port_pad_mdio" targetSignal="ecat_mdio" srcVirtualSignal="//@virtualSignals.6" targetVirtualSignal="//@virtualSignals.43"/>
@@ -357,7 +301,7 @@
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_run/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_run" systemDefined="true" sourceSignal="ecat_led_run" targetSignal="port_pad_led_run" srcVirtualSignal="//@virtualSignals.39" targetVirtualSignal="//@virtualSignals.2"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_err/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_err" systemDefined="true" sourceSignal="ecat_led_err" targetSignal="port_pad_led_err" srcVirtualSignal="//@virtualSignals.40" targetVirtualSignal="//@virtualSignals.3"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_link_act_p0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_link_act_p0" systemDefined="true" sourceSignal="ecat_p0_led_link_act" targetSignal="port_pad_led_link_act_p0" srcVirtualSignal="//@virtualSignals.41" targetVirtualSignal="//@virtualSignals.4"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_link_act_p1/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_link_act_p1" systemDefined="true" sourceSignal="ecat_p1_led_link_act" targetSignal="port_pad_led_link_act_p1" srcVirtualSignal="//@virtualSignals.42" targetVirtualSignal="//@virtualSignals.5"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_led_link_act_p1/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_led_link_act_p1" systemDefined="true" sourceSignal="ecat_p1_led_link_act" targetSignal="port_pad_led_link_act_p1" required="false" srcVirtualSignal="//@virtualSignals.42" targetVirtualSignal="//@virtualSignals.5"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_rxd0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_rxd0" systemDefined="true" sourceSignal="port_pad_p0_rxd0" targetSignal="ecat_p0_rxd0" srcVirtualSignal="//@virtualSignals.9" targetVirtualSignal="//@virtualSignals.50"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_rxd1/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_rxd1" systemDefined="true" sourceSignal="port_pad_p0_rxd1" targetSignal="ecat_p0_rxd1" srcVirtualSignal="//@virtualSignals.10" targetVirtualSignal="//@virtualSignals.51"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_rxd2/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_rxd2" systemDefined="true" sourceSignal="port_pad_p0_rxd2" targetSignal="ecat_p0_rxd2" srcVirtualSignal="//@virtualSignals.11" targetVirtualSignal="//@virtualSignals.52"/>
@@ -366,13 +310,13 @@
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_rx_err/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_rx_err" systemDefined="true" sourceSignal="port_pad_p0_rx-err" targetSignal="ecat_p0_rx_err" srcVirtualSignal="//@virtualSignals.14" targetVirtualSignal="//@virtualSignals.55"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_rx_clk/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_rx_clk" systemDefined="true" sourceSignal="port_pad_p0_rx_clk" targetSignal="ecat_p0_rx_clk" srcVirtualSignal="//@virtualSignals.15" targetVirtualSignal="//@virtualSignals.56"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_link/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_link" systemDefined="true" sourceSignal="port_pad_p0_link" targetSignal="ecat_p0_link" srcVirtualSignal="//@virtualSignals.16" targetVirtualSignal="//@virtualSignals.57"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd0" systemDefined="true" sourceSignal="port_pad_p1_rxd0" targetSignal="ecat_p1_rxd0" srcVirtualSignal="//@virtualSignals.17" targetVirtualSignal="//@virtualSignals.58"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd1/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd1" systemDefined="true" sourceSignal="port_pad_p1_rxd1" targetSignal="ecat_p1_rxd1" srcVirtualSignal="//@virtualSignals.18" targetVirtualSignal="//@virtualSignals.59"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd2/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd2" systemDefined="true" sourceSignal="port_pad_p1_rxd2" targetSignal="ecat_p1_rxd2" srcVirtualSignal="//@virtualSignals.19" targetVirtualSignal="//@virtualSignals.60"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd3/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd3" systemDefined="true" sourceSignal="port_pad_p1_rxd3" targetSignal="ecat_p1_rxd3" srcVirtualSignal="//@virtualSignals.20" targetVirtualSignal="//@virtualSignals.61"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_dv/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_dv" systemDefined="true" sourceSignal="port_pad_p1_rx_dv" targetSignal="ecat_p1_rx_dv" srcVirtualSignal="//@virtualSignals.21" targetVirtualSignal="//@virtualSignals.62"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_err/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_err" systemDefined="true" sourceSignal="port_pad_p1_rx-err" targetSignal="ecat_p1_rx_err" srcVirtualSignal="//@virtualSignals.22" targetVirtualSignal="//@virtualSignals.63"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_clk/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_clk" systemDefined="true" sourceSignal="port_pad_p1_rx_clk" targetSignal="ecat_p1_rx_clk" srcVirtualSignal="//@virtualSignals.23" targetVirtualSignal="//@virtualSignals.64"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd0" systemDefined="true" sourceSignal="port_pad_p1_rxd0" targetSignal="ecat_p1_rxd0" required="false" srcVirtualSignal="//@virtualSignals.17" targetVirtualSignal="//@virtualSignals.58"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd1/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd1" systemDefined="true" sourceSignal="port_pad_p1_rxd1" targetSignal="ecat_p1_rxd1" required="false" srcVirtualSignal="//@virtualSignals.18" targetVirtualSignal="//@virtualSignals.59"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd2/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd2" systemDefined="true" sourceSignal="port_pad_p1_rxd2" targetSignal="ecat_p1_rxd2" required="false" srcVirtualSignal="//@virtualSignals.19" targetVirtualSignal="//@virtualSignals.60"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rxd3/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rxd3" systemDefined="true" sourceSignal="port_pad_p1_rxd3" targetSignal="ecat_p1_rxd3" required="false" srcVirtualSignal="//@virtualSignals.20" targetVirtualSignal="//@virtualSignals.61"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_dv/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_dv" systemDefined="true" sourceSignal="port_pad_p1_rx_dv" targetSignal="ecat_p1_rx_dv" required="false" srcVirtualSignal="//@virtualSignals.21" targetVirtualSignal="//@virtualSignals.62"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_err/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_err" systemDefined="true" sourceSignal="port_pad_p1_rx-err" targetSignal="ecat_p1_rx_err" required="false" srcVirtualSignal="//@virtualSignals.22" targetVirtualSignal="//@virtualSignals.63"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_rx_clk/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_rx_clk" systemDefined="true" sourceSignal="port_pad_p1_rx_clk" targetSignal="ecat_p1_rx_clk" required="false" srcVirtualSignal="//@virtualSignals.23" targetVirtualSignal="//@virtualSignals.64"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_link/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_link" systemDefined="true" sourceSignal="port_pad_p1_link" targetSignal="ecat_p1_link" srcVirtualSignal="//@virtualSignals.24" targetVirtualSignal="//@virtualSignals.65"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_txd0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_txd0" systemDefined="true" sourceSignal="ecat_p0_txd0" targetSignal="port_pad_p0_txd0" srcVirtualSignal="//@virtualSignals.66" targetVirtualSignal="//@virtualSignals.25"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_txd1/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_txd1" systemDefined="true" sourceSignal="ecat_p0_txd1" targetSignal="port_pad_p0_txd1" srcVirtualSignal="//@virtualSignals.67" targetVirtualSignal="//@virtualSignals.26"/>
@@ -380,12 +324,12 @@
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_txd3/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_txd3" systemDefined="true" sourceSignal="ecat_p0_txd3" targetSignal="port_pad_p0_txd3" srcVirtualSignal="//@virtualSignals.69" targetVirtualSignal="//@virtualSignals.28"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_tx_clk/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_tx_clk" systemDefined="true" sourceSignal="port_pad_p0_tx_clk" targetSignal="ecat_p0_tx_clk" srcVirtualSignal="//@virtualSignals.29" targetVirtualSignal="//@virtualSignals.70"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p0_tx_ena/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p0_tx_ena" systemDefined="true" sourceSignal="ecat_p0_tx_ena" targetSignal="port_pad_p0_tx_ena" srcVirtualSignal="//@virtualSignals.71" targetVirtualSignal="//@virtualSignals.30"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd0" systemDefined="true" sourceSignal="ecat_p1_txd0" targetSignal="port_pad_p1_txd0" srcVirtualSignal="//@virtualSignals.72" targetVirtualSignal="//@virtualSignals.31"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd1/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd1" systemDefined="true" sourceSignal="ecat_p1_txd1" targetSignal="port_pad_p1_txd1" srcVirtualSignal="//@virtualSignals.73" targetVirtualSignal="//@virtualSignals.32"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd2/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd2" systemDefined="true" sourceSignal="ecat_p1_txd2" targetSignal="port_pad_p1_txd2" srcVirtualSignal="//@virtualSignals.74" targetVirtualSignal="//@virtualSignals.33"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd3/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd3" systemDefined="true" sourceSignal="ecat_p1_txd3" targetSignal="port_pad_p1_txd3" srcVirtualSignal="//@virtualSignals.75" targetVirtualSignal="//@virtualSignals.34"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_tx_clk/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_tx_clk" systemDefined="true" sourceSignal="port_pad_p1_tx_clk" targetSignal="ecat_p1_tx_clk" srcVirtualSignal="//@virtualSignals.35" targetVirtualSignal="//@virtualSignals.76"/>
-  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_tx_ena/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_tx_ena" systemDefined="true" sourceSignal="ecat_p1_tx_ena" targetSignal="port_pad_p1_tx_ena" srcVirtualSignal="//@virtualSignals.77" targetVirtualSignal="//@virtualSignals.36"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd0" systemDefined="true" sourceSignal="ecat_p1_txd0" targetSignal="port_pad_p1_txd0" required="false" srcVirtualSignal="//@virtualSignals.72" targetVirtualSignal="//@virtualSignals.31"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd1/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd1" systemDefined="true" sourceSignal="ecat_p1_txd1" targetSignal="port_pad_p1_txd1" required="false" srcVirtualSignal="//@virtualSignals.73" targetVirtualSignal="//@virtualSignals.32"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd2/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd2" systemDefined="true" sourceSignal="ecat_p1_txd2" targetSignal="port_pad_p1_txd2" required="false" srcVirtualSignal="//@virtualSignals.74" targetVirtualSignal="//@virtualSignals.33"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_txd3/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_txd3" systemDefined="true" sourceSignal="ecat_p1_txd3" targetSignal="port_pad_p1_txd3" required="false" srcVirtualSignal="//@virtualSignals.75" targetVirtualSignal="//@virtualSignals.34"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_tx_clk/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_tx_clk" systemDefined="true" sourceSignal="port_pad_p1_tx_clk" targetSignal="ecat_p1_tx_clk" required="false" srcVirtualSignal="//@virtualSignals.35" targetVirtualSignal="//@virtualSignals.76"/>
+  <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_ecat_p1_tx_ena/http://resources/4.0.30/app/ECAT_SSC/0/vs_port_pad_p1_tx_ena" systemDefined="true" sourceSignal="ecat_p1_tx_ena" targetSignal="port_pad_p1_tx_ena" required="false" srcVirtualSignal="//@virtualSignals.77" targetVirtualSignal="//@virtualSignals.36"/>
   <connections URI="http://resources/4.0.30/app/ECAT_SSC/0/http://resources/4.0.30/app/ECAT_SSC/0/vs_timer_ccu4_period_match_interrupt/http://resources/4.0.30/app/ECAT_SSC/0/vs_nvic_signal_in" systemDefined="true" sourceSignal="event_time_interval" targetSignal="sr_irq" proxySrcVirtualSignalUri="http://resources/4.1.12/app/TIMER/0/vs_timer_ccu4_period_match_interrupt" proxyTargetVirtualSignalUri="http://resources/4.0.10/app/INTERRUPT/2/vs_nvic_signal_in" containingProxySignal="true">
     <downwardMapList xsi:type="ResourceModel:VirtualSignal" href="../../TIMER/v4_1_12/TIMER_0.app#//@virtualSignals.0"/>
     <downwardMapList xsi:type="ResourceModel:VirtualSignal" href="../../INTERRUPT/v4_0_10/INTERRUPT_2.app#//@virtualSignals.0"/>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" URI="http://resources/48.1.0/port/p/0" description="Port 0" baseAddress="0x48028000">
   <provided xsi:type="ResourceModel:ResourceGroup" name="P0.2 / #100" URI="http://resources/48.1.0/port/p/0/pad/2">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@hwResources.33"/>
     <resourcesList name="hwsel_hw" requiredResourceUri="http://resources/48.1.0/port/p/0/hwsel/hw2"/>
     <resourcesList name="in_p" requiredResourceUri="http://resources/48.1.0/port/p/0/in/p2"/>
     <resourcesList name="iocr_oe" requiredResourceUri="http://resources/48.1.0/port/p/0/iocr0/pc2_4"/>
@@ -227,7 +226,6 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="PC12_4" URI="http://resources/48.1.0/port/p/0/iocr12/pc12_4" value="0x00000000" toolTipHelpDescription="Port Control for Port n Pin 12 to 15" defaultValue="0x00000000" startPos="7" stopPos="7" accessPermission="rw" maxValue="1" minValue="0"/>
   <provided xsi:type="ResourceModel:ResourceGroup" name="P0.11 / #95" URI="http://resources/48.1.0/port/p/0/pad/11">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@hwResources.8"/>
     <resourcesList name="hwsel_hw" requiredResourceUri="http://resources/48.1.0/port/p/0/hwsel/hw11"/>
     <resourcesList name="in_p" requiredResourceUri="http://resources/48.1.0/port/p/0/in/p11"/>
     <resourcesList name="iocr_oe" requiredResourceUri="http://resources/48.1.0/port/p/0/iocr8/pc11_4"/>
@@ -275,7 +273,6 @@
   <provided xsi:type="ResourceModel:BitField" name="PC11_2_0" URI="http://resources/48.1.0/port/p/0/iocr8/pc11_2_0" value="0x00000000" toolTipHelpDescription="Port Control for Port n Pin 8 to 11" defaultValue="0x00000000" startPos="27" stopPos="29" accessPermission="rw" maxValue="7" minValue="0"/>
   <provided xsi:type="ResourceModel:BitField" name="PC11_4" URI="http://resources/48.1.0/port/p/0/iocr8/pc11_4" value="0x00000000" toolTipHelpDescription="Port Control for Port n Pin 8 to 11" defaultValue="0x00000000" startPos="31" stopPos="31" accessPermission="rw" maxValue="1" minValue="0"/>
   <provided xsi:type="ResourceModel:ResourceGroup" name="P0.10 / #3" URI="http://resources/48.1.0/port/p/0/pad/10">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@hwResources.36"/>
     <resourcesList name="hwsel_hw" requiredResourceUri="http://resources/48.1.0/port/p/0/hwsel/hw10"/>
     <resourcesList name="in_p" requiredResourceUri="http://resources/48.1.0/port/p/0/in/p10"/>
     <resourcesList name="iocr_oe" requiredResourceUri="http://resources/48.1.0/port/p/0/iocr8/pc10_4"/>
@@ -309,7 +306,6 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="PC10_2_0" URI="http://resources/48.1.0/port/p/0/iocr8/pc10_2_0" value="0x00000000" toolTipHelpDescription="Port Control for Port n Pin 8 to 11" defaultValue="0x00000000" startPos="19" stopPos="21" accessPermission="rw" maxValue="7" minValue="0"/>
   <provided xsi:type="ResourceModel:ResourceGroup" name="P0.3 / #99" URI="http://resources/48.1.0/port/p/0/pad/3">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@hwResources.34"/>
     <resourcesList name="hwsel_hw" requiredResourceUri="http://resources/48.1.0/port/p/0/hwsel/hw3"/>
     <resourcesList name="in_p" requiredResourceUri="http://resources/48.1.0/port/p/0/in/p3"/>
     <resourcesList name="iocr_oe" requiredResourceUri="http://resources/48.1.0/port/p/0/iocr0/pc3_4"/>

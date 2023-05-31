@@ -242,18 +242,4 @@
   <hwConnections href="APPS/EVENT_DETECTOR/v4_0_8/EVENT_DETECTOR_1.app#//@connections.0"/>
   <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.111"/>
   <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.112"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.18"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.34"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.8"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.31"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.36"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.23"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.21"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.32"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.19"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.22"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.35"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.33"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.20"/>
-  <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.17"/>
 </ApplicationModel:ApplicationData>

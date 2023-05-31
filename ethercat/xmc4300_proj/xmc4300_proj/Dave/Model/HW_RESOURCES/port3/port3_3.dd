@@ -131,7 +131,6 @@
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="HW1 control path can override the software configuration."/>
   </provided>
   <provided xsi:type="ResourceModel:ResourceGroup" name="P3.2 / #5" URI="http://resources/48.1.0/port/p/3/pad/2">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@hwResources.32"/>
     <resourcesList name="hwsel_hw" requiredResourceUri="http://resources/48.1.0/port/p/3/hwsel/hw2"/>
     <resourcesList name="in_p" requiredResourceUri="http://resources/48.1.0/port/p/3/in/p2"/>
     <resourcesList name="iocr_oe" requiredResourceUri="http://resources/48.1.0/port/p/3/iocr0/pc2_4"/>
@@ -165,7 +164,6 @@
   <provided xsi:type="ResourceModel:BitField" name="PC2_4" URI="http://resources/48.1.0/port/p/3/iocr0/pc2_4" value="0x00000000" toolTipHelpDescription="Port Control for Port n Pin 0 to 3" defaultValue="0x00000000" startPos="23" stopPos="23" accessPermission="rw" maxValue="1" minValue="0"/>
   <provided xsi:type="ResourceModel:BitField" name="PC2_2_0" URI="http://resources/48.1.0/port/p/3/iocr0/pc2_2_0" value="0x00000000" toolTipHelpDescription="Port Control for Port n Pin 0 to 3" defaultValue="0x00000000" startPos="19" stopPos="21" accessPermission="rw" maxValue="7" minValue="0"/>
   <provided xsi:type="ResourceModel:ResourceGroup" name="P3.1 / #6" URI="http://resources/48.1.0/port/p/3/pad/1">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@hwResources.31"/>
     <resourcesList name="hwsel_hw" requiredResourceUri="http://resources/48.1.0/port/p/3/hwsel/hw1"/>
     <resourcesList name="in_p" requiredResourceUri="http://resources/48.1.0/port/p/3/in/p1"/>
     <resourcesList name="iocr_oe" requiredResourceUri="http://resources/48.1.0/port/p/3/iocr0/pc1_4"/>
@@ -199,7 +197,6 @@
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="HW1 control path can override the software configuration."/>
   </provided>
   <provided xsi:type="ResourceModel:ResourceGroup" name="P3.0 / #7" URI="http://resources/48.1.0/port/p/3/pad/0">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@hwResources.35"/>
     <resourcesList name="hwsel_hw" requiredResourceUri="http://resources/48.1.0/port/p/3/hwsel/hw0"/>
     <resourcesList name="in_p" requiredResourceUri="http://resources/48.1.0/port/p/3/in/p0"/>
     <resourcesList name="iocr_oe" requiredResourceUri="http://resources/48.1.0/port/p/3/iocr0/pc0_4"/>
