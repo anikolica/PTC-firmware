@@ -2,14 +2,20 @@ import os
 import sys
 import time
 
-os.system('poke 0x80020004 0x00010400')
+module = '5EV'
+if module == '2EG':
+    base_addr = '0xa003'
+else:
+    base_addr = '0x8002'
+
+os.system('poke ' + base_addr + '0004 0x00010400')
 print ('Selecting PTC SFP as timing source, resetting endpoint')
 time.sleep(1)
 
-os.system('poke 0x80020004 0x00010000')
+os.system('poke ' + base_addr + '0004 0x00010000')
 print ('Endpoint out of reset. Endpoint state is: ')
 time.sleep(1)
-os.system('peek 0x80020104')
+os.system('peek ' + base_addr + '0104')
 time.sleep(1)
 
 os.system('ifconfig eth1 192.168.200.12 up')

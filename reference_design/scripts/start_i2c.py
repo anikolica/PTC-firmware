@@ -2,29 +2,56 @@ import os
 import sys
 import time
 
-os.system('poke 0x80020000 1')
-print ('Taking I2C switch out of reset')
-time.sleep(1)
+sleep = 0.1
+module = '5EV'
+if module == '2EG':
+    base_addr = '0xa003'
+else:
+    base_addr = '0x8002'
+
+os.system('poke ' + base_addr + '0000 0x00000201')
+print ('Taking I2C switches out of reset')
+time.sleep(sleep)
 
 os.system('i2cset -y -r 0 0x70 0x08')
 print ('Selecting I2C switch for local sensor read')
-time.sleep(1)
+time.sleep(sleep)
+
+def read_temp (addr):
+    try:
+        i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x00 w').read()
+        # i2cget gives byte-swapped output
+        i2c_dec =((int((i2c_raw)[4:6],16) << 8) + int((i2c_raw)[2:4],16))
+        #Note that two's comp can give neg temp - should never see on PTC
+        temp = i2c_dec * 0.0078125 #conversion to degC on TMP117
+        print ('Temp sensor addr ' + str(addr) + ' reads ' + format(temp, '0.1f') + ' C')
+    except ValueError:
+        print ('Sensor ' + str(addr) + ' not readable')
+
+def read_volt (addr, resistor):
+    try:
+        i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x1e w').read()
+        # Right shift bc first 4 bits in reg are don't-care
+        i2c_dec =((int((i2c_raw)[4:6],16) << 8) + int((i2c_raw)[2:4],16)) >> 4
+        volts = i2c_dec * 0.025 # ADC conversion for LTC2945
+        i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x14 w').read()
+        i2c_dec =((int((i2c_raw)[4:6],16) << 8) + int((i2c_raw)[2:4],16)) >> 4
+        curr = i2c_dec * 0.000025 / resistor
+        print ('Voltage sensor addr ' + str(addr) + ' reads ' + format(volts, '0.2f') + ' V at ' + format(curr, '0.2f') + ' A')
+    except ValueError:
+        print ('Sensor ' + str(addr) + ' not readable')
 
 while(1):
-    print ('SoC temp sensor is: ')
-    os.system('i2cget -y 0 0x48 0x00 w')
-    time.sleep(1)
-
-    print ('Regulator temp sensor is: ')
-    os.system('i2cget -y 0 0x49 0x00 w')
-    time.sleep(1)
-
-    print ('48V sensor is: ')
-    os.system('i2cget -y 0 0x6e 0x1e')
-    os.system('i2cget -y 0 0x6e 0x1f')
-    time.sleep(1)
-
-    print ('12V sensor is: ')
-    os.system('i2cget -y 0 0x6d 0x1e')
-    os.system('i2cget -y 0 0x6d 0x1f')
-    time.sleep(1)
+    for addr in ['0x48', '0x49', '0x4a']:
+        read_temp(addr)
+        time.sleep(sleep)
+    for addr in ['0x6e']:
+        read_volt(addr, 0.0025) # 48V sensor has special R value
+        time.sleep(sleep)
+    for addr in ['0x67', '0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6e', '0x6f']:
+        read_volt(addr, 0.005)
+        time.sleep(sleep)
+    # Fake address on WIB I2C line; don't expect response
+    i2c_wib = os.popen('i2cget -y 1 0x5f 0x00 w').read()
+    print (i2c_wib)
+    time.sleep(sleep)
