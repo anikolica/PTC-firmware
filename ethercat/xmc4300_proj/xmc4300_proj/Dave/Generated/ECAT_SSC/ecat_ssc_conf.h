@@ -64,7 +64,7 @@
 #define ECAT_SSC_MINOR_VERSION (0U)
 #define ECAT_SSC_PATCH_VERSION (30U)
 
-#define ECAT_SCC_ENABLE_OUTPUT_PORT                    1
+#define ECAT_SCC_ENABLE_OUTPUT_PORT                    0
 
 #endif /* ECAT_SSC_CONF_H */
 

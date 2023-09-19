@@ -73,6 +73,10 @@
 
 #define MAP2LEVEL(x) ((x==0)?XMC_GPIO_OUTPUT_LEVEL_HIGH:XMC_GPIO_OUTPUT_LEVEL_LOW)
 
+uint8_t global_read_data[2];
+uint8_t global_scratch_buffer[2];
+bool flag = 0;
+
 void Init_ECAT_Adapt_LED ()
 {
   /* Set mode of all LED ports to push-pull and output level to low*/
@@ -125,6 +129,15 @@ void process_app(TOBJ7000 *OUT_GENERIC, TOBJ6000 *IN_GENERIC)
   /* Check integer set by Master OUT_GEN_INT1 and set duty cycle of PWM driving LED 2 accordingly */
   PWM_CCU8_SetDutyCycleSymmetric(&PWM_CCU8_0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
 		  6000+((uint32_t)4000*(uint32_t)OUT_GENERIC->OUT_GEN_INT1)/65535);
+
+  if(flag){
+	  memcpy(&(IN_GENERIC->IN_GEN_INT1), global_read_data, 2); // data that triggered ISR
+	  memcpy(&(IN_GENERIC->IN_GEN_INT2), global_scratch_buffer, 2);
+	  IN_GENERIC->IN_GEN_INT4 = IN_GENERIC->IN_GEN_INT4 + 1; // word counter
+	  flag = 0; // clear flag for next loop
+	  UART_Transmit(&UART_0, global_scratch_buffer, 2); // debug
+  }
+  UART_Receive(&UART_0, global_scratch_buffer, 2); // request for next loop
 
   /* INPUT PROCESSING */
   /*Check Button 1 and set IN_GEN_Bit1 which is sent to master accordingly*/
@@ -213,4 +226,10 @@ void DISABLE_ESC_INT_USER()
 {
 	INTERRUPT_Disable(&INT_SYNC0);
 	INTERRUPT_Disable(&INT_SYNC1);
+}
+
+void test_isr(){
+	UART_RUNTIME_t * ptr_runtime = (&UART_0)->runtime;
+	memcpy(global_read_data, ptr_runtime->rx_data, 2);
+	flag = 1;
 }

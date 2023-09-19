@@ -110,21 +110,6 @@
 
 /* EtherCAT slave physical layer Port 1 pin configurations */
 #define ECAT_P1_LINK_STATUS   P15_3
-#define ECAT_P1_LED_LINK_ACT  P0_11
-#define ECAT_P1_RXD3          P14_14
-#define ECAT_P1_RXD2          P14_13
-#define ECAT_P1_RXD1          P14_12
-#define ECAT_P1_RXD0          P14_7
-#define ECAT_P1_RX_DV         P14_15
-#define ECAT_P1_RX_CLK        P14_6
-#define ECAT_P1_RX_ERR        P15_2
-#define ECAT_P1_TXD3          P0_3
-#define ECAT_P1_TXD2          P0_2
-#define ECAT_P1_TXD1          P3_2
-#define ECAT_P1_TXD0          P3_1
-#define ECAT_P1_TX_EN         P3_0
-#define ECAT_P1_TX_CLK        P0_10
-
 /* Maximum Sync Managers supported */
 #define MAX_SYNC_MAN          (8U)
 
@@ -185,16 +170,9 @@ UINT16 HW_Init(void)
   XMC_GPIO_Init(ECAT_P0_RX_ERR, &gpio_config);
   XMC_GPIO_Init(ECAT_P0_TX_CLK, &gpio_config);
 
+  /* If an ESC MII interface is not used, LINK_MII has to be tied to the logic value high which indicates no link */
+  gpio_config.mode = XMC_GPIO_MODE_INPUT_PULL_UP;
   XMC_GPIO_Init(ECAT_P1_LINK_STATUS, &gpio_config);
-  XMC_GPIO_Init(ECAT_P1_RXD3, &gpio_config);
-  XMC_GPIO_Init(ECAT_P1_RXD2, &gpio_config);
-  XMC_GPIO_Init(ECAT_P1_RXD1, &gpio_config);
-  XMC_GPIO_Init(ECAT_P1_RXD0, &gpio_config);
-  XMC_GPIO_Init(ECAT_P1_RX_DV, &gpio_config);
-  XMC_GPIO_Init(ECAT_P1_RX_CLK, &gpio_config);
-  XMC_GPIO_Init(ECAT_P1_RX_ERR, &gpio_config);
-  XMC_GPIO_Init(ECAT_P1_TX_CLK, &gpio_config);
-
   port_control.common.enable_rstreq = false;
   port_control.common.mdio = XMC_ECAT_PORT_CTRL_MDIO_P0_12;
   port_control.common.phyaddr_offset = 0;
@@ -210,15 +188,16 @@ UINT16 HW_Init(void)
   port_control.port0.link = XMC_ECAT_PORT0_CTRL_LINK_P1_15;
   port_control.port0.tx_clk = XMC_ECAT_PORT0_CTRL_TX_CLK_P1_0;
   port_control.port0.tx_shift = XMC_ECAT_PORT0_CTRL_TX_SHIFT_0NS; 
-  port_control.port1.rxd0 = XMC_ECAT_PORT1_CTRL_RXD0_P14_7;
-  port_control.port1.rxd1 = XMC_ECAT_PORT1_CTRL_RXD1_P14_12;
-  port_control.port1.rxd2 = XMC_ECAT_PORT1_CTRL_RXD2_P14_13;
-  port_control.port1.rxd3 = XMC_ECAT_PORT1_CTRL_RXD3_P14_14;
-  port_control.port1.rx_clk = XMC_ECAT_PORT1_CTRL_RX_CLK_P14_6;
-  port_control.port1.rx_dv = XMC_ECAT_PORT1_CTRL_RX_DV_P14_15;
-  port_control.port1.rx_err = XMC_ECAT_PORT1_CTRL_RX_ERR_P15_2;
+  /* If an ESC MII interface is not used, RX_CLK, RXD, RX_ER, and especially RX_DV have to be tied to GND.                   For this purpose you can select a input position in register ECAT0_CONPx of these signals which are not connected to a pin on the XMC4800 */
+  port_control.port1.rxd0 = 3;
+  port_control.port1.rxd1 = 3;
+  port_control.port1.rxd2 = 3;
+  port_control.port1.rxd3 = 3;
+  port_control.port1.rx_clk = 3;
+  port_control.port1.rx_dv = 3;
+  port_control.port1.rx_err = 3;
   port_control.port1.link = XMC_ECAT_PORT1_CTRL_LINK_P15_3;
-  port_control.port1.tx_clk = XMC_ECAT_PORT1_CTRL_TX_CLK_P0_10;
+  port_control.port1.tx_clk = 3;
   port_control.port1.tx_shift = XMC_ECAT_PORT1_CTRL_TX_SHIFT_0NS;
   XMC_ECAT_SetPortControl(port_control);
 
@@ -239,17 +218,6 @@ UINT16 HW_Init(void)
   gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1;
   XMC_GPIO_Init(ECAT_P0_TX_EN, &gpio_config);
 
-  gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1;
-  XMC_GPIO_Init(ECAT_P1_TXD3, &gpio_config);
-  gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1;
-  XMC_GPIO_Init(ECAT_P1_TXD2, &gpio_config);
-  gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT3;
-  XMC_GPIO_Init(ECAT_P1_TXD1, &gpio_config);
-  gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT3;
-  XMC_GPIO_Init(ECAT_P1_TXD0, &gpio_config);
-  gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4;
-  XMC_GPIO_Init(ECAT_P1_TX_EN, &gpio_config);
-
   gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4;
   XMC_GPIO_Init(ECAT_CLK25, &gpio_config);
 
@@ -261,9 +229,6 @@ UINT16 HW_Init(void)
 
   gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4;
   XMC_GPIO_Init(ECAT_P0_LED_LINK_ACT, &gpio_config);
-
-  gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1;
-  XMC_GPIO_Init(ECAT_P1_LED_LINK_ACT, &gpio_config);
 
   gpio_config.mode = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4;
   XMC_GPIO_Init(ECAT_LED_RUN, &gpio_config);

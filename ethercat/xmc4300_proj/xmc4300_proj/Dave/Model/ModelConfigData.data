@@ -96,6 +96,15 @@
   <nodes xsi:type="ApplicationModel:PeripheralNode">
     <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/port14/port14_14.dd#/"/>
   </nodes>
+  <nodes xsi:type="ApplicationModel:AppNode">
+    <resource xsi:type="ResourceModel:App" href="APPS/UART/v4_1_14/UART_0.app#/"/>
+  </nodes>
+  <nodes xsi:type="ApplicationModel:PeripheralNode">
+    <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/usic1/usic1_1.dd#/"/>
+  </nodes>
+  <nodes xsi:type="ApplicationModel:PeripheralNode">
+    <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/usic0/usic0_0.dd#/"/>
+  </nodes>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.1" target="//@nodes.0"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.10" target="//@nodes.0"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.11" target="//@nodes.12"/>
@@ -108,6 +117,8 @@
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.19" target="//@nodes.15"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.19" target="//@nodes.12"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.19" target="//@nodes.0"/>
+  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.32" target="//@nodes.12"/>
+  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.32" target="//@nodes.0"/>
   <hwConnections href="APPS/CPU_CTRL_XMC4/v4_0_18/CPU_CTRL_XMC4_0.app#//@connections.7"/>
   <hwConnections href="APPS/CPU_CTRL_XMC4/v4_0_18/CPU_CTRL_XMC4_0.app#//@connections.8"/>
   <hwConnections href="APPS/CPU_CTRL_XMC4/v4_0_18/CPU_CTRL_XMC4_0.app#//@connections.9"/>
@@ -242,4 +253,13 @@
   <hwConnections href="APPS/EVENT_DETECTOR/v4_0_8/EVENT_DETECTOR_1.app#//@connections.0"/>
   <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.111"/>
   <hwConnections href="APPS/ECAT_SSC/v4_0_30/ECAT_SSC_0.app#//@connections.112"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.0"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.1"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.7"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.8"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.9"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.18"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.19"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.20"/>
+  <hwConnections href="APPS/UART/v4_1_14/UART_0.app#//@connections.21"/>
 </ApplicationModel:ApplicationData>

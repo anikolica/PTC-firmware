@@ -92,6 +92,8 @@ SyncManInfo         0x8               ./SSC/Src/ecatslv.o
 b32BitDc            0x1               ./SSC/Src/ecatslv.o
 u32SystemTimeReadFailure
                     0x4               ./SSC/Src/ecatappl.o
+global_scratch_buffer
+                    0x2               ./main.o
 u8PendingSdo        0x1               ./SSC/Src/sdoserv.o
 LatchInputSync0Value
                     0x2               ./SSC/Src/ecatslv.o
@@ -124,6 +126,7 @@ u8MbxWriteCounter   0x1               ./SSC/Src/mailbox.o
 u32LastDc32Value    0x4               ./SSC/Src/coeappl.o
 u32CheckForDcOverrunCnt
                     0x4               ./SSC/Src/coeappl.o
+global_read_data    0x2               ./main.o
 u8MailboxSendReqStored
                     0x1               ./SSC/Src/mailbox.o
 EepromReadSize      0x2               ./SSC/Src/ecatappl.o
@@ -324,8 +327,6 @@ Discarded input sections
                 0x00000000       0x1c ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_CLOCK_GetSystemClockFrequency
                 0x00000000       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
- .text.XMC_SCU_CLOCK_GetCpuClockFrequency
-                0x00000000       0x18 ./Libraries/XMCLib/src/xmc4_scu.o
  .bss.event_handler_list
                 0x00000000       0x80 ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_INTERRUPT_EnableEvent
@@ -408,8 +409,6 @@ Discarded input sections
                 0x00000000       0x58 ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_CLOCK_GetExternalOutputClockFrequency
                 0x00000000       0x74 ./Libraries/XMCLib/src/xmc4_scu.o
- .text.XMC_SCU_CLOCK_GetPeripheralClockFrequency
-                0x00000000       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_CLOCK_SetExternalOutputClockSource
                 0x00000000       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_CLOCK_SetExternalOutputClockDivider
@@ -420,8 +419,6 @@ Discarded input sections
                 0x00000000       0x2c ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_CLOCK_GatePeripheralClock
                 0x00000000       0x38 ./Libraries/XMCLib/src/xmc4_scu.o
- .text.XMC_SCU_CLOCK_IsPeripheralClockGated
-                0x00000000       0x48 ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_POWER_GetEVR13Voltage
                 0x00000000       0x30 ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_POWER_GetEVR33Voltage
@@ -1358,42 +1355,21 @@ Discarded input sections
  .text          0x00000000        0x0 ./Libraries/XMCLib/src/xmc_uart.o
  .data          0x00000000        0x0 ./Libraries/XMCLib/src/xmc_uart.o
  .bss           0x00000000        0x0 ./Libraries/XMCLib/src/xmc_uart.o
- .text.XMC_USIC_CH_GetTransmitBufferStatus
-                0x00000000       0x20 ./Libraries/XMCLib/src/xmc_uart.o
  .text.XMC_USIC_CH_SetMode
                 0x00000000       0x28 ./Libraries/XMCLib/src/xmc_uart.o
  .text.XMC_UART_CH_GetStatusFlag
                 0x00000000       0x18 ./Libraries/XMCLib/src/xmc_uart.o
- .text.XMC_UART_CH_ClearStatusFlag
-                0x00000000       0x1c ./Libraries/XMCLib/src/xmc_uart.o
- .text.XMC_UART_CH_InitEx
-                0x00000000       0xd4 ./Libraries/XMCLib/src/xmc_uart.o
  .text.XMC_UART_CH_SetBaudrate
                 0x00000000       0x44 ./Libraries/XMCLib/src/xmc_uart.o
  .text.XMC_UART_CH_SetBaudrateEx
                 0x00000000       0x5c ./Libraries/XMCLib/src/xmc_uart.o
- .text.XMC_UART_CH_Transmit
-                0x00000000       0x4c ./Libraries/XMCLib/src/xmc_uart.o
- .text.XMC_UART_CH_GetReceivedData
-                0x00000000       0x34 ./Libraries/XMCLib/src/xmc_uart.o
  .text.XMC_UART_CH_Stop
                 0x00000000       0x44 ./Libraries/XMCLib/src/xmc_uart.o
  .text.XMC_UART_CH_EnableEvent
                 0x00000000       0x34 ./Libraries/XMCLib/src/xmc_uart.o
  .text.XMC_UART_CH_DisableEvent
                 0x00000000       0x38 ./Libraries/XMCLib/src/xmc_uart.o
- .debug_info    0x00000000      0x9d2 ./Libraries/XMCLib/src/xmc_uart.o
- .debug_abbrev  0x00000000      0x225 ./Libraries/XMCLib/src/xmc_uart.o
- .debug_loc     0x00000000      0x414 ./Libraries/XMCLib/src/xmc_uart.o
- .debug_aranges
-                0x00000000       0x78 ./Libraries/XMCLib/src/xmc_uart.o
- .debug_ranges  0x00000000       0x68 ./Libraries/XMCLib/src/xmc_uart.o
- .debug_line    0x00000000      0x3ef ./Libraries/XMCLib/src/xmc_uart.o
- .debug_str     0x00000000      0xbcc ./Libraries/XMCLib/src/xmc_uart.o
  .comment       0x00000000       0x71 ./Libraries/XMCLib/src/xmc_uart.o
- .debug_frame   0x00000000      0x1f0 ./Libraries/XMCLib/src/xmc_uart.o
- .ARM.attributes
-                0x00000000       0x37 ./Libraries/XMCLib/src/xmc_uart.o
  .text          0x00000000        0x0 ./Libraries/XMCLib/src/xmc_usbd.o
  .data          0x00000000        0x0 ./Libraries/XMCLib/src/xmc_usbd.o
  .bss           0x00000000        0x0 ./Libraries/XMCLib/src/xmc_usbd.o
@@ -1597,14 +1573,8 @@ Discarded input sections
                 0x00000000       0x3c ./Libraries/XMCLib/src/xmc_usic.o
  .text.XMC_USIC_CH_SetBRGInputClockSource
                 0x00000000       0x28 ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_Enable
-                0x00000000       0x74 ./Libraries/XMCLib/src/xmc_usic.o
  .text.XMC_USIC_CH_Disable
                 0x00000000       0x24 ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_SetBaudrate
-                0x00000000       0xe4 ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_SetBaudrateEx
-                0x00000000      0x100 ./Libraries/XMCLib/src/xmc_usic.o
  .text.XMC_USIC_CH_SetBaudrateDivider
                 0x00000000       0x64 ./Libraries/XMCLib/src/xmc_usic.o
  .text.XMC_USIC_CH_GetBaudrate
@@ -1615,36 +1585,11 @@ Discarded input sections
                 0x00000000       0xa0 ./Libraries/XMCLib/src/xmc_usic.o
  .text.XMC_USIC_CH_ConfigExternalInputSignalToBRG
                 0x00000000       0x50 ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_TXFIFO_Configure
-                0x00000000       0x50 ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_RXFIFO_Configure
-                0x00000000       0x54 ./Libraries/XMCLib/src/xmc_usic.o
  .text.XMC_USIC_CH_TXFIFO_SetSizeTriggerLimit
                 0x00000000       0x30 ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit
-                0x00000000       0x30 ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_SetInterruptNodePointer
-                0x00000000       0x38 ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_TXFIFO_SetInterruptNodePointer
-                0x00000000       0x3c ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_CH_RXFIFO_SetInterruptNodePointer
-                0x00000000       0x3c ./Libraries/XMCLib/src/xmc_usic.o
- .text.XMC_USIC_Enable
-                0x00000000       0x84 ./Libraries/XMCLib/src/xmc_usic.o
  .text.XMC_USIC_Disable
                 0x00000000       0x48 ./Libraries/XMCLib/src/xmc_usic.o
- .debug_info    0x00000000      0xf1c ./Libraries/XMCLib/src/xmc_usic.o
- .debug_abbrev  0x00000000      0x24c ./Libraries/XMCLib/src/xmc_usic.o
- .debug_loc     0x00000000      0x6c6 ./Libraries/XMCLib/src/xmc_usic.o
- .debug_aranges
-                0x00000000       0xb8 ./Libraries/XMCLib/src/xmc_usic.o
- .debug_ranges  0x00000000       0xa8 ./Libraries/XMCLib/src/xmc_usic.o
- .debug_line    0x00000000      0x578 ./Libraries/XMCLib/src/xmc_usic.o
- .debug_str     0x00000000     0x13fd ./Libraries/XMCLib/src/xmc_usic.o
  .comment       0x00000000       0x71 ./Libraries/XMCLib/src/xmc_usic.o
- .debug_frame   0x00000000      0x330 ./Libraries/XMCLib/src/xmc_usic.o
- .ARM.attributes
-                0x00000000       0x37 ./Libraries/XMCLib/src/xmc_usic.o
  .text          0x00000000        0x0 ./Libraries/XMCLib/src/xmc_vadc.o
  .data          0x00000000        0x0 ./Libraries/XMCLib/src/xmc_vadc.o
  .bss           0x00000000        0x0 ./Libraries/XMCLib/src/xmc_vadc.o
@@ -1843,6 +1788,32 @@ Discarded input sections
  .bss.__dso_handle
                 0x00000000        0x4 ./Libraries/Newlib/syscalls.o
  .comment       0x00000000       0x71 ./Libraries/Newlib/syscalls.o
+ .text          0x00000000        0x0 ./Dave/Generated/UART/uart.o
+ .data          0x00000000        0x0 ./Dave/Generated/UART/uart.o
+ .bss           0x00000000        0x0 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_SetTransmitBufferStatus
+                0x00000000       0x1c ./Dave/Generated/UART/uart.o
+ .text.XMC_UART_CH_Start
+                0x00000000       0x24 ./Dave/Generated/UART/uart.o
+ .text.XMC_UART_CH_SetSamplePoint
+                0x00000000       0x28 ./Dave/Generated/UART/uart.o
+ .rodata.uart_event_status_flags
+                0x00000000       0x14 ./Dave/Generated/UART/uart.o
+ .rodata.uart_event_conf_flags
+                0x00000000       0x14 ./Dave/Generated/UART/uart.o
+ .text.UART_GetAppVersion
+                0x00000000       0x44 ./Dave/Generated/UART/uart.o
+ .text.UART_AbortTransmit
+                0x00000000       0x7c ./Dave/Generated/UART/uart.o
+ .text.UART_AbortReceive
+                0x00000000       0x64 ./Dave/Generated/UART/uart.o
+ .text.UART_SetBaudrate
+                0x00000000       0xd0 ./Dave/Generated/UART/uart.o
+ .comment       0x00000000       0x71 ./Dave/Generated/UART/uart.o
+ .text          0x00000000        0x0 ./Dave/Generated/UART/uart_conf.o
+ .data          0x00000000        0x0 ./Dave/Generated/UART/uart_conf.o
+ .bss           0x00000000        0x0 ./Dave/Generated/UART/uart_conf.o
+ .comment       0x00000000       0x71 ./Dave/Generated/UART/uart_conf.o
  .text          0x00000000        0x0 ./Dave/Generated/TIMER/timer.o
  .data          0x00000000        0x0 ./Dave/Generated/TIMER/timer.o
  .bss           0x00000000        0x0 ./Dave/Generated/TIMER/timer.o
@@ -2032,8 +2003,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x38 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4.o
  .debug_ranges  0x00000000       0x28 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4.o
- .debug_line    0x00000000      0x293 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4.o
- .debug_str     0x00000000      0x453 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4.o
+ .debug_line    0x00000000      0x289 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4.o
+ .debug_str     0x00000000      0x44e ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4.o
  .comment       0x00000000       0x71 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4.o
  .debug_frame   0x00000000       0xac ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4.o
  .ARM.attributes
@@ -2200,6 +2171,8 @@ LOAD ./Libraries/XMCLib/src/xmc_usic.o
 LOAD ./Libraries/XMCLib/src/xmc_vadc.o
 LOAD ./Libraries/XMCLib/src/xmc_wdt.o
 LOAD ./Libraries/Newlib/syscalls.o
+LOAD ./Dave/Generated/UART/uart.o
+LOAD ./Dave/Generated/UART/uart_conf.o
 LOAD ./Dave/Generated/TIMER/timer.o
 LOAD ./Dave/Generated/TIMER/timer_conf.o
 LOAD ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
@@ -2252,7 +2225,6 @@ END GROUP
                 0x08000298                DebugMon_Handler
                 0x08000298                VADC0_C0_0_IRQHandler
                 0x08000298                CAN0_4_IRQHandler
-                0x08000298                USIC0_5_IRQHandler
                 0x08000298                HardFault_Handler
                 0x08000298                VADC0_G1_1_IRQHandler
                 0x08000298                SysTick_Handler
@@ -2299,7 +2271,6 @@ END GROUP
                 0x08000298                VADC0_G0_2_IRQHandler
                 0x08000298                CAN0_3_IRQHandler
                 0x08000298                ETH0_0_IRQHandler
-                0x08000298                USIC0_3_IRQHandler
                 0x08000298                VADC0_C0_2_IRQHandler
                 0x08000298                FCE0_0_IRQHandler
                 0x08000298                VADC0_G1_0_IRQHandler
@@ -2321,7 +2292,7 @@ END GROUP
                 0x08000300                . = ALIGN (0x100)
  *fill*         0x0800029c       0x64 ff
 
-.text           0x08020000     0xa9dc load address 0x0c020000
+.text           0x08020000     0xb938 load address 0x0c020000
                 0x08020000                sText = .
  *(.text .text.* .gnu.linkonce.t.*)
  .text.SystemInit
@@ -2653,475 +2624,601 @@ END GROUP
  .text.XMC_GPIO_Init
                 0x080265b8      0x14c ./Libraries/XMCLib/src/xmc4_gpio.o
                 0x080265b8                XMC_GPIO_Init
- .text.XMC_SCU_GetMirrorStatus
+ .text.XMC_SCU_CLOCK_GetCpuClockFrequency
                 0x08026704       0x18 ./Libraries/XMCLib/src/xmc4_scu.o
+ .text.XMC_SCU_GetMirrorStatus
+                0x0802671c       0x18 ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_lDelay
-                0x0802671c       0x44 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026734       0x44 ./Libraries/XMCLib/src/xmc4_scu.o
  .text.XMC_SCU_INTERUPT_GetEventStatus
-                0x08026760       0x18 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026760                XMC_SCU_INTERUPT_GetEventStatus
+                0x08026778       0x18 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026778                XMC_SCU_INTERUPT_GetEventStatus
  .text.XMC_SCU_INTERRUPT_ClearEventStatus
-                0x08026778       0x1c ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026778                XMC_SCU_INTERRUPT_ClearEventStatus
+                0x08026790       0x1c ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026790                XMC_SCU_INTERRUPT_ClearEventStatus
  .text.XMC_SCU_CLOCK_Init
-                0x08026794       0xf8 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026794                XMC_SCU_CLOCK_Init
+                0x080267ac       0xf8 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x080267ac                XMC_SCU_CLOCK_Init
  .text.XMC_SCU_INTERRUPT_EnableNmiRequest
-                0x0802688c       0x24 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x0802688c                XMC_SCU_INTERRUPT_EnableNmiRequest
+                0x080268a4       0x24 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x080268a4                XMC_SCU_INTERRUPT_EnableNmiRequest
  .text.XMC_SCU_RESET_DeassertPeripheralReset
-                0x080268b0       0x38 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x080268b0                XMC_SCU_RESET_DeassertPeripheralReset
+                0x080268c8       0x38 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x080268c8                XMC_SCU_RESET_DeassertPeripheralReset
  .text.XMC_SCU_RESET_IsPeripheralResetAsserted
-                0x080268e8       0x48 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x080268e8                XMC_SCU_RESET_IsPeripheralResetAsserted
+                0x08026900       0x48 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026900                XMC_SCU_RESET_IsPeripheralResetAsserted
+ .text.XMC_SCU_CLOCK_GetPeripheralClockFrequency
+                0x08026948       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026948                XMC_SCU_CLOCK_GetPeripheralClockFrequency
  .text.XMC_SCU_CLOCK_SetSystemClockSource
-                0x08026930       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026930                XMC_SCU_CLOCK_SetSystemClockSource
+                0x08026968       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026968                XMC_SCU_CLOCK_SetSystemClockSource
  .text.XMC_SCU_CLOCK_SetUsbClockSource
-                0x08026958       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026958                XMC_SCU_CLOCK_SetUsbClockSource
+                0x08026990       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026990                XMC_SCU_CLOCK_SetUsbClockSource
  .text.XMC_SCU_CLOCK_SetWdtClockSource
-                0x08026980       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026980                XMC_SCU_CLOCK_SetWdtClockSource
+                0x080269b8       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x080269b8                XMC_SCU_CLOCK_SetWdtClockSource
  .text.XMC_SCU_CLOCK_SetSystemPllClockSource
-                0x080269a8       0x40 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x080269a8                XMC_SCU_CLOCK_SetSystemPllClockSource
+                0x080269e0       0x40 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x080269e0                XMC_SCU_CLOCK_SetSystemPllClockSource
  .text.XMC_SCU_HIB_SetRtcClockSource
-                0x080269e8       0x3c ./Libraries/XMCLib/src/xmc4_scu.o
-                0x080269e8                XMC_SCU_HIB_SetRtcClockSource
+                0x08026a20       0x3c ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026a20                XMC_SCU_HIB_SetRtcClockSource
  .text.XMC_SCU_HIB_SetStandbyClockSource
-                0x08026a24       0x3c ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026a24                XMC_SCU_HIB_SetStandbyClockSource
+                0x08026a5c       0x3c ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026a5c                XMC_SCU_HIB_SetStandbyClockSource
  .text.XMC_SCU_CLOCK_SetSystemClockDivider
-                0x08026a60       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026a60                XMC_SCU_CLOCK_SetSystemClockDivider
+                0x08026a98       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026a98                XMC_SCU_CLOCK_SetSystemClockDivider
  .text.XMC_SCU_CLOCK_SetCcuClockDivider
-                0x08026a88       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026a88                XMC_SCU_CLOCK_SetCcuClockDivider
+                0x08026ac0       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026ac0                XMC_SCU_CLOCK_SetCcuClockDivider
  .text.XMC_SCU_CLOCK_SetCpuClockDivider
-                0x08026ab0       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026ab0                XMC_SCU_CLOCK_SetCpuClockDivider
+                0x08026ae8       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026ae8                XMC_SCU_CLOCK_SetCpuClockDivider
  .text.XMC_SCU_CLOCK_SetPeripheralClockDivider
-                0x08026ad8       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026ad8                XMC_SCU_CLOCK_SetPeripheralClockDivider
+                0x08026b10       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026b10                XMC_SCU_CLOCK_SetPeripheralClockDivider
  .text.XMC_SCU_CLOCK_SetUsbClockDivider
-                0x08026b00       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026b00                XMC_SCU_CLOCK_SetUsbClockDivider
+                0x08026b38       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026b38                XMC_SCU_CLOCK_SetUsbClockDivider
  .text.XMC_SCU_CLOCK_SetWdtClockDivider
-                0x08026b28       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026b28                XMC_SCU_CLOCK_SetWdtClockDivider
+                0x08026b60       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026b60                XMC_SCU_CLOCK_SetWdtClockDivider
  .text.XMC_SCU_CLOCK_SetECATClockDivider
-                0x08026b50       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026b50                XMC_SCU_CLOCK_SetECATClockDivider
+                0x08026b88       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026b88                XMC_SCU_CLOCK_SetECATClockDivider
  .text.XMC_SCU_CLOCK_EnableClock
-                0x08026b78       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026b78                XMC_SCU_CLOCK_EnableClock
+                0x08026bb0       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026bb0                XMC_SCU_CLOCK_EnableClock
  .text.XMC_SCU_CLOCK_UngatePeripheralClock
-                0x08026b98       0x38 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026b98                XMC_SCU_CLOCK_UngatePeripheralClock
+                0x08026bd0       0x38 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026bd0                XMC_SCU_CLOCK_UngatePeripheralClock
+ .text.XMC_SCU_CLOCK_IsPeripheralClockGated
+                0x08026c08       0x48 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026c08                XMC_SCU_CLOCK_IsPeripheralClockGated
  .text.XMC_SCU_CLOCK_EnableUsbPll
-                0x08026bd0       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026bd0                XMC_SCU_CLOCK_EnableUsbPll
+                0x08026c50       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026c50                XMC_SCU_CLOCK_EnableUsbPll
  .text.XMC_SCU_CLOCK_StartUsbPll
-                0x08026bf0       0xb4 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026bf0                XMC_SCU_CLOCK_StartUsbPll
+                0x08026c70       0xb4 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026c70                XMC_SCU_CLOCK_StartUsbPll
  .text.XMC_SCU_CLOCK_SetBackupClockCalibrationMode
-                0x08026ca4       0x4c ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026ca4                XMC_SCU_CLOCK_SetBackupClockCalibrationMode
+                0x08026d24       0x4c ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026d24                XMC_SCU_CLOCK_SetBackupClockCalibrationMode
  .text.XMC_SCU_HIB_EnableHibernateDomain
-                0x08026cf0       0x58 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026cf0                XMC_SCU_HIB_EnableHibernateDomain
+                0x08026d70       0x58 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026d70                XMC_SCU_HIB_EnableHibernateDomain
  .text.XMC_SCU_CLOCK_IsLowPowerOscillatorStable
-                0x08026d48       0x24 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026d48                XMC_SCU_CLOCK_IsLowPowerOscillatorStable
+                0x08026dc8       0x24 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026dc8                XMC_SCU_CLOCK_IsLowPowerOscillatorStable
  .text.XMC_SCU_CLOCK_EnableLowPowerOscillator
-                0x08026d6c       0x70 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026d6c                XMC_SCU_CLOCK_EnableLowPowerOscillator
+                0x08026dec       0x70 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026dec                XMC_SCU_CLOCK_EnableLowPowerOscillator
  .text.XMC_SCU_CLOCK_EnableHighPerformanceOscillator
-                0x08026ddc       0x50 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026ddc                XMC_SCU_CLOCK_EnableHighPerformanceOscillator
+                0x08026e5c       0x50 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026e5c                XMC_SCU_CLOCK_EnableHighPerformanceOscillator
  .text.XMC_SCU_CLOCK_IsHighPerformanceOscillatorStable
-                0x08026e2c       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026e2c                XMC_SCU_CLOCK_IsHighPerformanceOscillatorStable
+                0x08026eac       0x28 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026eac                XMC_SCU_CLOCK_IsHighPerformanceOscillatorStable
  .text.XMC_SCU_CLOCK_EnableSystemPll
-                0x08026e54       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026e54                XMC_SCU_CLOCK_EnableSystemPll
+                0x08026ed4       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026ed4                XMC_SCU_CLOCK_EnableSystemPll
  .text.XMC_SCU_CLOCK_DisableSystemPll
-                0x08026e74       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026e74                XMC_SCU_CLOCK_DisableSystemPll
+                0x08026ef4       0x20 ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026ef4                XMC_SCU_CLOCK_DisableSystemPll
  .text.XMC_SCU_CLOCK_StartSystemPll
-                0x08026e94      0x19c ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08026e94                XMC_SCU_CLOCK_StartSystemPll
+                0x08026f14      0x19c ./Libraries/XMCLib/src/xmc4_scu.o
+                0x08026f14                XMC_SCU_CLOCK_StartSystemPll
  .text.XMC_SCU_CLOCK_StepSystemPllFrequency
-                0x08027030       0x3c ./Libraries/XMCLib/src/xmc4_scu.o
-                0x08027030                XMC_SCU_CLOCK_StepSystemPllFrequency
+                0x080270b0       0x3c ./Libraries/XMCLib/src/xmc4_scu.o
+                0x080270b0                XMC_SCU_CLOCK_StepSystemPllFrequency
  .text.XMC_CCU4_StartPrescaler
-                0x0802706c       0x1c ./Libraries/XMCLib/src/xmc_ccu4.o
+                0x080270ec       0x1c ./Libraries/XMCLib/src/xmc_ccu4.o
  .text.XMC_CCU4_lDeassertReset
-                0x08027088       0x34 ./Libraries/XMCLib/src/xmc_ccu4.o
+                0x08027108       0x34 ./Libraries/XMCLib/src/xmc_ccu4.o
  .text.XMC_CCU4_lUngateClock
-                0x080270bc       0x34 ./Libraries/XMCLib/src/xmc_ccu4.o
+                0x0802713c       0x34 ./Libraries/XMCLib/src/xmc_ccu4.o
  .text.XMC_CCU4_EnableModule
-                0x080270f0       0x20 ./Libraries/XMCLib/src/xmc_ccu4.o
-                0x080270f0                XMC_CCU4_EnableModule
+                0x08027170       0x20 ./Libraries/XMCLib/src/xmc_ccu4.o
+                0x08027170                XMC_CCU4_EnableModule
  .text.XMC_CCU4_Init
-                0x08027110       0x3c ./Libraries/XMCLib/src/xmc_ccu4.o
-                0x08027110                XMC_CCU4_Init
+                0x08027190       0x3c ./Libraries/XMCLib/src/xmc_ccu4.o
+                0x08027190                XMC_CCU4_Init
  .text.XMC_CCU4_SLICE_CompareInit
-                0x0802714c       0x6c ./Libraries/XMCLib/src/xmc_ccu4.o
-                0x0802714c                XMC_CCU4_SLICE_CompareInit
+                0x080271cc       0x6c ./Libraries/XMCLib/src/xmc_ccu4.o
+                0x080271cc                XMC_CCU4_SLICE_CompareInit
  .text.XMC_CCU4_SLICE_SetInterruptNode
-                0x080271b8       0xc8 ./Libraries/XMCLib/src/xmc_ccu4.o
-                0x080271b8                XMC_CCU4_SLICE_SetInterruptNode
+                0x08027238       0xc8 ./Libraries/XMCLib/src/xmc_ccu4.o
+                0x08027238                XMC_CCU4_SLICE_SetInterruptNode
  .text.XMC_CCU8_StartPrescaler
-                0x08027280       0x1c ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027300       0x1c ./Libraries/XMCLib/src/xmc_ccu8.o
  .text.XMC_CCU8_SLICE_StopTimer
-                0x0802729c       0x18 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x0802731c       0x18 ./Libraries/XMCLib/src/xmc_ccu8.o
  .text.XMC_CCU8_lDeassertReset
-                0x080272b4       0x20 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027334       0x20 ./Libraries/XMCLib/src/xmc_ccu8.o
  .text.XMC_CCU8_lUngateClock
-                0x080272d4       0x20 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027354       0x20 ./Libraries/XMCLib/src/xmc_ccu8.o
  .text.XMC_CCU8_EnableModule
-                0x080272f4       0x20 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080272f4                XMC_CCU8_EnableModule
+                0x08027374       0x20 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027374                XMC_CCU8_EnableModule
  .text.XMC_CCU8_Init
-                0x08027314       0x3c ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x08027314                XMC_CCU8_Init
+                0x08027394       0x3c ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027394                XMC_CCU8_Init
  .text.XMC_CCU8_SLICE_CompareInit
-                0x08027350       0x74 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x08027350                XMC_CCU8_SLICE_CompareInit
+                0x080273d0       0x74 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x080273d0                XMC_CCU8_SLICE_CompareInit
  .text.XMC_CCU8_SetMultiChannelShadowTransferMode
-                0x080273c4       0x38 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080273c4                XMC_CCU8_SetMultiChannelShadowTransferMode
+                0x08027444       0x38 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027444                XMC_CCU8_SetMultiChannelShadowTransferMode
  .text.XMC_CCU8_SLICE_StartConfig
-                0x080273fc       0x5c ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080273fc                XMC_CCU8_SLICE_StartConfig
+                0x0802747c       0x5c ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x0802747c                XMC_CCU8_SLICE_StartConfig
  .text.XMC_CCU8_SLICE_StopConfig
-                0x08027458       0x58 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x08027458                XMC_CCU8_SLICE_StopConfig
+                0x080274d8       0x58 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x080274d8                XMC_CCU8_SLICE_StopConfig
  .text.XMC_CCU8_SLICE_LoadConfig
-                0x080274b0       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080274b0                XMC_CCU8_SLICE_LoadConfig
+                0x08027530       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027530                XMC_CCU8_SLICE_LoadConfig
  .text.XMC_CCU8_SLICE_LoadSelector
-                0x080274e4       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080274e4                XMC_CCU8_SLICE_LoadSelector
+                0x08027564       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027564                XMC_CCU8_SLICE_LoadSelector
  .text.XMC_CCU8_SLICE_ModulationConfig
-                0x08027518       0x90 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x08027518                XMC_CCU8_SLICE_ModulationConfig
+                0x08027598       0x90 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027598                XMC_CCU8_SLICE_ModulationConfig
  .text.XMC_CCU8_SLICE_CountConfig
-                0x080275a8       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080275a8                XMC_CCU8_SLICE_CountConfig
+                0x08027628       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027628                XMC_CCU8_SLICE_CountConfig
  .text.XMC_CCU8_SLICE_GateConfig
-                0x080275dc       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080275dc                XMC_CCU8_SLICE_GateConfig
+                0x0802765c       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x0802765c                XMC_CCU8_SLICE_GateConfig
  .text.XMC_CCU8_SLICE_DirectionConfig
-                0x08027610       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x08027610                XMC_CCU8_SLICE_DirectionConfig
+                0x08027690       0x34 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027690                XMC_CCU8_SLICE_DirectionConfig
  .text.XMC_CCU8_SLICE_StatusBitOverrideConfig
-                0x08027644       0x30 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x08027644                XMC_CCU8_SLICE_StatusBitOverrideConfig
+                0x080276c4       0x30 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x080276c4                XMC_CCU8_SLICE_StatusBitOverrideConfig
  .text.XMC_CCU8_SLICE_TrapConfig
-                0x08027674       0x74 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x08027674                XMC_CCU8_SLICE_TrapConfig
+                0x080276f4       0x74 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x080276f4                XMC_CCU8_SLICE_TrapConfig
  .text.XMC_CCU8_SLICE_ConfigureStatusBitOverrideEvent
-                0x080276e8       0xc4 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080276e8                XMC_CCU8_SLICE_ConfigureStatusBitOverrideEvent
+                0x08027768       0xc4 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027768                XMC_CCU8_SLICE_ConfigureStatusBitOverrideEvent
  .text.XMC_CCU8_SLICE_ConfigureEvent
-                0x080277ac       0xd4 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080277ac                XMC_CCU8_SLICE_ConfigureEvent
+                0x0802782c       0xd4 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x0802782c                XMC_CCU8_SLICE_ConfigureEvent
  .text.XMC_CCU8_SLICE_SetTimerPeriodMatch
-                0x08027880       0x1c ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x08027880                XMC_CCU8_SLICE_SetTimerPeriodMatch
+                0x08027900       0x1c ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027900                XMC_CCU8_SLICE_SetTimerPeriodMatch
  .text.XMC_CCU8_SLICE_SetTimerCompareMatch
-                0x0802789c       0x30 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x0802789c                XMC_CCU8_SLICE_SetTimerCompareMatch
+                0x0802791c       0x30 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x0802791c                XMC_CCU8_SLICE_SetTimerCompareMatch
  .text.XMC_CCU8_SLICE_SetInterruptNode
-                0x080278cc       0xd0 ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x080278cc                XMC_CCU8_SLICE_SetInterruptNode
+                0x0802794c       0xd0 ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x0802794c                XMC_CCU8_SLICE_SetInterruptNode
  .text.XMC_CCU8_SLICE_DeadTimeInit
-                0x0802799c       0x2c ./Libraries/XMCLib/src/xmc_ccu8.o
-                0x0802799c                XMC_CCU8_SLICE_DeadTimeInit
+                0x08027a1c       0x2c ./Libraries/XMCLib/src/xmc_ccu8.o
+                0x08027a1c                XMC_CCU8_SLICE_DeadTimeInit
  .text.XMC_ECAT_Enable
-                0x080279c8       0x24 ./Libraries/XMCLib/src/xmc_ecat.o
-                0x080279c8                XMC_ECAT_Enable
+                0x08027a48       0x24 ./Libraries/XMCLib/src/xmc_ecat.o
+                0x08027a48                XMC_ECAT_Enable
  .text.XMC_ECAT_Init
-                0x080279ec       0x78 ./Libraries/XMCLib/src/xmc_ecat.o
-                0x080279ec                XMC_ECAT_Init
+                0x08027a6c       0x78 ./Libraries/XMCLib/src/xmc_ecat.o
+                0x08027a6c                XMC_ECAT_Init
  .text.XMC_ECAT_DisableEvent
-                0x08027a64       0x28 ./Libraries/XMCLib/src/xmc_ecat.o
-                0x08027a64                XMC_ECAT_DisableEvent
+                0x08027ae4       0x28 ./Libraries/XMCLib/src/xmc_ecat.o
+                0x08027ae4                XMC_ECAT_DisableEvent
  .text.XMC_ECAT_DisableSyncManChannel
-                0x08027a8c       0x38 ./Libraries/XMCLib/src/xmc_ecat.o
-                0x08027a8c                XMC_ECAT_DisableSyncManChannel
+                0x08027b0c       0x38 ./Libraries/XMCLib/src/xmc_ecat.o
+                0x08027b0c                XMC_ECAT_DisableSyncManChannel
  .text.XMC_ERU_ETL_Init
-                0x08027ac4       0x4c ./Libraries/XMCLib/src/xmc_eru.o
-                0x08027ac4                XMC_ERU_ETL_Init
+                0x08027b44       0x4c ./Libraries/XMCLib/src/xmc_eru.o
+                0x08027b44                XMC_ERU_ETL_Init
  .text.XMC_ERU_OGU_Init
-                0x08027b10       0x28 ./Libraries/XMCLib/src/xmc_eru.o
-                0x08027b10                XMC_ERU_OGU_Init
+                0x08027b90       0x28 ./Libraries/XMCLib/src/xmc_eru.o
+                0x08027b90                XMC_ERU_OGU_Init
  .text.XMC_FCE_Init
-                0x08027b38       0x2c ./Libraries/XMCLib/src/xmc_fce.o
-                0x08027b38                XMC_FCE_Init
+                0x08027bb8       0x2c ./Libraries/XMCLib/src/xmc_fce.o
+                0x08027bb8                XMC_FCE_Init
  .text.XMC_FCE_Enable
-                0x08027b64       0x28 ./Libraries/XMCLib/src/xmc_fce.o
-                0x08027b64                XMC_FCE_Enable
+                0x08027be4       0x28 ./Libraries/XMCLib/src/xmc_fce.o
+                0x08027be4                XMC_FCE_Enable
  .text.XMC_FCE_CalculateCRC32
-                0x08027b8c       0x60 ./Libraries/XMCLib/src/xmc_fce.o
-                0x08027b8c                XMC_FCE_CalculateCRC32
+                0x08027c0c       0x60 ./Libraries/XMCLib/src/xmc_fce.o
+                0x08027c0c                XMC_FCE_CalculateCRC32
  .text.XMC_GPIO_SetMode
-                0x08027bec       0x80 ./Libraries/XMCLib/src/xmc_gpio.o
-                0x08027bec                XMC_GPIO_SetMode
+                0x08027c6c       0x80 ./Libraries/XMCLib/src/xmc_gpio.o
+                0x08027c6c                XMC_GPIO_SetMode
  .text.XMC_GPIO_SetHardwareControl
-                0x08027c6c       0x44 ./Libraries/XMCLib/src/xmc_gpio.o
-                0x08027c6c                XMC_GPIO_SetHardwareControl
- .text._sbrk    0x08027cb0       0x68 ./Libraries/Newlib/syscalls.o
-                0x08027cb0                _sbrk
- .text._init    0x08027d18        0xc ./Libraries/Newlib/syscalls.o
-                0x08027d18                _init
+                0x08027cec       0x44 ./Libraries/XMCLib/src/xmc_gpio.o
+                0x08027cec                XMC_GPIO_SetHardwareControl
+ .text.XMC_USIC_CH_GetTransmitBufferStatus
+                0x08027d30       0x20 ./Libraries/XMCLib/src/xmc_uart.o
+ .text.XMC_UART_CH_ClearStatusFlag
+                0x08027d50       0x1c ./Libraries/XMCLib/src/xmc_uart.o
+ .text.XMC_UART_CH_InitEx
+                0x08027d6c       0xd4 ./Libraries/XMCLib/src/xmc_uart.o
+                0x08027d6c                XMC_UART_CH_InitEx
+ .text.XMC_UART_CH_Transmit
+                0x08027e40       0x4c ./Libraries/XMCLib/src/xmc_uart.o
+                0x08027e40                XMC_UART_CH_Transmit
+ .text.XMC_UART_CH_GetReceivedData
+                0x08027e8c       0x34 ./Libraries/XMCLib/src/xmc_uart.o
+                0x08027e8c                XMC_UART_CH_GetReceivedData
+ .text.XMC_USIC_CH_Enable
+                0x08027ec0       0x74 ./Libraries/XMCLib/src/xmc_usic.o
+                0x08027ec0                XMC_USIC_CH_Enable
+ .text.XMC_USIC_CH_SetBaudrate
+                0x08027f34       0xe4 ./Libraries/XMCLib/src/xmc_usic.o
+                0x08027f34                XMC_USIC_CH_SetBaudrate
+ .text.XMC_USIC_CH_SetBaudrateEx
+                0x08028018      0x100 ./Libraries/XMCLib/src/xmc_usic.o
+                0x08028018                XMC_USIC_CH_SetBaudrateEx
+ .text.XMC_USIC_CH_TXFIFO_Configure
+                0x08028118       0x50 ./Libraries/XMCLib/src/xmc_usic.o
+                0x08028118                XMC_USIC_CH_TXFIFO_Configure
+ .text.XMC_USIC_CH_RXFIFO_Configure
+                0x08028168       0x54 ./Libraries/XMCLib/src/xmc_usic.o
+                0x08028168                XMC_USIC_CH_RXFIFO_Configure
+ .text.XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit
+                0x080281bc       0x30 ./Libraries/XMCLib/src/xmc_usic.o
+                0x080281bc                XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit
+ .text.XMC_USIC_CH_SetInterruptNodePointer
+                0x080281ec       0x38 ./Libraries/XMCLib/src/xmc_usic.o
+                0x080281ec                XMC_USIC_CH_SetInterruptNodePointer
+ .text.XMC_USIC_CH_TXFIFO_SetInterruptNodePointer
+                0x08028224       0x3c ./Libraries/XMCLib/src/xmc_usic.o
+                0x08028224                XMC_USIC_CH_TXFIFO_SetInterruptNodePointer
+ .text.XMC_USIC_CH_RXFIFO_SetInterruptNodePointer
+                0x08028260       0x3c ./Libraries/XMCLib/src/xmc_usic.o
+                0x08028260                XMC_USIC_CH_RXFIFO_SetInterruptNodePointer
+ .text.XMC_USIC_Enable
+                0x0802829c       0x84 ./Libraries/XMCLib/src/xmc_usic.o
+                0x0802829c                XMC_USIC_Enable
+ .text._sbrk    0x08028320       0x68 ./Libraries/Newlib/syscalls.o
+                0x08028320                _sbrk
+ .text._init    0x08028388        0xc ./Libraries/Newlib/syscalls.o
+                0x08028388                _init
+ .text.XMC_USIC_CH_EnableEvent
+                0x08028394       0x20 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_DisableEvent
+                0x080283b4       0x24 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_GetTransmitBufferStatus
+                0x080283d8       0x20 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_TriggerServiceRequest
+                0x080283f8       0x20 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_TXFIFO_EnableEvent
+                0x08028418       0x24 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_TXFIFO_DisableEvent
+                0x0802843c       0x28 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_TXFIFO_Flush
+                0x08028464       0x1c ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_TXFIFO_IsFull
+                0x08028480       0x28 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_TXFIFO_IsEmpty
+                0x080284a8       0x28 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_RXFIFO_EnableEvent
+                0x080284d0       0x24 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_RXFIFO_DisableEvent
+                0x080284f4       0x28 ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_RXFIFO_Flush
+                0x0802851c       0x1c ./Dave/Generated/UART/uart.o
+ .text.XMC_USIC_CH_RXFIFO_IsEmpty
+                0x08028538       0x28 ./Dave/Generated/UART/uart.o
+ .text.UART_Init
+                0x08028560       0x24 ./Dave/Generated/UART/uart.o
+                0x08028560                UART_Init
+ .text.UART_Transmit
+                0x08028584       0x38 ./Dave/Generated/UART/uart.o
+                0x08028584                UART_Transmit
+ .text.UART_Receive
+                0x080285bc       0x38 ./Dave/Generated/UART/uart.o
+                0x080285bc                UART_Receive
+ .text.UART_StartTransmitIRQ
+                0x080285f4       0xb8 ./Dave/Generated/UART/uart.o
+                0x080285f4                UART_StartTransmitIRQ
+ .text.UART_StartReceiveIRQ
+                0x080286ac       0xac ./Dave/Generated/UART/uart.o
+                0x080286ac                UART_StartReceiveIRQ
+ .text.UART_lTransmitHandler
+                0x08028758      0x10c ./Dave/Generated/UART/uart.o
+                0x08028758                UART_lTransmitHandler
+ .text.UART_lReceiveHandler
+                0x08028864      0x120 ./Dave/Generated/UART/uart.o
+                0x08028864                UART_lReceiveHandler
+ .text.UART_lReconfigureRxFIFO
+                0x08028984       0x50 ./Dave/Generated/UART/uart.o
+ .text.__NVIC_GetPriorityGrouping
+                0x080289d4       0x1c ./Dave/Generated/UART/uart_conf.o
+ .text.__NVIC_EnableIRQ
+                0x080289f0       0x38 ./Dave/Generated/UART/uart_conf.o
+ .text.__NVIC_SetPriority
+                0x08028a28       0x54 ./Dave/Generated/UART/uart_conf.o
+ .text.NVIC_EncodePriority
+                0x08028a7c       0x64 ./Dave/Generated/UART/uart_conf.o
+ .text.XMC_USIC_CH_SetInputSource
+                0x08028ae0       0x3c ./Dave/Generated/UART/uart_conf.o
+ .text.XMC_UART_CH_Init
+                0x08028b1c       0x1c ./Dave/Generated/UART/uart_conf.o
+ .text.XMC_UART_CH_Start
+                0x08028b38       0x24 ./Dave/Generated/UART/uart_conf.o
+ .text.UART_0_init
+                0x08028b5c       0xd4 ./Dave/Generated/UART/uart_conf.o
+                0x08028b5c                UART_0_init
+ .text.USIC0_3_IRQHandler
+                0x08028c30       0x10 ./Dave/Generated/UART/uart_conf.o
+                0x08028c30                USIC0_3_IRQHandler
+ .text.USIC0_5_IRQHandler
+                0x08028c40       0x10 ./Dave/Generated/UART/uart_conf.o
+                0x08028c40                USIC0_5_IRQHandler
  .text.XMC_CCU4_EnableClock
-                0x08027d24       0x20 ./Dave/Generated/TIMER/timer.o
+                0x08028c50       0x20 ./Dave/Generated/TIMER/timer.o
  .text.XMC_CCU4_SLICE_StartTimer
-                0x08027d44       0x18 ./Dave/Generated/TIMER/timer.o
+                0x08028c70       0x18 ./Dave/Generated/TIMER/timer.o
  .text.XMC_CCU4_SLICE_ClearTimer
-                0x08027d5c       0x18 ./Dave/Generated/TIMER/timer.o
+                0x08028c88       0x18 ./Dave/Generated/TIMER/timer.o
  .text.XMC_CCU4_SLICE_SetTimerPeriodMatch
-                0x08027d74       0x1c ./Dave/Generated/TIMER/timer.o
+                0x08028ca0       0x1c ./Dave/Generated/TIMER/timer.o
  .text.XMC_CCU4_SLICE_SetTimerCompareMatch
-                0x08027d90       0x1c ./Dave/Generated/TIMER/timer.o
+                0x08028cbc       0x1c ./Dave/Generated/TIMER/timer.o
  .text.XMC_CCU4_EnableShadowTransfer
-                0x08027dac       0x1c ./Dave/Generated/TIMER/timer.o
+                0x08028cd8       0x1c ./Dave/Generated/TIMER/timer.o
  .text.XMC_CCU4_SLICE_EnableEvent
-                0x08027dc8       0x2c ./Dave/Generated/TIMER/timer.o
+                0x08028cf4       0x2c ./Dave/Generated/TIMER/timer.o
  .text.TIMER_Init
-                0x08027df4       0x3c ./Dave/Generated/TIMER/timer.o
-                0x08027df4                TIMER_Init
+                0x08028d20       0x3c ./Dave/Generated/TIMER/timer.o
+                0x08028d20                TIMER_Init
  .text.TIMER_Start
-                0x08027e30       0x3c ./Dave/Generated/TIMER/timer.o
-                0x08027e30                TIMER_Start
+                0x08028d5c       0x3c ./Dave/Generated/TIMER/timer.o
+                0x08028d5c                TIMER_Start
  .text.TIMER_CCU4_lInit
-                0x08027e6c       0x98 ./Dave/Generated/TIMER/timer.o
-                0x08027e6c                TIMER_CCU4_lInit
+                0x08028d98       0x98 ./Dave/Generated/TIMER/timer.o
+                0x08028d98                TIMER_CCU4_lInit
  .text.TIMER_CCU4_lShadowTransfer
-                0x08027f04       0x3c ./Dave/Generated/TIMER/timer.o
-                0x08027f04                TIMER_CCU4_lShadowTransfer
+                0x08028e30       0x3c ./Dave/Generated/TIMER/timer.o
+                0x08028e30                TIMER_CCU4_lShadowTransfer
  .text.XMC_CCU8_EnableClock
-                0x08027f40       0x20 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08028e6c       0x20 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.XMC_CCU8_SLICE_EnableTrap
-                0x08027f60       0x24 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08028e8c       0x24 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.XMC_CCU8_SLICE_StartTimer
-                0x08027f84       0x18 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08028eb0       0x18 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.XMC_CCU8_SLICE_GetTimerPeriodMatch
-                0x08027f9c       0x1c ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08028ec8       0x1c ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.XMC_CCU8_EnableShadowTransfer
-                0x08027fb8       0x1c ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08028ee4       0x1c ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.XMC_CCU8_SLICE_EnableEvent
-                0x08027fd4       0x2c ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08028f00       0x2c ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.XMC_CCU8_SLICE_SetShadowTransferMode
-                0x08028000       0x30 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08028f2c       0x30 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.PWM_CCU8_Init
-                0x08028030      0x170 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
-                0x08028030                PWM_CCU8_Init
+                0x08028f5c      0x170 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08028f5c                PWM_CCU8_Init
  .text.PWM_CCU8_lInit_Interrupt
-                0x080281a0      0x188 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x080290cc      0x188 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.PWM_CCU8_lInit_GPIO
-                0x08028328       0xbc ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08029254       0xbc ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.PWM_CCU8_lConfigure_Events
-                0x080283e4      0x1e0 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08029310      0x1e0 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .text.PWM_CCU8_Start
-                0x080285c4       0x58 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
-                0x080285c4                PWM_CCU8_Start
+                0x080294f0       0x58 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x080294f0                PWM_CCU8_Start
  .text.PWM_CCU8_SetDutyCycleSymmetric
-                0x0802861c       0x98 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
-                0x0802861c                PWM_CCU8_SetDutyCycleSymmetric
+                0x08029548       0x98 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x08029548                PWM_CCU8_SetDutyCycleSymmetric
  .text.__NVIC_GetPriorityGrouping
-                0x080286b4       0x1c ./Dave/Generated/INTERRUPT/interrupt.o
+                0x080295e0       0x1c ./Dave/Generated/INTERRUPT/interrupt.o
  .text.__NVIC_EnableIRQ
-                0x080286d0       0x38 ./Dave/Generated/INTERRUPT/interrupt.o
+                0x080295fc       0x38 ./Dave/Generated/INTERRUPT/interrupt.o
  .text.__NVIC_SetPriority
-                0x08028708       0x54 ./Dave/Generated/INTERRUPT/interrupt.o
+                0x08029634       0x54 ./Dave/Generated/INTERRUPT/interrupt.o
  .text.NVIC_EncodePriority
-                0x0802875c       0x64 ./Dave/Generated/INTERRUPT/interrupt.o
+                0x08029688       0x64 ./Dave/Generated/INTERRUPT/interrupt.o
  .text.INTERRUPT_Enable
-                0x080287c0       0x1c ./Dave/Generated/INTERRUPT/interrupt.o
+                0x080296ec       0x1c ./Dave/Generated/INTERRUPT/interrupt.o
  .text.INTERRUPT_Init
-                0x080287dc       0x4c ./Dave/Generated/INTERRUPT/interrupt.o
-                0x080287dc                INTERRUPT_Init
+                0x08029708       0x4c ./Dave/Generated/INTERRUPT/interrupt.o
+                0x08029708                INTERRUPT_Init
  .text.XMC_CCU8_StartPrescaler
-                0x08028828       0x1c ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+                0x08029754       0x1c ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
  .text.GLOBAL_CCU8_Init
-                0x08028844       0x40 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
-                0x08028844                GLOBAL_CCU8_Init
+                0x08029770       0x40 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+                0x08029770                GLOBAL_CCU8_Init
  .text.XMC_CCU4_StartPrescaler
-                0x08028884       0x1c ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+                0x080297b0       0x1c ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
  .text.GLOBAL_CCU4_Init
-                0x080288a0       0x40 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
-                0x080288a0                GLOBAL_CCU4_Init
+                0x080297cc       0x40 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+                0x080297cc                GLOBAL_CCU4_Init
  .text.XMC_FLASH_SetMargin
-                0x080288e0       0x34 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x0802980c       0x34 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.XMC_FLASH_EnableDoubleBitErrorTrap
-                0x08028914       0x28 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029840       0x28 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.XMC_FLASH_DisableDoubleBitErrorTrap
-                0x0802893c       0x28 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029868       0x28 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.XMC_FCE_InitializeSeedValue
-                0x08028964       0x1c ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029890       0x1c ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.E_EEPROM_XMC4_Init
-                0x08028980       0xd4 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
-                0x08028980                E_EEPROM_XMC4_Init
+                0x080298ac       0xd4 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x080298ac                E_EEPROM_XMC4_Init
  .text.E_EEPROM_XMC4_WriteArray
-                0x08028a54       0x64 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
-                0x08028a54                E_EEPROM_XMC4_WriteArray
+                0x08029980       0x64 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029980                E_EEPROM_XMC4_WriteArray
  .text.E_EEPROM_XMC4_ReadArray
-                0x08028ab8       0x4c ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
-                0x08028ab8                E_EEPROM_XMC4_ReadArray
+                0x080299e4       0x4c ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x080299e4                E_EEPROM_XMC4_ReadArray
  .text.E_EEPROM_XMC4_UpdateFlashContents
-                0x08028b04       0xa4 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
-                0x08028b04                E_EEPROM_XMC4_UpdateFlashContents
+                0x08029a30       0xa4 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029a30                E_EEPROM_XMC4_UpdateFlashContents
  .text.E_EEPROM_XMC4_IsFlashEmpty
-                0x08028ba8       0x28 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
-                0x08028ba8                E_EEPROM_XMC4_IsFlashEmpty
+                0x08029ad4       0x28 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029ad4                E_EEPROM_XMC4_IsFlashEmpty
  .text.E_EEPROM_XMC4_lWriteToFlash
-                0x08028bd0       0x7c ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029afc       0x7c ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.E_EEPROM_XMC4_lInitReadSectorInfo
-                0x08028c4c       0xac ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029b78       0xac ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.E_EEPROM_XMC4_lInitEraseStateMachine
-                0x08028cf8       0x80 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029c24       0x80 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.E_EEPROM_XMC4_lCalculateCRC
-                0x08028d78       0x30 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029ca4       0x30 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.E_EEPROM_XMC4_lCopyFlashToRam
-                0x08028da8       0x4c ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x08029cd4       0x4c ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .text.EVENT_GENERATOR_Init
-                0x08028df4       0x48 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
-                0x08028df4                EVENT_GENERATOR_Init
+                0x08029d20       0x48 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+                0x08029d20                EVENT_GENERATOR_Init
  .text.EVENT_DETECTOR_Init
-                0x08028e3c       0x3c ./Dave/Generated/EVENT_DETECTOR/event_detector.o
-                0x08028e3c                EVENT_DETECTOR_Init
+                0x08029d68       0x3c ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+                0x08029d68                EVENT_DETECTOR_Init
  .text.ECAT_SSC_Init
-                0x08028e78       0xd0 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
-                0x08028e78                ECAT_SSC_Init
+                0x08029da4       0xd0 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+                0x08029da4                ECAT_SSC_Init
  .text.__NVIC_GetPriorityGrouping
-                0x08028f48       0x1c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x08029e74       0x1c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.__NVIC_EnableIRQ
-                0x08028f64       0x38 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x08029e90       0x38 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.__NVIC_DisableIRQ
-                0x08028f9c       0x44 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x08029ec8       0x44 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.__NVIC_SetPriority
-                0x08028fe0       0x54 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x08029f0c       0x54 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.NVIC_EncodePriority
-                0x08029034       0x64 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x08029f60       0x64 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.XMC_ECAT_SetPortControl
-                0x08029098       0x2c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x08029fc4       0x2c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.HW_EscRead
-                0x080290c4       0x2c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x08029ff0       0x2c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.HW_EscWrite
-                0x080290f0       0x2c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a01c       0x2c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.INTERRUPT_Enable
-                0x0802911c       0x1c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a048       0x1c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .text.INTERRUPT_Disable
-                0x08029138       0x1c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
- .text.HW_Init  0x08029154      0x3a0 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
-                0x08029154                HW_Init
+                0x0802a064       0x1c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+ .text.HW_Init  0x0802a080      0x2d0 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a080                HW_Init
  .text.HW_EepromWrite
-                0x080294f4       0x94 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
-                0x080294f4                HW_EepromWrite
+                0x0802a350       0x94 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a350                HW_EepromWrite
  .text.HW_EepromReload
-                0x08029588       0x8c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
-                0x08029588                HW_EepromReload
+                0x0802a3e4       0x8c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a3e4                HW_EepromReload
  .text.ECAT0_0_IRQHandler
-                0x08029614        0xc ./Dave/Generated/ECAT_SSC/xmc_eschw.o
-                0x08029614                ECAT0_0_IRQHandler
+                0x0802a470        0xc ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a470                ECAT0_0_IRQHandler
  .text.CCU41_1_IRQHandler
-                0x08029620       0x18 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
-                0x08029620                CCU41_1_IRQHandler
+                0x0802a47c       0x18 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a47c                CCU41_1_IRQHandler
  .text.ENABLE_ESC_INT
-                0x08029638       0x1c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
-                0x08029638                ENABLE_ESC_INT
+                0x0802a494       0x1c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a494                ENABLE_ESC_INT
  .text.DISABLE_ESC_INT
-                0x08029654       0x40 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
-                0x08029654                DISABLE_ESC_INT
+                0x0802a4b0       0x40 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0802a4b0                DISABLE_ESC_INT
  .text.__NVIC_SetPriorityGrouping
-                0x08029694       0x48 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+                0x0802a4f0       0x48 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
  .text.SystemCoreSetup
-                0x080296dc       0xa0 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
-                0x080296dc                SystemCoreSetup
+                0x0802a538       0xa0 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+                0x0802a538                SystemCoreSetup
  .text.CLOCK_XMC4_Init
-                0x0802977c       0x20 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
-                0x0802977c                CLOCK_XMC4_Init
+                0x0802a5d8       0x20 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+                0x0802a5d8                CLOCK_XMC4_Init
  .text.OSCHP_GetFrequency
-                0x0802979c       0x14 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
-                0x0802979c                OSCHP_GetFrequency
+                0x0802a5f8       0x14 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+                0x0802a5f8                OSCHP_GetFrequency
  .text.XMC_SCU_CLOCK_SetECATClockSource
-                0x080297b0       0x28 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+                0x0802a60c       0x28 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
  .text.SystemCoreClockSetup
-                0x080297d8       0x60 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
-                0x080297d8                SystemCoreClockSetup
+                0x0802a634       0x60 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+                0x0802a634                SystemCoreClockSetup
  .text.DAVE_Init
-                0x08029838       0xc4 ./Dave/Generated/DAVE.o
-                0x08029838                DAVE_Init
+                0x0802a694       0xd8 ./Dave/Generated/DAVE.o
+                0x0802a694                DAVE_Init
  .text.__NVIC_EnableIRQ
-                0x080298fc       0x38 ./main.o
+                0x0802a76c       0x38 ./main.o
  .text.__NVIC_DisableIRQ
-                0x08029934       0x44 ./main.o
+                0x0802a7a4       0x44 ./main.o
  .text.INTERRUPT_Enable
-                0x08029978       0x1c ./main.o
+                0x0802a7e8       0x1c ./main.o
  .text.INTERRUPT_Disable
-                0x08029994       0x1c ./main.o
+                0x0802a804       0x1c ./main.o
  .text.XMC_GPIO_SetOutputLevel
-                0x080299b0       0x24 ./main.o
+                0x0802a820       0x24 ./main.o
  .text.XMC_GPIO_SetOutputHigh
-                0x080299d4       0x20 ./main.o
+                0x0802a844       0x20 ./main.o
  .text.XMC_GPIO_GetInput
-                0x080299f4       0x28 ./main.o
+                0x0802a864       0x28 ./main.o
  .text.XMC_GPIO_EnableDigitalInput
-                0x08029a1c       0x2c ./main.o
+                0x0802a88c       0x2c ./main.o
  .text.Init_ECAT_Adapt_LED
-                0x08029a48       0xa4 ./main.o
-                0x08029a48                Init_ECAT_Adapt_LED
+                0x0802a8b8       0xa4 ./main.o
+                0x0802a8b8                Init_ECAT_Adapt_LED
  .text.Init_Relax_Button
-                0x08029aec       0x30 ./main.o
-                0x08029aec                Init_Relax_Button
+                0x0802a95c       0x30 ./main.o
+                0x0802a95c                Init_Relax_Button
  .text.process_app
-                0x08029b1c      0x194 ./main.o
-                0x08029b1c                process_app
- .text.main     0x08029cb0       0x28 ./main.o
-                0x08029cb0                main
+                0x0802a98c      0x1ec ./main.o
+                0x0802a98c                process_app
+ .text.main     0x0802ab78       0x28 ./main.o
+                0x0802ab78                main
  .text.ERU1_0_IRQHandler
-                0x08029cd8        0xc ./main.o
-                0x08029cd8                ERU1_0_IRQHandler
+                0x0802aba0        0xc ./main.o
+                0x0802aba0                ERU1_0_IRQHandler
  .text.ERU1_3_IRQHandler
-                0x08029ce4        0xc ./main.o
-                0x08029ce4                ERU1_3_IRQHandler
+                0x0802abac        0xc ./main.o
+                0x0802abac                ERU1_3_IRQHandler
  .text.ENABLE_ESC_INT_USER
-                0x08029cf0       0x1c ./main.o
-                0x08029cf0                ENABLE_ESC_INT_USER
+                0x0802abb8       0x1c ./main.o
+                0x0802abb8                ENABLE_ESC_INT_USER
  .text.DISABLE_ESC_INT_USER
-                0x08029d0c       0x1c ./main.o
-                0x08029d0c                DISABLE_ESC_INT_USER
- .text.__errno  0x08029d28        0xc c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-errno.o)
-                0x08029d28                __errno
+                0x0802abd4       0x1c ./main.o
+                0x0802abd4                DISABLE_ESC_INT_USER
+ .text.test_isr
+                0x0802abf0       0x34 ./main.o
+                0x0802abf0                test_isr
+ .text.__errno  0x0802ac24        0xc c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-errno.o)
+                0x0802ac24                __errno
  .text.__libc_init_array
-                0x08029d34       0x4c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-init.o)
-                0x08029d34                __libc_init_array
- .text.malloc   0x08029d80       0x10 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-malloc.o)
-                0x08029d80                malloc
- .text.free     0x08029d90       0x10 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-malloc.o)
-                0x08029d90                free
- .text.memcmp   0x08029da0       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcmp.o)
-                0x08029da0                memcmp
- .text.memcpy   0x08029dc0       0x16 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcpy.o)
-                0x08029dc0                memcpy
- .text.memset   0x08029dd6       0x10 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memset.o)
-                0x08029dd6                memset
- *fill*         0x08029de6        0x2 
- .text._free_r  0x08029de8       0x88 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-freer.o)
-                0x08029de8                _free_r
+                0x0802ac30       0x4c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-init.o)
+                0x0802ac30                __libc_init_array
+ .text.malloc   0x0802ac7c       0x10 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-malloc.o)
+                0x0802ac7c                malloc
+ .text.free     0x0802ac8c       0x10 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-malloc.o)
+                0x0802ac8c                free
+ .text.memcmp   0x0802ac9c       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcmp.o)
+                0x0802ac9c                memcmp
+ .text.memcpy   0x0802acbc       0x16 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcpy.o)
+                0x0802acbc                memcpy
+ .text.memset   0x0802acd2       0x10 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memset.o)
+                0x0802acd2                memset
+ *fill*         0x0802ace2        0x2 
+ .text._free_r  0x0802ace4       0x88 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-freer.o)
+                0x0802ace4                _free_r
  .text._malloc_r
-                0x08029e70       0xac c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
-                0x08029e70                _malloc_r
- .text._sbrk_r  0x08029f1c       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-sbrkr.o)
-                0x08029f1c                _sbrk_r
- .text.strlen   0x08029f3c       0x10 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-strlen.o)
-                0x08029f3c                strlen
+                0x0802ad6c       0xac c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
+                0x0802ad6c                _malloc_r
+ .text._sbrk_r  0x0802ae18       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-sbrkr.o)
+                0x0802ae18                _sbrk_r
+ .text.strlen   0x0802ae38       0x10 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-strlen.o)
+                0x0802ae38                strlen
  *(.init)
  *(.fini)
  *crtbegin.o(.ctors)
@@ -3136,187 +3233,202 @@ END GROUP
  *(.dtors)
  *(.rodata .rodata.*)
  .rodata.asEntryDesc0x1600
-                0x08029f4c       0x50 ./SSC/Src/coeappl.o
-                0x08029f4c                asEntryDesc0x1600
+                0x0802ae48       0x50 ./SSC/Src/coeappl.o
+                0x0802ae48                asEntryDesc0x1600
  .rodata.aName0x1600
-                0x08029f9c       0xc0 ./SSC/Src/coeappl.o
-                0x08029f9c                aName0x1600
+                0x0802ae98       0xc0 ./SSC/Src/coeappl.o
+                0x0802ae98                aName0x1600
  .rodata.asEntryDesc0x1A00
-                0x0802a05c       0x50 ./SSC/Src/coeappl.o
-                0x0802a05c                asEntryDesc0x1A00
+                0x0802af58       0x50 ./SSC/Src/coeappl.o
+                0x0802af58                asEntryDesc0x1A00
  .rodata.aName0x1A00
-                0x0802a0ac       0xc0 ./SSC/Src/coeappl.o
-                0x0802a0ac                aName0x1A00
+                0x0802afa8       0xc0 ./SSC/Src/coeappl.o
+                0x0802afa8                aName0x1A00
  .rodata.asEntryDesc0x1C12
-                0x0802a16c        0xc ./SSC/Src/coeappl.o
-                0x0802a16c                asEntryDesc0x1C12
+                0x0802b068        0xc ./SSC/Src/coeappl.o
+                0x0802b068                asEntryDesc0x1C12
  .rodata.aName0x1C12
-                0x0802a178       0x1c ./SSC/Src/coeappl.o
-                0x0802a178                aName0x1C12
+                0x0802b074       0x1c ./SSC/Src/coeappl.o
+                0x0802b074                aName0x1C12
  .rodata.asEntryDesc0x1C13
-                0x0802a194        0xc ./SSC/Src/coeappl.o
-                0x0802a194                asEntryDesc0x1C13
+                0x0802b090        0xc ./SSC/Src/coeappl.o
+                0x0802b090                asEntryDesc0x1C13
  .rodata.aName0x1C13
-                0x0802a1a0       0x1c ./SSC/Src/coeappl.o
-                0x0802a1a0                aName0x1C13
+                0x0802b09c       0x1c ./SSC/Src/coeappl.o
+                0x0802b09c                aName0x1C13
  .rodata.asEntryDesc0x6000
-                0x0802a1bc       0x50 ./SSC/Src/coeappl.o
-                0x0802a1bc                asEntryDesc0x6000
+                0x0802b0b8       0x50 ./SSC/Src/coeappl.o
+                0x0802b0b8                asEntryDesc0x6000
  .rodata.aName0x6000
-                0x0802a20c       0xa0 ./SSC/Src/coeappl.o
-                0x0802a20c                aName0x6000
+                0x0802b108       0xa0 ./SSC/Src/coeappl.o
+                0x0802b108                aName0x6000
  .rodata.asEntryDesc0x7000
-                0x0802a2ac       0x50 ./SSC/Src/coeappl.o
-                0x0802a2ac                asEntryDesc0x7000
+                0x0802b1a8       0x50 ./SSC/Src/coeappl.o
+                0x0802b1a8                asEntryDesc0x7000
  .rodata.aName0x7000
-                0x0802a2fc       0xac ./SSC/Src/coeappl.o
-                0x0802a2fc                aName0x7000
+                0x0802b1f8       0xac ./SSC/Src/coeappl.o
+                0x0802b1f8                aName0x7000
  .rodata.asEntryDesc0xF000
-                0x0802a3a8       0x14 ./SSC/Src/coeappl.o
-                0x0802a3a8                asEntryDesc0xF000
+                0x0802b2a4       0x14 ./SSC/Src/coeappl.o
+                0x0802b2a4                asEntryDesc0xF000
  .rodata.aName0xF000
-                0x0802a3bc       0x44 ./SSC/Src/coeappl.o
-                0x0802a3bc                aName0xF000
+                0x0802b2b8       0x44 ./SSC/Src/coeappl.o
+                0x0802b2b8                aName0xF000
  .rodata.sEntryDesc0x1000
-                0x0802a400        0x8 ./SSC/Src/coeappl.o
-                0x0802a400                sEntryDesc0x1000
+                0x0802b2fc        0x8 ./SSC/Src/coeappl.o
+                0x0802b2fc                sEntryDesc0x1000
  .rodata.aName0x1000
-                0x0802a408        0xc ./SSC/Src/coeappl.o
-                0x0802a408                aName0x1000
+                0x0802b304        0xc ./SSC/Src/coeappl.o
+                0x0802b304                aName0x1000
  .rodata.sEntryDesc0x1001
-                0x0802a414        0x8 ./SSC/Src/coeappl.o
-                0x0802a414                sEntryDesc0x1001
+                0x0802b310        0x8 ./SSC/Src/coeappl.o
+                0x0802b310                sEntryDesc0x1001
  .rodata.aName0x1001
-                0x0802a41c       0x10 ./SSC/Src/coeappl.o
-                0x0802a41c                aName0x1001
+                0x0802b318       0x10 ./SSC/Src/coeappl.o
+                0x0802b318                aName0x1001
  .rodata.sEntryDesc0x1008
-                0x0802a42c        0x8 ./SSC/Src/coeappl.o
-                0x0802a42c                sEntryDesc0x1008
+                0x0802b328        0x8 ./SSC/Src/coeappl.o
+                0x0802b328                sEntryDesc0x1008
  .rodata.aName0x1008
-                0x0802a434        0xc ./SSC/Src/coeappl.o
-                0x0802a434                aName0x1008
+                0x0802b330        0xc ./SSC/Src/coeappl.o
+                0x0802b330                aName0x1008
  .rodata.sEntryDesc0x1009
-                0x0802a440        0x8 ./SSC/Src/coeappl.o
-                0x0802a440                sEntryDesc0x1009
+                0x0802b33c        0x8 ./SSC/Src/coeappl.o
+                0x0802b33c                sEntryDesc0x1009
  .rodata.aName0x1009
-                0x0802a448       0x14 ./SSC/Src/coeappl.o
-                0x0802a448                aName0x1009
+                0x0802b344       0x14 ./SSC/Src/coeappl.o
+                0x0802b344                aName0x1009
  .rodata.sEntryDesc0x100A
-                0x0802a45c        0x8 ./SSC/Src/coeappl.o
-                0x0802a45c                sEntryDesc0x100A
+                0x0802b358        0x8 ./SSC/Src/coeappl.o
+                0x0802b358                sEntryDesc0x100A
  .rodata.aName0x100A
-                0x0802a464       0x14 ./SSC/Src/coeappl.o
-                0x0802a464                aName0x100A
+                0x0802b360       0x14 ./SSC/Src/coeappl.o
+                0x0802b360                aName0x100A
  .rodata.asEntryDesc0x1018
-                0x0802a478       0x20 ./SSC/Src/coeappl.o
-                0x0802a478                asEntryDesc0x1018
+                0x0802b374       0x20 ./SSC/Src/coeappl.o
+                0x0802b374                asEntryDesc0x1018
  .rodata.aName0x1018
-                0x0802a498       0x3c ./SSC/Src/coeappl.o
-                0x0802a498                aName0x1018
+                0x0802b394       0x3c ./SSC/Src/coeappl.o
+                0x0802b394                aName0x1018
  .rodata.asEntryDesc0x10F1
-                0x0802a4d4       0x14 ./SSC/Src/coeappl.o
-                0x0802a4d4                asEntryDesc0x10F1
+                0x0802b3d0       0x14 ./SSC/Src/coeappl.o
+                0x0802b3d0                asEntryDesc0x10F1
  .rodata.aName0x10F1
-                0x0802a4e8       0x40 ./SSC/Src/coeappl.o
-                0x0802a4e8                aName0x10F1
+                0x0802b3e4       0x40 ./SSC/Src/coeappl.o
+                0x0802b3e4                aName0x10F1
  .rodata.sEntryDesc0x10F8
-                0x0802a528        0x8 ./SSC/Src/coeappl.o
-                0x0802a528                sEntryDesc0x10F8
+                0x0802b424        0x8 ./SSC/Src/coeappl.o
+                0x0802b424                sEntryDesc0x10F8
  .rodata.aName0x10F8
-                0x0802a530       0x14 ./SSC/Src/coeappl.o
-                0x0802a530                aName0x10F8
+                0x0802b42c       0x14 ./SSC/Src/coeappl.o
+                0x0802b42c                aName0x10F8
  .rodata.asEntryDesc0x1C00
-                0x0802a544        0xc ./SSC/Src/coeappl.o
-                0x0802a544                asEntryDesc0x1C00
+                0x0802b440        0xc ./SSC/Src/coeappl.o
+                0x0802b440                asEntryDesc0x1C00
  .rodata.aName0x1C00
-                0x0802a550       0x14 ./SSC/Src/coeappl.o
-                0x0802a550                aName0x1C00
+                0x0802b44c       0x14 ./SSC/Src/coeappl.o
+                0x0802b44c                aName0x1C00
  .rodata.asEntryDesc0x1C3x
-                0x0802a564       0xc8 ./SSC/Src/coeappl.o
-                0x0802a564                asEntryDesc0x1C3x
+                0x0802b460       0xc8 ./SSC/Src/coeappl.o
+                0x0802b460                asEntryDesc0x1C3x
  .rodata.aName0x1C32
-                0x0802a62c      0x100 ./SSC/Src/coeappl.o
-                0x0802a62c                aName0x1C32
+                0x0802b528      0x100 ./SSC/Src/coeappl.o
+                0x0802b528                aName0x1C32
  .rodata.aName0x1C33
-                0x0802a72c      0x100 ./SSC/Src/coeappl.o
-                0x0802a72c                aName0x1C33
+                0x0802b628      0x100 ./SSC/Src/coeappl.o
+                0x0802b628                aName0x1C33
  .rodata.cBitMask
-                0x0802a82c       0x20 ./SSC/Src/objdef.o
-                0x0802a82c                cBitMask
+                0x0802b728       0x20 ./SSC/Src/objdef.o
+                0x0802b728                cBitMask
  .rodata.cAbortCode
-                0x0802a84c       0x78 ./SSC/Src/sdoserv.o
-                0x0802a84c                cAbortCode
+                0x0802b748       0x78 ./SSC/Src/sdoserv.o
+                0x0802b748                cAbortCode
+ .rodata.UART_0_channel_config
+                0x0802b7c0        0xc ./Dave/Generated/UART/uart_conf.o
+                0x0802b7c0                UART_0_channel_config
+ .rodata.UART_0_tx_pin_config
+                0x0802b7cc        0xc ./Dave/Generated/UART/uart_conf.o
+                0x0802b7cc                UART_0_tx_pin_config
+ .rodata.UART_0_tx_pin
+                0x0802b7d8        0xc ./Dave/Generated/UART/uart_conf.o
+                0x0802b7d8                UART_0_tx_pin
+ .rodata.UART_0_config
+                0x0802b7e4       0x30 ./Dave/Generated/UART/uart_conf.o
+                0x0802b7e4                UART_0_config
+ .rodata.UART_0_rx_pin_config
+                0x0802b814        0xc ./Dave/Generated/UART/uart_conf.o
+                0x0802b814                UART_0_rx_pin_config
  .rodata.PWM_CCU8_0_timer_handle
-                0x0802a8c4       0x10 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                0x0802a8c4                PWM_CCU8_0_timer_handle
+                0x0802b820       0x10 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x0802b820                PWM_CCU8_0_timer_handle
  .rodata.PWM_CCU8_0_event0_config
-                0x0802a8d4        0x4 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                0x0802a8d4                PWM_CCU8_0_event0_config
+                0x0802b830        0x4 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x0802b830                PWM_CCU8_0_event0_config
  .rodata.PWM_CCU8_0_event1_config
-                0x0802a8d8        0x4 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                0x0802a8d8                PWM_CCU8_0_event1_config
+                0x0802b834        0x4 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x0802b834                PWM_CCU8_0_event1_config
  .rodata.PWM_CCU8_0_event2_config
-                0x0802a8dc        0x4 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                0x0802a8dc                PWM_CCU8_0_event2_config
+                0x0802b838        0x4 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x0802b838                PWM_CCU8_0_event2_config
  .rodata.PWM_CCU8_0_dt_config
-                0x0802a8e0        0xc ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                0x0802a8e0                PWM_CCU8_0_dt_config
+                0x0802b83c        0xc ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x0802b83c                PWM_CCU8_0_dt_config
  .rodata.PWM_CCU8_0_ch1_out1_config
-                0x0802a8ec        0xc ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                0x0802a8ec                PWM_CCU8_0_ch1_out1_config
+                0x0802b848        0xc ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x0802b848                PWM_CCU8_0_ch1_out1_config
  .rodata.PWM_CCU8_0_config_handle
-                0x0802a8f8       0x90 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                0x0802a8f8                PWM_CCU8_0_config_handle
+                0x0802b854       0x90 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x0802b854                PWM_CCU8_0_config_handle
  .rodata.INT_SYNC0
-                0x0802a988        0x4 ./Dave/Generated/INTERRUPT/interrupt_conf.o
-                0x0802a988                INT_SYNC0
+                0x0802b8e4        0x4 ./Dave/Generated/INTERRUPT/interrupt_conf.o
+                0x0802b8e4                INT_SYNC0
  .rodata.INT_SYNC1
-                0x0802a98c        0x4 ./Dave/Generated/INTERRUPT/interrupt_conf.o
-                0x0802a98c                INT_SYNC1
+                0x0802b8e8        0x4 ./Dave/Generated/INTERRUPT/interrupt_conf.o
+                0x0802b8e8                INT_SYNC1
  .rodata.INTERRUPT_0
-                0x0802a990        0x4 ./Dave/Generated/INTERRUPT/interrupt_conf.o
-                0x0802a990                INTERRUPT_0
+                0x0802b8ec        0x4 ./Dave/Generated/INTERRUPT/interrupt_conf.o
+                0x0802b8ec                INTERRUPT_0
  .rodata.e_eeprom_xmc4_fce
-                0x0802a994        0xc ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x0802b8f0        0xc ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .rodata.EG_SYNC0_OGU_Config
-                0x0802a9a0        0x4 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
-                0x0802a9a0                EG_SYNC0_OGU_Config
+                0x0802b8fc        0x4 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+                0x0802b8fc                EG_SYNC0_OGU_Config
  .rodata.EG_SYNC1_OGU_Config
-                0x0802a9a4        0x4 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
-                0x0802a9a4                EG_SYNC1_OGU_Config
+                0x0802b900        0x4 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+                0x0802b900                EG_SYNC1_OGU_Config
  .rodata.ED_SYNC0_ETL_Config
-                0x0802a9a8        0x8 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
-                0x0802a9a8                ED_SYNC0_ETL_Config
+                0x0802b904        0x8 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+                0x0802b904                ED_SYNC0_ETL_Config
  .rodata.ED_SYNC1_ETL_Config
-                0x0802a9b0        0x8 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
-                0x0802a9b0                ED_SYNC1_ETL_Config
+                0x0802b90c        0x8 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+                0x0802b90c                ED_SYNC1_ETL_Config
  .rodata.ECAT_SSC_0
-                0x0802a9b8        0xc ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
-                0x0802a9b8                ECAT_SSC_0
- .rodata        0x0802a9c4       0x14 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+                0x0802b914        0xc ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
+                0x0802b914                ECAT_SSC_0
+ .rodata        0x0802b920       0x14 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
  .rodata.str1.1
-                0x0802a9d8        0x2 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-impure.o)
+                0x0802b934        0x2 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-impure.o)
  *(.gnu.linkonce.r*)
  *(vtable)
-                0x0802a9dc                . = ALIGN (0x4)
- *fill*         0x0802a9da        0x2 
+                0x0802b938                . = ALIGN (0x4)
+ *fill*         0x0802b936        0x2 
 
-.glue_7         0x0802a9dc        0x0 load address 0x0c02a9dc
+.glue_7         0x0802b938        0x0 load address 0x0c02b938
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x0802a9dc        0x0 load address 0x0c02a9dc
+.glue_7t        0x0802b938        0x0 load address 0x0c02b938
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x0802a9dc        0x0 load address 0x0c02a9dc
+.vfp11_veneer   0x0802b938        0x0 load address 0x0c02b938
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0802a9dc        0x0 load address 0x0c02a9dc
+.v4_bx          0x0802b938        0x0 load address 0x0c02b938
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x0802a9dc        0x0 load address 0x0c02a9dc
+.iplt           0x0802b938        0x0 load address 0x0c02b938
  .iplt          0x00000000        0x0 ./Startup/startup_XMC4300.o
 
-.rel.dyn        0x0802a9dc        0x0 load address 0x0c02a9dc
+.rel.dyn        0x0802b938        0x0 load address 0x0c02b938
  .rel.iplt      0x00000000        0x0 ./Startup/startup_XMC4300.o
 
 .eh_frame_hdr
@@ -3327,13 +3439,13 @@ END GROUP
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0802a9dc                . = ALIGN (0x4)
-                0x0802a9dc                __exidx_start = .
+                0x0802b938                . = ALIGN (0x4)
+                0x0802b938                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x0802a9dc                __exidx_end = .
-                0x0802a9dc                . = ALIGN (0x4)
+                0x0802b938                __exidx_end = .
+                0x0802b938                . = ALIGN (0x4)
 
 Stack           0x1fff0000      0x800
                 0x1fff0000                __stack_start = .
@@ -3342,16 +3454,16 @@ Stack           0x1fff0000      0x800
                 0x1fff0800                __stack_end = .
                 0x1fff0800                __initial_sp = .
 
-.ram_code       0x1fff0800        0x0 load address 0x0c02a9dc
+.ram_code       0x1fff0800        0x0 load address 0x0c02b938
                 0x1fff0800                . = ALIGN (0x4)
                 0x1fff0800                __ram_code_start = .
  *(.ram_code)
                 0x1fff0800                . = ALIGN (0x4)
                 0x1fff0800                __ram_code_end = .
-                0x0c02a9dc                __ram_code_load = LOADADDR (.ram_code)
+                0x0c02b938                __ram_code_load = LOADADDR (.ram_code)
                 0x00000000                __ram_code_size = (__ram_code_end - __ram_code_start)
 
-.data           0x1fff0800      0xd38 load address 0x0c02a9dc
+.data           0x1fff0800      0xd44 load address 0x0c02b938
                 0x1fff0800                . = ALIGN (0x4)
                 0x1fff0800                __data_start = .
  *(.data)
@@ -3410,233 +3522,245 @@ Stack           0x1fff0000      0x800
  .data.aSubindexDesc
                 0x1fff13f0       0x10 ./SSC/Src/objdef.o
                 0x1fff13f0                aSubindexDesc
+ .data.UART_0   0x1fff1400        0xc ./Dave/Generated/UART/uart_conf.o
+                0x1fff1400                UART_0
  .data.TIMER_0_config
-                0x1fff1400        0x8 ./Dave/Generated/TIMER/timer_conf.o
-                0x1fff1400                TIMER_0_config
- .data.TIMER_0  0x1fff1408       0x28 ./Dave/Generated/TIMER/timer_conf.o
-                0x1fff1408                TIMER_0
+                0x1fff140c        0x8 ./Dave/Generated/TIMER/timer_conf.o
+                0x1fff140c                TIMER_0_config
+ .data.TIMER_0  0x1fff1414       0x28 ./Dave/Generated/TIMER/timer_conf.o
+                0x1fff1414                TIMER_0
  .data.PWM_CCU8_0
-                0x1fff1430       0x34 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                0x1fff1430                PWM_CCU8_0
+                0x1fff143c       0x34 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x1fff143c                PWM_CCU8_0
  .data.GLOBAL_CCU8_0
-                0x1fff1464       0x10 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
-                0x1fff1464                GLOBAL_CCU8_0
+                0x1fff1470       0x10 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
+                0x1fff1470                GLOBAL_CCU8_0
  .data.GLOBAL_CCU4_0
-                0x1fff1474       0x10 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
-                0x1fff1474                GLOBAL_CCU4_0
+                0x1fff1480       0x10 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
+                0x1fff1480                GLOBAL_CCU4_0
  .data.e_eeprom_xmc4_sector_info
-                0x1fff1484       0x10 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x1fff1490       0x10 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .data.EG_SYNC0
-                0x1fff1494       0x10 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
-                0x1fff1494                EG_SYNC0
+                0x1fff14a0       0x10 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+                0x1fff14a0                EG_SYNC0
  .data.EG_SYNC1
-                0x1fff14a4       0x10 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
-                0x1fff14a4                EG_SYNC1
+                0x1fff14b0       0x10 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+                0x1fff14b0                EG_SYNC1
  .data.ED_SYNC0
-                0x1fff14b4       0x10 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
-                0x1fff14b4                ED_SYNC0
+                0x1fff14c0       0x10 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+                0x1fff14c0                ED_SYNC0
  .data.ED_SYNC1
-                0x1fff14c4       0x10 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
-                0x1fff14c4                ED_SYNC1
+                0x1fff14d0       0x10 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+                0x1fff14d0                ED_SYNC1
  .data.impure_data
-                0x1fff14d4       0x60 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-impure.o)
+                0x1fff14e0       0x60 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-impure.o)
  .data._impure_ptr
-                0x1fff1534        0x4 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-impure.o)
-                0x1fff1534                _impure_ptr
+                0x1fff1540        0x4 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-impure.o)
+                0x1fff1540                _impure_ptr
  *(*.data)
  *(.gnu.linkonce.d*)
-                0x1fff1538                . = ALIGN (0x4)
-                0x1fff1538                PROVIDE (__preinit_array_start, .)
+                0x1fff1544                . = ALIGN (0x4)
+                0x1fff1544                PROVIDE (__preinit_array_start, .)
  *(.preinit_array)
-                0x1fff1538                PROVIDE (__preinit_array_end, .)
-                0x1fff1538                . = ALIGN (0x4)
-                0x1fff1538                PROVIDE (__init_array_start, .)
+                0x1fff1544                PROVIDE (__preinit_array_end, .)
+                0x1fff1544                . = ALIGN (0x4)
+                0x1fff1544                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array)
-                0x1fff1538                PROVIDE (__init_array_end, .)
-                0x1fff1538                . = ALIGN (0x4)
-                0x1fff1538                PROVIDE (__fini_array_start, .)
+                0x1fff1544                PROVIDE (__init_array_end, .)
+                0x1fff1544                . = ALIGN (0x4)
+                0x1fff1544                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array)
-                0x1fff1538                PROVIDE (__fini_array_end, .)
-                0x1fff1538                . = ALIGN (0x4)
-                0x1fff1538                __data_end = .
-                0x0c02a9dc                __data_load = LOADADDR (.data)
-                0x00000d38                __data_size = (__data_end - __data_start)
-                0x0000b714                __text_size = (((__exidx_end - sText) + __data_size) + __ram_code_size)
-                0x0802b714                eText = (sText + __text_size)
+                0x1fff1544                PROVIDE (__fini_array_end, .)
+                0x1fff1544                . = ALIGN (0x4)
+                0x1fff1544                __data_end = .
+                0x0c02b938                __data_load = LOADADDR (.data)
+                0x00000d44                __data_size = (__data_end - __data_start)
+                0x0000c67c                __text_size = (((__exidx_end - sText) + __data_size) + __ram_code_size)
+                0x0802c67c                eText = (sText + __text_size)
 
-.igot.plt       0x1fff1538        0x0 load address 0x0c02b714
+.igot.plt       0x1fff1544        0x0 load address 0x0c02c67c
  .igot.plt      0x00000000        0x0 ./Startup/startup_XMC4300.o
 
-.bss            0x1fff1538     0x1258 load address 0x0c02b714
-                0x1fff1538                . = ALIGN (0x4)
-                0x1fff1538                __bss_start = .
+.bss            0x1fff1548     0x1280 load address 0x0c02c67c
+                0x1fff1548                . = ALIGN (0x4)
+                0x1fff1548                __bss_start = .
  *(.bss)
  *(.bss*)
  .bss.u64Timestamp
-                0x1fff1538        0x8 ./SSC/Src/coeappl.o
-                0x1fff1538                u64Timestamp
+                0x1fff1548        0x8 ./SSC/Src/coeappl.o
+                0x1fff1548                u64Timestamp
  .bss.u16ErrorRegister
-                0x1fff1540        0x2 ./SSC/Src/coeappl.o
-                0x1fff1540                u16ErrorRegister
- *fill*         0x1fff1542        0x2 
+                0x1fff1550        0x2 ./SSC/Src/coeappl.o
+                0x1fff1550                u16ErrorRegister
+ *fill*         0x1fff1552        0x2 
  .bss.ObjDicList
-                0x1fff1544        0x4 ./SSC/Src/coeappl.o
-                0x1fff1544                ObjDicList
+                0x1fff1554        0x4 ./SSC/Src/coeappl.o
+                0x1fff1554                ObjDicList
  .bss.bInitFinished
-                0x1fff1548        0x1 ./SSC/Src/ecatappl.o
-                0x1fff1548                bInitFinished
+                0x1fff1558        0x1 ./SSC/Src/ecatappl.o
+                0x1fff1558                bInitFinished
  .bss.SMActivate
-                0x1fff1549        0x1 ./SSC/Src/ecatslv.o
-                0x1fff1549                SMActivate
+                0x1fff1559        0x1 ./SSC/Src/ecatslv.o
+                0x1fff1559                SMActivate
  .bss.EepromLoaded
-                0x1fff154a        0x1 ./SSC/Src/ecatslv.o
-                0x1fff154a                EepromLoaded
+                0x1fff155a        0x1 ./SSC/Src/ecatslv.o
+                0x1fff155a                EepromLoaded
  .bss.bSdoInWork
-                0x1fff154b        0x1 ./SSC/Src/sdoserv.o
-                0x1fff154b                bSdoInWork
+                0x1fff155b        0x1 ./SSC/Src/sdoserv.o
+                0x1fff155b                bSdoInWork
  .bss.heap_ptr.4331
-                0x1fff154c        0x4 ./Libraries/Newlib/syscalls.o
+                0x1fff155c        0x4 ./Libraries/Newlib/syscalls.o
+ .bss.UART_0_runtime
+                0x1fff1560       0x1c ./Dave/Generated/UART/uart_conf.o
+                0x1fff1560                UART_0_runtime
  .bss.e_eeprom_xmc4_data_buffer
-                0x1fff1550     0x1000 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x1fff157c     0x1000 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .bss.E_EEPROM_XMC4_0
-                0x1fff2550        0x4 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
-                0x1fff2550                E_EEPROM_XMC4_0
- .bss.ticks     0x1fff2554        0x4 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x1fff257c        0x4 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
+                0x1fff257c                E_EEPROM_XMC4_0
+ .bss.ticks     0x1fff2580        0x4 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .bss.CLOCK_XMC4_0
-                0x1fff2558        0x4 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
-                0x1fff2558                CLOCK_XMC4_0
+                0x1fff2584        0x4 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+                0x1fff2584                CLOCK_XMC4_0
+ .bss.flag      0x1fff2588        0x1 ./main.o
+                0x1fff2588                flag
+ *fill*         0x1fff2589        0x3 
  .bss.__malloc_sbrk_start
-                0x1fff255c        0x4 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
-                0x1fff255c                __malloc_sbrk_start
+                0x1fff258c        0x4 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
+                0x1fff258c                __malloc_sbrk_start
  .bss.__malloc_free_list
-                0x1fff2560        0x4 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
-                0x1fff2560                __malloc_free_list
+                0x1fff2590        0x4 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
+                0x1fff2590                __malloc_free_list
  *(COMMON)
- COMMON         0x1fff2564        0x8 ./SSC/Src/coeappl.o
-                0x1fff2564                u32LastDc32Value
-                0x1fff2568                u32CheckForDcOverrunCnt
- COMMON         0x1fff256c       0x5a ./SSC/Src/ecatappl.o
-                0x1fff256c                pAPPL_EEPROM_Store
-                0x1fff2570                bMinCycleTimeMeasurementStarted
-                0x1fff2574                u32CycleTimeStartValue
-                0x1fff2578                pAPPL_EEPROM_Read
-                0x1fff257c                pAPPL_EEPROM_Write
-                0x1fff2580                bRunApplication
-                0x1fff2584                u32SystemTimeReadFailure
-                0x1fff2588                bEcatWaitForInputUpdate
-                0x1fff258c                u32MinCycleTimeValue
-                0x1fff2590                aPdOutputData
-                0x1fff259c                u16EepromStoreTimeoutCounter
-                0x1fff259e                EepromReadSize
-                0x1fff25a0                pAPPL_MainLoop
-                0x1fff25a4                bEtherCATErrorLed
-                0x1fff25a8                u32MinCycleTimeStartValue
-                0x1fff25ac                aPdInputData
-                0x1fff25b8                pEEPROM
-                0x1fff25bc                bEtherCATRunLed
-                0x1fff25c0                pAPPL_EEPROM_Reload
-                0x1fff25c4                u16EepromStoreTimeoutValue
- *fill*         0x1fff25c6        0x2 
- COMMON         0x1fff25c8        0x4 ./SSC/Src/ecatcoe.o
-                0x1fff25c8                pCoeSendStored
- COMMON         0x1fff25cc       0x4c ./SSC/Src/ecatslv.o
-                0x1fff25cc                b3BufferMode
-                0x1fff25ce                nEcatStateTrans
-                0x1fff25d0                bApplEsmPending
-                0x1fff25d1                nAlStatus
-                0x1fff25d2                nPdOutputSize
-                0x1fff25d4                u16LocalErrorCode
-                0x1fff25d6                Sync0WdCounter
-                0x1fff25d8                bLocalErrorFlag
-                0x1fff25da                LatchInputSync0Counter
-                0x1fff25dc                i16WaitForPllRunningCnt
-                0x1fff25de                nEscAddrOutputData
-                0x1fff25e0                Sync0WdValue
-                0x1fff25e2                u8EcatRunLed
-                0x1fff25e4                i16WaitForPllRunningTimeout
-                0x1fff25e6                Sync1WdValue
-                0x1fff25e8                u8dummy
-                0x1fff25ea                u16ALEventMask
-                0x1fff25ec                bDcRunning
-                0x1fff25f0                SyncManInfo
-                0x1fff25f8                b32BitDc
-                0x1fff25fa                LatchInputSync0Value
-                0x1fff25fc                bEcatWaitForAlControlRes
-                0x1fff25fe                nPdInputSize
-                0x1fff2600                u16SmSync0Value
-                0x1fff2602                nMaxEscAddress
-                0x1fff2604                bEcatFirstOutputsReceived
-                0x1fff2605                bSmSyncSequenceValid
-                0x1fff2606                EsmTimeoutCounter
-                0x1fff2608                bDcSyncActive
-                0x1fff2609                bEcatOutputUpdateRunning
-                0x1fff260a                Sync1WdCounter
-                0x1fff260c                EcatWdValue
-                0x1fff260e                bEcatInputUpdateRunning
-                0x1fff260f                bEscIntEnabled
-                0x1fff2610                bWdTrigger
-                0x1fff2612                u16SmSync0Counter
-                0x1fff2614                nMaxSyncMan
-                0x1fff2615                u8EcatErrorLed
-                0x1fff2616                nEscAddrInputData
- COMMON         0x1fff2618       0x94 ./SSC/Src/mailbox.o
-                0x1fff2618                u8MbxReadCounter
-                0x1fff261c                sMbxSendQueue
-                0x1fff2650                sMbxReceiveQueue
-                0x1fff2684                bNoMbxMemoryAvailable
-                0x1fff2685                bSendMbxIsFull
-                0x1fff2686                bMbxRunning
-                0x1fff2688                u16EscAddrReceiveMbx
-                0x1fff268c                psStoreMbx
-                0x1fff2690                u16SendMbxSize
-                0x1fff2694                psReadMbx
-                0x1fff2698                bReceiveMbxIsLocked
-                0x1fff269a                u16EscAddrSendMbx
-                0x1fff269c                psWriteMbx
-                0x1fff26a0                u8MbxWriteCounter
-                0x1fff26a1                u8MailboxSendReqStored
-                0x1fff26a2                u16ReceiveMbxSize
-                0x1fff26a4                bMbxRepeatToggle
-                0x1fff26a8                psRepeatMbx
- COMMON         0x1fff26ac       0x8e ./SSC/Src/objdef.o
-                0x1fff26ac                sSyncManInPar
-                0x1fff26f0                sSyncManOutPar
-                0x1fff2734                bSyncSetByUser
-                0x1fff2738                sCycleDiag
- *fill*         0x1fff273a        0x2 
- COMMON         0x1fff273c       0x4d ./SSC/Src/sdoserv.o
-                0x1fff273c                nSdoInfoIndex
-                0x1fff2740                pStoreData
-                0x1fff2744                nSdoSegBytesToHandle
-                0x1fff2748                bSdoSegAccess
-                0x1fff2749                bSdoSegFollows
-                0x1fff274c                nSdoSegCompleteSize
-                0x1fff2750                pSdoPendFunc
-                0x1fff2754                u8PendingSdo
-                0x1fff2755                bStoreCompleteAccess
-                0x1fff2756                bSdoSegLastToggle
-                0x1fff2757                nSdoSegService
-                0x1fff2758                pSdoInfoObjEntry
-                0x1fff275c                nSdoInfoFragmentsLeft
-                0x1fff2760                pSdoResStored
-                0x1fff2764                u32StoreDataSize
-                0x1fff2768                pSdoSegData
-                0x1fff276c                nSdoSegIndex
-                0x1fff2770                aSdoInfoHeader
-                0x1fff2780                pSdoSegObjEntry
-                0x1fff2784                nSdoSegSubindex
-                0x1fff2786                u16StoreIndex
-                0x1fff2788                u8StoreSubindex
- *fill*         0x1fff2789        0x3 
- COMMON         0x1fff278c        0x4 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-reent.o)
-                0x1fff278c                errno
+ COMMON         0x1fff2594        0x8 ./SSC/Src/coeappl.o
+                0x1fff2594                u32LastDc32Value
+                0x1fff2598                u32CheckForDcOverrunCnt
+ COMMON         0x1fff259c       0x5a ./SSC/Src/ecatappl.o
+                0x1fff259c                pAPPL_EEPROM_Store
+                0x1fff25a0                bMinCycleTimeMeasurementStarted
+                0x1fff25a4                u32CycleTimeStartValue
+                0x1fff25a8                pAPPL_EEPROM_Read
+                0x1fff25ac                pAPPL_EEPROM_Write
+                0x1fff25b0                bRunApplication
+                0x1fff25b4                u32SystemTimeReadFailure
+                0x1fff25b8                bEcatWaitForInputUpdate
+                0x1fff25bc                u32MinCycleTimeValue
+                0x1fff25c0                aPdOutputData
+                0x1fff25cc                u16EepromStoreTimeoutCounter
+                0x1fff25ce                EepromReadSize
+                0x1fff25d0                pAPPL_MainLoop
+                0x1fff25d4                bEtherCATErrorLed
+                0x1fff25d8                u32MinCycleTimeStartValue
+                0x1fff25dc                aPdInputData
+                0x1fff25e8                pEEPROM
+                0x1fff25ec                bEtherCATRunLed
+                0x1fff25f0                pAPPL_EEPROM_Reload
+                0x1fff25f4                u16EepromStoreTimeoutValue
+ *fill*         0x1fff25f6        0x2 
+ COMMON         0x1fff25f8        0x4 ./SSC/Src/ecatcoe.o
+                0x1fff25f8                pCoeSendStored
+ COMMON         0x1fff25fc       0x4c ./SSC/Src/ecatslv.o
+                0x1fff25fc                b3BufferMode
+                0x1fff25fe                nEcatStateTrans
+                0x1fff2600                bApplEsmPending
+                0x1fff2601                nAlStatus
+                0x1fff2602                nPdOutputSize
+                0x1fff2604                u16LocalErrorCode
+                0x1fff2606                Sync0WdCounter
+                0x1fff2608                bLocalErrorFlag
+                0x1fff260a                LatchInputSync0Counter
+                0x1fff260c                i16WaitForPllRunningCnt
+                0x1fff260e                nEscAddrOutputData
+                0x1fff2610                Sync0WdValue
+                0x1fff2612                u8EcatRunLed
+                0x1fff2614                i16WaitForPllRunningTimeout
+                0x1fff2616                Sync1WdValue
+                0x1fff2618                u8dummy
+                0x1fff261a                u16ALEventMask
+                0x1fff261c                bDcRunning
+                0x1fff2620                SyncManInfo
+                0x1fff2628                b32BitDc
+                0x1fff262a                LatchInputSync0Value
+                0x1fff262c                bEcatWaitForAlControlRes
+                0x1fff262e                nPdInputSize
+                0x1fff2630                u16SmSync0Value
+                0x1fff2632                nMaxEscAddress
+                0x1fff2634                bEcatFirstOutputsReceived
+                0x1fff2635                bSmSyncSequenceValid
+                0x1fff2636                EsmTimeoutCounter
+                0x1fff2638                bDcSyncActive
+                0x1fff2639                bEcatOutputUpdateRunning
+                0x1fff263a                Sync1WdCounter
+                0x1fff263c                EcatWdValue
+                0x1fff263e                bEcatInputUpdateRunning
+                0x1fff263f                bEscIntEnabled
+                0x1fff2640                bWdTrigger
+                0x1fff2642                u16SmSync0Counter
+                0x1fff2644                nMaxSyncMan
+                0x1fff2645                u8EcatErrorLed
+                0x1fff2646                nEscAddrInputData
+ COMMON         0x1fff2648       0x94 ./SSC/Src/mailbox.o
+                0x1fff2648                u8MbxReadCounter
+                0x1fff264c                sMbxSendQueue
+                0x1fff2680                sMbxReceiveQueue
+                0x1fff26b4                bNoMbxMemoryAvailable
+                0x1fff26b5                bSendMbxIsFull
+                0x1fff26b6                bMbxRunning
+                0x1fff26b8                u16EscAddrReceiveMbx
+                0x1fff26bc                psStoreMbx
+                0x1fff26c0                u16SendMbxSize
+                0x1fff26c4                psReadMbx
+                0x1fff26c8                bReceiveMbxIsLocked
+                0x1fff26ca                u16EscAddrSendMbx
+                0x1fff26cc                psWriteMbx
+                0x1fff26d0                u8MbxWriteCounter
+                0x1fff26d1                u8MailboxSendReqStored
+                0x1fff26d2                u16ReceiveMbxSize
+                0x1fff26d4                bMbxRepeatToggle
+                0x1fff26d8                psRepeatMbx
+ COMMON         0x1fff26dc       0x8e ./SSC/Src/objdef.o
+                0x1fff26dc                sSyncManInPar
+                0x1fff2720                sSyncManOutPar
+                0x1fff2764                bSyncSetByUser
+                0x1fff2768                sCycleDiag
+ *fill*         0x1fff276a        0x2 
+ COMMON         0x1fff276c       0x4d ./SSC/Src/sdoserv.o
+                0x1fff276c                nSdoInfoIndex
+                0x1fff2770                pStoreData
+                0x1fff2774                nSdoSegBytesToHandle
+                0x1fff2778                bSdoSegAccess
+                0x1fff2779                bSdoSegFollows
+                0x1fff277c                nSdoSegCompleteSize
+                0x1fff2780                pSdoPendFunc
+                0x1fff2784                u8PendingSdo
+                0x1fff2785                bStoreCompleteAccess
+                0x1fff2786                bSdoSegLastToggle
+                0x1fff2787                nSdoSegService
+                0x1fff2788                pSdoInfoObjEntry
+                0x1fff278c                nSdoInfoFragmentsLeft
+                0x1fff2790                pSdoResStored
+                0x1fff2794                u32StoreDataSize
+                0x1fff2798                pSdoSegData
+                0x1fff279c                nSdoSegIndex
+                0x1fff27a0                aSdoInfoHeader
+                0x1fff27b0                pSdoSegObjEntry
+                0x1fff27b4                nSdoSegSubindex
+                0x1fff27b6                u16StoreIndex
+                0x1fff27b8                u8StoreSubindex
+ *fill*         0x1fff27b9        0x3 
+ COMMON         0x1fff27bc        0x6 ./main.o
+                0x1fff27bc                global_scratch_buffer
+                0x1fff27c0                global_read_data
+ *fill*         0x1fff27c2        0x2 
+ COMMON         0x1fff27c4        0x4 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-reent.o)
+                0x1fff27c4                errno
  *(.gnu.linkonce.b*)
-                0x1fff2790                . = ALIGN (0x4)
-                0x1fff2790                __bss_end = .
-                0x00001258                __bss_size = (__bss_end - __bss_start)
-                0x0000d870                __shift_loc = (__bss_end >= ORIGIN (DSRAM_1_system))?0x0:(ORIGIN (DSRAM_1_system) - __bss_end)
+                0x1fff27c8                . = ALIGN (0x4)
+                0x1fff27c8                __bss_end = .
+                0x00001280                __bss_size = (__bss_end - __bss_start)
+                0x0000d838                __shift_loc = (__bss_end >= ORIGIN (DSRAM_1_system))?0x0:(ORIGIN (DSRAM_1_system) - __bss_end)
 
 USB_RAM         0x20000000        0x0
                 0x20000000                . = ALIGN (0x4)
@@ -3686,7 +3810,7 @@ ETH_RAM         0x20000000        0x0
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000     0x14b8
+.debug_aranges  0x00000000     0x1750
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 ./Startup/startup_XMC4300.o
@@ -3729,55 +3853,63 @@ ETH_RAM         0x20000000        0x0
  .debug_aranges
                 0x00000dc0       0x28 ./Libraries/XMCLib/src/xmc_gpio.o
  .debug_aranges
-                0x00000de8       0x28 ./Libraries/Newlib/syscalls.o
+                0x00000de8       0x78 ./Libraries/XMCLib/src/xmc_uart.o
  .debug_aranges
-                0x00000e10       0xd8 ./Dave/Generated/TIMER/timer.o
+                0x00000e60       0xb8 ./Libraries/XMCLib/src/xmc_usic.o
  .debug_aranges
-                0x00000ee8       0x18 ./Dave/Generated/TIMER/timer_conf.o
+                0x00000f18       0x28 ./Libraries/Newlib/syscalls.o
  .debug_aranges
-                0x00000f00      0x120 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x00000f40       0xf8 ./Dave/Generated/UART/uart.o
  .debug_aranges
-                0x00001020       0x18 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x00001038       0x68 ./Dave/Generated/UART/uart_conf.o
  .debug_aranges
-                0x00001038       0x50 ./Dave/Generated/INTERRUPT/interrupt.o
+                0x000010a0       0xd8 ./Dave/Generated/TIMER/timer.o
  .debug_aranges
-                0x00001088       0x18 ./Dave/Generated/INTERRUPT/interrupt_conf.o
+                0x00001178       0x18 ./Dave/Generated/TIMER/timer_conf.o
  .debug_aranges
-                0x000010a0       0x30 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+                0x00001190      0x120 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .debug_aranges
-                0x000010d0       0x18 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
+                0x000012b0       0x18 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
  .debug_aranges
-                0x000010e8       0x30 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+                0x000012c8       0x50 ./Dave/Generated/INTERRUPT/interrupt.o
  .debug_aranges
-                0x00001118       0x18 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
+                0x00001318       0x18 ./Dave/Generated/INTERRUPT/interrupt_conf.o
  .debug_aranges
-                0x00001130       0xa0 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x00001330       0x30 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
  .debug_aranges
-                0x000011d0       0x18 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
+                0x00001360       0x18 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
  .debug_aranges
-                0x000011e8       0x28 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+                0x00001378       0x30 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
  .debug_aranges
-                0x00001210       0x18 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+                0x000013a8       0x18 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
  .debug_aranges
-                0x00001228       0x28 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+                0x000013c0       0xa0 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .debug_aranges
-                0x00001250       0x18 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+                0x00001460       0x18 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
  .debug_aranges
-                0x00001268       0x38 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+                0x00001478       0x28 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
  .debug_aranges
-                0x000012a0       0x18 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
+                0x000014a0       0x18 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
  .debug_aranges
-                0x000012b8       0xc0 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x000014b8       0x28 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
  .debug_aranges
-                0x00001378       0x28 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+                0x000014e0       0x18 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
  .debug_aranges
-                0x000013a0       0x38 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+                0x000014f8       0x38 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
  .debug_aranges
-                0x000013d8       0x28 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+                0x00001530       0x18 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
  .debug_aranges
-                0x00001400       0x20 ./Dave/Generated/DAVE.o
+                0x00001548       0xc0 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .debug_aranges
-                0x00001420       0x98 ./main.o
+                0x00001608       0x28 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+ .debug_aranges
+                0x00001630       0x38 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+ .debug_aranges
+                0x00001668       0x28 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+ .debug_aranges
+                0x00001690       0x20 ./Dave/Generated/DAVE.o
+ .debug_aranges
+                0x000016b0       0xa0 ./main.o
 
 .debug_pubnames
  *(.debug_pubnames)
@@ -3785,7 +3917,7 @@ ETH_RAM         0x20000000        0x0
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_info     0x00000000    0x24021
+.debug_info     0x00000000    0x28fcf
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000       0x9b ./Startup/startup_XMC4300.o
  .debug_info    0x0000009b      0x9e8 ./Startup/system_XMC4300.o
@@ -3807,33 +3939,37 @@ ETH_RAM         0x20000000        0x0
  .debug_info    0x000114e0      0xb70 ./Libraries/XMCLib/src/xmc_eru.o
  .debug_info    0x00012050      0x957 ./Libraries/XMCLib/src/xmc_fce.o
  .debug_info    0x000129a7      0x458 ./Libraries/XMCLib/src/xmc_gpio.o
- .debug_info    0x00012dff      0x11f ./Libraries/Newlib/syscalls.o
- .debug_info    0x00012f1e      0xe2c ./Dave/Generated/TIMER/timer.o
- .debug_info    0x00013d4a      0x8d5 ./Dave/Generated/TIMER/timer_conf.o
- .debug_info    0x0001461f     0x1f13 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
- .debug_info    0x00016532     0x15a9 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
- .debug_info    0x00017adb      0x8d7 ./Dave/Generated/INTERRUPT/interrupt.o
- .debug_info    0x000183b2      0x406 ./Dave/Generated/INTERRUPT/interrupt_conf.o
- .debug_info    0x000187b8      0x436 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
- .debug_info    0x00018bee      0x336 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
- .debug_info    0x00018f24      0x427 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
- .debug_info    0x0001934b      0x327 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
- .debug_info    0x00019672      0xb13 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
- .debug_info    0x0001a185      0x1a9 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
- .debug_info    0x0001a32e      0x5fd ./Dave/Generated/EVENT_GENERATOR/event_generator.o
- .debug_info    0x0001a92b      0x594 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
- .debug_info    0x0001aebf      0x657 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
- .debug_info    0x0001b516      0x6d5 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
- .debug_info    0x0001bbeb      0xbfc ./Dave/Generated/ECAT_SSC/ecat_ssc.o
- .debug_info    0x0001c7e7      0xad5 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
- .debug_info    0x0001d2bc     0x2063 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
- .debug_info    0x0001f31f      0x52e ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
- .debug_info    0x0001f84d      0x2dd ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
- .debug_info    0x0001fb2a      0x62c ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
- .debug_info    0x00020156     0x2239 ./Dave/Generated/DAVE.o
- .debug_info    0x0002238f     0x1c92 ./main.o
+ .debug_info    0x00012dff      0x9d2 ./Libraries/XMCLib/src/xmc_uart.o
+ .debug_info    0x000137d1      0xf1c ./Libraries/XMCLib/src/xmc_usic.o
+ .debug_info    0x000146ed      0x11f ./Libraries/Newlib/syscalls.o
+ .debug_info    0x0001480c     0x1590 ./Dave/Generated/UART/uart.o
+ .debug_info    0x00015d9c     0x1383 ./Dave/Generated/UART/uart_conf.o
+ .debug_info    0x0001711f      0xe2c ./Dave/Generated/TIMER/timer.o
+ .debug_info    0x00017f4b      0x8d5 ./Dave/Generated/TIMER/timer_conf.o
+ .debug_info    0x00018820     0x1f13 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+ .debug_info    0x0001a733     0x15a9 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+ .debug_info    0x0001bcdc      0x8d7 ./Dave/Generated/INTERRUPT/interrupt.o
+ .debug_info    0x0001c5b3      0x406 ./Dave/Generated/INTERRUPT/interrupt_conf.o
+ .debug_info    0x0001c9b9      0x436 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+ .debug_info    0x0001cdef      0x336 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
+ .debug_info    0x0001d125      0x427 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+ .debug_info    0x0001d54c      0x327 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
+ .debug_info    0x0001d873      0xb13 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+ .debug_info    0x0001e386      0x1a9 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
+ .debug_info    0x0001e52f      0x5fd ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+ .debug_info    0x0001eb2c      0x594 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+ .debug_info    0x0001f0c0      0x657 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+ .debug_info    0x0001f717      0x6d5 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+ .debug_info    0x0001fdec      0xbfc ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+ .debug_info    0x000209e8      0xad5 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
+ .debug_info    0x000214bd     0x1f3b ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+ .debug_info    0x000233f8      0x52e ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+ .debug_info    0x00023926      0x2dd ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+ .debug_info    0x00023c03      0x62c ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+ .debug_info    0x0002422f     0x2949 ./Dave/Generated/DAVE.o
+ .debug_info    0x00026b78     0x2457 ./main.o
 
-.debug_abbrev   0x00000000     0x5461
+.debug_abbrev   0x00000000     0x5e34
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x14 ./Startup/startup_XMC4300.o
  .debug_abbrev  0x00000014      0x1f1 ./Startup/system_XMC4300.o
@@ -3855,33 +3991,37 @@ ETH_RAM         0x20000000        0x0
  .debug_abbrev  0x00002203      0x22f ./Libraries/XMCLib/src/xmc_eru.o
  .debug_abbrev  0x00002432      0x263 ./Libraries/XMCLib/src/xmc_fce.o
  .debug_abbrev  0x00002695      0x144 ./Libraries/XMCLib/src/xmc_gpio.o
- .debug_abbrev  0x000027d9       0xbd ./Libraries/Newlib/syscalls.o
- .debug_abbrev  0x00002896      0x252 ./Dave/Generated/TIMER/timer.o
- .debug_abbrev  0x00002ae8      0x181 ./Dave/Generated/TIMER/timer_conf.o
- .debug_abbrev  0x00002c69      0x2a4 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
- .debug_abbrev  0x00002f0d      0x1b4 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
- .debug_abbrev  0x000030c1      0x212 ./Dave/Generated/INTERRUPT/interrupt.o
- .debug_abbrev  0x000032d3       0xd8 ./Dave/Generated/INTERRUPT/interrupt_conf.o
- .debug_abbrev  0x000033ab      0x196 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
- .debug_abbrev  0x00003541      0x124 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
- .debug_abbrev  0x00003665      0x196 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
- .debug_abbrev  0x000037fb      0x124 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
- .debug_abbrev  0x0000391f      0x2a9 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
- .debug_abbrev  0x00003bc8       0xc2 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
- .debug_abbrev  0x00003c8a      0x1df ./Dave/Generated/EVENT_GENERATOR/event_generator.o
- .debug_abbrev  0x00003e69      0x194 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
- .debug_abbrev  0x00003ffd      0x1d0 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
- .debug_abbrev  0x000041cd      0x185 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
- .debug_abbrev  0x00004352      0x211 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
- .debug_abbrev  0x00004563      0x18e ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
- .debug_abbrev  0x000046f1      0x44e ./Dave/Generated/ECAT_SSC/xmc_eschw.o
- .debug_abbrev  0x00004b3f      0x1b4 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
- .debug_abbrev  0x00004cf3      0x13d ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
- .debug_abbrev  0x00004e30      0x168 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
- .debug_abbrev  0x00004f98      0x1df ./Dave/Generated/DAVE.o
- .debug_abbrev  0x00005177      0x2ea ./main.o
+ .debug_abbrev  0x000027d9      0x225 ./Libraries/XMCLib/src/xmc_uart.o
+ .debug_abbrev  0x000029fe      0x24c ./Libraries/XMCLib/src/xmc_usic.o
+ .debug_abbrev  0x00002c4a       0xbd ./Libraries/Newlib/syscalls.o
+ .debug_abbrev  0x00002d07      0x27e ./Dave/Generated/UART/uart.o
+ .debug_abbrev  0x00002f85      0x27b ./Dave/Generated/UART/uart_conf.o
+ .debug_abbrev  0x00003200      0x252 ./Dave/Generated/TIMER/timer.o
+ .debug_abbrev  0x00003452      0x181 ./Dave/Generated/TIMER/timer_conf.o
+ .debug_abbrev  0x000035d3      0x2a4 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+ .debug_abbrev  0x00003877      0x1b4 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+ .debug_abbrev  0x00003a2b      0x212 ./Dave/Generated/INTERRUPT/interrupt.o
+ .debug_abbrev  0x00003c3d       0xd8 ./Dave/Generated/INTERRUPT/interrupt_conf.o
+ .debug_abbrev  0x00003d15      0x196 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+ .debug_abbrev  0x00003eab      0x124 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
+ .debug_abbrev  0x00003fcf      0x196 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+ .debug_abbrev  0x00004165      0x124 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
+ .debug_abbrev  0x00004289      0x2a9 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+ .debug_abbrev  0x00004532       0xc2 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
+ .debug_abbrev  0x000045f4      0x1df ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+ .debug_abbrev  0x000047d3      0x194 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+ .debug_abbrev  0x00004967      0x1d0 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+ .debug_abbrev  0x00004b37      0x185 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+ .debug_abbrev  0x00004cbc      0x211 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+ .debug_abbrev  0x00004ecd      0x18e ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
+ .debug_abbrev  0x0000505b      0x44e ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+ .debug_abbrev  0x000054a9      0x1b4 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+ .debug_abbrev  0x0000565d      0x13d ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+ .debug_abbrev  0x0000579a      0x168 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+ .debug_abbrev  0x00005902      0x1fe ./Dave/Generated/DAVE.o
+ .debug_abbrev  0x00005b00      0x334 ./main.o
 
-.debug_line     0x00000000     0xc323
+.debug_line     0x00000000     0xd58b
  *(.debug_line)
  .debug_line    0x00000000       0x87 ./Startup/startup_XMC4300.o
  .debug_line    0x00000087      0x384 ./Startup/system_XMC4300.o
@@ -3903,33 +4043,37 @@ ETH_RAM         0x20000000        0x0
  .debug_line    0x00005859      0x31d ./Libraries/XMCLib/src/xmc_eru.o
  .debug_line    0x00005b76      0x439 ./Libraries/XMCLib/src/xmc_fce.o
  .debug_line    0x00005faf      0x248 ./Libraries/XMCLib/src/xmc_gpio.o
- .debug_line    0x000061f7       0xd0 ./Libraries/Newlib/syscalls.o
- .debug_line    0x000062c7      0x5e3 ./Dave/Generated/TIMER/timer.o
- .debug_line    0x000068aa      0x361 ./Dave/Generated/TIMER/timer_conf.o
- .debug_line    0x00006c0b      0x7d3 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
- .debug_line    0x000073de      0x387 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
- .debug_line    0x00007765      0x36b ./Dave/Generated/INTERRUPT/interrupt.o
- .debug_line    0x00007ad0      0x244 ./Dave/Generated/INTERRUPT/interrupt_conf.o
- .debug_line    0x00007d14      0x38c ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
- .debug_line    0x000080a0      0x2df ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
- .debug_line    0x0000837f      0x38c ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
- .debug_line    0x0000870b      0x2df ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
- .debug_line    0x000089ea      0x55a ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
- .debug_line    0x00008f44      0x1c3 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
- .debug_line    0x00009107      0x366 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
- .debug_line    0x0000946d      0x2cf ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
- .debug_line    0x0000973c      0x2ce ./Dave/Generated/EVENT_DETECTOR/event_detector.o
- .debug_line    0x00009a0a      0x238 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
- .debug_line    0x00009c42      0x664 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
- .debug_line    0x0000a2a6      0x4fc ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
- .debug_line    0x0000a7a2      0x63d ./Dave/Generated/ECAT_SSC/xmc_eschw.o
- .debug_line    0x0000addf      0x2b5 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
- .debug_line    0x0000b094      0x307 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
- .debug_line    0x0000b39b      0x300 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
- .debug_line    0x0000b69b      0x574 ./Dave/Generated/DAVE.o
- .debug_line    0x0000bc0f      0x714 ./main.o
+ .debug_line    0x000061f7      0x3ef ./Libraries/XMCLib/src/xmc_uart.o
+ .debug_line    0x000065e6      0x578 ./Libraries/XMCLib/src/xmc_usic.o
+ .debug_line    0x00006b5e       0xd0 ./Libraries/Newlib/syscalls.o
+ .debug_line    0x00006c2e      0x608 ./Dave/Generated/UART/uart.o
+ .debug_line    0x00007236      0x3d5 ./Dave/Generated/UART/uart_conf.o
+ .debug_line    0x0000760b      0x5ca ./Dave/Generated/TIMER/timer.o
+ .debug_line    0x00007bd5      0x34d ./Dave/Generated/TIMER/timer_conf.o
+ .debug_line    0x00007f22      0x7ba ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+ .debug_line    0x000086dc      0x373 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+ .debug_line    0x00008a4f      0x35c ./Dave/Generated/INTERRUPT/interrupt.o
+ .debug_line    0x00008dab      0x23a ./Dave/Generated/INTERRUPT/interrupt_conf.o
+ .debug_line    0x00008fe5      0x378 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+ .debug_line    0x0000935d      0x2d0 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
+ .debug_line    0x0000962d      0x378 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+ .debug_line    0x000099a5      0x2d0 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
+ .debug_line    0x00009c75      0x546 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+ .debug_line    0x0000a1bb      0x1be ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
+ .debug_line    0x0000a379      0x352 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+ .debug_line    0x0000a6cb      0x2c0 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+ .debug_line    0x0000a98b      0x2bf ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+ .debug_line    0x0000ac4a      0x22e ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+ .debug_line    0x0000ae78      0x632 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+ .debug_line    0x0000b4aa      0x4d9 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
+ .debug_line    0x0000b983      0x61b ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+ .debug_line    0x0000bf9e      0x2ab ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+ .debug_line    0x0000c249      0x2f8 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+ .debug_line    0x0000c541      0x2f1 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+ .debug_line    0x0000c832      0x5b5 ./Dave/Generated/DAVE.o
+ .debug_line    0x0000cde7      0x7a4 ./main.o
 
-.debug_frame    0x00000000     0x544c
+.debug_frame    0x00000000     0x5f8c
  *(.debug_frame)
  .debug_frame   0x00000000       0xec ./Startup/system_XMC4300.o
  .debug_frame   0x000000ec      0x1ac ./SSC/Src/XMC_ESC.o
@@ -3950,35 +4094,39 @@ ETH_RAM         0x20000000        0x0
  .debug_frame   0x00003748      0x240 ./Libraries/XMCLib/src/xmc_eru.o
  .debug_frame   0x00003988      0x1b0 ./Libraries/XMCLib/src/xmc_fce.o
  .debug_frame   0x00003b38       0x60 ./Libraries/XMCLib/src/xmc_gpio.o
- .debug_frame   0x00003b98       0x5c ./Libraries/Newlib/syscalls.o
- .debug_frame   0x00003bf4      0x3e0 ./Dave/Generated/TIMER/timer.o
- .debug_frame   0x00003fd4      0x538 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
- .debug_frame   0x0000450c      0x124 ./Dave/Generated/INTERRUPT/interrupt.o
- .debug_frame   0x00004630       0x88 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
- .debug_frame   0x000046b8       0x88 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
- .debug_frame   0x00004740      0x2b0 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
- .debug_frame   0x000049f0       0x60 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
- .debug_frame   0x00004a50       0x60 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
- .debug_frame   0x00004ab0       0xa8 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
- .debug_frame   0x00004b58      0x320 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
- .debug_frame   0x00004e78       0x60 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
- .debug_frame   0x00004ed8       0xac ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
- .debug_frame   0x00004f84       0x64 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
- .debug_frame   0x00004fe8       0x38 ./Dave/Generated/DAVE.o
- .debug_frame   0x00005020      0x240 ./main.o
- .debug_frame   0x00005260       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-errno.o)
- .debug_frame   0x00005280       0x2c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-init.o)
- .debug_frame   0x000052ac       0x30 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-malloc.o)
- .debug_frame   0x000052dc       0x28 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcmp.o)
- .debug_frame   0x00005304       0x28 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcpy.o)
- .debug_frame   0x0000532c       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memset.o)
- .debug_frame   0x0000534c       0x2c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x00005378       0x2c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x000053a4       0x2c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x000053d0       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-strlen.o)
- .debug_frame   0x000053f0       0x5c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-reent.o)
+ .debug_frame   0x00003b98      0x1f0 ./Libraries/XMCLib/src/xmc_uart.o
+ .debug_frame   0x00003d88      0x330 ./Libraries/XMCLib/src/xmc_usic.o
+ .debug_frame   0x000040b8       0x5c ./Libraries/Newlib/syscalls.o
+ .debug_frame   0x00004114      0x474 ./Dave/Generated/UART/uart.o
+ .debug_frame   0x00004588      0x184 ./Dave/Generated/UART/uart_conf.o
+ .debug_frame   0x0000470c      0x3e0 ./Dave/Generated/TIMER/timer.o
+ .debug_frame   0x00004aec      0x538 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+ .debug_frame   0x00005024      0x124 ./Dave/Generated/INTERRUPT/interrupt.o
+ .debug_frame   0x00005148       0x88 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+ .debug_frame   0x000051d0       0x88 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+ .debug_frame   0x00005258      0x2b0 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+ .debug_frame   0x00005508       0x60 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+ .debug_frame   0x00005568       0x60 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+ .debug_frame   0x000055c8       0xa8 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+ .debug_frame   0x00005670      0x320 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+ .debug_frame   0x00005990       0x60 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+ .debug_frame   0x000059f0       0xac ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+ .debug_frame   0x00005a9c       0x64 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+ .debug_frame   0x00005b00       0x38 ./Dave/Generated/DAVE.o
+ .debug_frame   0x00005b38      0x268 ./main.o
+ .debug_frame   0x00005da0       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x00005dc0       0x2c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x00005dec       0x30 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-malloc.o)
+ .debug_frame   0x00005e1c       0x28 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcmp.o)
+ .debug_frame   0x00005e44       0x28 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcpy.o)
+ .debug_frame   0x00005e6c       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memset.o)
+ .debug_frame   0x00005e8c       0x2c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00005eb8       0x2c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00005ee4       0x2c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00005f10       0x20 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-strlen.o)
+ .debug_frame   0x00005f30       0x5c c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-reent.o)
 
-.debug_str      0x00000000     0xd5c5
+.debug_str      0x00000000     0xf1a4
  *(.debug_str)
  .debug_str     0x00000000      0x5e3 ./Startup/system_XMC4300.o
                                 0x64f (size before relaxing)
@@ -3992,84 +4140,92 @@ ETH_RAM         0x20000000        0x0
                                 0x46f (size before relaxing)
  .debug_str     0x00001d76      0x430 ./SSC/Src/ecatslv.o
                                0x1211 (size before relaxing)
- .debug_str     0x000021a6      0x251 ./SSC/Src/mailbox.o
+ .debug_str     0x000021a6      0x24b ./SSC/Src/mailbox.o
                                 0xd0b (size before relaxing)
- .debug_str     0x000023f7      0x213 ./SSC/Src/objdef.o
+ .debug_str     0x000023f1      0x213 ./SSC/Src/objdef.o
                                 0x7d1 (size before relaxing)
- .debug_str     0x0000260a      0x2ae ./SSC/Src/sdoserv.o
+ .debug_str     0x00002604      0x2ae ./SSC/Src/sdoserv.o
                                 0x876 (size before relaxing)
- .debug_str     0x000028b8      0x53a ./Libraries/XMCLib/src/xmc4_eru.o
+ .debug_str     0x000028b2      0x53a ./Libraries/XMCLib/src/xmc4_eru.o
                                 0x7da (size before relaxing)
- .debug_str     0x00002df2      0x91c ./Libraries/XMCLib/src/xmc4_flash.o
+ .debug_str     0x00002dec      0x91c ./Libraries/XMCLib/src/xmc4_flash.o
                                 0xc32 (size before relaxing)
- .debug_str     0x0000370e      0x535 ./Libraries/XMCLib/src/xmc4_gpio.o
+ .debug_str     0x00003708      0x535 ./Libraries/XMCLib/src/xmc4_gpio.o
                                 0x7fa (size before relaxing)
- .debug_str     0x00003c43     0x1cd4 ./Libraries/XMCLib/src/xmc4_scu.o
+ .debug_str     0x00003c3d     0x1cbf ./Libraries/XMCLib/src/xmc4_scu.o
                                0x26e5 (size before relaxing)
- .debug_str     0x00005917     0x1507 ./Libraries/XMCLib/src/xmc_ccu4.o
+ .debug_str     0x000058fc     0x1507 ./Libraries/XMCLib/src/xmc_ccu4.o
                                0x1ce7 (size before relaxing)
- .debug_str     0x00006e1e     0x1a21 ./Libraries/XMCLib/src/xmc_ccu8.o
+ .debug_str     0x00006e03     0x1a21 ./Libraries/XMCLib/src/xmc_ccu8.o
                                0x242b (size before relaxing)
- .debug_str     0x0000883f      0x290 ./Libraries/XMCLib/src/xmc_ecat.o
+ .debug_str     0x00008824      0x290 ./Libraries/XMCLib/src/xmc_ecat.o
                                0x10d3 (size before relaxing)
- .debug_str     0x00008acf      0x9c5 ./Libraries/XMCLib/src/xmc_eru.o
+ .debug_str     0x00008ab4      0x9c5 ./Libraries/XMCLib/src/xmc_eru.o
                                 0xd06 (size before relaxing)
- .debug_str     0x00009494      0x2d3 ./Libraries/XMCLib/src/xmc_fce.o
+ .debug_str     0x00009479      0x2d3 ./Libraries/XMCLib/src/xmc_fce.o
                                 0xa2e (size before relaxing)
- .debug_str     0x00009767       0xca ./Libraries/XMCLib/src/xmc_gpio.o
+ .debug_str     0x0000974c       0xca ./Libraries/XMCLib/src/xmc_gpio.o
                                 0x6a8 (size before relaxing)
- .debug_str     0x00009831       0x6f ./Libraries/Newlib/syscalls.o
+ .debug_str     0x00009816      0x8c5 ./Libraries/XMCLib/src/xmc_uart.o
+                                0xbcc (size before relaxing)
+ .debug_str     0x0000a0db      0xaef ./Libraries/XMCLib/src/xmc_usic.o
+                               0x13fd (size before relaxing)
+ .debug_str     0x0000abca       0x6f ./Libraries/Newlib/syscalls.o
                                 0x236 (size before relaxing)
- .debug_str     0x000098a0      0x516 ./Dave/Generated/TIMER/timer.o
-                                0xc67 (size before relaxing)
- .debug_str     0x00009db6      0x29a ./Dave/Generated/TIMER/timer_conf.o
-                                0xbac (size before relaxing)
- .debug_str     0x0000a050      0xd74 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
-                               0x25f2 (size before relaxing)
- .debug_str     0x0000adc4      0x340 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
-                               0x228e (size before relaxing)
- .debug_str     0x0000b104      0x5a6 ./Dave/Generated/INTERRUPT/interrupt.o
-                                0x913 (size before relaxing)
- .debug_str     0x0000b6aa       0x4d ./Dave/Generated/INTERRUPT/interrupt_conf.o
-                                0x6f5 (size before relaxing)
- .debug_str     0x0000b6f7       0x57 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
-                                0x5b0 (size before relaxing)
- .debug_str     0x0000b74e       0x31 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
-                                0x4c4 (size before relaxing)
- .debug_str     0x0000b77f       0xb5 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
-                                0x5aa (size before relaxing)
- .debug_str     0x0000b834       0x31 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
-                                0x4be (size before relaxing)
- .debug_str     0x0000b865      0x53a ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
-                                0xc59 (size before relaxing)
- .debug_str     0x0000bd9f       0x45 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
-                                0x2e1 (size before relaxing)
- .debug_str     0x0000bde4      0x10f ./Dave/Generated/EVENT_GENERATOR/event_generator.o
-                                0x50d (size before relaxing)
- .debug_str     0x0000bef3       0x73 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
-                                0x543 (size before relaxing)
- .debug_str     0x0000bf66       0xed ./Dave/Generated/EVENT_DETECTOR/event_detector.o
-                                0x4fd (size before relaxing)
- .debug_str     0x0000c053       0x71 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
-                                0x86a (size before relaxing)
- .debug_str     0x0000c0c4       0xf2 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
-                                0xd7f (size before relaxing)
- .debug_str     0x0000c1b6       0x36 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
-                                0xc94 (size before relaxing)
- .debug_str     0x0000c1ec     0x104c ./Dave/Generated/ECAT_SSC/xmc_eschw.o
-                               0x25c6 (size before relaxing)
- .debug_str     0x0000d238       0x88 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
-                                0x43a (size before relaxing)
- .debug_str     0x0000d2c0       0xe7 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
-                                0x3eb (size before relaxing)
- .debug_str     0x0000d3a7       0xe5 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
-                                0x958 (size before relaxing)
- .debug_str     0x0000d48c       0x65 ./Dave/Generated/DAVE.o
-                               0x276f (size before relaxing)
- .debug_str     0x0000d4f1       0xd4 ./main.o
-                               0x2480 (size before relaxing)
+ .debug_str     0x0000ac39      0xc1e ./Dave/Generated/UART/uart.o
+                               0x1d02 (size before relaxing)
+ .debug_str     0x0000b857      0x5b2 ./Dave/Generated/UART/uart_conf.o
+                               0x184b (size before relaxing)
+ .debug_str     0x0000be09      0x4e0 ./Dave/Generated/TIMER/timer.o
+                                0xc62 (size before relaxing)
+ .debug_str     0x0000c2e9      0x29a ./Dave/Generated/TIMER/timer_conf.o
+                                0xba7 (size before relaxing)
+ .debug_str     0x0000c583      0xd74 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                               0x25ed (size before relaxing)
+ .debug_str     0x0000d2f7      0x340 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                               0x2289 (size before relaxing)
+ .debug_str     0x0000d637       0xdd ./Dave/Generated/INTERRUPT/interrupt.o
+                                0x90e (size before relaxing)
+ .debug_str     0x0000d714       0x4d ./Dave/Generated/INTERRUPT/interrupt_conf.o
+                                0x6f0 (size before relaxing)
+ .debug_str     0x0000d761       0x57 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+                                0x5ab (size before relaxing)
+ .debug_str     0x0000d7b8       0x31 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
+                                0x4bf (size before relaxing)
+ .debug_str     0x0000d7e9       0xb5 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+                                0x5a5 (size before relaxing)
+ .debug_str     0x0000d89e       0x31 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
+                                0x4b9 (size before relaxing)
+ .debug_str     0x0000d8cf      0x531 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                                0xc54 (size before relaxing)
+ .debug_str     0x0000de00       0x45 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
+                                0x2dc (size before relaxing)
+ .debug_str     0x0000de45      0x10f ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+                                0x508 (size before relaxing)
+ .debug_str     0x0000df54       0x73 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+                                0x53e (size before relaxing)
+ .debug_str     0x0000dfc7       0xed ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+                                0x4f8 (size before relaxing)
+ .debug_str     0x0000e0b4       0x71 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+                                0x865 (size before relaxing)
+ .debug_str     0x0000e125       0xf2 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+                                0xd7a (size before relaxing)
+ .debug_str     0x0000e217       0x36 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
+                                0xc8f (size before relaxing)
+ .debug_str     0x0000e24d      0xb9a ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                               0x210f (size before relaxing)
+ .debug_str     0x0000ede7       0x88 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+                                0x435 (size before relaxing)
+ .debug_str     0x0000ee6f       0xe7 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+                                0x3e6 (size before relaxing)
+ .debug_str     0x0000ef56       0xe5 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+                                0x953 (size before relaxing)
+ .debug_str     0x0000f03b       0x65 ./Dave/Generated/DAVE.o
+                               0x2dad (size before relaxing)
+ .debug_str     0x0000f0a0      0x104 ./main.o
+                               0x2c98 (size before relaxing)
 
-.debug_loc      0x00000000     0xa8c4
+.debug_loc      0x00000000     0xc08e
  *(.debug_loc)
  .debug_loc     0x00000000      0x1a4 ./Startup/system_XMC4300.o
  .debug_loc     0x000001a4      0x328 ./SSC/Src/XMC_ESC.o
@@ -4090,27 +4246,31 @@ ETH_RAM         0x20000000        0x0
  .debug_loc     0x000071e8      0x4f0 ./Libraries/XMCLib/src/xmc_eru.o
  .debug_loc     0x000076d8      0x394 ./Libraries/XMCLib/src/xmc_fce.o
  .debug_loc     0x00007a6c       0xb8 ./Libraries/XMCLib/src/xmc_gpio.o
- .debug_loc     0x00007b24       0x94 ./Libraries/Newlib/syscalls.o
- .debug_loc     0x00007bb8      0x81c ./Dave/Generated/TIMER/timer.o
- .debug_loc     0x000083d4      0xaf8 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
- .debug_loc     0x00008ecc      0x254 ./Dave/Generated/INTERRUPT/interrupt.o
- .debug_loc     0x00009120      0x108 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
- .debug_loc     0x00009228      0x108 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
- .debug_loc     0x00009330      0x598 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
- .debug_loc     0x000098c8       0xac ./Dave/Generated/EVENT_GENERATOR/event_generator.o
- .debug_loc     0x00009974       0xac ./Dave/Generated/EVENT_DETECTOR/event_detector.o
- .debug_loc     0x00009a20      0x134 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
- .debug_loc     0x00009b54      0x624 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
- .debug_loc     0x0000a178       0xac ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
- .debug_loc     0x0000a224      0x14c ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
- .debug_loc     0x0000a370       0xac ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
- .debug_loc     0x0000a41c       0x50 ./Dave/Generated/DAVE.o
- .debug_loc     0x0000a46c      0x458 ./main.o
+ .debug_loc     0x00007b24      0x414 ./Libraries/XMCLib/src/xmc_uart.o
+ .debug_loc     0x00007f38      0x6c6 ./Libraries/XMCLib/src/xmc_usic.o
+ .debug_loc     0x000085fe       0x94 ./Libraries/Newlib/syscalls.o
+ .debug_loc     0x00008692      0x98c ./Dave/Generated/UART/uart.o
+ .debug_loc     0x0000901e      0x308 ./Dave/Generated/UART/uart_conf.o
+ .debug_loc     0x00009326      0x81c ./Dave/Generated/TIMER/timer.o
+ .debug_loc     0x00009b42      0xaf8 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+ .debug_loc     0x0000a63a      0x254 ./Dave/Generated/INTERRUPT/interrupt.o
+ .debug_loc     0x0000a88e      0x108 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+ .debug_loc     0x0000a996      0x108 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+ .debug_loc     0x0000aa9e      0x598 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+ .debug_loc     0x0000b036       0xac ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+ .debug_loc     0x0000b0e2       0xac ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+ .debug_loc     0x0000b18e      0x134 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+ .debug_loc     0x0000b2c2      0x624 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+ .debug_loc     0x0000b8e6       0xac ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+ .debug_loc     0x0000b992      0x14c ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+ .debug_loc     0x0000bade       0xac ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+ .debug_loc     0x0000bb8a       0x50 ./Dave/Generated/DAVE.o
+ .debug_loc     0x0000bbda      0x4b4 ./main.o
 
 .debug_macinfo
  *(.debug_macinfo)
 
-.debug_ranges   0x00000000     0x11c0
+.debug_ranges   0x00000000     0x1418
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x38 ./Startup/system_XMC4300.o
  .debug_ranges  0x00000038       0x60 ./SSC/Src/XMC_ESC.o
@@ -4131,22 +4291,26 @@ ETH_RAM         0x20000000        0x0
  .debug_ranges  0x00000bd8       0x78 ./Libraries/XMCLib/src/xmc_eru.o
  .debug_ranges  0x00000c50       0x60 ./Libraries/XMCLib/src/xmc_fce.o
  .debug_ranges  0x00000cb0       0x18 ./Libraries/XMCLib/src/xmc_gpio.o
- .debug_ranges  0x00000cc8       0x18 ./Libraries/Newlib/syscalls.o
- .debug_ranges  0x00000ce0       0xc8 ./Dave/Generated/TIMER/timer.o
- .debug_ranges  0x00000da8      0x110 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
- .debug_ranges  0x00000eb8       0x40 ./Dave/Generated/INTERRUPT/interrupt.o
- .debug_ranges  0x00000ef8       0x20 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
- .debug_ranges  0x00000f18       0x20 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
- .debug_ranges  0x00000f38       0x90 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
- .debug_ranges  0x00000fc8       0x18 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
- .debug_ranges  0x00000fe0       0x18 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
- .debug_ranges  0x00000ff8       0x28 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
- .debug_ranges  0x00001020       0xb0 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
- .debug_ranges  0x000010d0       0x18 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
- .debug_ranges  0x000010e8       0x28 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
- .debug_ranges  0x00001110       0x18 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
- .debug_ranges  0x00001128       0x10 ./Dave/Generated/DAVE.o
- .debug_ranges  0x00001138       0x88 ./main.o
+ .debug_ranges  0x00000cc8       0x68 ./Libraries/XMCLib/src/xmc_uart.o
+ .debug_ranges  0x00000d30       0xa8 ./Libraries/XMCLib/src/xmc_usic.o
+ .debug_ranges  0x00000dd8       0x18 ./Libraries/Newlib/syscalls.o
+ .debug_ranges  0x00000df0       0xe8 ./Dave/Generated/UART/uart.o
+ .debug_ranges  0x00000ed8       0x58 ./Dave/Generated/UART/uart_conf.o
+ .debug_ranges  0x00000f30       0xc8 ./Dave/Generated/TIMER/timer.o
+ .debug_ranges  0x00000ff8      0x110 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+ .debug_ranges  0x00001108       0x40 ./Dave/Generated/INTERRUPT/interrupt.o
+ .debug_ranges  0x00001148       0x20 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+ .debug_ranges  0x00001168       0x20 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+ .debug_ranges  0x00001188       0x90 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+ .debug_ranges  0x00001218       0x18 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+ .debug_ranges  0x00001230       0x18 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+ .debug_ranges  0x00001248       0x28 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+ .debug_ranges  0x00001270       0xb0 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+ .debug_ranges  0x00001320       0x18 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+ .debug_ranges  0x00001338       0x28 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+ .debug_ranges  0x00001360       0x18 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+ .debug_ranges  0x00001378       0x10 ./Dave/Generated/DAVE.o
+ .debug_ranges  0x00001388       0x90 ./main.o
 
 .debug_weaknames
  *(.debug_weaknames)
@@ -4161,7 +4325,7 @@ ETH_RAM         0x20000000        0x0
  *(.debug_varnames)
 
 .build_attributes
-                0x00000000      0xbf1
+                0x00000000      0xccd
  *(.ARM.attributes)
  .ARM.attributes
                 0x00000000       0x25 ./Startup/startup_XMC4300.o
@@ -4204,77 +4368,85 @@ ETH_RAM         0x20000000        0x0
  .ARM.attributes
                 0x00000403       0x37 ./Libraries/XMCLib/src/xmc_gpio.o
  .ARM.attributes
-                0x0000043a       0x37 ./Libraries/Newlib/syscalls.o
+                0x0000043a       0x37 ./Libraries/XMCLib/src/xmc_uart.o
  .ARM.attributes
-                0x00000471       0x37 ./Dave/Generated/TIMER/timer.o
+                0x00000471       0x37 ./Libraries/XMCLib/src/xmc_usic.o
  .ARM.attributes
-                0x000004a8       0x37 ./Dave/Generated/TIMER/timer_conf.o
+                0x000004a8       0x37 ./Libraries/Newlib/syscalls.o
  .ARM.attributes
-                0x000004df       0x37 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
+                0x000004df       0x37 ./Dave/Generated/UART/uart.o
  .ARM.attributes
-                0x00000516       0x37 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
+                0x00000516       0x37 ./Dave/Generated/UART/uart_conf.o
  .ARM.attributes
-                0x0000054d       0x37 ./Dave/Generated/INTERRUPT/interrupt.o
+                0x0000054d       0x37 ./Dave/Generated/TIMER/timer.o
  .ARM.attributes
-                0x00000584       0x37 ./Dave/Generated/INTERRUPT/interrupt_conf.o
+                0x00000584       0x37 ./Dave/Generated/TIMER/timer_conf.o
  .ARM.attributes
-                0x000005bb       0x37 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
+                0x000005bb       0x37 ./Dave/Generated/PWM_CCU8/pwm_ccu8.o
  .ARM.attributes
-                0x000005f2       0x37 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
+                0x000005f2       0x37 ./Dave/Generated/PWM_CCU8/pwm_ccu8_conf.o
  .ARM.attributes
-                0x00000629       0x37 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
+                0x00000629       0x37 ./Dave/Generated/INTERRUPT/interrupt.o
  .ARM.attributes
-                0x00000660       0x37 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
+                0x00000660       0x37 ./Dave/Generated/INTERRUPT/interrupt_conf.o
  .ARM.attributes
-                0x00000697       0x37 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
+                0x00000697       0x37 ./Dave/Generated/GLOBAL_CCU8/global_ccu8.o
  .ARM.attributes
-                0x000006ce       0x37 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
+                0x000006ce       0x37 ./Dave/Generated/GLOBAL_CCU8/global_ccu8_conf.o
  .ARM.attributes
-                0x00000705       0x37 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
+                0x00000705       0x37 ./Dave/Generated/GLOBAL_CCU4/global_ccu4.o
  .ARM.attributes
-                0x0000073c       0x37 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
+                0x0000073c       0x37 ./Dave/Generated/GLOBAL_CCU4/global_ccu4_conf.o
  .ARM.attributes
-                0x00000773       0x37 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
+                0x00000773       0x37 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4.o
  .ARM.attributes
-                0x000007aa       0x37 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
+                0x000007aa       0x37 ./Dave/Generated/E_EEPROM_XMC4/e_eeprom_xmc4_conf.o
  .ARM.attributes
-                0x000007e1       0x37 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
+                0x000007e1       0x37 ./Dave/Generated/EVENT_GENERATOR/event_generator.o
  .ARM.attributes
-                0x00000818       0x37 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
+                0x00000818       0x37 ./Dave/Generated/EVENT_GENERATOR/event_generator_conf.o
  .ARM.attributes
-                0x0000084f       0x37 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
+                0x0000084f       0x37 ./Dave/Generated/EVENT_DETECTOR/event_detector.o
  .ARM.attributes
-                0x00000886       0x37 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
+                0x00000886       0x37 ./Dave/Generated/EVENT_DETECTOR/event_detector_conf.o
  .ARM.attributes
-                0x000008bd       0x37 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
+                0x000008bd       0x37 ./Dave/Generated/ECAT_SSC/ecat_ssc.o
  .ARM.attributes
-                0x000008f4       0x37 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
+                0x000008f4       0x37 ./Dave/Generated/ECAT_SSC/ecat_ssc_conf.o
  .ARM.attributes
-                0x0000092b       0x37 ./Dave/Generated/DAVE.o
+                0x0000092b       0x37 ./Dave/Generated/ECAT_SSC/xmc_eschw.o
  .ARM.attributes
-                0x00000962       0x37 ./main.o
+                0x00000962       0x37 ./Dave/Generated/CPU_CTRL_XMC4/cpu_ctrl_xmc4_conf.o
  .ARM.attributes
-                0x00000999       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-errno.o)
+                0x00000999       0x37 ./Dave/Generated/CLOCK_XMC4/clock_xmc4.o
  .ARM.attributes
-                0x000009cb       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-impure.o)
+                0x000009d0       0x37 ./Dave/Generated/CLOCK_XMC4/clock_xmc4_conf.o
  .ARM.attributes
-                0x000009fd       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-init.o)
+                0x00000a07       0x37 ./Dave/Generated/DAVE.o
  .ARM.attributes
-                0x00000a2f       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-malloc.o)
+                0x00000a3e       0x37 ./main.o
  .ARM.attributes
-                0x00000a61       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcmp.o)
+                0x00000a75       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-errno.o)
  .ARM.attributes
-                0x00000a93       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcpy.o)
+                0x00000aa7       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-impure.o)
  .ARM.attributes
-                0x00000ac5       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memset.o)
+                0x00000ad9       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-init.o)
  .ARM.attributes
-                0x00000af7       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-freer.o)
+                0x00000b0b       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-malloc.o)
  .ARM.attributes
-                0x00000b29       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
+                0x00000b3d       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcmp.o)
  .ARM.attributes
-                0x00000b5b       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-sbrkr.o)
+                0x00000b6f       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memcpy.o)
  .ARM.attributes
-                0x00000b8d       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-strlen.o)
+                0x00000ba1       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-memset.o)
  .ARM.attributes
-                0x00000bbf       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-reent.o)
+                0x00000bd3       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-freer.o)
+ .ARM.attributes
+                0x00000c05       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-nano-mallocr.o)
+ .ARM.attributes
+                0x00000c37       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-sbrkr.o)
+ .ARM.attributes
+                0x00000c69       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-strlen.o)
+ .ARM.attributes
+                0x00000c9b       0x32 c:/infineon/tools/dave ide/4.5.0.202105191637/eclipse/arm-gcc-49/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m/softfp\libg_nano.a(lib_a-reent.o)
 OUTPUT(xmc4300_proj.elf elf32-littlearm)

@@ -31,6 +31,7 @@ Dave/Generated/GLOBAL_CCU8 \
 Dave/Generated/INTERRUPT \
 Dave/Generated/PWM_CCU8 \
 Dave/Generated/TIMER \
+Dave/Generated/UART \
 Libraries/Newlib \
 Libraries/XMCLib/src \
 SSC/Src \
