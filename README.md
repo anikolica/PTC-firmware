@@ -104,12 +104,13 @@ You should printouts on the PTC terminal that show the state of various sensors.
 
 ### To set up a permanent IP address:
 1. Change the `setup_timing.py` script to use your IP address of choice.
-2. Create a script `/etc/init.d/start_network.sh` with the following lines, which will run the above script to enable the Zynq GbE controller <sup>2<sup>and eth1 interface (and enable the timing interface):
+2. Create a script `/etc/init.d/start_network.sh` with the following lines, which will run the above script to enable the Zynq GbE controller <sup>2</sup>and eth1 interface (and enable the timing interface):
 
 `#!/bin/sh`
 
 `python3 /home/root/setup_timing.sh`
-3. Make the script executable with `chmod +x`
+
+3. Make the script executable with `chmod +x`.
 4. Issue the following commands to make symbolic links to this script in the appropriate startup directories, which will run the script at bootup:
 
 `ln -s /etc/init.d/start_network.sh /etc/rc2.d/S99start_network.sh`
@@ -119,6 +120,7 @@ You should printouts on the PTC terminal that show the state of various sensors.
 `ln -s /etc/init.d/start_network.sh /etc/rc4.d/S99start_network.sh`
 
 `ln -s /etc/init.d/start_network.sh /etc/rc5.d/S99start_network.sh`
+
 5. Test by powering down PTC with `init 0` and turning off the main 48V supply, waiting a minute for the supply capacitors to discharge, and then powering on again. The PTC should show eth1 up and running with the IP address chosen in step 1. 
 
 ### To transfer files to and from PTC:
