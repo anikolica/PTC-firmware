@@ -77,11 +77,11 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 3. After applying 48V, it will take a few seconds for the FPGA to power. You’ll see 3 green LEDs on the front go on: 12V_LOCAL, SOC_PG, and FPGA_DONE. You may see a red OVER_TEMP LED go on at powerup, but it will turn off after the FPGA powers on. You’ll also see a blinking amber LED on the Enclustra FPGA mezzanine after a few seconds.
 4. Connect to the front panel UART at 115,200 baud, 8-bit data, 1 stop bit, no parity or flow control. You may need to install the [MaxLinear XR21V1410 drivers]( https://www.maxlinear.com/product/interface/uarts/usb-uarts/xr21v1410).
 5. Run the following scripts:
-`python3 power_on_wib [wib] [on|off]`
+`python3 power_on_wib.py [wib] [on|off]`
 Where `[wib]` is the slot 0 through 5 that your WIB(s) are plugged into.
-`python3 setup_timing`
+`python3 setup_timing.py`
 You should see a green TIMING_GOOD LED go on the PTC front panel.
-`python3 start_i2c`
+`python3 start_i2c.py`
 You should printouts on the PTC terminal that show the state of various sensors.
 
 ### Setting up EtherCAT
@@ -99,8 +99,32 @@ You should printouts on the PTC terminal that show the state of various sensors.
 1. Open DAVE and open the project at `ethercat/xmc_4300_proj/`. This is an Eclipse-like environment where the code can be modified asnd re-built.
 2. The EtherCAT block is implemented in a DAVE "App" and has minimal configuration.
 3. To change the data exchange types that PTC uses, the `XMC_ESC.xlsx` Excel file definitions need to be changed using SSC OD tool.exe. See the [Beckhoff ET9300 app note](https://download.beckhoff.com/download/document/io/ethercat-development-products/an_et9300_v1i8.pdf). 
-4. If the DAVE project is modified, it must be reloaded onto the XMC4300 using the [KITXMCLINKSEGGERV1TOBO1 JTAG pod](https://www.digikey.com/en/products/detail/infineon-technologies/KITXMCLINKSEGGERV1TOBO1/5970448?s=N4IgTCBcDaIB4FsDGACANgSwHYGsQF0BfIA) connected to J6 on the PTC. (There is a provision to reprogram from the FPGA, but this is not implemented at the time of this writing). This only needs to be done once, and successive power-ups will retian the programming.
-5. Provision to exhange further data between the FPGA an XMC4300 via UART is not implemented at the time of this writing.
+4. If the DAVE project is modified, it must be reloaded onto the XMC4300 using the [KITXMCLINKSEGGERV1TOBO1 JTAG pod](https://www.digikey.com/en/products/detail/infineon-technologies/KITXMCLINKSEGGERV1TOBO1/5970448?s=N4IgTCBcDaIB4FsDGACANgSwHYGsQF0BfIA) connected to J6 on the PTC. (There is a provision to reprogram from the FPGA, but this is not implemented at the time of this writing). This only needs to be done once, and successive power-ups will retian the programming. To program the XMC4300 without using DAVE, the [J-Flash Lite](https://www.segger.com/downloads/jlink/) utility will still need to be used with the Infineon programming pod. The `.hex` file generated in `ethercat/xmc_proj/Debug` is used.
+5. A preliminary data exchange test exists. To run it, use `python3 ecat_test1.py`, which will send one temperature reading and the 48V line current across the EtherCAT link. The IN_GENERIC_INT values in TwinCAT will show: TMP117 ADC counts, LTC2945 ADC counts, an alignment word (0xcafe), and a sequence number 0-65535 that updates once per second with the ADC reads and rolls over. Provision to exhange further data between the FPGA an XMC4300 is pending.
+
+### To set up a permanent IP address:
+1. Change the `setup_timing.py` script to use your IP address of choice.
+2. Create a script `/etc/init.d/start_network.sh` with the following lines, which will run the above script to enable the Zynq GbE controller <sup>2<sup>and eth1 interface (and enable the timing interface):
+
+`#!/bin/sh`
+
+`python3 /home/root/setup_timing.sh`
+3. Make the script executable with `chmod +x`
+4. Issue the following commands to make symbolic links to this script in the appropriate startup directories, which will run the script at bootup:
+
+`ln -s /etc/init.d/start_network.sh /etc/rc2.d/S99start_network.sh`
+
+`ln -s /etc/init.d/start_network.sh /etc/rc3.d/S99start_network.sh`
+
+`ln -s /etc/init.d/start_network.sh /etc/rc4.d/S99start_network.sh`
+
+`ln -s /etc/init.d/start_network.sh /etc/rc5.d/S99start_network.sh`
+5. Test by powering down PTC with `init 0` and turning off the main 48V supply, waiting a minute for the supply capacitors to discharge, and then powering on again. The PTC should show eth1 up and running with the IP address chosen in step 1. 
+
+### To transfer files to and from PTC:
+1. From host to PTC (from host): `rsync -avzh [file to transfer] root@[your IP address]:/home/root/`
+2. From PTC to host (from host): `rsync -avzh root@[your IP address]:/home/root/[file to transfer]`
 
 ## Footnotes
 1. This is done by creating an app template as in the [PetaLinux Yocto documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842475/PetaLinux+Yocto+Tips#PetaLinuxYoctoTips-CreatingApps(whichuseslibraries)inPetaLinuxProject)
+2. The Zynq GbE interface is on the PS side using the GEM controller. The software driver mode is defined through Petalinux using the system-user.dtsi device tree file, which sets it as `is-internal-pcspma`. For some reason, the Xilinx drivers do not automatically enable the GEM when it's in this mode, so the script writes the correct values to the [network_config](https://www.xilinx.com/htmldocs/registers/ug1087/ug1087-zynq-ultrascale-registers.html) register for GEM1. An alternate solution is to [change the driver code](https://github.com/DUNE-DAQ/dune-wib-firmware/blob/master/linux-2020.1/project-spec/meta-user/recipes-kernel/linux/linux-xlnx/macb-5.4.patch#L30) as was done on the WIB.
