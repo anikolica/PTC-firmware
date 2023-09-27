@@ -134,8 +134,8 @@ const UART_CONFIG_t UART_0_config =
   .mode             = UART_MODE_FULLDUPLEX,
   .transmit_mode = UART_TRANSFER_MODE_INTERRUPT,
   .receive_mode = UART_TRANSFER_MODE_INTERRUPT,
-  .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_2WORDS,
-  .rx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_2WORDS,
+  .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_8WORDS,
+  .rx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_8WORDS,
   .tx_sr   = 0x3U,
 };
 
@@ -175,13 +175,13 @@ UART_STATUS_t UART_0_init()
   XMC_USIC_CH_SetInputSource(XMC_UART0_CH1, XMC_USIC_CH_INPUT_DX0, 0U);
   /*Configure transmit FIFO*/
   XMC_USIC_CH_TXFIFO_Configure(XMC_UART0_CH1,
-        2U,
-        XMC_USIC_CH_FIFO_SIZE_2WORDS,
+        8U,
+        XMC_USIC_CH_FIFO_SIZE_8WORDS,
         1U);
   /*Configure receive FIFO*/
   XMC_USIC_CH_RXFIFO_Configure(XMC_UART0_CH1,
         0U,
-        XMC_USIC_CH_FIFO_SIZE_2WORDS,
+        XMC_USIC_CH_FIFO_SIZE_8WORDS,
         0U);
   /* Start UART */
   XMC_UART_CH_Start(XMC_UART0_CH1);

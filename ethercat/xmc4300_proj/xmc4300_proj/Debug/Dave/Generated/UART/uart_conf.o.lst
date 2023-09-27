@@ -3506,8 +3506,8 @@
  482 0028 00       	 .byte 0
  483 0029 00       	 .byte 0
  484 002a 00       	 .byte 0
- 485 002b 01       	 .byte 1
- 486 002c 01       	 .byte 1
+ 485 002b 03       	 .byte 3
+ 486 002c 03       	 .byte 3
  487 002d 03       	 .byte 3
  488 002e 0000     	 .space 2
  489              	 .global UART_0_runtime
@@ -3679,8 +3679,8 @@
  134:../Dave/Generated/UART/uart_conf.c ****   .mode             = UART_MODE_FULLDUPLEX,
  135:../Dave/Generated/UART/uart_conf.c ****   .transmit_mode = UART_TRANSFER_MODE_INTERRUPT,
  136:../Dave/Generated/UART/uart_conf.c ****   .receive_mode = UART_TRANSFER_MODE_INTERRUPT,
- 137:../Dave/Generated/UART/uart_conf.c ****   .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_2WORDS,
- 138:../Dave/Generated/UART/uart_conf.c ****   .rx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_2WORDS,
+ 137:../Dave/Generated/UART/uart_conf.c ****   .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_8WORDS,
+ 138:../Dave/Generated/UART/uart_conf.c ****   .rx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_8WORDS,
  139:../Dave/Generated/UART/uart_conf.c ****   .tx_sr   = 0x3U,
  140:../Dave/Generated/UART/uart_conf.c **** };
  141:../Dave/Generated/UART/uart_conf.c **** 
@@ -3754,23 +3754,23 @@
  177:../Dave/Generated/UART/uart_conf.c ****   XMC_USIC_CH_TXFIFO_Configure(XMC_UART0_CH1,
  557              	 .loc 4 177 0
  558 0026 2848     	 ldr r0,.L23+8
- 559 0028 0221     	 movs r1,#2
- 560 002a 0122     	 movs r2,#1
+ 559 0028 0821     	 movs r1,#8
+ 560 002a 0322     	 movs r2,#3
  561 002c 0123     	 movs r3,#1
  562 002e FFF7FEFF 	 bl XMC_USIC_CH_TXFIFO_Configure
- 178:../Dave/Generated/UART/uart_conf.c ****         2U,
- 179:../Dave/Generated/UART/uart_conf.c ****         XMC_USIC_CH_FIFO_SIZE_2WORDS,
+ 178:../Dave/Generated/UART/uart_conf.c ****         8U,
+ 179:../Dave/Generated/UART/uart_conf.c ****         XMC_USIC_CH_FIFO_SIZE_8WORDS,
  180:../Dave/Generated/UART/uart_conf.c ****         1U);
  181:../Dave/Generated/UART/uart_conf.c ****   /*Configure receive FIFO*/
  182:../Dave/Generated/UART/uart_conf.c ****   XMC_USIC_CH_RXFIFO_Configure(XMC_UART0_CH1,
  563              	 .loc 4 182 0
  564 0032 2548     	 ldr r0,.L23+8
  565 0034 0021     	 movs r1,#0
- 566 0036 0122     	 movs r2,#1
+ 566 0036 0322     	 movs r2,#3
  567 0038 0023     	 movs r3,#0
  568 003a FFF7FEFF 	 bl XMC_USIC_CH_RXFIFO_Configure
  183:../Dave/Generated/UART/uart_conf.c ****         0U,
- 184:../Dave/Generated/UART/uart_conf.c ****         XMC_USIC_CH_FIFO_SIZE_2WORDS,
+ 184:../Dave/Generated/UART/uart_conf.c ****         XMC_USIC_CH_FIFO_SIZE_8WORDS,
  185:../Dave/Generated/UART/uart_conf.c ****         0U);
  186:../Dave/Generated/UART/uart_conf.c ****   /* Start UART */
  187:../Dave/Generated/UART/uart_conf.c ****   XMC_UART_CH_Start(XMC_UART0_CH1);

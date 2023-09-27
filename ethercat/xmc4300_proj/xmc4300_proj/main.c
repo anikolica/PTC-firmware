@@ -73,9 +73,8 @@
 
 #define MAP2LEVEL(x) ((x==0)?XMC_GPIO_OUTPUT_LEVEL_HIGH:XMC_GPIO_OUTPUT_LEVEL_LOW)
 
-uint8_t global_read_data[2];
 uint8_t global_scratch_buffer[2];
-bool flag = 0;
+bool global_rx_flag = 0;
 
 void Init_ECAT_Adapt_LED ()
 {
@@ -130,14 +129,74 @@ void process_app(TOBJ7000 *OUT_GENERIC, TOBJ6000 *IN_GENERIC)
   PWM_CCU8_SetDutyCycleSymmetric(&PWM_CCU8_0, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
 		  6000+((uint32_t)4000*(uint32_t)OUT_GENERIC->OUT_GEN_INT1)/65535);
 
-  if(flag){
-	  memcpy(&(IN_GENERIC->IN_GEN_INT1), global_read_data, 2); // data that triggered ISR
-	  memcpy(&(IN_GENERIC->IN_GEN_INT2), global_scratch_buffer, 2);
-	  IN_GENERIC->IN_GEN_INT4 = IN_GENERIC->IN_GEN_INT4 + 1; // word counter
-	  flag = 0; // clear flag for next loop
-	  UART_Transmit(&UART_0, global_scratch_buffer, 2); // debug
+  if(global_rx_flag){
+	  int word_order[4] = {0,2,4};
+	  /*bool copy = 0;
+	  uint8_t local_buffer[8];
+	  memcpy(local_buffer + 0*sizeof(uint8_t), global_scratch_buffer + 0*sizeof(uint8_t), 2);
+	  memcpy(local_buffer + 2*sizeof(uint8_t), global_scratch_buffer + 2*sizeof(uint8_t), 2);
+	  memcpy(local_buffer + 4*sizeof(uint8_t), global_scratch_buffer + 4*sizeof(uint8_t), 2);
+	  memcpy(local_buffer + 6*sizeof(uint8_t), global_scratch_buffer + 6*sizeof(uint8_t), 2);
+	  for (uint8_t i=0; i<=3; i++){
+		  if (local_buffer[i*2] == 0xfe && local_buffer[i*2+1] == 0xca){
+			  if((i==0) | (i==2)){
+				  word_order[0] = ((i+2)*2)%8;
+				  word_order[1] = ((i+3)*2)%8;
+				  word_order[2] = ((i+0)*2)%8;
+				  word_order[3] = ((i+1)*2)%8;
+				  copy = 1;
+			  }
+			  if((i==1) | (i==3)){
+				  word_order[2] = ((i+2)*2)%8;
+				  word_order[3] = ((i+3)*2)%8;
+				  word_order[0] = ((i+0)*2)%8;
+				  word_order[1] = ((i+1)*2)%8;
+				  copy = 1;
+			  }
+		  }
+	  }*/
+	  /*if (local_buffer[0] == 0xfe && local_buffer[1] == 0xca){
+		  word_order[0] = 4;
+		  word_order[1] = 6;
+		  word_order[2] = 0;
+		  word_order[3] = 2;
+		  copy = 1;
+	  }
+	  else if (local_buffer[2] == 0xfe && local_buffer[3] == 0xca){
+		  word_order[0] = 2;
+		  word_order[1] = 4;
+		  word_order[2] = 6;
+		  word_order[3] = 0;
+		  copy = 1;
+	  }
+	  else if (local_buffer[4] == 0xfe && local_buffer[5] == 0xca){
+		  word_order[0] = 0;
+		  word_order[1] = 2;
+		  word_order[2] = 4;
+		  word_order[3] = 6;
+		  copy = 1;
+	  }
+	  else if (local_buffer[6] == 0xfe && local_buffer[7] == 0xca){
+		  word_order[0] = 6;
+		  word_order[1] = 0;
+		  word_order[2] = 2;
+		  word_order[3] = 4;
+		  copy = 1;
+	  }
+	  else{
+		  copy = 0;
+	  }*/
+	  //if(copy){
+		  memcpy(&(IN_GENERIC->IN_GEN_INT1), global_scratch_buffer + word_order[0]*sizeof(uint8_t), 2); // data that triggered ISR
+		  memcpy(&(IN_GENERIC->IN_GEN_INT2), global_scratch_buffer + word_order[1]*sizeof(uint8_t), 2);
+		  memcpy(&(IN_GENERIC->IN_GEN_INT3), global_scratch_buffer + word_order[2]*sizeof(uint8_t), 2);
+		  IN_GENERIC->IN_GEN_INT4 = IN_GENERIC->IN_GEN_INT4 + 1; // packet counter
+		  UART_Transmit(&UART_0, global_scratch_buffer, 6); // debug
+	  //}
+	  global_rx_flag = 0; // clear flag for next loop
+	  //copy = 0;
   }
-  UART_Receive(&UART_0, global_scratch_buffer, 2); // request for next loop
+  UART_Receive(&UART_0, global_scratch_buffer, 6); // request for next loop
 
   /* INPUT PROCESSING */
   /*Check Button 1 and set IN_GEN_Bit1 which is sent to master accordingly*/
@@ -229,7 +288,5 @@ void DISABLE_ESC_INT_USER()
 }
 
 void test_isr(){
-	UART_RUNTIME_t * ptr_runtime = (&UART_0)->runtime;
-	memcpy(global_read_data, ptr_runtime->rx_data, 2);
-	flag = 1;
+	global_rx_flag = 1;
 }
