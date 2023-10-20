@@ -234,8 +234,8 @@ set_property -dict {PACKAGE_PIN AE15  IOSTANDARD LVCMOS33  } [get_ports {XMC_JTA
 set_property -dict {PACKAGE_PIN AE14  IOSTANDARD LVCMOS33  } [get_ports {XMC_JTAG_RST}]
 set_property -dict {PACKAGE_PIN AE13  IOSTANDARD LVCMOS33  } [get_ports {XMC_JTAG_TDI}]
 set_property -dict {PACKAGE_PIN AF13  IOSTANDARD LVCMOS33  } [get_ports {OVER_TEMP_LED}]
-set_property -dict {PACKAGE_PIN AG13  IOSTANDARD LVCMOS33  } [get_ports {ECAT_UART_TX}]
-set_property -dict {PACKAGE_PIN AH13  IOSTANDARD LVCMOS33  } [get_ports {ECAT_UART_RX}]
+set_property -dict {PACKAGE_PIN AG13  IOSTANDARD LVCMOS33  } [get_ports {ECAT_UART_RX}]
+set_property -dict {PACKAGE_PIN AH13  IOSTANDARD LVCMOS33  } [get_ports {ECAT_UART_TX}]
 set_property -dict {PACKAGE_PIN AB11  IOSTANDARD LVCMOS33  } [get_ports {VP12_EN3}]
 set_property -dict {PACKAGE_PIN AC11  IOSTANDARD LVCMOS33  } [get_ports {VP12_EN2}]
 set_property -dict {PACKAGE_PIN W14   IOSTANDARD LVCMOS33  } [get_ports {VP12_SYNC0}]
@@ -303,8 +303,8 @@ set_property -dict {PACKAGE_PIN N8    IOSTANDARD LVCMOS18  } [get_ports {SFP0_SP
 #set_property -dict {PACKAGE_PIN K8    IOSTANDARD LVCMOS18  } [get_ports {FMC_LA06_P}]
 #set_property -dict {PACKAGE_PIN H8    IOSTANDARD LVCMOS18  } [get_ports {FMC_LA07_N}]
 #set_property -dict {PACKAGE_PIN H9    IOSTANDARD LVCMOS18  } [get_ports {FMC_LA07_P}]
-set_property -dict {PACKAGE_PIN H7    IOSTANDARD LVCMOS18  } [get_ports {WIB_SCL}]
-set_property -dict {PACKAGE_PIN J7    IOSTANDARD LVCMOS18  } [get_ports {WIB_SDA}]
+set_property -dict {PACKAGE_PIN H7    IOSTANDARD LVCMOS18  } [get_ports {WIB_SDA}]
+set_property -dict {PACKAGE_PIN J7    IOSTANDARD LVCMOS18  } [get_ports {WIB_SCL}]
 set_property -dict {PACKAGE_PIN H6    IOSTANDARD LVCMOS18  } [get_ports {WIB_I2C_OE}]
 #set_property -dict {PACKAGE_PIN J6    IOSTANDARD LVCMOS18  } [get_ports {FMC_LA09_P}]
 set_property -dict {PACKAGE_PIN J4    IOSTANDARD LVCMOS18  } [get_ports {WIB_CLK_SEL}]
@@ -400,6 +400,9 @@ set_property -dict {PACKAGE_PIN C12   IOSTANDARD LVCMOS33  } [get_ports {SOC_I2C
 #  set_property -dict {PACKAGE_PIN G1    IOSTANDARD LVCMOS18  } [get_ports {IOE_D2_LED2_N}]
 #  set_property -dict {PACKAGE_PIN F1    IOSTANDARD LVCMOS18  } [get_ports {IOE_D3_LED3_N}]
 #}
+
+set_property -dict {PACKAGE_PIN G1    IOSTANDARD LVCMOS18  } [get_ports {GTR1_SPARE_P}]
+set_property -dict {PACKAGE_PIN F1    IOSTANDARD LVCMOS18  } [get_ports {GTR1_SPARE_N}]
 
 # LED
 set_property -dict {PACKAGE_PIN H2    IOSTANDARD LVCMOS18  } [get_ports {LED1_N}]

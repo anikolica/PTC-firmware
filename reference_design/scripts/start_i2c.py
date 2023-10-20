@@ -17,6 +17,15 @@ os.system('i2cset -y -r 0 0x70 0x08')
 print ('Selecting I2C switch for local sensor read')
 time.sleep(sleep)
 
+# Set up bus 1 on WIB, and clear FEM bias sensor to prep for read
+# NOTE: Need to enable 10MHz clock on WIB before reading WIB I2C busses
+os.system('i2cset -y 2 0x3d 0x00 0x01')
+os.system('i2cget -y 2 0x4e 0x1d').read()
+os.system('i2cget -y 2 0x4e 0x1c').read()
+print ('Selecting I2C switch for local sensor read')
+time.sleep(sleep)
+
+
 def read_temp (addr):
     try:
         i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x00 w').read()
@@ -48,10 +57,12 @@ while(1):
     for addr in ['0x6e']:
         read_volt(addr, 0.0025) # 48V sensor has special R value
         time.sleep(sleep)
-    for addr in ['0x67', '0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6e', '0x6f']:
+    for addr in ['0x67', '0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6d']:
         read_volt(addr, 0.005)
         time.sleep(sleep)
-    # Fake address on WIB I2C line; don't expect response
-    i2c_wib = os.popen('i2cget -y 1 0x5f 0x00 w').read()
+    # WIB FEMB bias monitor
+    i2c_wib = os.popen('i2cget -y 2 0x4e 0x1d').read()
+    i2c_wib2 = os.popen('i2cget -y 2 0x4e 0x1c').read()
     print (i2c_wib)
+    print (i2c_wib2)
     time.sleep(sleep)

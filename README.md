@@ -53,7 +53,7 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 1. First, from Vivado: **File - Export - Export Hardware - Include Bitstream** and export to the default *Mercury_XU5_PE1/* project directory (this will export an .xsa file).
 2. **File - Export - Export Hardware - Export Bitstream File** and choose the same default directory as above. Name the file *Mercury_XU5_PE1.bit*.
 3. From the `reference_design/` directory on the Linux machine:`petalinux-create -t project -n ptc.linux --template zynqMP`
-4. From the `petalinux/configs/` directory in this repo, copy the `config` and `rootfs_config` files to the `/ptc.linux/project-spec/configs/` folder. 
+4. From the `petalinux/configs/` directory in this repo, copy the `config` and `rootfs_config` files to the `ptc.linux/project-spec/configs/` folder. 
 5. `petalinux-config -p ptc.linux/ --get-hw-description Mercury_XU5_PE1/`. This will grab the exported .xsa and .bit files from before. In the graphical menu that pops up, select **Image Packaging Configuration - Root filesystem type - EXT4**. (This ensures the image will boot from an ext4 partition on the SD card.) This option should have been read from the `config` file copied earlier.
 6. `petalinux-config -p ptc.linux/ -c rootfs` will bring up a graphical menu, and you can confirm that the choices in the `rootfs_config` file are reflected here. (There are several filesystem utilities that will be marked for install based on the file.)
 7. Copy `system-user.dtsi` file in this repo to `project-spec/meta-user/recipes-bsp/device-tree/files/`. This ensures that the SD card controller, GEM (gigabit ethernet MAC that the PS uses for the SFP connection), and the I2C device on the PS, all get configured correctly.

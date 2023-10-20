@@ -120,6 +120,8 @@ entity Mercury_XU5_PE1 is
     CRATE_ADDR5                     : inout std_logic;
     CRATE_ADDR6                     : inout std_logic;
     CRATE_ADDR7                     : inout std_logic;
+    GTR1_SPARE_P                    : inout std_logic;
+    GTR1_SPARE_N                    : inout std_logic;
     
 --    -- Anios_A
 --    IOA_D0_P                       : inout   std_logic;
@@ -809,6 +811,21 @@ begin
       I => iic_wib_sda_o,
       IO => WIB_SDA,
       T => iic_wib_sda_t
+   );
+   IOBUF_gtrp : IOBUF
+   port map (
+      O => open,
+      I => '0',
+      IO => GTR1_SPARE_P,
+      T => '1'
+   );
+   
+   IOBUF_gtrn : IOBUF
+   port map (
+      O => open,
+      I => '0',
+      IO => GTR1_SPARE_N,
+      T => '1'
    );
 
 end rtl;
