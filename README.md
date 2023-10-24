@@ -125,7 +125,7 @@ You should printouts on the PTC terminal that show the state of various sensors.
 
 ### To transfer files to and from PTC:
 1. From host to PTC (from host): `rsync -avzh [file to transfer] root@[your IP address]:/home/root/`
-2. From PTC to host (from host): `rsync -avzh root@[your IP address]:/home/root/[file to transfer]`
+2. From PTC to host (from host): `rsync -avzh root@[your IP address]:/home/root/[file to transfer] .`
 
 ## Footnotes
 1. This is done by creating an app template as in the [PetaLinux Yocto documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842475/PetaLinux+Yocto+Tips#PetaLinuxYoctoTips-CreatingApps(whichuseslibraries)inPetaLinuxProject)
