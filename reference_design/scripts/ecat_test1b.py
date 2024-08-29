@@ -3,7 +3,7 @@ import sys
 import time
 
 sleep = 1
-module = '2EG'
+module = '5EV'
 if module == '2EG':
     base_addr = '0xa003'
 else:
@@ -88,10 +88,23 @@ def read_curr (addr, resistor):
 while(1):
     date = os.popen('date').read()
     logfile.write(date)
-    for addr in ['0x48']:
-        word1 = read_temp(addr)
+    for addr in ['0x48', '0x49', '0x4a', '0x4b']:
+        word0 = read_temp(addr)
+    for addr in ['0x67']:
+        word1 = read_curr(addr, 0.005)
+    for addr in ['0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6d']:
+        word2 = read_curr(addr, 0.005)
     for addr in ['0x6e']:
-        word2 = read_curr(addr, 0.0025) #48V sensor has special value
-    data = word1 + word2 + r"\xfe\xca" 
+        word3 = read_curr(addr, 0.0025) #48V sensor has special value
+    data = word1 + word3 + r"\xfe\xca" 
     os.system('echo -n -e "' + data + '" > /dev/ttyPS1')
+    # switch I2C bus for additional temp sensors
+    os.system('i2cset -y -r 0 0x70 0x04')
+    print ('Switching to alternate I2C bus')
+    for addr in ['0x48', '0x49', '0x4a', '0x4b']:
+        word4 = read_temp(addr)
+    for addr in ['0x6e', '0x6f']:
+        word5 = read_curr(addr, 0.020) # 3.3/2.5V sensors have special value
+    os.system('i2cset -y -r 0 0x70 0x08')
+    print ('switching back to default I2C bus')
     time.sleep(sleep)
