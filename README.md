@@ -108,7 +108,7 @@ You should printouts on the PTC terminal that show the state of various sensors.
 
 `#!/bin/sh`
 
-`python3 /home/root/setup_timing.sh`
+`python3 /home/root/setup_timing.py`
 
 3. Make the script executable with `chmod +x`.
 4. Issue the following commands to make symbolic links to this script in the appropriate startup directories, which will run the script at bootup:
