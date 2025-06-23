@@ -81,16 +81,80 @@ module top_RTL(
 
     // LTC2645 open-drain programmable alerts
     input               VP2V5_ALERT,
+    inout               VP2V5_PG,
+    input               VP3V3_PG,
     input               VP3V3_ALERT,
     input [6:0]         VP12_IV_ALERT,  
     input               VP48_IV_ALERT,
+    input               LOAD_IV_ALERT,
+    
     
     // TMP117 open drain programmable alerts
     input [2:0]         OVER_TEMP,
     output              OVER_TEMP_LED,
     
-    output [64*32-1:0]  reg_ro_out          
+    output [64*32-1:0]  reg_ro_out, 
+    
+    //Load Enables
+   output               LOAD_EN0,
+   output               LOAD_EN1,
+   output               LOAD_EN2,
+   output               LOAD_EN3,
+   output               LOAD_EN4,
+   output               LOAD_EN5,
+   
+   //PWM Signals
+   output               PWM0,
+   output               PWM1,
+   output               PWM2,
+   output               PWM3,
+   output               PWM4,
+   output               PWM5,
+   
+   //CLKs and CMDs 
+   output               SYS_CLK_P5,
+   output               SYS_CLK_N5,
+   output               SYS_CMD_P5,
+   output               SYS_CMD_N5,
+   output               SYS_CLK_5,
+   
+   output               SYS_CLK_P4,
+   output               SYS_CLK_N4,
+   output               SYS_CMD_P4,
+   output               SYS_CMD_N4,
+   output               SYS_CLK_4,
+
+   output               SYS_CLK_P3,
+   output               SYS_CLK_N3,
+   output               SYS_CMD_P3,
+   output               SYS_CMD_N3,         
+   output               SYS_CLK_3,
+   
+   output               SYS_CLK_P2,
+   output               SYS_CLK_N2,
+   output               SYS_CMD_P2,
+   output               SYS_CMD_N2, 
+   output               SYS_CLK_2,
+   
+   output               SYS_CLK_P1,
+   output               SYS_CLK_N1,
+   output               SYS_CMD_P1,
+   output               SYS_CMD_N1,
+   output               SYS_CLK_1,
+   
+   output               SYS_CLK_P0,
+   output               SYS_CLK_N0,
+   output               SYS_CMD_P0,
+   output               SYS_CMD_N0,
+   output               SYS_CLK_0,
+   
+   //I2C
+   output               I2C_SCL,
+   inout                I2C_SDA,
+   output               QC_EN
     );
+    
+   
     
     // *** Declarations ***
     wire [6:0]      vp12_sync_en;
@@ -202,11 +266,11 @@ module top_RTL(
     // WIB priority encoder select
     // tri-state = TXB0104 controls MUX (default)
     // low = SoC controls MUX through WIB_RX_SEL lines (do not drive high!)
-    IOBUF pesel_buf (.T(~wib_pe_soc_en), .I(1'b0), .O(), .IO(WIB_PE_SEL));
-    IOBUF wib_rx_buf0 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[0]), .O(wib_rx_sel_in[0]), .IO(WIB_RX_SEL[0]));
-    IOBUF wib_rx_buf1 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[1]), .O(wib_rx_sel_in[1]), .IO(WIB_RX_SEL[1]));
-    IOBUF wib_rx_buf2 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[2]), .O(wib_rx_sel_in[2]), .IO(WIB_RX_SEL[2]));
-    // timing SFP
+//    IOBUF pesel_buf (.T(~wib_pe_soc_en), .I(1'b0), .O(), .IO(WIB_PE_SEL));
+//    IOBUF wib_rx_buf0 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[0]), .O(wib_rx_sel_in[0]), .IO(WIB_RX_SEL[0]));
+//    IOBUF wib_rx_buf1 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[1]), .O(wib_rx_sel_in[1]), .IO(WIB_RX_SEL[1]));
+//    IOBUF wib_rx_buf2 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[2]), .O(wib_rx_sel_in[2]), .IO(WIB_RX_SEL[2]));
+//    // timing SFP
     // tri-state = transmitter disabled
     // low = transmitter enabled (do not drive high!)
     IOBUF sfp2_buf (.T(sfp2_tx_en), .I(1'b0), .O(), .IO(SFP2_TX_DISABLE));
@@ -251,6 +315,107 @@ module top_RTL(
         .tx_dis     (),
         .txd        (SYS_CMD)
     );
+    
+//    pdts_endpoint_wrapper ts_ep_wrp_4
+//    (
+//        .addr       (16'h0000),
+//        .clk        (),
+//        .clk2x      (clk125_from_ts),
+//        .rdy        (),
+//        .rec_clk    (),
+//        .rec_d      (SYS_CLK_4),
+//        .rst        (),
+//        .sclk       (clk_axi),
+//        .srst       (ep_srst),
+//        .stat       (timing_stat),
+//        .sync       (),
+//        .sync_stb   (),
+//        .ts_clk_sel (ep_clk_sel),
+//        .tstamp     (),
+//        .tx_dis     (),
+//        .txd        (SYS_CMD_4)
+//    );
+    
+//    pdts_endpoint_wrapper ts_ep_wrp_3
+//    (
+//        .addr       (16'h0000),
+//        .clk        (),
+//        .clk2x      (clk125_from_ts),
+//        .rdy        (),
+//        .rec_clk    (),
+//        .rec_d      (SYS_CLK_3),
+//        .rst        (),
+//        .sclk       (clk_axi),
+//        .srst       (ep_srst),
+//        .stat       (timing_stat),
+//        .sync       (),
+//        .sync_stb   (),
+//        .ts_clk_sel (ep_clk_sel),
+//        .tstamp     (),
+//        .tx_dis     (),
+//        .txd        (SYS_CMD_3)
+//    );
+    
+//    pdts_endpoint_wrapper ts_ep_wrp_2
+//    (
+//        .addr       (16'h0000),
+//        .clk        (),
+//        .clk2x      (clk125_from_ts),
+//        .rdy        (),
+//        .rec_clk    (),
+//        .rec_d      (SYS_CLK_2),
+//        .rst        (),
+//        .sclk       (clk_axi),
+//        .srst       (ep_srst),
+//        .stat       (timing_stat),
+//        .sync       (),
+//        .sync_stb   (),
+//        .ts_clk_sel (ep_clk_sel),
+//        .tstamp     (),
+//        .tx_dis     (),
+//        .txd        (SYS_CMD_2)
+//    );
+    
+    
+//    pdts_endpoint_wrapper ts_ep_wrp_1
+//    (
+//        .addr       (16'h0000),
+//        .clk        (),
+//        .clk2x      (clk125_from_ts),
+//        .rdy        (),
+//        .rec_clk    (),
+//        .rec_d      (SYS_CLK_1),
+//        .rst        (),
+//        .sclk       (clk_axi),
+//        .srst       (ep_srst),
+//        .stat       (timing_stat),
+//        .sync       (),
+//        .sync_stb   (),
+//        .ts_clk_sel (ep_clk_sel),
+//        .tstamp     (),
+//        .tx_dis     (),
+//        .txd        (SYS_CMD_1)
+//    );
+    
+//    pdts_endpoint_wrapper ts_ep_wrp_0
+//    (
+//        .addr       (16'h0000),
+//        .clk        (),
+//        .clk2x      (clk125_from_ts),
+//        .rdy        (),
+//        .rec_clk    (),
+//        .rec_d      (SYS_CLK_0),
+//        .rst        (),
+//        .sclk       (clk_axi),
+//        .srst       (ep_srst),
+//        .stat       (timing_stat),
+//        .sync       (),
+//        .sync_stb   (),
+//        .ts_clk_sel (ep_clk_sel),
+//        .tstamp     (),
+//        .tx_dis     (),
+//        .txd        (SYS_CMD_0)
+//    );
     
     // *** Main code ***
     

@@ -37,68 +37,68 @@ entity Mercury_XU5_PE1 is
   );
   
   port (
-    XMC_JTAG_TMS                    : out   std_logic;
-    XMC_JTAG_TCK                    : out   std_logic;
-    XMC_JTAG_TDI                    : out   std_logic;
-    XMC_JTAG_TDO                    : in    std_logic;
-    XMC_JTAG_RST                    : out   std_logic;
-    OVER_TEMP_LED                   : out   std_logic;
-    ECAT_UART_TX                    : out   std_logic;
-    ECAT_UART_RX                    : in    std_logic;
-    DEBUG_UART_TX                   : out   std_logic;
-    DEBUG_UART_RX                   : in    std_logic;
-    VP12_EN3                        : out   std_logic;
-    VP12_EN2                        : out   std_logic;
-    VP12_SYNC0                      : out   std_logic;
-    VP12_SYNC1                      : out   std_logic;
-    VP12_SYNC2                      : out   std_logic;
-    VP12_SYNC3                      : out   std_logic;
-    VP12_SYNC4                      : out   std_logic;
-    VP12_SYNC5                      : out   std_logic;
-    VP12_SYNC6                      : out   std_logic;
-    OVER_TEMP0                      : in    std_logic;
-    OVER_TEMP1                      : in    std_logic;
-    OVER_TEMP2                      : in    std_logic;
+--    XMC_JTAG_TMS                    : out   std_logic;
+--    XMC_JTAG_TCK                    : out   std_logic;
+--    XMC_JTAG_TDI                    : out   std_logic;
+--    XMC_JTAG_TDO                    : in    std_logic;
+--    XMC_JTAG_RST                    : out   std_logic;
+--    OVER_TEMP_LED                   : out   std_logic;
+--    ECAT_UART_TX                    : out   std_logic;
+--    ECAT_UART_RX                    : in    std_logic;
+--    DEBUG_UART_TX                   : out   std_logic;
+--    DEBUG_UART_RX                   : in    std_logic;
+--    VP12_EN3                        : out   std_logic;
+--    VP12_EN2                        : out   std_logic;
+--    VP12_SYNC0                      : out   std_logic;
+--    VP12_SYNC1                      : out   std_logic;
+--    VP12_SYNC2                      : out   std_logic;
+--    VP12_SYNC3                      : out   std_logic;
+--    VP12_SYNC4                      : out   std_logic;
+--    VP12_SYNC5                      : out   std_logic;
+--    VP12_SYNC6                      : out   std_logic;
+--    OVER_TEMP0                      : in    std_logic;
+--    OVER_TEMP1                      : in    std_logic;
+--    OVER_TEMP2                      : in    std_logic;
     VP2V5_ALERT                     : in    std_logic;
     VP3V3_ALERT                     : in    std_logic;
-    VP12_IV_ALERT0                  : in    std_logic;
-    VP12_IV_ALERT1                  : in    std_logic;
-    WIB_PE_SEL                      : out   std_logic;
-    LV_SYNC                         : out   std_logic;
-    VP12_EN1                        : out   std_logic;
-    VP12_EN0                        : out   std_logic;
-    SFP2_LOS                        : in    std_logic;
-    SFP2_PRESENT                    : in    std_logic;
-    WIB_RX_SEL0                     : inout std_logic;
-    WIB_RX_SEL1                     : inout std_logic;
-    WIB_RX_SEL2                     : inout std_logic;
-    SFP0_LOS                        : in    std_logic;
-    SFP0_TX_FAULT                   : in    std_logic;
-    SFP0_PRESENT                    : in    std_logic;
-    SFP0_SPARE_LED                  : out   std_logic;
-    VP12_IV_ALERT2                  : in    std_logic;
-    VP12_IV_ALERT3                  : in    std_logic;
-    VP12_IV_ALERT4                  : in    std_logic;
-    VP12_IV_ALERT5                  : in    std_logic;
-    VP12_IV_ALERT6                  : in    std_logic;
+    VP12_IV_ALERT                  : in    std_logic;
+--    VP12_IV_ALERT1                  : in    std_logic;
+--    WIB_PE_SEL                      : out   std_logic;
+--    LV_SYNC                         : out   std_logic;
+--    VP12_EN1                        : out   std_logic;
+--    VP12_EN0                        : out   std_logic;
+--    SFP2_LOS                        : in    std_logic;
+--    SFP2_PRESENT                    : in    std_logic;
+--    WIB_RX_SEL0                     : inout std_logic;
+--    WIB_RX_SEL1                     : inout std_logic;
+--    WIB_RX_SEL2                     : inout std_logic;
+--    SFP0_LOS                        : in    std_logic;
+--    SFP0_TX_FAULT                   : in    std_logic;
+--    SFP0_PRESENT                    : in    std_logic;
+--    SFP0_SPARE_LED                  : out   std_logic;
+--    VP12_IV_ALERT2                  : in    std_logic;
+--    VP12_IV_ALERT3                  : in    std_logic;
+--    VP12_IV_ALERT4                  : in    std_logic;
+--    VP12_IV_ALERT5                  : in    std_logic;
+--    VP12_IV_ALERT6                  : in    std_logic;
     VP48_IV_ALERT                   : in    std_logic;
-    SOC_I2C_SW_RST                  : out   std_logic;
-    SFP1_TX_FAULT                   : in    std_logic;
-    SFP2_TX_FAULT                   : in    std_logic;
-    SFP2_TX_DISABLE                 : inout std_logic;
-    SFP1_LOS                        : in    std_logic;
-    SFP1_PRESENT                    : in    std_logic;
-    VP12_EN4                        : out   std_logic;
-    VP12_EN5                        : out   std_logic;
-    WIB_SCL                         : inout   std_logic;
-    WIB_SDA                         : inout   std_logic;
-    WIB_I2C_OE                      : out   std_logic;
-    MCU_I2C_OE                      : out   std_logic;
-    WIB_CLK_SEL                     : out   std_logic;
-    SYS_CMD_P                       : out   std_logic;
-    SYS_CMD_N                       : out   std_logic;
-    SOC_AUX_CLK_P                   : out   std_logic;
-    SOC_AUX_CLK_N                   : out   std_logic;
+--    SOC_I2C_SW_RST                  : out   std_logic;
+--    SFP1_TX_FAULT                   : in    std_logic;
+--    SFP2_TX_FAULT                   : in    std_logic;
+--    SFP2_TX_DISABLE                 : inout std_logic;
+--    SFP1_LOS                        : in    std_logic;
+--    SFP1_PRESENT                    : in    std_logic;
+--    VP12_EN4                        : out   std_logic;
+--    VP12_EN5                        : out   std_logic;
+--    WIB_SCL                         : inout   std_logic;
+--    WIB_SDA                         : inout   std_logic;
+--    WIB_I2C_OE                      : out   std_logic;
+--    MCU_I2C_OE                      : out   std_logic;
+--    WIB_CLK_SEL                     : out   std_logic;
+ 
+
+--    SOC_AUX_CLK_P                   : out   std_logic;
+--    SOC_AUX_CLK_N                   : out   std_logic;
     BP_IO0                          : in    std_logic;
     BP_IO1                          : in    std_logic;
     BP_IO2                          : in    std_logic;
@@ -106,7 +106,7 @@ entity Mercury_XU5_PE1 is
     BP_IO4                          : in    std_logic;
     BP_IO5                          : in    std_logic;
     BP_IO_OE                        : inout std_logic;
-    TIMING_GOOD                     : out   std_logic;
+--    TIMING_GOOD                     : out   std_logic;
     EN_3V3                          : out   std_logic;
     EN_2V5                          : out   std_logic;
     SYS_CLK_P                       : in    std_logic;
@@ -122,6 +122,61 @@ entity Mercury_XU5_PE1 is
     CRATE_ADDR7                     : inout std_logic;
     GTR1_SPARE_P                    : inout std_logic;
     GTR1_SPARE_N                    : inout std_logic;
+    
+-- Eliot's Adjustments
+    VP2V5_PG                        : out   std_logic;
+    VP3V3_PG                        : out   std_logic;
+    LOAD_IV_ALERT                   : out   std_logic;
+    LOAD_EN0                        : out   std_logic;
+    LOAD_EN1                        : out   std_logic;
+    LOAD_EN2                        : out   std_logic;
+    LOAD_EN3                        : out   std_logic;
+    LOAD_EN4                        : out   std_logic;
+    LOAD_EN5                        : out   std_logic;
+    PWM0                            : out   std_logic;
+    PWM1                            : out   std_logic;
+    PWM2                            : out   std_logic;
+    PWM3                            : out   std_logic;
+    PWM4                            : out   std_logic;
+    PWM5                            : out   std_logic;
+    
+    SYS_CMD_P                       : out   std_logic;
+    SYS_CMD_N                       : out   std_logic;
+    
+    SYS_CLK_P5                      : in   std_logic; 
+    SYS_CLK_N5                      : in   std_logic;
+    SYS_CMD_P5                      : in   std_logic;
+    SYS_CMD_N5                      : in   std_logic;
+    
+    SYS_CLK_P4                      : in   std_logic; 
+    SYS_CLK_N4                      : in   std_logic;
+    SYS_CMD_P4                      : in   std_logic;
+    SYS_CMD_N4                      : in   std_logic;
+    
+    SYS_CLK_P3                      : in   std_logic; 
+    SYS_CLK_N3                      : in   std_logic;
+    SYS_CMD_P3                      : in   std_logic;
+    SYS_CMD_N3                      : in   std_logic; 
+    
+    SYS_CLK_P2                      : in   std_logic; 
+    SYS_CLK_N2                      : in   std_logic;
+    SYS_CMD_P2                      : in   std_logic;
+    SYS_CMD_N2                      : in   std_logic;
+    
+    SYS_CLK_P1                      : in   std_logic; 
+    SYS_CLK_N1                      : in   std_logic;
+    SYS_CMD_P1                      : in   std_logic;
+    SYS_CMD_N1                      : in   std_logic;
+    
+    SYS_CLK_P0                      : in   std_logic; 
+    SYS_CLK_N0                      : in   std_logic;
+    SYS_CMD_P0                      : in   std_logic;
+    SYS_CMD_N0                      : in   std_logic;
+    I2C_SCL                         : out   std_logic;
+    I2C_SDA                         : inout   std_logic;
+    QC_EN                           : out   std_logic;
+    --BP_IO               : in    std_logic_vector(5 downto 0);
+    
     
 --    -- Anios_A
 --    IOA_D0_P                       : inout   std_logic;
@@ -361,10 +416,10 @@ architecture rtl of Mercury_XU5_PE1 is
       iic_wib_sda_i       : in     std_logic;
       iic_wib_sda_o       : out    std_logic;
       iic_wib_sda_t       : out    std_logic;
-      ECAT_UART_txd       : out    std_logic;
-      ECAT_UART_rxd       : in     std_logic;
-      DEBUG_UART_txd      : out    std_logic;
-      DEBUG_UART_rxd      : in     std_logic;
+--      ECAT_UART_txd       : out    std_logic;
+--      ECAT_UART_rxd       : in     std_logic;
+--      DEBUG_UART_txd      : out    std_logic;
+--      DEBUG_UART_rxd      : in     std_logic;
       reg_ro              : in     std_logic_vector(2047 downto 0);
       reg_rw              : out    std_logic_vector(2047 downto 0)
 --      MDIO_mdc            : out    std_logic;
@@ -438,38 +493,38 @@ architecture rtl of Mercury_XU5_PE1 is
       clk_axi             : in    std_logic;
       reg_rw_in           : in    std_logic_vector(2047 downto 0);
       
-      XMC_JTAG_TMS        : out   std_logic;
-      XMC_JTAG_TCK        : out   std_logic;
-      XMC_JTAG_TDO        : in    std_logic;
-      XMC_JTAG_TDI        : out   std_logic;
-      XMC_JTAG_RST        : out   std_logic;
+--      XMC_JTAG_TMS        : out   std_logic;
+--      XMC_JTAG_TCK        : out   std_logic;
+--      XMC_JTAG_TDO        : in    std_logic;
+--      XMC_JTAG_TDI        : out   std_logic;
+--      XMC_JTAG_RST        : out   std_logic;
       --DEBUG_UART_TX       : out   std_logic;
       --DEBUG_UART_RX       : in    std_logic;
       --ECAT_UART_TX        : out   std_logic;
       --ECAT_UART_RX        : in    std_logic;
-      OVER_TEMP_LED       : out   std_logic;
-      VP12_EN             : out   std_logic_vector(5 downto 0);
-      VP12_SYNC           : out   std_logic_vector(6 downto 0);
-      OVER_TEMP           : in    std_logic_vector(2 downto 0);
+--      OVER_TEMP_LED       : out   std_logic;
+--      VP12_EN             : out   std_logic_vector(5 downto 0);
+--      VP12_SYNC           : out   std_logic_vector(6 downto 0);
+--      OVER_TEMP           : in    std_logic_vector(2 downto 0);
       VP2V5_ALERT         : in    std_logic;
       VP3V3_ALERT         : in    std_logic;
-      VP12_IV_ALERT       : in    std_logic_vector(6 downto 0);
-      WIB_PE_SEL          : out   std_logic;
-      LV_SYNC             : out   std_logic;
-      SFP2_LOS            : in    std_logic;
-      SFP2_PRESENT        : in    std_logic;
+      VP12_IV_ALERT       : in    std_logic;
+--      WIB_PE_SEL          : out   std_logic;
+--      LV_SYNC             : out   std_logic;
+--      SFP2_LOS            : in    std_logic;
+--      SFP2_PRESENT        : in    std_logic;
       WIB_RX_SEL          : inout std_logic_vector(2 downto 0);
-      SFP0_LOS            : in    std_logic;
-      SFP0_PRESENT        : in    std_logic;
-      SFP0_TX_FAULT       : in    std_logic;
-      SFP0_SPARE_LED      : out   std_logic;
-      VP48_IV_ALERT       : in    std_logic;
-      SOC_I2C_SW_RST      : out   std_logic;
-      SFP1_TX_FAULT       : in    std_logic;
-      SFP2_TX_FAULT       : in    std_logic;
-      SFP2_TX_DISABLE     : inout std_logic;
-      SFP1_LOS            : in    std_logic;
-      SFP1_PRESENT        : in    std_logic;
+--     SFP0_LOS            : in    std_logic;
+--      SFP0_PRESENT        : in    std_logic;
+--      SFP0_TX_FAULT       : in    std_logic;
+--      SFP0_SPARE_LED      : out   std_logic;
+--      VP48_IV_ALERT       : in    std_logic;
+--      SOC_I2C_SW_RST      : out   std_logic;
+--      SFP1_TX_FAULT       : in    std_logic;
+--      SFP2_TX_FAULT       : in    std_logic;
+--      SFP2_TX_DISABLE     : inout std_logic;
+--      SFP1_LOS            : in    std_logic;
+--      SFP1_PRESENT        : in    std_logic;
       --WIB_SCL             : inout   std_logic;
       --WIB_SDA             : inout   std_logic;
       WIB_I2C_OE          : out   std_logic;
@@ -480,11 +535,12 @@ architecture rtl of Mercury_XU5_PE1 is
       SYS_CLK             : in    std_logic;
       BP_IO               : in    std_logic_vector(5 downto 0);
       BP_IO_OE            : inout std_logic;
-      TIMING_GOOD         : out   std_logic;
+--      TIMING_GOOD         : out   std_logic;
       EN_3V3              : out   std_logic;
       EN_2V5              : out   std_logic;
       CRATE_ADDR_OE       : out   std_logic;
       CRATE_ADDR          : inout std_logic_vector(7 downto 0);
+      
 
       reg_ro_out          : out    std_logic_vector(2047 downto 0)
     );
@@ -535,6 +591,12 @@ architecture rtl of Mercury_XU5_PE1 is
 --  signal GMII_tx_er       : std_logic;
 --  signal GMII_txd         : std_logic_vector(7 downto 0);
   signal LedCount         : unsigned(23 downto 0);
+  signal SYS_CLK_5           : std_logic;
+  signal SYS_CLK_4           : std_logic;
+  signal SYS_CLK_3           : std_logic;
+  signal SYS_CLK_2           : std_logic;
+  signal SYS_CLK_1           : std_logic;
+  signal SYS_CLK_0           : std_logic;
 
 begin
   
@@ -575,10 +637,10 @@ begin
       iic_wib_sda_i        => iic_wib_sda_i,
       iic_wib_sda_o        => iic_wib_sda_o,
       iic_wib_sda_t        => iic_wib_sda_t,
-      ECAT_UART_txd        => ECAT_UART_TX,
-      ECAT_UART_rxd        => ECAT_UART_RX,
-      DEBUG_UART_txd       => DEBUG_UART_TX,
-      DEBUG_UART_rxd       => DEBUG_UART_RX,
+--      ECAT_UART_txd        => ECAT_UART_TX,
+--      ECAT_UART_rxd        => ECAT_UART_RX,
+--      DEBUG_UART_txd       => DEBUG_UART_TX,
+--      DEBUG_UART_rxd       => DEBUG_UART_RX,
       reg_ro               => reg_ro,
       reg_rw               => reg_rw
 --      MDIO_mdc             => ETH1_MDC,
@@ -667,14 +729,14 @@ begin
       O => SYS_CMD_P,
       OB => SYS_CMD_N,
       I => SYS_CMD
-   );
+ );
    
-   OBUFDS_socclk : OBUFDS
-   port map (
-      O => SOC_AUX_CLK_P,
-      OB => SOC_AUX_CLK_N,
-      I => SOC_AUX_CLK
-   );  
+--   OBUFDS_socclk : OBUFDS
+--   port map (
+--      O => SOC_AUX_CLK_P,
+--      OB => SOC_AUX_CLK_N,
+--      I => SOC_AUX_CLK
+--   );  
    
    IBUFDS_clk : IBUFDS
    port map (
@@ -682,6 +744,49 @@ begin
       I => SYS_CLK_P,
       IB => SYS_CLK_N
    );   
+   
+   clk0_buf : IBUFDS
+   port map(
+      I => SYS_CLK_P0,
+      IB => SYS_CLK_N0,
+      O => SYS_CLK_0
+   );
+   
+   clk1_buf : IBUFDS
+   port map(
+      I => SYS_CLK_P1,
+      IB => SYS_CLK_N1,
+      O => SYS_CLK_1
+   );
+   
+   clk2_buf : IBUFDS
+   port map(
+      I => SYS_CLK_P2,
+      IB => SYS_CLK_N2,
+      O => SYS_CLK_2
+   );
+   
+   
+   clk3_buf : IBUFDS
+   port map(
+      I => SYS_CLK_P3,
+      IB => SYS_CLK_N3,
+      O => SYS_CLK_3
+   );
+   
+   clk4_buf : IBUFDS
+   port map(
+      I => SYS_CLK_P4,
+      IB => SYS_CLK_N4,
+      O => SYS_CLK_4
+   );
+   
+   clk5_buf : IBUFDS
+   port map(
+      I => SYS_CLK_P5,
+      IB => SYS_CLK_N5,
+      O => SYS_CLK_5
+   );
    
   -- IBUFDS_clk_pl : IBUFDS
   -- port map (
@@ -695,65 +800,65 @@ begin
     clk_axi             => Clk100,
     reg_rw_in           => reg_rw,
     
-    XMC_JTAG_TMS        => XMC_JTAG_TMS,
-    XMC_JTAG_TCK        => XMC_JTAG_TCK,
-    XMC_JTAG_TDO        => XMC_JTAG_TDO,
-    XMC_JTAG_TDI        => XMC_JTAG_TDI,
-    XMC_JTAG_RST        => XMC_JTAG_RST,
-    OVER_TEMP_LED       => OVER_TEMP_LED,
+--    XMC_JTAG_TMS        => XMC_JTAG_TMS,
+--    XMC_JTAG_TCK        => XMC_JTAG_TCK,
+--    XMC_JTAG_TDO        => XMC_JTAG_TDO,
+--    XMC_JTAG_TDI        => XMC_JTAG_TDI,
+--    XMC_JTAG_RST        => XMC_JTAG_RST,
+--    OVER_TEMP_LED       => OVER_TEMP_LED,
     --ECAT_UART_RX        => ECAT_UART_TX,
     --ECAT_UART_RX        => ECAT_UART_RX,
     --DEBUG_UART_TX       => DEBUG_UART_TX,
     --DEBUG_UART_RX       => DEBUG_UART_RX,
-    LV_SYNC             => LV_SYNC,
-    VP12_EN(0)          => VP12_EN0,
-    VP12_EN(1)          => VP12_EN1,
-    VP12_EN(2)          => VP12_EN2,
-    VP12_EN(3)          => VP12_EN3,
-    VP12_EN(4)          => VP12_EN4,
-    VP12_EN(5)          => VP12_EN5,
-    VP12_SYNC(0)        => VP12_SYNC0,
-    VP12_SYNC(1)        => VP12_SYNC1,
-    VP12_SYNC(2)        => VP12_SYNC2,
-    VP12_SYNC(3)        => VP12_SYNC3,
-    VP12_SYNC(4)        => VP12_SYNC4,
-    VP12_SYNC(5)        => VP12_SYNC5,
-    VP12_SYNC(6)        => VP12_SYNC6,
-    OVER_TEMP(0)        => OVER_TEMP0,
-    OVER_TEMP(1)        => OVER_TEMP1,
-    OVER_TEMP(2)        => OVER_TEMP2,
+--    LV_SYNC             => LV_SYNC,
+--    VP12_EN(0)          => VP12_EN0,
+--    VP12_EN(1)          => VP12_EN1,
+--    VP12_EN(2)          => VP12_EN2,
+--    VP12_EN(3)          => VP12_EN3,
+--    VP12_EN(4)          => VP12_EN4,
+--    VP12_EN(5)          => VP12_EN5,
+--    VP12_SYNC(0)        => VP12_SYNC0,
+--    VP12_SYNC(1)        => VP12_SYNC1,
+--    VP12_SYNC(2)        => VP12_SYNC2,
+--    VP12_SYNC(3)        => VP12_SYNC3,
+--    VP12_SYNC(4)        => VP12_SYNC4,
+--    VP12_SYNC(5)        => VP12_SYNC5,
+--    VP12_SYNC(6)        => VP12_SYNC6,
+--    OVER_TEMP(0)        => OVER_TEMP0,
+--    OVER_TEMP(1)        => OVER_TEMP1,
+--    OVER_TEMP(2)        => OVER_TEMP2,
     VP2V5_ALERT         => VP2V5_ALERT,
     VP3V3_ALERT         => VP3V3_ALERT,
-    VP12_IV_ALERT(0)    => VP12_IV_ALERT0,
-    VP12_IV_ALERT(1)    => VP12_IV_ALERT1,
-    VP12_IV_ALERT(2)    => VP12_IV_ALERT2,
-    VP12_IV_ALERT(3)    => VP12_IV_ALERT3,
-    VP12_IV_ALERT(4)    => VP12_IV_ALERT4,
-    VP12_IV_ALERT(5)    => VP12_IV_ALERT5,
-    VP12_IV_ALERT(6)    => VP12_IV_ALERT6,
-    WIB_PE_SEL          => WIB_PE_SEL,
-    SFP2_LOS            => SFP2_LOS,
-    SFP2_PRESENT        => SFP2_PRESENT,
-    WIB_RX_SEL(0)       => WIB_RX_SEL0,
-    WIB_RX_SEL(1)       => WIB_RX_SEL1,
-    WIB_RX_SEL(2)       => WIB_RX_SEL2,
-    SFP0_LOS            => SFP0_LOS,
-    SFP0_TX_FAULT       => SFP0_TX_FAULT,
-    SFP0_PRESENT        => SFP0_PRESENT,
-    VP48_IV_ALERT       => VP48_IV_ALERT,
-    SOC_I2C_SW_RST      => SOC_I2C_SW_RST,
-    SFP1_TX_FAULT       => SFP1_TX_FAULT,
-    SFP2_TX_FAULT       => SFP2_TX_FAULT,
-    SFP2_TX_DISABLE     => SFP2_TX_DISABLE,
-    SFP1_LOS            => SFP1_LOS,
-    SFP1_PRESENT        => SFP1_PRESENT,
+    VP12_IV_ALERT    => VP12_IV_ALERT,
+--    VP12_IV_ALERT(1)    => VP12_IV_ALERT1,
+--    VP12_IV_ALERT(2)    => VP12_IV_ALERT2,
+--    VP12_IV_ALERT(3)    => VP12_IV_ALERT3,
+--    VP12_IV_ALERT(4)    => VP12_IV_ALERT4,
+--    VP12_IV_ALERT(5)    => VP12_IV_ALERT5,
+--    VP12_IV_ALERT(6)    => VP12_IV_ALERT6,
+--    WIB_PE_SEL          => WIB_PE_SEL,
+--    SFP2_LOS            => SFP2_LOS,
+--    SFP2_PRESENT        => SFP2_PRESENT,
+--    WIB_RX_SEL(0)       => WIB_RX_SEL0,
+--    WIB_RX_SEL(1)       => WIB_RX_SEL1,
+--    WIB_RX_SEL(2)       => WIB_RX_SEL2,
+--    SFP0_LOS            => SFP0_LOS,
+--    SFP0_TX_FAULT       => SFP0_TX_FAULT,
+--    SFP0_PRESENT        => SFP0_PRESENT,
+--    VP48_IV_ALERT       => VP48_IV_ALERT,
+--    SOC_I2C_SW_RST      => SOC_I2C_SW_RST,
+--    SFP1_TX_FAULT       => SFP1_TX_FAULT,
+--    SFP2_TX_FAULT       => SFP2_TX_FAULT,
+--    SFP2_TX_DISABLE     => SFP2_TX_DISABLE,
+--    SFP1_LOS            => SFP1_LOS,
+--    SFP1_PRESENT        => SFP1_PRESENT,
     --WIB_SCL             => WIB_SCL,
     --WIB_SDA             => WIB_SDA,
-    WIB_I2C_OE          => WIB_I2C_OE,
-    MCU_I2C_OE          => MCU_I2C_OE,
-    WIB_CLK_SEL         => WIB_CLK_SEL,
-    SYS_CMD             => SYS_CMD,
-    SOC_AUX_CLK         => SOC_AUX_CLK,
+--    WIB_I2C_OE          => WIB_I2C_OE,
+--    MCU_I2C_OE          => MCU_I2C_OE,
+--    WIB_CLK_SEL         => WIB_CLK_SEL,
+--    SYS_CMD             => SYS_CMD,
+--    SOC_AUX_CLK         => SOC_AUX_CLK,
     SYS_CLK             => SYS_CLK,
     BP_IO(0)            => BP_IO0,
     BP_IO(1)            => BP_IO1,
@@ -762,7 +867,7 @@ begin
     BP_IO(4)            => BP_IO4,
     BP_IO(5)            => BP_IO5,
     BP_IO_OE            => BP_IO_OE,
-    TIMING_GOOD         => TIMING_GOOD,
+--    TIMING_GOOD         => TIMING_GOOD,
     EN_3V3              => EN_3V3,
     EN_2V5              => EN_2V5,
     CRATE_ADDR_OE       => CRATE_ADDR_OE,
@@ -774,6 +879,8 @@ begin
     CRATE_ADDR(5)       => CRATE_ADDR5,
     CRATE_ADDR(6)       => CRATE_ADDR6,
     CRATE_ADDR(7)       => CRATE_ADDR7,
+    
+    
         
     reg_ro_out          => reg_ro
     );
@@ -797,21 +904,21 @@ begin
       T => iic_ptc_sda_t
    );
 
-   IOBUF_wib_scl : IOBUF
-   port map (
-      O => iic_wib_scl_i,
-      I => iic_wib_scl_o,
-      IO => WIB_SCL,
-      T => iic_wib_scl_t
-   );
+--   IOBUF_wib_scl : IOBUF
+--   port map (
+--      O => iic_wib_scl_i,
+--      I => iic_wib_scl_o,
+--     IO => WIB_SCL,
+--      T => iic_wib_scl_t
+--   );
 
-   IOBUF_wib_sda : IOBUF
-   port map (
-      O => iic_wib_sda_i,
-      I => iic_wib_sda_o,
-      IO => WIB_SDA,
-      T => iic_wib_sda_t
-   );
+--   IOBUF_wib_sda : IOBUF
+--   port map (
+--      O => iic_wib_sda_i,
+--      I => iic_wib_sda_o,
+--      IO => WIB_SDA,
+--      T => iic_wib_sda_t
+--   );
    IOBUF_gtrp : IOBUF
    port map (
       O => open,
