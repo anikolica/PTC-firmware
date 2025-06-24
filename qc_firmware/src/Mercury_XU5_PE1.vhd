@@ -147,6 +147,7 @@ entity Mercury_XU5_PE1 is
     SYS_CLK_N5                      : in   std_logic;
     SYS_CMD_P5                      : in   std_logic;
     SYS_CMD_N5                      : in   std_logic;
+
     
     SYS_CLK_P4                      : in   std_logic; 
     SYS_CLK_N4                      : in   std_logic;
@@ -532,7 +533,13 @@ architecture rtl of Mercury_XU5_PE1 is
       WIB_CLK_SEL         : out   std_logic;
       SYS_CMD             : out   std_logic;
       SOC_AUX_CLK         : out   std_logic;
-      SYS_CLK             : in    std_logic;
+--      SYS_CLK             : in    std_logic;
+      SYS_CLK_5           : in    std_logic;
+      SYS_CLK_4           : in    std_logic;
+      SYS_CLK_3           : in    std_logic;
+      SYS_CLK_2           : in    std_logic;
+      SYS_CLK_1           : in    std_logic;
+      SYS_CLK_0           : in    std_logic;
       BP_IO               : in    std_logic_vector(5 downto 0);
       BP_IO_OE            : inout std_logic;
 --      TIMING_GOOD         : out   std_logic;
@@ -556,7 +563,13 @@ architecture rtl of Mercury_XU5_PE1 is
   signal LED_N            : std_logic_vector(1 downto 0);
   signal reg_ro           : std_logic_vector(2047 downto 0);
   signal reg_rw           : std_logic_vector(2047 downto 0);
-  signal SYS_CLK          : std_logic;
+--  signal SYS_CLK          : std_logic;
+  signal SYS_CLK_5        : std_logic;
+  signal SYS_CLK_4        : std_logic;
+  signal SYS_CLK_3        : std_logic;
+  signal SYS_CLK_2        : std_logic;
+  signal SYS_CLK_1        : std_logic;
+  signal SYS_CLK_0        : std_logic;
   signal SYS_CMD          : std_logic;
   signal SOC_AUX_CLK      : std_logic;
   signal iic_ptc_scl_i    : std_logic;
@@ -591,12 +604,7 @@ architecture rtl of Mercury_XU5_PE1 is
 --  signal GMII_tx_er       : std_logic;
 --  signal GMII_txd         : std_logic_vector(7 downto 0);
   signal LedCount         : unsigned(23 downto 0);
-  signal SYS_CLK_5           : std_logic;
-  signal SYS_CLK_4           : std_logic;
-  signal SYS_CLK_3           : std_logic;
-  signal SYS_CLK_2           : std_logic;
-  signal SYS_CLK_1           : std_logic;
-  signal SYS_CLK_0           : std_logic;
+  
 
 begin
   
@@ -738,12 +746,12 @@ begin
 --      I => SOC_AUX_CLK
 --   );  
    
-   IBUFDS_clk : IBUFDS
-   port map (
-      O => SYS_CLK,
-      I => SYS_CLK_P,
-      IB => SYS_CLK_N
-   );   
+--   IBUFDS_clk : IBUFDS
+--   port map (
+--      O => SYS_CLK,
+--      I => SYS_CLK_P,
+--      IB => SYS_CLK_N
+--   );   
    
    clk0_buf : IBUFDS
    port map(
@@ -859,7 +867,14 @@ begin
 --    WIB_CLK_SEL         => WIB_CLK_SEL,
 --    SYS_CMD             => SYS_CMD,
 --    SOC_AUX_CLK         => SOC_AUX_CLK,
-    SYS_CLK             => SYS_CLK,
+--    SYS_CLK             => SYS_CLK,
+    SYS_CLK_5           => SYS_CLK_5,
+    SYS_CLK_4           => SYS_CLK_4,
+    SYS_CLK_3           => SYS_CLK_3,
+    SYS_CLK_2           => SYS_CLK_2,
+    SYS_CLK_1           => SYS_CLK_1,
+    SYS_CLK_0           => SYS_CLK_0,
+
     BP_IO(0)            => BP_IO0,
     BP_IO(1)            => BP_IO1,
     BP_IO(2)            => BP_IO2,
