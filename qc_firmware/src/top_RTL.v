@@ -148,6 +148,9 @@ module top_RTL(
    output               SYS_CMD_N0,
    input                SYS_CLK_0,
    
+   output               OUT_CLK,
+   input[2:0]           sel,
+   
    //I2C
    output               I2C_SCL,
    inout                I2C_SDA,
@@ -175,8 +178,18 @@ module top_RTL(
     wire [2:0]      wib_rx_sel_in;
     wire [7:0]      crate_addr_out;
     
+    //Wires for the cascading mux scheme
+    wire            mux_01_out;
+    wire            mux_23_out;
+    wire            mux_45_out;
+    wire            mux_0123_out;
+    wire            mux_4567_out;
+    reg             selected_clk;
+    
     
     reg             timing_lock;
+    wire             dummy;
+    
     
     // *** R/W Register map ***
     // Reg 0, I2C and level translator control
@@ -297,19 +310,20 @@ module top_RTL(
     // MUX between endpoint output (default) and PLL-based clocks (reg sel when no timing system)
     BUFGMUX ts_clk_mux2x (.I0(clk125_from_ts), .I1(), .S(1'b0), .O(clk125));   
     
+
     
     pdts_endpoint_wrapper ts_ep_wrp
     (
         .addr       (16'h0000),
         .clk        (),
-        .clk2x      (),
+        .clk2x      (clk125_from_ts),
         .rdy        (),
         .rec_clk    (),
         .rec_d      (SYS_CLK_0),
         .rst        (),
         .sclk       (clk_axi),
         .srst       (ep_srst),
-        .stat       (),
+        .stat       (timing_stat),
         .sync       (),
         .sync_stb   (),
         .ts_clk_sel (ep_clk_sel),

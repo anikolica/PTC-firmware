@@ -228,6 +228,31 @@ set_false_path -from [get_ports SYS_CLK_P]
 #set_clock_groups -physically_exclusive -group SYS_CLK -group rxd 
 
 #Start of Eliot's Madness
+
+## Allow clock dedicated route override for mux_23_out net
+#set_property top/bufgctrl_23 BUFGCTRL_X0Y23 [get_nets top/mux_23_out]
+
+## Allow clock dedicated route override for clk0_buf output net
+#set_property top/bufgctrl_01 BUFGCTRL_X0Y21 [get_nets clk0_buf/O]
+
+## Allow clock dedicated route override for clk2_buf output net
+#set_property top/bugctrl_0123 BUFGCTRL_X0Y20 [get_nets clk2_buf/O]
+
+### Allow clock dedicated route override for mux_45_out net
+##set_property CLOCK_DEDICATED_ROUTE ANY_CMT_COLUMN [get_nets top/mux_45_out]
+
+### Allow clock dedicated route override for clk4_buf output net
+#set_property top/bufgctrl_final X0Y19 [get_nets clk4_buf/O]
+
+#set_property LOC BUFGCTRL_X0Y18 [get_cells top/bufgctrl_01]
+##set_property LOC BUFGCTRL_X0Y17 [get_cells top/bufgctrl_23]
+#set_property LOC BUFGCTRL_X0Y19 [get_cells top/bufgctrl_01x]
+#set_property LOC BUFGCTRL_X0Y20 [get_cells top/bufgctrl_final]
+#set_property LOC BUFGCTRL_X0Y21 [get_cells top/bufgctrl_45x]
+#set_property LOC BUFGCTRL_X0Y22 [get_cells top/bufgctrl_45]
+
+#set_property LOC BUFGCTRL_
+
 #Left side of Connector A
 set_property -dict {PACKAGE_PIN Y12   IOSTANDARD LVCMOS33  } [get_ports {VP2V5_PG}]
 set_property -dict {PACKAGE_PIN AA12  IOSTANDARD LVCMOS33  } [get_ports {VP3V3_PG}]
