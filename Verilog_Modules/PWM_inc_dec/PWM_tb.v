@@ -5,6 +5,7 @@
 module PWM_tb;
 	reg clk;
 	reg rst;
+	reg en;
 	reg duty_inc;
 	reg duty_dec;
 	reg [2:0] duty_cycle;
@@ -18,6 +19,7 @@ module PWM_tb;
 	//Instantiate the PWM generator
 	PWM_main PWM_inst(
 		.clk(clk),
+		.en(en),
 		.rst(rst),
 		.duty_inc(duty_inc),
 		.duty_dec(duty_dec),
@@ -36,6 +38,7 @@ module PWM_tb;
 		clk=1'b0;
 		duty_cycle = 3'b100;	
 		PWM_inst.counter = 3'b0;
+		en = 1'b1;
 		rst = 1'b1;
 		#PAUSE
 		rst = 1'b0;
