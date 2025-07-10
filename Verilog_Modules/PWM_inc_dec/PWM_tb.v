@@ -17,7 +17,7 @@ module PWM_tb;
 	parameter PAUSE = CYCLE * 100; //A prolonged pause to observe changes
 
 	//Instantiate the PWM generator
-	PWM_main PWM_inst(
+	PWM PWM_inst(
 		.clk(clk),
 		.en(en),
 		.rst(rst),

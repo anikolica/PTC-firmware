@@ -186,6 +186,14 @@ module top_RTL(
     wire            mux_4567_out;
     reg             selected_clk;
     
+    //Wires for PWM Register
+    wire            PWM_EN;
+    wire            PWM_RST;
+    wire            PWM_INC;
+    wire            PWM_DEC;
+    wire [2:0]      PWM_DUTY;
+    wire [2:0]      PWM_DIV;
+    
     
     reg             timing_lock;
     wire             dummy;
@@ -225,6 +233,15 @@ module top_RTL(
     // Reg 12, LED TEST
     assign SFP0_SPARE_LED   = reg_rw_in[11 * 32 +  0]; // wire to PS for GbE indicator?
     assign OVER_TEMP_LED    = reg_rw_in[11 * 32 +  1];
+    
+    // Attempt at PWM register mapping
+    //Reg 13
+    assign PWM_EN           = reg_rw_in[12 * 32 +  9];
+    assign PWM_RST          = reg_rw_in[12 * 32 +  8];
+    assign PWM_INC          = reg_rw_in[12 * 32 +  7];
+    assign PWM_DEC          = reg_rw_in[12 * 32 +  6];
+    assign PWM_DUTY         = reg_rw_in[12 * 32 +  5 : 12 * 32 + 3];
+    assign PWM_DIV          = reg_rw_in[12 * 32 +  2 : 12 * 32];
     
     // *** TEMP ***
     assign SPARE0           = reg_rw_in[12 * 32 +  0];
@@ -330,6 +347,17 @@ module top_RTL(
         .tstamp     (),
         .tx_dis     (),
         .txd        (SYS_CMD_0)
+    );
+    
+    PWM_main pwm_inst
+    (
+        .clk(SYS_CLK_0),
+        .en(PWM_EN),
+        .rst(PWM_RST),
+        .duty_inc(PWM_INC),
+        .duty_dec(PWM_DEC),
+        .duty(PWM_DUTY),
+        .PWM_out(PWM0)
     );
     
     // *** Main code ***

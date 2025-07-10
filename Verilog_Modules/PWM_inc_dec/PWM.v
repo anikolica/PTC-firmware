@@ -1,4 +1,4 @@
-module PWM_main(
+module PWM(
 	input clk,
 	input en,
 	input rst,
