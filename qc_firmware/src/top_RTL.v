@@ -96,7 +96,7 @@ module top_RTL(
     output [64*32-1:0]  reg_ro_out, 
     
     //Load Enables
-   output reg[7:0]               LOAD_EN0,
+   output reg[7:0]              LOAD_EN0,
    output reg[7:0]              LOAD_EN1,
    output reg[7:0]              LOAD_EN2,
    output reg[7:0]              LOAD_EN3,
@@ -187,12 +187,53 @@ module top_RTL(
     reg             selected_clk;
     
     //Wires for PWM Register
-    wire            PWM_EN;
-    wire            PWM_RST;
-    wire            PWM_INC;
-    wire            PWM_DEC;
-    wire [2:0]      PWM_DUTY;
-    wire [2:0]      PWM_DIV;
+    wire            PWM_EN0;
+    wire            PWM_RST0;
+    wire            PWM_INC0;
+    wire            PWM_DEC0;
+    wire [2:0]      PWM_DUTY0;
+    wire [2:0]      PWM_DIV0;
+    
+    //Wires for PWM Register
+    wire            PWM_EN1;
+    wire            PWM_RST1;
+    wire            PWM_INC1;
+    wire            PWM_DEC1;
+    wire [2:0]      PWM_DUTY1;
+    wire [2:0]      PWM_DIV1;
+    
+    //Wires for PWM Register
+    wire            PWM_EN2;
+    wire            PWM_RST2;
+    wire            PWM_INC2;
+    wire            PWM_DEC2;
+    wire [2:0]      PWM_DUTY2;
+    wire [2:0]      PWM_DIV2;
+    
+    //Wires for PWM Register
+    wire            PWM_EN3;
+    wire            PWM_RST3;
+    wire            PWM_INC3;
+    wire            PWM_DEC3;
+    wire [2:0]      PWM_DUTY3;
+    wire [2:0]      PWM_DIV3;
+    
+    //Wires for PWM Register
+    wire            PWM_EN4;
+    wire            PWM_RST4;
+    wire            PWM_INC4;
+    wire            PWM_DEC4;
+    wire [2:0]      PWM_DUTY4;
+    wire [2:0]      PWM_DIV4;
+    
+    //Wires for PWM Register
+    wire            PWM_EN5;
+    wire            PWM_RST5;
+    wire            PWM_INC5;
+    wire            PWM_DEC5;
+    wire [2:0]      PWM_DUTY5;
+    wire [2:0]      PWM_DIV5;
+    
     
     
     reg             timing_lock;
@@ -236,12 +277,52 @@ module top_RTL(
     
     // Attempt at PWM register mapping
     //Reg 13
-    assign PWM_EN           = reg_rw_in[12 * 32 +  9];
-    assign PWM_RST          = reg_rw_in[12 * 32 +  8];
-    assign PWM_INC          = reg_rw_in[12 * 32 +  7];
-    assign PWM_DEC          = reg_rw_in[12 * 32 +  6];
-    assign PWM_DUTY         = reg_rw_in[12 * 32 +  5 : 12 * 32 + 3];
-    assign PWM_DIV          = reg_rw_in[12 * 32 +  2 : 12 * 32];
+    assign PWM_EN0           = reg_rw_in[12 * 32 +  9];
+    assign PWM_RST0          = reg_rw_in[12 * 32 +  8];
+    assign PWM_INC0          = reg_rw_in[12 * 32 +  7];
+    assign PWM_DEC0          = reg_rw_in[12 * 32 +  6];
+    assign PWM_DUTY0[2:0]    = reg_rw_in[12 * 32 +  5 : 12 * 32 + 3];
+    assign PWM_DIV0[2:0]     = reg_rw_in[12 * 32 +  2 : 12 * 32];
+    
+    //Reg 14
+    assign PWM_EN1           = reg_rw_in[13 * 32 +  9];
+    assign PWM_RST1          = reg_rw_in[13 * 32 +  8];
+    assign PWM_INC1          = reg_rw_in[13 * 32 +  7];
+    assign PWM_DEC1          = reg_rw_in[13 * 32 +  6];
+    assign PWM_DUTY1[2:0]    = reg_rw_in[13 * 32 +  5 : 12 * 32 + 3];
+    assign PWM_DIV1[2:0]     = reg_rw_in[13 * 32 +  2 : 12 * 32];
+    
+    //Reg 15
+    assign PWM_EN2           = reg_rw_in[14 * 32 +  9];
+    assign PWM_RST2          = reg_rw_in[14 * 32 +  8];
+    assign PWM_INC2          = reg_rw_in[14 * 32 +  7];
+    assign PWM_DEC2          = reg_rw_in[14 * 32 +  6];
+    assign PWM_DUTY2[2:0]    = reg_rw_in[14 * 32 +  5 : 12 * 32 + 3];
+    assign PWM_DIV2[2:0]     = reg_rw_in[14 * 32 +  2 : 12 * 32];
+    
+    //Reg 16
+    assign PWM_EN3           = reg_rw_in[15 * 32 +  9];
+    assign PWM_RST3          = reg_rw_in[15 * 32 +  8];
+    assign PWM_INC3          = reg_rw_in[15 * 32 +  7];
+    assign PWM_DEC3          = reg_rw_in[15 * 32 +  6];
+    assign PWM_DUTY3[2:0]    = reg_rw_in[15 * 32 +  5 : 12 * 32 + 3];
+    assign PWM_DIV3[2:0]     = reg_rw_in[15 * 32 +  2 : 12 * 32];
+    
+    //Reg 17
+    assign PWM_EN4           = reg_rw_in[16 * 32 +  9];
+    assign PWM_RST4          = reg_rw_in[16 * 32 +  8];
+    assign PWM_INC4          = reg_rw_in[16 * 32 +  7];
+    assign PWM_DEC4          = reg_rw_in[16 * 32 +  6];
+    assign PWM_DUTY4[2:0]    = reg_rw_in[16 * 32 +  5 : 12 * 32 + 3];
+    assign PWM_DIV4[2:0]     = reg_rw_in[16 * 32 +  2 : 12 * 32];
+    
+    //Reg 18
+    assign PWM_EN5           = reg_rw_in[17 * 32 +  9];
+    assign PWM_RST5          = reg_rw_in[17 * 32 +  8];
+    assign PWM_INC5          = reg_rw_in[17 * 32 +  7];
+    assign PWM_DEC5          = reg_rw_in[17 * 32 +  6];
+    assign PWM_DUTY5[2:0]    = reg_rw_in[17 * 32 +  5 : 12 * 32 + 3];
+    assign PWM_DIV5[2:0]     = reg_rw_in[17 * 32 +  2 : 12 * 32];
     
     // *** TEMP ***
     assign SPARE0           = reg_rw_in[12 * 32 +  0];
@@ -349,15 +430,71 @@ module top_RTL(
         .txd        (SYS_CMD_0)
     );
     
-    PWM_main pwm_inst
+    
+    PWM pwm_inst0
     (
-        .clk(SYS_CLK_0),
-        .en(PWM_EN),
-        .rst(PWM_RST),
-        .duty_inc(PWM_INC),
-        .duty_dec(PWM_DEC),
-        .duty(PWM_DUTY),
+        .clk(clk_axi),
+        .en(PWM_EN0),
+        .rst(PWM_RST0),
+        .duty_inc(PWM_INC0),
+        .duty_dec(PWM_DEC0),
+        .duty(PWM_DUTY0),
         .PWM_out(PWM0)
+    );
+    
+     PWM pwm_inst1
+    (
+        .clk(clk_axi),
+        .en(PWM_EN1),
+        .rst(PWM_RST1),
+        .duty_inc(PWM_INC1),
+        .duty_dec(PWM_DEC1),
+        .duty(PWM_DUTY1),
+        .PWM_out(PWM1)
+    ); 
+    
+     PWM pwm_inst2
+    (
+        .clk(clk_axi),
+        .en(PWM_EN2),
+        .rst(PWM_RST2),
+        .duty_inc(PWM_INC2),
+        .duty_dec(PWM_DEC2),
+        .duty(PWM_DUTY2),
+        .PWM_out(PWM2)
+    );
+    
+     PWM pwm_inst3
+    (
+        .clk(clk_axi),
+        .en(PWM_EN3),
+        .rst(PWM_RST3),
+        .duty_inc(PWM_INC3),
+        .duty_dec(PWM_DEC3),
+        .duty(PWM_DUTY3),
+        .PWM_out(PWM3)
+    );
+    
+     PWM pwm_inst4
+    (
+        .clk(clk_axi),
+        .en(PWM_EN4),
+        .rst(PWM_RST4),
+        .duty_inc(PWM_INC4),
+        .duty_dec(PWM_DEC4),
+        .duty(PWM_DUTY4),
+        .PWM_out(PWM4)
+    );
+    
+     PWM pwm_inst5
+    (
+        .clk(clk_axi),
+        .en(PWM_EN5),
+        .rst(PWM_RST5),
+        .duty_inc(PWM_INC5),
+        .duty_dec(PWM_DEC5),
+        .duty(PWM_DUTY5),
+        .PWM_out(PWM5)
     );
     
     // *** Main code ***

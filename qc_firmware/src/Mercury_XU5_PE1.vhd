@@ -540,6 +540,12 @@ architecture rtl of Mercury_XU5_PE1 is
       SYS_CLK_2           : in    std_logic;
       SYS_CLK_1           : in    std_logic;
       SYS_CLK_0           : in    std_logic;
+      PWM0                : out   std_logic;
+      PWM1                : out   std_logic;
+      PWM2                : out   std_logic;
+      PWM3                : out   std_logic;
+      PWM4                : out   std_logic;
+      PWM5                : out   std_logic;
       BP_IO               : in    std_logic_vector(5 downto 0);
       BP_IO_OE            : inout std_logic;
 --      TIMING_GOOD         : out   std_logic;
@@ -895,6 +901,12 @@ begin
     CRATE_ADDR(6)       => CRATE_ADDR6,
     CRATE_ADDR(7)       => CRATE_ADDR7,
     
+    PWM0                => PWM0,
+    PWM1                => PWM1,
+    PWM2                => PWM2,
+    PWM3                => PWM3,
+    PWM4                => PWM4,
+    PWM5                => PWM5,
     
         
     reg_ro_out          => reg_ro
