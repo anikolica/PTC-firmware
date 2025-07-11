@@ -9,6 +9,7 @@ module PWM_tb;
 	reg duty_inc;
 	reg duty_dec;
 	reg [2:0] duty_cycle;
+	reg [2:0] div;
 	wire PWM_out;
 
 
@@ -24,6 +25,7 @@ module PWM_tb;
 		.duty_inc(duty_inc),
 		.duty_dec(duty_dec),
 		.duty(duty_cycle),
+		.div(div),
 		.PWM_out(PWM_out)
 	);
 
@@ -34,45 +36,51 @@ module PWM_tb;
 
 	initial begin //Initialize key registers
 		$dumpfile("PWM.vcd");
-		$dumpvars(0, clk, PWM_out, duty_inc, duty_dec, PWM_inst.duty_cycle);
+		$dumpvars(0, clk, PWM_out, duty_inc, duty_dec, rst, PWM_inst.duty_changed, PWM_inst.duty_cycle, PWM_inst.clk_div, PWM_inst.duty);
 		clk=1'b0;
-		duty_cycle = 3'b100;	
-		PWM_inst.counter = 3'b0;
 		en = 1'b1;
+		div = 3'b001;
+		PWM_inst.clock_div_inst.counter = 0;
 		rst = 1'b1;
-		#PAUSE
+		#CYCLE
 		rst = 1'b0;
+		#CYCLE
+		duty_cycle = 3'b100;
+		duty_inc = 0;
+		duty_dec = 0;
+		#PAUSE
+		duty_inc = 1;
+		#CYCLE
+		#CYCLE
+	       	duty_inc = 0;
+		#PAUSE
+		duty_inc = 1;
+		#CYCLE
+		#CYCLE
+	       	duty_inc = 0;
+		#PAUSE
+		duty_inc = 1;
+		#CYCLE
+		#CYCLE
+	       	duty_inc = 0;
+		rst = 1'b1;
+		#CYCLE
+		#CYCLE
+		rst = 1'b0;
+		#PAUSE
+		duty_dec = 1;
+		#CYCLE
+		#CYCLE
+	       	duty_dec = 0;
+		#PAUSE
+		duty_dec = 1;
+		#CYCLE
+		#CYCLE
+	       	duty_dec = 0;
+		#PAUSE
 
-		duty_inc = 0;
-		duty_dec = 0;
-		#PAUSE
-		duty_inc = 1;
-		#CYCLE	
-		duty_inc = 0;
-		#PAUSE
-		duty_inc = 1;
-		#CYCLE
-		duty_inc = 0;
-		#PAUSE
-        duty_inc = 1;
-		#CYCLE
-		duty_inc = 0;
-		#PAUSE
-	    duty_dec = 1;
-		#CYCLE
-		duty_dec = 0;
-		#PAUSE
-		duty_dec = 1;
-		#CYCLE
-		duty_dec = 0;
-		#PAUSE
-		duty_dec = 1;
-		#CYCLE
-		duty_dec = 0;
-		#PAUSE
-		duty_dec = 1;
-		#CYCLE
-		duty_dec = 0;
+
+			
 		#PAUSE
 		$finish;
 	end	
