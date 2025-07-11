@@ -7,7 +7,8 @@ module clock_div_tb;
 	reg [2:0] div;
 	wire clk_div;
 
-	parameter FREQ = 50;
+	//Will generate a 50MHz Clock
+	parameter HALF_CYCLE = 10;
 
 	//Instantiate clock divider
 	clock_div clock_div_inst(
@@ -44,7 +45,7 @@ module clock_div_tb;
 
 	always
 	begin
-		#FREQ clk = !clk;
+		#HALF_CYCLE clk = !clk;
 	end
 
 endmodule
