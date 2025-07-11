@@ -409,7 +409,7 @@ module top_RTL(
     BUFGMUX ts_clk_mux2x (.I0(clk125_from_ts), .I1(), .S(1'b0), .O(clk125));   
     
 
-    
+    //Enpoint Wrapper --NOTE: Will need to edit parameters as we figure out the hardware muxing situation
     pdts_endpoint_wrapper ts_ep_wrp
     (
         .addr       (16'h0000),
@@ -431,6 +431,7 @@ module top_RTL(
     );
     
     
+    //List of PWM Modules 0-5
     PWM pwm_inst0
     (
         .clk(clk_axi),
@@ -439,6 +440,7 @@ module top_RTL(
         .duty_inc(PWM_INC0),
         .duty_dec(PWM_DEC0),
         .duty(PWM_DUTY0),
+        .div(PWM_DIV0),
         .PWM_out(PWM0)
     );
     
@@ -450,6 +452,7 @@ module top_RTL(
         .duty_inc(PWM_INC1),
         .duty_dec(PWM_DEC1),
         .duty(PWM_DUTY1),
+        .div(PWM_DIV1),
         .PWM_out(PWM1)
     ); 
     
@@ -461,6 +464,7 @@ module top_RTL(
         .duty_inc(PWM_INC2),
         .duty_dec(PWM_DEC2),
         .duty(PWM_DUTY2),
+        .div(PWM_DIV2),
         .PWM_out(PWM2)
     );
     
@@ -472,6 +476,7 @@ module top_RTL(
         .duty_inc(PWM_INC3),
         .duty_dec(PWM_DEC3),
         .duty(PWM_DUTY3),
+        .div(PWM_DIV3),
         .PWM_out(PWM3)
     );
     
@@ -483,6 +488,7 @@ module top_RTL(
         .duty_inc(PWM_INC4),
         .duty_dec(PWM_DEC4),
         .duty(PWM_DUTY4),
+        .div(PWM_DIV4),
         .PWM_out(PWM4)
     );
     
@@ -494,6 +500,7 @@ module top_RTL(
         .duty_inc(PWM_INC5),
         .duty_dec(PWM_DEC5),
         .duty(PWM_DUTY5),
+        .div(PWM_DIV5),
         .PWM_out(PWM5)
     );
     
