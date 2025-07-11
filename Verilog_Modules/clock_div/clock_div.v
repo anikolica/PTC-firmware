@@ -8,7 +8,7 @@ module clock_div(
 	reg [7:0] counter;
 	reg compare;
 
-	//Implement counter and compar it to the chosen clock division
+	//Implement counter and compare it to the chosen clock division
 	always @(posedge CLK)
 	begin
 		if (RST == 1'b1)

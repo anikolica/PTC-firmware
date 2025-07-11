@@ -20,7 +20,7 @@ module clock_div_tb;
 
 	initial begin
 		$dumpfile("clock_div.vcd");
-		$dumpvars(0, clk, clk_div);
+		$dumpvars(0, clk, clk_div, clock_div_inst.RST, clock_div_inst.div);
 		//Initialize key values
 		clk = 1'b0;
 		clock_div_inst.counter = 8'b0;
@@ -30,6 +30,9 @@ module clock_div_tb;
 		//Div by 2
 		div = 3'd1;
 		#5000;
+		rst = 1'b1;
+		#100;
+		rst = 1'b0;
 		//Div by 4
 		div = 3'd2;
 		#5000;
