@@ -220,9 +220,16 @@ set_property BITSTREAM.CONFIG.UNUSEDPIN PULLNONE [current_design]
 #set_property -dict {PACKAGE_PIN Y2 IOSTANDARD LVCMOS18} [get_ports {B224_RXP_Y2}]
 ## END RIXU
 
-create_clock -period 16.000 -name SYS_CLK [get_ports SYS_CLK_P]
-set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks SYS_CLK]
-set_false_path -from [get_ports SYS_CLK_P]
+#create_clock -period 16.000 -name SYS_CLK [get_ports SYS_CLK_P]
+#set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks SYS_CLK]
+#set_false_path -from [get_ports SYS_CLK_P]
+
+#Edited version for the QC Endpoint Wrapper
+#IMPORTANT: This will change now that the clock muxing is done via hardware rather than software
+create_clock -period 16.000 -name SYS_CLK_0 [get_ports SYS_CLK_P0]
+set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks SYS_CLK_0]
+set_false_path -from [get_ports SYS_CLK_P0]
+
 #set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets IBUFDS_clk/O]
 #create_clock -period 16 -name rxd [get_pins top/ts_ep_wrp/ts_ep/rxcdr/sm/iff/D]
 #set_clock_groups -physically_exclusive -group SYS_CLK -group rxd 
