@@ -434,7 +434,7 @@ module top_RTL(
     //List of PWM Modules 0-5
     PWM pwm_inst0
     (
-        .clk(SYS_CLK),
+        .clk(clk_axi),
         .en(clk_axi),
         .rst(PWM_RST0),
         .duty_inc(PWM_INC0),
