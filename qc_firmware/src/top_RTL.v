@@ -289,40 +289,40 @@ module top_RTL(
     assign PWM_RST1          = reg_rw_in[13 * 32 +  8];
     assign PWM_INC1          = reg_rw_in[13 * 32 +  7];
     assign PWM_DEC1          = reg_rw_in[13 * 32 +  6];
-    assign PWM_DUTY1[2:0]    = reg_rw_in[13 * 32 +  5 : 12 * 32 + 3];
-    assign PWM_DIV1[2:0]     = reg_rw_in[13 * 32 +  2 : 12 * 32];
+    assign PWM_DUTY1[2:0]    = reg_rw_in[13 * 32 +  5 : 13 * 32 + 3];
+    assign PWM_DIV1[2:0]     = reg_rw_in[13 * 32 +  2 : 13 * 32];
     
     //Reg 15
     assign PWM_EN2           = reg_rw_in[14 * 32 +  9];
     assign PWM_RST2          = reg_rw_in[14 * 32 +  8];
     assign PWM_INC2          = reg_rw_in[14 * 32 +  7];
     assign PWM_DEC2          = reg_rw_in[14 * 32 +  6];
-    assign PWM_DUTY2[2:0]    = reg_rw_in[14 * 32 +  5 : 12 * 32 + 3];
-    assign PWM_DIV2[2:0]     = reg_rw_in[14 * 32 +  2 : 12 * 32];
+    assign PWM_DUTY2[2:0]    = reg_rw_in[14 * 32 +  5 : 14 * 32 + 3];
+    assign PWM_DIV2[2:0]     = reg_rw_in[14 * 32 +  2 : 14 * 32];
     
     //Reg 16
     assign PWM_EN3           = reg_rw_in[15 * 32 +  9];
     assign PWM_RST3          = reg_rw_in[15 * 32 +  8];
     assign PWM_INC3          = reg_rw_in[15 * 32 +  7];
     assign PWM_DEC3          = reg_rw_in[15 * 32 +  6];
-    assign PWM_DUTY3[2:0]    = reg_rw_in[15 * 32 +  5 : 12 * 32 + 3];
-    assign PWM_DIV3[2:0]     = reg_rw_in[15 * 32 +  2 : 12 * 32];
+    assign PWM_DUTY3[2:0]    = reg_rw_in[15 * 32 +  5 : 15 * 32 + 3];
+    assign PWM_DIV3[2:0]     = reg_rw_in[15 * 32 +  2 : 15 * 32];
     
     //Reg 17
     assign PWM_EN4           = reg_rw_in[16 * 32 +  9];
     assign PWM_RST4          = reg_rw_in[16 * 32 +  8];
     assign PWM_INC4          = reg_rw_in[16 * 32 +  7];
     assign PWM_DEC4          = reg_rw_in[16 * 32 +  6];
-    assign PWM_DUTY4[2:0]    = reg_rw_in[16 * 32 +  5 : 12 * 32 + 3];
-    assign PWM_DIV4[2:0]     = reg_rw_in[16 * 32 +  2 : 12 * 32];
+    assign PWM_DUTY4[2:0]    = reg_rw_in[16 * 32 +  5 : 16 * 32 + 3];
+    assign PWM_DIV4[2:0]     = reg_rw_in[16 * 32 +  2 : 16 * 32];
     
     //Reg 18
     assign PWM_EN5           = reg_rw_in[17 * 32 +  9];
     assign PWM_RST5          = reg_rw_in[17 * 32 +  8];
     assign PWM_INC5          = reg_rw_in[17 * 32 +  7];
     assign PWM_DEC5          = reg_rw_in[17 * 32 +  6];
-    assign PWM_DUTY5[2:0]    = reg_rw_in[17 * 32 +  5 : 12 * 32 + 3];
-    assign PWM_DIV5[2:0]     = reg_rw_in[17 * 32 +  2 : 12 * 32];
+    assign PWM_DUTY5[2:0]    = reg_rw_in[17 * 32 +  5 : 17 * 32 + 3];
+    assign PWM_DIV5[2:0]     = reg_rw_in[17 * 32 +  2 : 17 * 32];
     
     // *** TEMP ***
     assign SPARE0           = reg_rw_in[12 * 32 +  0];
@@ -435,7 +435,7 @@ module top_RTL(
     PWM pwm_inst0
     (
         .clk(clk_axi),
-        .en(clk_axi),
+        .en(PWM_EN0),
         .rst(PWM_RST0),
         .duty_inc(PWM_INC0),
         .duty_dec(PWM_DEC0),
