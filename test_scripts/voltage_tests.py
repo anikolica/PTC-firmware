@@ -20,9 +20,18 @@ def read_volt(addr, resistor):
         print('Voltage sensor addr ' + str(addr) + ' reads ' + format(volts, '0.2f') + ' V at ' + format(curr, '0.2f') + ' A')
     except ValueError:
         print('Sensor ' + str(addr) + ' not readable')
+        volts = float('nan')
+        current = float('nan') 
+    return volts, current
 
 
 def voltage_meter_test(component_list):
+    test_results = []
     for addr, resistor in component_list:
-        read_volt(addr, resistor)
+        volts, current = read_volt(addr, resistor)
+        volt_data = ["Voltage", addr, str(volts) + " V"]
+        test_results.append(volt_data)
+        amp_data = ["Current", addr, str(current) + " A"]
+        test_results.append(amp_data)
         time.sleep(sleep)
+    return test_results

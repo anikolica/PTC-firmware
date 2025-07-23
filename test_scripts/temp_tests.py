@@ -15,8 +15,14 @@ def read_temp(addr):
         print('Temp sensor addr ' + str(addr) + ' reads ' + format(temp, '0.1f') + ' C')
     except ValueError:
         print('Sensor ' + str(addr) + ' not readable')
+        temp = float('nan')
+    return temp
 
 def temperature_sensor_test(component_list):
+    test_results = []
     for addr in component_list:
-        read_temp(addr)
+        temp = read_temp(addr)
+        temp_reading = ["Temp", addr, str(temp) + " C"] 
+        test_results.append(temp_reading)
         time.sleep(sleep)
+    return test_results
