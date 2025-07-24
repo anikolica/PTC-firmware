@@ -77,7 +77,6 @@
 |                 |         |                 |                                                          |            |          |
 | RO REGISTER MAP |         |                 |                                                          |            |          |
 | reg no.         | bits    | name            | description                                              |            | bits req |
-| --------------- | ------- | --------------- | -------------------------------------------------------- | ---------- | -------- |
 | 0               | [0]     | SFP0_TX_FAULT   | low = no fault                                           |            |          |
 | 0               | [1]     | SFP0_LOS        | low = no loss of signal                                  |            |          |
 | 0               | [2]     | SFP0_PRESENT    | low = present                                            |            |          |
