@@ -34,7 +34,7 @@ module PWM(
 		else if(en && enable_tick) begin
 		  //Run through the PWM process while reset is not asserted
 		      //Counter for PWM
-		          counter <= counter + 1'b1;	
+		            counter <= counter + 1'b1;	
 			 //Comparator for duty cycle
 				    if(duty_cycle > counter)
 					   PWM_out <= 1'b1;
@@ -61,8 +61,12 @@ module PWM(
 		 end
 	   
 	   //When enable is not asserted, the output is 0
-	   else begin 
+	   else if(en == 0) begin 
 			PWM_out <= 1'b0;
-
+		end
+		
+		//If there are no substantial changes, sustain the output
+		else begin
+		  PWM_out <= PWM_out;
 		end
 endmodule
