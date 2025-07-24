@@ -74,9 +74,10 @@
 | 19              | [6]     | PWM_DEC5        | Decreases the duty cycle by 12.5%                        | dec        | 1        |
 | 19              | [5:3]   | PWM_DUTY5       | Sets the duty cycle to this value when reset is asserted | duty cycle | 3        |
 | 19              | [2:0]   | PWM_DIV5        | Clock divider value                                      | clk divide | 3        |
-
+|                 |         |                 |                                                          |            |          |
 | RO REGISTER MAP |         |                 |                                                          |            |          |
 | reg no.         | bits    | name            | description                                              |            | bits req |
+| --------------- | ------- | --------------- | -------------------------------------------------------- | ---------- | -------- |
 | 0               | [0]     | SFP0_TX_FAULT   | low = no fault                                           |            |          |
 | 0               | [1]     | SFP0_LOS        | low = no loss of signal                                  |            |          |
 | 0               | [2]     | SFP0_PRESENT    | low = present                                            |            |          |
