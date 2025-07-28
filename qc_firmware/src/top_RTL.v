@@ -157,8 +157,6 @@ module top_RTL(
    output               QC_EN
     );
     
-   
-    
     // *** Declarations ***
     wire [6:0]      vp12_sync_en;
     wire            lvsync_en;
@@ -242,12 +240,10 @@ module top_RTL(
     
     // *** R/W Register map ***
     // Reg 0, I2C and level translator control
-    assign SOC_I2C_SW_RST   = reg_rw_in[ 0 * 32 +  0];
-    assign MCU_I2C_OE       = reg_rw_in[ 0 * 32 +  8];
-    assign WIB_I2C_OE       = reg_rw_in[ 0 * 32 +  9];
     assign bp_io_en         = reg_rw_in[ 0 * 32 + 16];
     assign crate_addr_en    = reg_rw_in[ 0 * 32 + 23];
     assign crate_addr_out   = reg_rw_in[ 0 * 32 +  31 : 0 * 32 +  24];
+   
     // Reg 1, timing control
     assign wib_rx_sel_out   = reg_rw_in[ 1 * 32 +  2 : 1 * 32 +  0];
     assign wib_pe_soc_en    = reg_rw_in[ 1 * 32 +  3];
@@ -255,101 +251,88 @@ module top_RTL(
     assign sfp2_tx_mux_ovr  = reg_rw_in[ 1 * 32 +  9];
     assign ep_srst          = reg_rw_in[ 1 * 32 + 10];
     assign ep_clk_sel       = reg_rw_in[ 1 * 32 + 11];
-    assign WIB_CLK_SEL      = reg_rw_in[ 1 * 32 + 16];
     assign mmcm0_rst_n      = reg_rw_in[ 1 * 32 + 17];
+    
     // Reg 2 - 10, power regulator control
     assign EN_3V3           = ~reg_rw_in[ 2 * 32 +  0]; // TEST: FMC_LA33_P, pin G37 on FMC J1200-A, 1.8V
     assign EN_2V5           = ~reg_rw_in[ 3 * 32 +  0];
-    assign VP12_EN[0]       = reg_rw_in[ 4 * 32 +  0]; // TEST: IOB_D1_N, pin 32 on Anios J1403, 3.3V
-    assign VP12_EN[1]       = reg_rw_in[ 5 * 32 +  0];
-    assign VP12_EN[2]       = reg_rw_in[ 6 * 32 +  0];
-    assign VP12_EN[3]       = reg_rw_in[ 7 * 32 +  0];
-    assign VP12_EN[4]       = reg_rw_in[ 8 * 32 +  0];
-    assign VP12_EN[5]       = reg_rw_in[ 9 * 32 +  0];
     assign vp12_sync_en     = reg_rw_in[10 * 32 +  6 : 10 * 32];
     assign lvsync_en        = reg_rw_in[10 * 32 +  7];
+    
     // Reg 11, XMC control
     assign xmc_jtag_en      = reg_rw_in[11 * 32 +  0];
     assign xmc_reset_n      = reg_rw_in[11 * 32 +  8];
+    
     // Reg 12, LED TEST
-    assign SFP0_SPARE_LED   = reg_rw_in[11 * 32 +  0]; // wire to PS for GbE indicator?
-    assign OVER_TEMP_LED    = reg_rw_in[11 * 32 +  1];
+    
+    
+        // *** TEMP ***
+    // *************
     
     // Attempt at PWM register mapping
-    //Reg 13
-    assign PWM_EN0           = reg_rw_in[12 * 32 +  9];
-    assign PWM_RST0          = reg_rw_in[12 * 32 +  8];
-    assign PWM_INC0          = reg_rw_in[12 * 32 +  7];
-    assign PWM_DEC0          = reg_rw_in[12 * 32 +  6];
-    assign PWM_DUTY0[2:0]    = reg_rw_in[12 * 32 +  5 : 12 * 32 + 3];
-    assign PWM_DIV0[2:0]     = reg_rw_in[12 * 32 +  2 : 12 * 32];
-    
     //Reg 14
-    assign PWM_EN1           = reg_rw_in[13 * 32 +  9];
-    assign PWM_RST1          = reg_rw_in[13 * 32 +  8];
-    assign PWM_INC1          = reg_rw_in[13 * 32 +  7];
-    assign PWM_DEC1          = reg_rw_in[13 * 32 +  6];
-    assign PWM_DUTY1[2:0]    = reg_rw_in[13 * 32 +  5 : 13 * 32 + 3];
-    assign PWM_DIV1[2:0]     = reg_rw_in[13 * 32 +  2 : 13 * 32];
+    assign PWM_EN0           = reg_rw_in[14 * 32 +  9];
+    assign PWM_RST0          = reg_rw_in[14 * 32 +  8];
+    assign PWM_INC0          = reg_rw_in[14 * 32 +  7];
+    assign PWM_DEC0          = reg_rw_in[14 * 32 +  6];
+    assign PWM_DUTY0[2:0]    = reg_rw_in[14 * 32 +  5 : 14 * 32 + 3];
+    assign PWM_DIV0[2:0]     = reg_rw_in[14 * 32 +  2 : 14 * 32];
     
     //Reg 15
-    assign PWM_EN2           = reg_rw_in[14 * 32 +  9];
-    assign PWM_RST2          = reg_rw_in[14 * 32 +  8];
-    assign PWM_INC2          = reg_rw_in[14 * 32 +  7];
-    assign PWM_DEC2          = reg_rw_in[14 * 32 +  6];
-    assign PWM_DUTY2[2:0]    = reg_rw_in[14 * 32 +  5 : 14 * 32 + 3];
-    assign PWM_DIV2[2:0]     = reg_rw_in[14 * 32 +  2 : 14 * 32];
+    assign PWM_EN1           = reg_rw_in[15 * 32 +  9];
+    assign PWM_RST1          = reg_rw_in[15 * 32 +  8];
+    assign PWM_INC1          = reg_rw_in[15 * 32 +  7];
+    assign PWM_DEC1          = reg_rw_in[15 * 32 +  6];
+    assign PWM_DUTY1[2:0]    = reg_rw_in[15 * 32 +  5 : 15 * 32 + 3];
+    assign PWM_DIV1[2:0]     = reg_rw_in[15 * 32 +  2 : 15 * 32];
     
     //Reg 16
-    assign PWM_EN3           = reg_rw_in[15 * 32 +  9];
-    assign PWM_RST3          = reg_rw_in[15 * 32 +  8];
-    assign PWM_INC3          = reg_rw_in[15 * 32 +  7];
-    assign PWM_DEC3          = reg_rw_in[15 * 32 +  6];
-    assign PWM_DUTY3[2:0]    = reg_rw_in[15 * 32 +  5 : 15 * 32 + 3];
-    assign PWM_DIV3[2:0]     = reg_rw_in[15 * 32 +  2 : 15 * 32];
+    assign PWM_EN2           = reg_rw_in[16 * 32 +  9];
+    assign PWM_RST2          = reg_rw_in[16 * 32 +  8];
+    assign PWM_INC2          = reg_rw_in[16 * 32 +  7];
+    assign PWM_DEC2          = reg_rw_in[16 * 32 +  6];
+    assign PWM_DUTY2[2:0]    = reg_rw_in[16 * 32 +  5 : 16 * 32 + 3];
+    assign PWM_DIV2[2:0]     = reg_rw_in[16 * 32 +  2 : 16 * 32];
     
     //Reg 17
-    assign PWM_EN4           = reg_rw_in[16 * 32 +  9];
-    assign PWM_RST4          = reg_rw_in[16 * 32 +  8];
-    assign PWM_INC4          = reg_rw_in[16 * 32 +  7];
-    assign PWM_DEC4          = reg_rw_in[16 * 32 +  6];
-    assign PWM_DUTY4[2:0]    = reg_rw_in[16 * 32 +  5 : 16 * 32 + 3];
-    assign PWM_DIV4[2:0]     = reg_rw_in[16 * 32 +  2 : 16 * 32];
+    assign PWM_EN3           = reg_rw_in[17 * 32 +  9];
+    assign PWM_RST3          = reg_rw_in[17 * 32 +  8];
+    assign PWM_INC3          = reg_rw_in[17 * 32 +  7];
+    assign PWM_DEC3          = reg_rw_in[17 * 32 +  6];
+    assign PWM_DUTY3[2:0]    = reg_rw_in[17 * 32 +  5 : 17 * 32 + 3];
+    assign PWM_DIV3[2:0]     = reg_rw_in[17 * 32 +  2 : 17 * 32];
     
     //Reg 18
-    assign PWM_EN5           = reg_rw_in[17 * 32 +  9];
-    assign PWM_RST5          = reg_rw_in[17 * 32 +  8];
-    assign PWM_INC5          = reg_rw_in[17 * 32 +  7];
-    assign PWM_DEC5          = reg_rw_in[17 * 32 +  6];
-    assign PWM_DUTY5[2:0]    = reg_rw_in[17 * 32 +  5 : 17 * 32 + 3];
-    assign PWM_DIV5[2:0]     = reg_rw_in[17 * 32 +  2 : 17 * 32];
+    assign PWM_EN4           = reg_rw_in[18 * 32 +  9];
+    assign PWM_RST4          = reg_rw_in[18 * 32 +  8];
+    assign PWM_INC4          = reg_rw_in[18 * 32 +  7];
+    assign PWM_DEC4          = reg_rw_in[18 * 32 +  6];
+    assign PWM_DUTY4[2:0]    = reg_rw_in[18 * 32 +  5 : 18 * 32 + 3];
+    assign PWM_DIV4[2:0]     = reg_rw_in[18 * 32 +  2 : 18 * 32];
     
-    // *** TEMP ***
-    assign SPARE0           = reg_rw_in[12 * 32 +  0];
-    assign SPARE1           = reg_rw_in[12 * 32 +  1];
-    // *************
+    //Reg 19
+    assign PWM_EN5           = reg_rw_in[19 * 32 +  9];
+    assign PWM_RST5          = reg_rw_in[19 * 32 +  8];
+    assign PWM_INC5          = reg_rw_in[19 * 32 +  7];
+    assign PWM_DEC5          = reg_rw_in[19 * 32 +  6];
+    assign PWM_DUTY5[2:0]    = reg_rw_in[19 * 32 +  5 : 19 * 32 + 3];
+    assign PWM_DIV5[2:0]     = reg_rw_in[19 * 32 +  2 : 19 * 32];
     
     // *** RO Register map ***
     // Reg 64, SFP status
-    assign reg_ro_out [ 0 * 32 +  0] = SFP0_TX_FAULT; // low = no fault
-    assign reg_ro_out [ 0 * 32 +  1] = SFP0_LOS;      // low = no loss of signal
-    assign reg_ro_out [ 0 * 32 +  2] = SFP0_PRESENT;  // low = present
-    assign reg_ro_out [ 0 * 32 +  8] = SFP1_TX_FAULT;
-    assign reg_ro_out [ 0 * 32 +  9] = SFP1_LOS;
-    assign reg_ro_out [ 0 * 32 + 10] = SFP1_PRESENT;
-    assign reg_ro_out [ 0 * 32 + 16] = SFP2_TX_FAULT;
-    assign reg_ro_out [ 0 * 32 + 17] = SFP2_LOS;
-    assign reg_ro_out [ 0 * 32 + 18] = SFP2_PRESENT;
+
+    
     // Reg 65, crate addres and WIB TX assert status
-    assign reg_ro_out [ 1 * 32 + 13 :  1 * 32 +  8] = BP_IO;
+    //assign reg_ro_out [ 1 * 32 + 13 :  1 * 32 +  8] = BP_IO;
     assign reg_ro_out [ 1 * 32 + 18 :  1 * 32 + 16] = wib_rx_sel_in;
     assign reg_ro_out [ 1 * 32 + 27 :  1 * 32 + 24] = timing_stat;
     assign reg_ro_out [ 1 * 32 + 28] = timing_lock;
+    
     // Reg 66, power and temperature alerts
     assign reg_ro_out [ 2 * 32 +  6 :  2 * 32 +  0] = ~VP12_IV_ALERT; // low = alert
     assign reg_ro_out [ 2 * 32 +  8] = ~VP2V5_ALERT;                  // low = alert
     assign reg_ro_out [ 2 * 32 +  9] = ~VP3V3_ALERT;                  // low = alert
-    assign reg_ro_out [ 2 * 32 + 18 :  2 * 32 + 16] = ~OVER_TEMP;     // low = alert
+    //assign reg_ro_out [ 2 * 32 + 18 :  2 * 32 + 16] = ~OVER_TEMP;     // low = alert
     assign reg_ro_out [ 2 * 32 + 24] = ~VP48_IV_ALERT;                // low = alert
     //
     assign reg_ro_out [ 62 * 32 +  0] = mmcm0_locked; // TEST
