@@ -14,6 +14,13 @@ from eeprom import *
 sleep = 0.1
 module = '5EV'
 
+
+class PTC_Board:
+    def __init__(serial, eeprom, ip):
+        self.serial = serial
+        self.eeprom = eeprom
+        self.ip = ip
+
 df = pd.DataFrame(columns=["Test", "Board", "EEPROM", "IP", "Component Address", "Data"])
 #Write/read on-board EEPROM (for serial number / MAC address)
 EEPROM_Serial, board_ip = get_EEPROM()
@@ -45,3 +52,4 @@ for test in temp_test_results:
 #Subset of QC-tested PTCs can be tested in full WEIC crate
 
 print(df)
+df.to_csv('output.csv', index=False)

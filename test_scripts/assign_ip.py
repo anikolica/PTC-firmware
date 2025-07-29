@@ -5,11 +5,11 @@ import subprocess
 
 def assign_ip(EEPROM):
     #Generate random IP in private range
-    octet2 = random.randint(0,255)
-    octet3 = random.randint(0,255)
-    octet4 = random.randint(1,254)
+    octet2 = 168 
+    octet3 = 43 
+    octet4 = 0
 
-    ip = f"10.{octet2}.{octet3}.{octet4}"
+    ip = f"192.{octet2}.{octet3}.{octet4}"
     interface = "eth1"
 
     try:
