@@ -24,44 +24,11 @@ module top_RTL(
     input               clk_axi,
     input [64*32-1:0]   reg_rw_in,
     
-    output              XMC_JTAG_TMS, // XMC4300 bootstrap and JTAG
-    output              XMC_JTAG_TCK,
-    input               XMC_JTAG_TDO,
-    output              XMC_JTAG_TDI,
-    output              XMC_JTAG_RST, // XMC4300 PORST_N
     
-    // UARTS are from PS and AXI peripheral
-    //output              ECAT_UART_TX,
-    //input               ECAT_UART_RX,
-    //output              DEBUG_UART_TX,
-    //input               DEBUG_UART_RX,
     
-    // On-board I2C control 
-    output              SOC_I2C_SW_RST,
-    output              WIB_I2C_OE,
-    output              MCU_I2C_OE,
-    
-    // I2C is from two AXI peripherals
-    //WIB_SDA
-    //WIB_SCL
-    
-    // SFPs
-    input               SFP0_LOS,       // Slow Control (GbE)
-    input               SFP0_TX_FAULT,
-    input               SFP0_PRESENT,
-    input               SFP1_LOS,       // DUNE Detector Safety System (EtherCAT)
-    input               SFP1_TX_FAULT,
-    input               SFP1_PRESENT,
-    input               SFP2_LOS,       // Timing (62.5MHz DCSK)
-    input               SFP2_TX_FAULT,
-    input               SFP2_PRESENT,
-    
-    output              SFP0_SPARE_LED, // GbE indicator
-    inout               SFP2_TX_DISABLE,// timing system TX
-    output              WIB_CLK_SEL,    // select timing system of SoC clock source
     output              TIMING_GOOD,    // LED to indicate timing lock
-    output              WIB_PE_SEL,     // priority encode on PCB or SoC
-    inout [2:0]         WIB_RX_SEL,     // control timing TX MUX on PCN or SoC
+    //output              WIB_PE_SEL,     // priority encode on PCB or SoC
+    //inout [2:0]         WIB_RX_SEL,     // control timing TX MUX on PCN or SoC
     output              SYS_CMD,        // SoC test command out to timing master
     output              SOC_AUX_CLK,    // SoC test clock out to WIBs
     input               SYS_CLK,        // timing system master clock in
@@ -76,7 +43,7 @@ module top_RTL(
     output              EN_3V3,
     output              EN_2V5,  
     output              LV_SYNC,    
-    output [5:0]        VP12_EN,
+    //output [5:0]        VP12_EN,
     output [6:0]        VP12_SYNC,
 
     // LTC2645 open-drain programmable alerts
@@ -84,24 +51,24 @@ module top_RTL(
     inout               VP2V5_PG,
     input               VP3V3_PG,
     input               VP3V3_ALERT,
-    input [6:0]         VP12_IV_ALERT,  
+    input               VP12_IV_ALERT,  
     input               VP48_IV_ALERT,
     input               LOAD_IV_ALERT,
     
     
     // TMP117 open drain programmable alerts
-    input [2:0]         OVER_TEMP,
-    output              OVER_TEMP_LED,
+    //input [2:0]         OVER_TEMP,
+    //output              OVER_TEMP_LED,
     
     output [64*32-1:0]  reg_ro_out, 
     
     //Load Enables
-   output reg[7:0]              LOAD_EN0,
-   output reg[7:0]              LOAD_EN1,
-   output reg[7:0]              LOAD_EN2,
-   output reg[7:0]              LOAD_EN3,
-   output reg[7:0]              LOAD_EN4,
-   output reg[7:0]              LOAD_EN5,
+   output              LOAD_EN0,
+   output              LOAD_EN1,
+   output              LOAD_EN2,
+   output              LOAD_EN3,
+   output              LOAD_EN4,
+   output              LOAD_EN5,
    
    //PWM Signals
    output               PWM0,
@@ -112,44 +79,34 @@ module top_RTL(
    output               PWM5,
    
    //CLKs and CMDs 
-   output               SYS_CLK_P5,
-   output               SYS_CLK_N5,
    output               SYS_CMD_P5,
    output               SYS_CMD_N5,
-   input                SYS_CLK_5,
    
-   output               SYS_CLK_P4,
-   output               SYS_CLK_N4,
    output               SYS_CMD_P4,
    output               SYS_CMD_N4,
-   input                SYS_CLK_4,
 
-   output               SYS_CLK_P3,
-   output               SYS_CLK_N3,
    output               SYS_CMD_P3,
    output               SYS_CMD_N3,         
-   input                SYS_CLK_3,
-   
-   output               SYS_CLK_P2,
-   output               SYS_CLK_N2,
+
    output               SYS_CMD_P2,
    output               SYS_CMD_N2, 
-   input                SYS_CLK_2,
    
-   output               SYS_CLK_P1,
-   output               SYS_CLK_N1,
    output               SYS_CMD_P1,
    output               SYS_CMD_N1,
-   input                SYS_CLK_1,
-   
-   output               SYS_CLK_P0,
-   output               SYS_CLK_N0,
+  
    output               SYS_CMD_P0,
    output               SYS_CMD_N0,
-   input                SYS_CLK_0,
+
    
    output               OUT_CLK,
    input[2:0]           sel,
+   
+   
+   //SOC Auxiliary Lines
+   inout [15:0]         SOC_AUX_IO,
+   
+   //Hardware Mux Lines
+   output[2:0]          MUX_SEL,
    
    //I2C
    output               I2C_SCL,
@@ -160,29 +117,12 @@ module top_RTL(
     // *** Declarations ***
     wire [6:0]      vp12_sync_en;
     wire            lvsync_en;
-    wire            xmc_reset;
-    wire            xmc_jtag_en;
-    wire            wib_pe_soc_en_n;
-    wire            sfp2_tx_en;
-    wire            sfp2_tx_en_reg;
-    wire            sfp2_tx_mux_ovr;
-    wire            sfp2_tx_en_from_muxbits;
     wire [7:0]      timing_stat;
     wire            ep_stst;
     wire            ep_clk_sel;
     wire            mmcm0_rst_n;
     wire            mmcm0_locked;
-    wire [2:0]      wib_rx_sel_out;
-    wire [2:0]      wib_rx_sel_in;
     wire [7:0]      crate_addr_out;
-    
-    //Wires for the cascading mux scheme
-    wire            mux_01_out;
-    wire            mux_23_out;
-    wire            mux_45_out;
-    wire            mux_0123_out;
-    wire            mux_4567_out;
-    reg             selected_clk;
     
     //Wires for PWM Register
     wire            PWM_EN0;
@@ -232,10 +172,7 @@ module top_RTL(
     wire [2:0]      PWM_DUTY5;
     wire [2:0]      PWM_DIV5;
     
-    
-    
     reg             timing_lock;
-    wire             dummy;
     
     
     // *** R/W Register map ***
@@ -263,13 +200,7 @@ module top_RTL(
     assign xmc_jtag_en      = reg_rw_in[11 * 32 +  0];
     assign xmc_reset_n      = reg_rw_in[11 * 32 +  8];
     
-    // Reg 12, LED TEST
-    
-    
-        // *** TEMP ***
-    // *************
-    
-    // Attempt at PWM register mapping
+    // PWM register mapping
     //Reg 14
     assign PWM_EN0           = reg_rw_in[14 * 32 +  9];
     assign PWM_RST0          = reg_rw_in[14 * 32 +  8];
@@ -329,11 +260,11 @@ module top_RTL(
     assign reg_ro_out [ 1 * 32 + 28] = timing_lock;
     
     // Reg 66, power and temperature alerts
-    assign reg_ro_out [ 2 * 32 +  6 :  2 * 32 +  0] = ~VP12_IV_ALERT; // low = alert
+    assign reg_ro_out [ 2 * 32] = ~VP12_IV_ALERT; // low = alert
     assign reg_ro_out [ 2 * 32 +  8] = ~VP2V5_ALERT;                  // low = alert
     assign reg_ro_out [ 2 * 32 +  9] = ~VP3V3_ALERT;                  // low = alert
     //assign reg_ro_out [ 2 * 32 + 18 :  2 * 32 + 16] = ~OVER_TEMP;     // low = alert
-    assign reg_ro_out [ 2 * 32 + 24] = ~VP48_IV_ALERT;                // low = alert
+    //assign reg_ro_out [ 2 * 32 + 24] = ~VP48_IV_ALERT;                // low = alert
     //
     assign reg_ro_out [ 62 * 32 +  0] = mmcm0_locked; // TEST
     assign reg_ro_out [ 63 * 32 +  31 : 63 * 32 +  0] = 32'hdeadbeef; // TEST
@@ -400,7 +331,7 @@ module top_RTL(
         .clk2x      (clk125_from_ts),
         .rdy        (),
         .rec_clk    (),
-        .rec_d      (SYS_CLK_0),
+        .rec_d      (SYS_CLK),
         .rst        (),
         .sclk       (clk_axi),
         .srst       (ep_srst),
@@ -410,7 +341,7 @@ module top_RTL(
         .ts_clk_sel (ep_clk_sel),
         .tstamp     (),
         .tx_dis     (),
-        .txd        (SYS_CMD_0)
+        .txd        (SYS_CMD)
     );
     
     

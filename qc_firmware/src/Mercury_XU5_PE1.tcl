@@ -226,9 +226,9 @@ set_property BITSTREAM.CONFIG.UNUSEDPIN PULLNONE [current_design]
 
 #Edited version for the QC Endpoint Wrapper
 #IMPORTANT: This will change now that the clock muxing is done via hardware rather than software
-create_clock -period 16.000 -name SYS_CLK_0 [get_ports SYS_CLK_P0]
-set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks SYS_CLK_0]
-set_false_path -from [get_ports SYS_CLK_P0]
+create_clock -period 16.000 -name SYS_CLK [get_ports SYS_CLK_P]
+set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks SYS_CLK]
+set_false_path -from [get_ports SYS_CLK_P]
 
 #set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets IBUFDS_clk/O]
 #create_clock -period 16 -name rxd [get_pins top/ts_ep_wrp/ts_ep/rxcdr/sm/iff/D]
@@ -261,14 +261,30 @@ set_false_path -from [get_ports SYS_CLK_P0]
 #set_property LOC BUFGCTRL_
 
 #Left side of Connector A
-set_property -dict {PACKAGE_PIN Y12   IOSTANDARD LVCMOS33  } [get_ports {VP2V5_PG}]
-set_property -dict {PACKAGE_PIN AA12  IOSTANDARD LVCMOS33  } [get_ports {VP3V3_PG}]
+set_property -dict {PACKAGE_PIN W14   IOSTANDARD LVCMOS33  } [get_ports {VP2V5_PG}]
+set_property -dict {PACKAGE_PIN W13  IOSTANDARD LVCMOS33  } [get_ports {VP3V3_PG}]
+set_property -dict {PACKAGE_PIN Y14  IOSTANDARD LVCMOS33  } [get_ports {VP2V5_ALERT}]
+set_property -dict {PACKAGE_PIN Y13  IOSTANDARD LVCMOS33  } [get_ports {VP3V3_ALERT}]
 
-set_property -dict {PACKAGE_PIN AH14  IOSTANDARD LVCMOS33  } [get_ports {LOAD_IV_ALERT}]
-set_property -dict {PACKAGE_PIN AA13  IOSTANDARD LVCMOS33  } [get_ports {VP12_IV_ALERT}]
+set_property -dict {PACKAGE_PIN Y12  IOSTANDARD LVCMOS33  } [get_ports {LOAD_IV_ALERT}]
+set_property -dict {PACKAGE_PIN AA12  IOSTANDARD LVCMOS33  } [get_ports {VP12_IV_ALERT}]
 
-set_property -dict {PACKAGE_PIN AB13  IOSTANDARD LVCMOS33  } [get_ports {VP2V5_ALERT}]
-set_property -dict {PACKAGE_PIN AD15  IOSTANDARD LVCMOS33  } [get_ports {VP3V3_ALERT}]
+set_property -dict {PACKAGE_PIN AG14  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO0}]
+set_property -dict {PACKAGE_PIN AH14  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO1}]
+set_property -dict {PACKAGE_PIN AA13  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO2}]
+set_property -dict {PACKAGE_PIN AB13  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO3}]
+set_property -dict {PACKAGE_PIN AD15  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO4}]
+set_property -dict {PACKAGE_PIN AD14  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO5}]
+set_property -dict {PACKAGE_PIN AG10  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO6}]
+set_property -dict {PACKAGE_PIN AH10  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO7}]
+set_property -dict {PACKAGE_PIN AE10  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO8}]
+set_property -dict {PACKAGE_PIN AF10  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO9}]
+set_property -dict {PACKAGE_PIN AH12  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO10}]
+set_property -dict {PACKAGE_PIN AH11  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO11}]
+set_property -dict {PACKAGE_PIN AF11  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO12}]
+set_property -dict {PACKAGE_PIN AG11  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO13}]
+set_property -dict {PACKAGE_PIN AB10  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO14}]
+set_property -dict {PACKAGE_PIN AB9  IOSTANDARD LVCMOS33  } [get_ports {SOC_AUX_IO15}]
 
 #Start Right side of Connector A
 set_property -dict {PACKAGE_PIN W12   IOSTANDARD LVCMOS33  } [get_ports {LOAD_EN0}]
@@ -278,20 +294,21 @@ set_property -dict {PACKAGE_PIN AE14  IOSTANDARD LVCMOS33  } [get_ports {LOAD_EN
 set_property -dict {PACKAGE_PIN AE13  IOSTANDARD LVCMOS33  } [get_ports {LOAD_EN4}]
 set_property -dict {PACKAGE_PIN AF13  IOSTANDARD LVCMOS33  } [get_ports {LOAD_EN5}]
 
-set_property -dict {PACKAGE_PIN AC14  IOSTANDARD LVCMOS33  } [get_ports {PWM0}]
+set_property -dict {PACKAGE_PIN AH13  IOSTANDARD LVCMOS33  } [get_ports {PWM0}]
 set_property -dict {PACKAGE_PIN AB11  IOSTANDARD LVCMOS33  } [get_ports {PWM1}]
 set_property -dict {PACKAGE_PIN AA11  IOSTANDARD LVCMOS33  } [get_ports {PWM2}]
 set_property -dict {PACKAGE_PIN Y9    IOSTANDARD LVCMOS33  } [get_ports {PWM3}]
 set_property -dict {PACKAGE_PIN W10   IOSTANDARD LVCMOS33  } [get_ports {PWM4}]
 set_property -dict {PACKAGE_PIN AC12  IOSTANDARD LVCMOS33  } [get_ports {PWM5}]
 
+set_property -dict {PACKAGE_PIN E10  IOSTANDARD LVCMOS33  } [get_ports {MUX_SEL0}]
+set_property -dict {PACKAGE_PIN D10  IOSTANDARD LVCMOS33  } [get_ports {MUX_SEL1}]
+set_property -dict {PACKAGE_PIN E12  IOSTANDARD LVCMOS33  } [get_ports {MUX_SEL2}]
+
+
 #Start of Connector B
 set_property -dict {PACKAGE_PIN C1    IOSTANDARD LVCMOS18  } [get_ports {EN_2V5}]
 set_property -dict {PACKAGE_PIN B1    IOSTANDARD LVCMOS18  } [get_ports {EN_3V3}]
-
-
-set_property -dict {PACKAGE_PIN G5    IOSTANDARD LVDS  } [get_ports {SYS_CLK_P4}]
-set_property -dict {PACKAGE_PIN F5    IOSTANDARD LVDS  } [get_ports {SYS_CLK_N4}]
 
 set_property -dict {PACKAGE_PIN A2    IOSTANDARD LVDS  } [get_ports {SYS_CMD_P4}]
 set_property -dict {PACKAGE_PIN A1    IOSTANDARD LVDS  } [get_ports {SYS_CMD_N4}]
@@ -305,15 +322,8 @@ set_property -dict {PACKAGE_PIN B6    IOSTANDARD LVCMOS18  } [get_ports {CRATE_A
 set_property -dict {PACKAGE_PIN A7    IOSTANDARD LVCMOS18  } [get_ports {CRATE_ADDR6}]
 set_property -dict {PACKAGE_PIN A6    IOSTANDARD LVCMOS18  } [get_ports {CRATE_ADDR7}]
 
-
-set_property -dict {PACKAGE_PIN D7    IOSTANDARD LVDS  } [get_ports {SYS_CLK_P3}]
-set_property -dict {PACKAGE_PIN D6    IOSTANDARD LVDS  } [get_ports {SYS_CLK_N3}]
-
 set_property -dict {PACKAGE_PIN C8    IOSTANDARD LVDS  } [get_ports {SYS_CMD_P3}]
 set_property -dict {PACKAGE_PIN B8    IOSTANDARD LVDS } [get_ports {SYS_CMD_N3}]
-
-set_property -dict {PACKAGE_PIN E5    IOSTANDARD LVDS  } [get_ports {SYS_CLK_P1}]
-set_property -dict {PACKAGE_PIN D5    IOSTANDARD LVDS  } [get_ports {SYS_CLK_N1}]
 
 set_property -dict {PACKAGE_PIN G8    IOSTANDARD LVDS  } [get_ports {SYS_CMD_P1}]
 set_property -dict {PACKAGE_PIN F7    IOSTANDARD LVDS  } [get_ports {SYS_CMD_N1}]
@@ -322,9 +332,6 @@ set_property -dict {PACKAGE_PIN F6    IOSTANDARD LVCMOS18  } [get_ports {CRATE_A
 
 #Start Right Side of Connector B
 set_property -dict {PACKAGE_PIN T6    IOSTANDARD LVCMOS18  } [get_ports {BP_IO_OE}]
-
-set_property -dict {PACKAGE_PIN L3    IOSTANDARD LVDS  } [get_ports {SYS_CLK_P5}]
-set_property -dict {PACKAGE_PIN L2    IOSTANDARD LVDS  } [get_ports {SYS_CLK_N5}]
 
 set_property -dict {PACKAGE_PIN L1    IOSTANDARD LVDS  } [get_ports {SYS_CMD_P5}]
 set_property -dict {PACKAGE_PIN K1    IOSTANDARD LVDS  } [get_ports {SYS_CMD_N5}]
@@ -340,14 +347,8 @@ set_property -dict {PACKAGE_PIN J4    IOSTANDARD LVCMOS18  } [get_ports {I2C_SCL
 set_property -dict {PACKAGE_PIN J6    IOSTANDARD LVCMOS18  } [get_ports {I2C_SDA}]
 set_property -dict {PACKAGE_PIN H6    IOSTANDARD LVCMOS18  } [get_ports {QC_EN}]
 
-set_property -dict {PACKAGE_PIN L7    IOSTANDARD LVDS  } [get_ports {SYS_CLK_P2}]
-set_property -dict {PACKAGE_PIN L6    IOSTANDARD LVDS  } [get_ports {SYS_CLK_N2}]
-
 set_property -dict {PACKAGE_PIN K8    IOSTANDARD LVDS  } [get_ports {SYS_CMD_P2}]
 set_property -dict {PACKAGE_PIN K7    IOSTANDARD LVDS  } [get_ports {SYS_CMD_N2}]
-
-set_property -dict {PACKAGE_PIN M6    IOSTANDARD LVDS  } [get_ports {SYS_CLK_P0}]
-set_property -dict {PACKAGE_PIN L5    IOSTANDARD LVDS  } [get_ports {SYS_CLK_N0}]
 
 set_property -dict {PACKAGE_PIN N7    IOSTANDARD LVDS  } [get_ports {SYS_CMD_P0}]
 set_property -dict {PACKAGE_PIN N6    IOSTANDARD LVDS  } [get_ports {SYS_CMD_N0}]
