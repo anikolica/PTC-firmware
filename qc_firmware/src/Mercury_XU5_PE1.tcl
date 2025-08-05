@@ -230,6 +230,11 @@ create_clock -period 16.000 -name SYS_CLK [get_ports SYS_CLK_P]
 set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks SYS_CLK]
 set_false_path -from [get_ports SYS_CLK_P]
 
+#62.5 MHz
+create_clock -period 16.000 -name MUX_CLK [get_ports MUX_CLK_IN_P]
+set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks MUX_CLK]
+set_false_path -from [get_ports MUX_CLK_IN_P]
+
 #set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets IBUFDS_clk/O]
 #create_clock -period 16 -name rxd [get_pins top/ts_ep_wrp/ts_ep/rxcdr/sm/iff/D]
 #set_clock_groups -physically_exclusive -group SYS_CLK -group rxd 
@@ -353,6 +358,8 @@ set_property -dict {PACKAGE_PIN K7    IOSTANDARD LVDS  } [get_ports {SYS_CMD_N2}
 set_property -dict {PACKAGE_PIN N7    IOSTANDARD LVDS  } [get_ports {SYS_CMD_P0}]
 set_property -dict {PACKAGE_PIN N6    IOSTANDARD LVDS  } [get_ports {SYS_CMD_N0}]
 
+set_property -dict {PACKAGE_PIN M6    IOSTANDARD LVDS  } [get_ports {MUX_CLK_IN_P}]
+set_property -dict {PACKAGE_PIN L5    IOSTANDARD LVDS  } [get_ports {MUX_CLK_IN_N}]
 
 #Assigned to Unused Pins to Use the same firmware skeleton
 set_property -dict {PACKAGE_PIN H3    IOSTANDARD LVDS      } [get_ports {SYS_CMD_N}]

@@ -183,6 +183,9 @@ entity Mercury_XU5_PE1 is
     MUX_SEL1                        : out     std_logic;
     MUX_SEL2                        : out     std_logic;
     
+    MUX_CLK_IN_P                    : in      std_logic;
+    MUX_CLK_IN_N                    : in      std_logic;
+    
     I2C_SCL                         : out   std_logic;
     I2C_SDA                         : inout   std_logic;
     QC_EN                           : out   std_logic;
@@ -507,7 +510,7 @@ architecture rtl of Mercury_XU5_PE1 is
       VP3V3_ALERT         : in    std_logic;
       VP12_IV_ALERT       : in    std_logic;
       SYS_CMD             : out   std_logic;
-      SYS_CLK             : in    std_logic;
+      MUX_CLK             : in    std_logic;
       SOC_AUX_CLK         : out   std_logic;
       PWM0                : out   std_logic;
       PWM1                : out   std_logic;
@@ -525,6 +528,8 @@ architecture rtl of Mercury_XU5_PE1 is
       SOC_AUX_IO          : inout std_logic_vector(15 downto 0);
       
       MUX_SEL             : out   std_logic_vector(2 downto 0);
+      MUX_CLK_IN_P        : in    std_logic;
+      MUX_CLK_IN_N        : in    std_logic;
 
       reg_ro_out          : out    std_logic_vector(2047 downto 0)
     );
@@ -541,6 +546,7 @@ architecture rtl of Mercury_XU5_PE1 is
   signal reg_rw           : std_logic_vector(2047 downto 0);
   signal SYS_CLK          : std_logic;
   signal SYS_CMD          : std_logic;
+  signal MUX_CLK          : std_logic;
   signal SOC_AUX_CLK      : std_logic;
   signal iic_ptc_scl_i    : std_logic;
   signal iic_ptc_scl_o    : std_logic;
@@ -697,6 +703,13 @@ begin
       IB => SYS_CLK_N,
       O => SYS_CLK
    );
+   
+   mux_clk_buf : IBUFDS
+   port map(
+      I => MUX_CLK_IN_P,
+      IB => MUX_CLK_IN_N,
+      O => MUX_CLK
+   );
 
   top: component top_RTL
     port map (
@@ -706,7 +719,7 @@ begin
     VP3V3_ALERT         => VP3V3_ALERT,
     VP12_IV_ALERT    => VP12_IV_ALERT,
     
-    SYS_CLK             => SYS_CLK,
+    MUX_CLK             => MUX_CLK,
     BP_IO(0)            => BP_IO0,
     BP_IO(1)            => BP_IO1,
     BP_IO(2)            => BP_IO2,
@@ -754,6 +767,9 @@ begin
     MUX_SEL(0)          => MUX_SEL0,
     MUX_SEL(1)          => MUX_SEL1,
     MUX_SEL(2)          => MUX_SEL2,
+    
+    MUX_CLK_IN_P        => MUX_CLK_IN_P,
+    MUX_CLK_IN_N        => MUX_CLK_IN_N,
     
        
     reg_ro_out          => reg_ro

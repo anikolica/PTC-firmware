@@ -24,14 +24,10 @@ module top_RTL(
     input               clk_axi,
     input [64*32-1:0]   reg_rw_in,
     
-    
-    
     output              TIMING_GOOD,    // LED to indicate timing lock
-    //output              WIB_PE_SEL,     // priority encode on PCB or SoC
-    //inout [2:0]         WIB_RX_SEL,     // control timing TX MUX on PCN or SoC
     output              SYS_CMD,        // SoC test command out to timing master
     output              SOC_AUX_CLK,    // SoC test clock out to WIBs
-    input               SYS_CLK,        // timing system master clock in
+    input               MUX_CLK,        // timing system master clock in from some WIB on the backplane
     
     input [5:0]         BP_IO,          // WIB "spare" IO for timing TX assert
     inout               BP_IO_OE,       // level translator enable (N)
@@ -43,7 +39,6 @@ module top_RTL(
     output              EN_3V3,
     output              EN_2V5,  
     output              LV_SYNC,    
-    //output [5:0]        VP12_EN,
     output [6:0]        VP12_SYNC,
 
     // LTC2645 open-drain programmable alerts
@@ -107,6 +102,8 @@ module top_RTL(
    
    //Hardware Mux Lines
    output[2:0]          MUX_SEL,
+   input                MUX_CLK_IN_P,
+   input                MUX_CLK_IN_N,
    
    //I2C
    output               I2C_SCL,
@@ -182,10 +179,6 @@ module top_RTL(
     assign crate_addr_out   = reg_rw_in[ 0 * 32 +  31 : 0 * 32 +  24];
    
     // Reg 1, timing control
-    assign wib_rx_sel_out   = reg_rw_in[ 1 * 32 +  2 : 1 * 32 +  0];
-    assign wib_pe_soc_en    = reg_rw_in[ 1 * 32 +  3];
-    assign sfp2_tx_en_reg   = reg_rw_in[ 1 * 32 +  8];
-    assign sfp2_tx_mux_ovr  = reg_rw_in[ 1 * 32 +  9];
     assign ep_srst          = reg_rw_in[ 1 * 32 + 10];
     assign ep_clk_sel       = reg_rw_in[ 1 * 32 + 11];
     assign mmcm0_rst_n      = reg_rw_in[ 1 * 32 + 17];
@@ -195,10 +188,6 @@ module top_RTL(
     assign EN_2V5           = ~reg_rw_in[ 3 * 32 +  0];
     assign vp12_sync_en     = reg_rw_in[10 * 32 +  6 : 10 * 32];
     assign lvsync_en        = reg_rw_in[10 * 32 +  7];
-    
-    // Reg 11, XMC control
-    assign xmc_jtag_en      = reg_rw_in[11 * 32 +  0];
-    assign xmc_reset_n      = reg_rw_in[11 * 32 +  8];
     
     // PWM register mapping
     //Reg 14
@@ -250,12 +239,9 @@ module top_RTL(
     assign PWM_DIV5[2:0]     = reg_rw_in[19 * 32 +  2 : 19 * 32];
     
     // *** RO Register map ***
-    // Reg 64, SFP status
 
     
-    // Reg 65, crate addres and WIB TX assert status
-    //assign reg_ro_out [ 1 * 32 + 13 :  1 * 32 +  8] = BP_IO;
-    assign reg_ro_out [ 1 * 32 + 18 :  1 * 32 + 16] = wib_rx_sel_in;
+    // Reg 65, crate addres and WIB TX assert status;
     assign reg_ro_out [ 1 * 32 + 27 :  1 * 32 + 24] = timing_stat;
     assign reg_ro_out [ 1 * 32 + 28] = timing_lock;
     
@@ -263,9 +249,8 @@ module top_RTL(
     assign reg_ro_out [ 2 * 32] = ~VP12_IV_ALERT; // low = alert
     assign reg_ro_out [ 2 * 32 +  8] = ~VP2V5_ALERT;                  // low = alert
     assign reg_ro_out [ 2 * 32 +  9] = ~VP3V3_ALERT;                  // low = alert
-    //assign reg_ro_out [ 2 * 32 + 18 :  2 * 32 + 16] = ~OVER_TEMP;     // low = alert
-    //assign reg_ro_out [ 2 * 32 + 24] = ~VP48_IV_ALERT;                // low = alert
-    //
+    
+    
     assign reg_ro_out [ 62 * 32 +  0] = mmcm0_locked; // TEST
     assign reg_ro_out [ 63 * 32 +  31 : 63 * 32 +  0] = 32'hdeadbeef; // TEST
     
@@ -282,29 +267,7 @@ module top_RTL(
     IOBUF sync6_buf (.T(~vp12_sync_en[6]), .I(1'b0), .O(), .IO(VP12_SYNC[6]));
     IOBUF lvsync_buf (.T(~lvsync_en     ), .I(1'b0), .O(), .IO(LV_SYNC));
     
-    // Keep XMC4300 JTAG interface tri-stated to use on-board 10-pin connector
-    IOBUF rst_buf (.T(~xmc_jtag_en), .I(xmc_reset_n), .O(), .IO(XMC_JTAG_RST)); // Actually PORST_N
-    IOBUF tms_buf (.T(~xmc_jtag_en), .I(1'b1), .O(), .IO(XMC_JTAG_TMS)); // controls boot mode
-    IOBUF tck_buf (.T(~xmc_jtag_en), .I(1'b0), .O(), .IO(XMC_JTAG_TCK)); // controls boot mode
-    IOBUF tdo_buf (.T(~xmc_jtag_en), .I(), .O(    ), .IO(XMC_JTAG_TDO)); // FIXME: wire Output to code block
-    IOBUF tdi_buf (.T(~xmc_jtag_en), .I(1'b0), .O(), .IO(XMC_JTAG_TDI)); // FIXME: wire Input to code block
-    
-    // WIB priority encoder select
-    // tri-state = TXB0104 controls MUX (default)
-    // low = SoC controls MUX through WIB_RX_SEL lines (do not drive high!)
-//    IOBUF pesel_buf (.T(~wib_pe_soc_en), .I(1'b0), .O(), .IO(WIB_PE_SEL));
-//    IOBUF wib_rx_buf0 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[0]), .O(wib_rx_sel_in[0]), .IO(WIB_RX_SEL[0]));
-//    IOBUF wib_rx_buf1 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[1]), .O(wib_rx_sel_in[1]), .IO(WIB_RX_SEL[1]));
-//    IOBUF wib_rx_buf2 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[2]), .O(wib_rx_sel_in[2]), .IO(WIB_RX_SEL[2]));
-//    // timing SFP
-    // tri-state = transmitter disabled
-    // low = transmitter enabled (do not drive high!)
-    IOBUF sfp2_buf (.T(sfp2_tx_en), .I(1'b0), .O(), .IO(SFP2_TX_DISABLE));
-
-    // Level translators from WIB 2.5V to SoC 1.8V
-    // tri-state = disable (pullup on PCB)
-    // low = enable (do not drive high!)
-
+  
     IOBUF bpoe_buf (.T(~bp_io_en), .I(1'b0), .O(), .IO(BP_IO_OE));
     
     // NOTE: Jan 2023 PTCv4 only reads DIP settings in by default
@@ -331,7 +294,7 @@ module top_RTL(
         .clk2x      (clk125_from_ts),
         .rdy        (),
         .rec_clk    (),
-        .rec_d      (SYS_CLK),
+        .rec_d      (MUX_CLK),
         .rst        (),
         .sclk       (clk_axi),
         .srst       (ep_srst),
@@ -424,13 +387,6 @@ module top_RTL(
     // --1) Sequence 3.3V and 2.5V at same time
     // --2) 
     
-    // --XMC bootup: 
-    // --1) power on 3.3V
-    // --2) assert TMS
-    // --3) bring JTAG lines out of tri-state
-    // --4) assert xmc_reset_n (not reset)
-    // --then XMC boots normally (as per p2512 of XMC4300 manual
-    
     // *** TIMING ***
         mmcm0 fake_clk
     (
@@ -449,10 +405,5 @@ module top_RTL(
     end
     assign TIMING_GOOD = timing_lock; // to LED
     
-    // SFP2 TX control
-    // If MUX override bit is set, pull down when any of 6 prio encode lines go low
-    assign sfp2_tx_en_from_muxbits = (sfp2_tx_mux_ovr == 1'b1) ? &BP_IO: 1'b1;
-    // pull TX_EN low when either: reg force bit is set, or MUX override is set
-    assign sfp2_tx_en = ~sfp2_tx_en_reg && sfp2_tx_en_from_muxbits;
         
 endmodule
