@@ -169,6 +169,9 @@ module top_RTL(
     wire [2:0]      PWM_DUTY5;
     wire [2:0]      PWM_DIV5;
     
+    //Make a wire to lead from the endpoint to the demux
+    wire            BP_IO_ENDPOINT;
+    
     reg             timing_lock;
     
     
@@ -303,9 +306,33 @@ module top_RTL(
         .sync_stb   (),
         .ts_clk_sel (ep_clk_sel),
         .tstamp     (),
-        .tx_dis     (),
+        .tx_dis     (BP_IO_ENDPOINT),
         .txd        (SYS_CMD)
     );
+    
+    //SYS_CMD_DEMUX
+    demux_1_8 sys_cmd_demux(
+    .sel(MUX_SEL),
+    .i(SYS_CMD),
+    .y0(SYS_CMD_P0),
+    .y1(SYS_CMD_P1),
+    .y2(SYS_CMD_P2),
+    .y3(SYS_CMD_P3),
+    .y4(SYS_CMD_P4),
+    .y5(SYS_CMD_P5)
+    );
+    
+//    //BP_IO_DEMUX
+//    demux_1_8 bp_io_demux(
+//    .sel(MUX_SEL),
+//    .i(BP_IO_ENDPOINT),
+//    .y0(BP_IO[0]),
+//    .y1(BP_IO[1]),
+//    .y2(BP_IO[2]),
+//    .y3(BP_IO[3]),
+//    .y4(BP_IO[4]),
+//    .y5(BP_IO[5])
+//    );
     
     
     //List of PWM Modules 0-5
