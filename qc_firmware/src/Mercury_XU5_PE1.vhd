@@ -99,12 +99,12 @@ entity Mercury_XU5_PE1 is
 
 --    SOC_AUX_CLK_P                   : out   std_logic;
 --    SOC_AUX_CLK_N                   : out   std_logic;
-    BP_IO0                          : in    std_logic;
-    BP_IO1                          : in    std_logic;
-    BP_IO2                          : in    std_logic;
-    BP_IO3                          : in    std_logic;
-    BP_IO4                          : in    std_logic;
-    BP_IO5                          : in    std_logic;
+    BP_IO0                          : out   std_logic;
+    BP_IO1                          : out   std_logic;
+    BP_IO2                          : out   std_logic;
+    BP_IO3                          : out   std_logic;
+    BP_IO4                          : out   std_logic;
+    BP_IO5                          : out   std_logic;
     BP_IO_OE                        : inout std_logic;
 --    TIMING_GOOD                     : out   std_logic;
     EN_3V3                          : out   std_logic;
@@ -186,9 +186,9 @@ entity Mercury_XU5_PE1 is
     MUX_CLK_IN_P                    : in      std_logic;
     MUX_CLK_IN_N                    : in      std_logic;
     
-    I2C_SCL                         : out   std_logic;
+    I2C_SCL                         : out     std_logic;
     I2C_SDA                         : inout   std_logic;
-    QC_EN                           : out   std_logic;
+    QC_EN                           : out     std_logic;
     --BP_IO               : in    std_logic_vector(5 downto 0);
     
     
@@ -518,7 +518,7 @@ architecture rtl of Mercury_XU5_PE1 is
       PWM3                : out   std_logic;
       PWM4                : out   std_logic;
       PWM5                : out   std_logic;
-      BP_IO               : in    std_logic_vector(5 downto 0);
+      BP_IO               : out    std_logic_vector(5 downto 0);
       BP_IO_OE            : inout std_logic;
       EN_3V3              : out   std_logic;
       EN_2V5              : out   std_logic;

@@ -29,7 +29,7 @@ module top_RTL(
     output              SOC_AUX_CLK,    // SoC test clock out to WIBs
     input               MUX_CLK,        // timing system master clock in from some WIB on the backplane
     
-    input [5:0]         BP_IO,          // WIB "spare" IO for timing TX assert
+    output [5:0]        BP_IO,          // WIB "spare" IO for timing TX assert
     inout               BP_IO_OE,       // level translator enable (N)
     
     inout [7:0]         CRATE_ADDR,     // backplane address to WIB
@@ -322,17 +322,17 @@ module top_RTL(
     .y5(SYS_CMD_P5)
     );
     
-//    //BP_IO_DEMUX
-//    demux_1_8 bp_io_demux(
-//    .sel(MUX_SEL),
-//    .i(BP_IO_ENDPOINT),
-//    .y0(BP_IO[0]),
-//    .y1(BP_IO[1]),
-//    .y2(BP_IO[2]),
-//    .y3(BP_IO[3]),
-//    .y4(BP_IO[4]),
-//    .y5(BP_IO[5])
-//    );
+    //BP_IO_DEMUX
+    demux_1_8 bp_io_demux(
+    .sel(MUX_SEL),
+    .i(BP_IO_ENDPOINT),
+    .y0(BP_IO[0]),
+    .y1(BP_IO[1]),
+    .y2(BP_IO[2]),
+    .y3(BP_IO[3]),
+    .y4(BP_IO[4]),
+    .y5(BP_IO[5])
+    );
     
     
     //List of PWM Modules 0-5
