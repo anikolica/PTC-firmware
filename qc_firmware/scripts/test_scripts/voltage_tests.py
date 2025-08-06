@@ -17,7 +17,7 @@ def read_volt(addr, resistor):
         # See above
         i2c_dec = ((int((i2c_raw)[4:6],16) << 8) + int((i2c_raw)[2:4],16)) >> 4
         current = i2c_dec * 0.000025 / resistor
-        print('Voltage sensor addr ' + str(addr) + ' reads ' + format(volts, '0.2f') + ' V at ' + format(curr, '0.2f') + ' A')
+        print('Voltage sensor addr ' + str(addr) + ' reads ' + format(volts, '0.2f') + ' V at ' + format(current, '0.2f') + ' A')
     except ValueError:
         print('Sensor ' + str(addr) + ' not readable')
         volts = float('nan')
@@ -27,11 +27,21 @@ def read_volt(addr, resistor):
 
 def voltage_meter_test(component_list):
     test_results = []
+    os.system('python3 power_on_wib.py 0 on')
+    os.system('python3 power_on_wib.py 1 on')
+    os.system('python3 power_on_wib.py 2 on')
+    os.system('python3 power_on_wib.py 3 on')
+    os.system('python3 power_on_wib.py 4 on')
+    os.system('python3 power_on_wib.py 5 on')
+
     for addr, resistor in component_list:
+        print("Testing monitor at " + addr)
         volts, current = read_volt(addr, resistor)
         volt_data = ["Voltage", addr, str(volts) + " V"]
         test_results.append(volt_data)
         amp_data = ["Current", addr, str(current) + " A"]
         test_results.append(amp_data)
         time.sleep(sleep)
+
+
     return test_results

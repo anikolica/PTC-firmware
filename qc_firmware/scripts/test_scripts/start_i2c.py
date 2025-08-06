@@ -19,10 +19,10 @@ time.sleep(sleep)
 
 # Set up bus 1 on WIB, and clear FEM bias sensor to prep for read
 # NOTE: Need to enable 10MHz clock on WIB before reading WIB I2C busses
-os.system('i2cset -y 2 0x3d 0x00 0x01')
-os.system('i2cget -y 2 0x4e 0x1d').read()
-os.system('i2cget -y 2 0x4e 0x1c').read()
-print ('Selecting I2C switch for local sensor read')
+#os.system('i2cset -y 2 0x3d 0x00 0x01')
+#os.system('i2cget -y 2 0x4e 0x1d').read()
+#os.system('i2cget -y 2 0x4e 0x1c').read()
+#print ('Selecting I2C switch for local sensor read')
 time.sleep(sleep)
 
 
