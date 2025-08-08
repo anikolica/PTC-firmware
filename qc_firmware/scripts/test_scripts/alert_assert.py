@@ -47,37 +47,6 @@ def check_alert():
                 #Check each bit to see if errors were asserted
                 if((alert_byte >> i) & 1):
                     print(alert_messages[i])
-        #Check register 66 of FPGA (steps of 4, so 4 * 66 = 264 => 108, and then minus 4 because fencepost error) 
-            i2c_raw = os.popen('peek 0x80020104').read()
-            alert_reg = int(i2c_raw, 16) 
-            #Convert to 32 bit binary string
-            alert_reg = format(alert_reg, '032b')
-            
-            #Reverse the string to use indices like LSBs
-            reverse_alert_reg = alert_reg[::-1]
-            reg_alert_list = []
-            #Collecting the error information from key bits
-            VP_48_IV_ALERT = reverse_alert_reg[24]
-            reg_alert_list.append(VP_48_IV_ALERT)
-
-            OVER_TEMP = reverse_alert_reg[16:18]
-            reg_alert_list.append(OVER_TEMP)
-
-            VP3V3_ALERT = reverse_alert_reg[9]
-            reg_alert_list.append(VP3V3_ALERT)
-            
-            VP2V5_ALERT = reverse_alert_reg[8]
-            reg_alert_list.append(VP2V5_ALERT)
-
-            VP12_IV_ALERT = reverse_alert_reg[0:6]
-            reg_alert_list.append(VP12_IV_ALERT)
-
-            #Check each element to see if alert was asserted
-            print(addr + " has the following errors: ")
-            for i, error in enumerate(reg_alert_list):
-                if( '0' in error): 
-                    print(reg_alert_messages[i])
-
 
             #String manipulation to print the register in clusters of 4 bits
             #alert_reg = ' '.join(alert_reg[i : i+4] for i in range(0, 32, 4))
@@ -85,3 +54,35 @@ def check_alert():
         except:
             print('Could not access the register')
         
+    
+    #Check register 66 of FPGA (steps of 4, so 4 * 66 = 264 => 108, and then minus 4 because fencepost error) 
+    i2c_raw = os.popen('peek 0x80020104').read()
+    alert_reg = int(i2c_raw, 16) 
+    #Convert to 32 bit binary string
+    alert_reg = format(alert_reg, '032b')
+    
+    #Reverse the string to use indices like LSBs
+    reverse_alert_reg = alert_reg[::-1]
+    reg_alert_list = []
+    #Collecting the error information from key bits
+    VP_48_IV_ALERT = reverse_alert_reg[24]
+    reg_alert_list.append(VP_48_IV_ALERT)
+
+    OVER_TEMP = reverse_alert_reg[16:18]
+    reg_alert_list.append(OVER_TEMP)
+
+    VP3V3_ALERT = reverse_alert_reg[9]
+    reg_alert_list.append(VP3V3_ALERT)
+    
+    VP2V5_ALERT = reverse_alert_reg[8]
+    reg_alert_list.append(VP2V5_ALERT)
+
+    VP12_IV_ALERT = reverse_alert_reg[0:6]
+    reg_alert_list.append(VP12_IV_ALERT)
+
+    #Check each element to see if alert was asserted
+    print(addr + " has the following errors: ")
+    for i, error in enumerate(reg_alert_list):
+	if( '0' in error): 
+	    print(reg_alert_messages[i])
+
