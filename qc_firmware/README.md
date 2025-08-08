@@ -13,15 +13,15 @@ This repository is meant as a subset of firmware specifically designed for the Q
 ## Clock Divider Frequencies
 The written clock divider uses an 3 bit counter, so divisions up to 7 are possible. For a nominal 50 MHz clock, the output of the divider will look like:
 
-| Div     |  Frequency  | Period  |
-| ------- | ----------- | --------|
-| 1       | 25MHz       | 40ns    |
-| 2       | 12.5MHz     | 80ns    |
-| 3       | ~8.3MHz     | 120ns    |
-| 4       | 6.25MHz     | 160ns    |
-| 5       | 5MHz        | 200ns    |
-| 6       | ~4.17MHz    | 240ns    |
-| 7       | ~3.57MHz    | 280ns    |
+| Div     |  Frequency  | Period  | Frequency (PWM) | Period (PWM) |
+| ------- | ----------- | --------| ----------------| ------------ |
+| 1       | 25MHz       | 40ns    | 625 KHz         | 1600ns       |
+| 2       | 12.5MHz     | 80ns    | 312.5 KHz       | 3200ns       |
+| 3       | ~8.3MHz     | 120ns   | ~208 KHz        | 4800ns       |
+| 4       | 6.25MHz     | 160ns   | 156.2 KHz       | 6400ns       |
+| 5       | 5MHz        | 200ns   | 125 KHz         | 8000ns       |
+| 6       | ~4.17MHz    | 240ns   | ~104 KHz        | 9600ns       |
+| 7       | ~3.57MHz    | 280ns   | ~89 KHz         | 11200ns      |
 
 It is important to note that the PWM module uses the output of this clock divider almost as if it were the main clock. By virtue of PWM, this means the effective output will be divided again, and the PWM module was also written with a 3 bit counter.
 
