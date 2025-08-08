@@ -5,11 +5,9 @@ import subprocess
 
 def assign_ip(EEPROM):
     #IP in private range
-    octet2 = 168 
-    octet3 = 200 
-    octet4 = input("Enter the PTC number: ") 
+    board_tag = input("Enter the PTC number: ") 
 
-    ip = f"192.{octet2}.{octet3}.{octet4}"
+    ip = f"192.168.200.{board_tag}"
     interface = "eth1"
 
     try:
