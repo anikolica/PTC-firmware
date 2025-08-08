@@ -36,7 +36,7 @@ module PWM_tb;
 
 	initial begin //Initialize key registers
 		$dumpfile("PWM.vcd");
-		$dumpvars(0, clk, PWM_out, duty_inc, duty_dec, rst, PWM_inst.duty_changed, PWM_inst.duty_cycle, PWM_inst.clk_div, PWM_inst.duty);
+		$dumpvars(0, clk, PWM_out, duty_inc, duty_dec, rst, PWM_inst.duty_changed, PWM_inst.duty_cycle,  PWM_inst.duty);
 		clk=1'b0;
 		en = 1'b1;
 		div = 3'b001;
