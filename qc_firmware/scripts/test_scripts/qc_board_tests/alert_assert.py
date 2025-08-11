@@ -8,7 +8,7 @@ FPGA_addr = '0x77'
 
 def check_alert():
     #List of IV Monitors
-    component_list = ['0x6E', '0x6F']
+    component_list = ['0x6E', '0x6F', '0x67']
 
     #Error messages for IV registers
     alert_messages = [
@@ -22,10 +22,8 @@ def check_alert():
             'Maximum Power Alert'
             ]
 
-    #Error messages for Reg 666
+    #Error messages for Reg 66
     reg_alert_messages = [
-            'VP48_IV_ALERT',
-            'OVER_TEMP',
             'VP3V3_ALERT',
             'VP2V5_ALERT',
             'VP12_IV_ALERT'
@@ -65,19 +63,13 @@ def check_alert():
     reverse_alert_reg = alert_reg[::-1]
     reg_alert_list = []
     #Collecting the error information from key bits
-    VP_48_IV_ALERT = reverse_alert_reg[24]
-    reg_alert_list.append(VP_48_IV_ALERT)
-
-    OVER_TEMP = reverse_alert_reg[16:18]
-    reg_alert_list.append(OVER_TEMP)
-
     VP3V3_ALERT = reverse_alert_reg[9]
     reg_alert_list.append(VP3V3_ALERT)
     
     VP2V5_ALERT = reverse_alert_reg[8]
     reg_alert_list.append(VP2V5_ALERT)
 
-    VP12_IV_ALERT = reverse_alert_reg[0:6]
+    VP12_IV_ALERT = reverse_alert_reg[0]
     reg_alert_list.append(VP12_IV_ALERT)
 
     #Check each element to see if alert was asserted
