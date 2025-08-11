@@ -1,0 +1,52 @@
+import os
+import time
+import sys
+
+#I2C addresses for the QC board, double check resistor values
+IV_monitor_list = [(0x6E, 0.0025), (0x6F, 0.0025)]
+sleep = 0.1
+
+def read_volt(addr, resistor):
+    try:
+        #Check the 'word' in the  V_in register
+        i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x1E w').read()
+        # Right shift bc first 4 bits in reg are don't-cares
+        i2c_dec = ((int((i2c_raw)[4:6],16) << 8) + int((i2c_raw)[2:4],16)) >> 4
+        volts = i2c_dec * 0.025 # ADC conversion for LTC2945
+
+        #Check the 'word' in the delta sense register 
+        i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x14 w').read()
+        # Right shift bc first 4 bits in reg are don't cares
+        i2c_dec = ((int((i2c_raw)[4:6],16) << 8) + int((i2c_raw)[2:4],16)) >> 4
+        current = i2c_dec * 0.000025 / resistor
+        print('Voltage sensor addr ' + str(addr) + ' reads ' + format(volts, '0.2f') + ' V at ' + format(current, '0.2f') + ' A')
+    except ValueError:
+        #In case the sensor can't be accessed, print error
+        print('Sensor ' + str(addr) + ' not readable')
+        volts = float('nan')
+        current = float('nan') 
+    return volts, current
+
+
+def voltage_meter_test(component_list):
+    test_results = []
+    #turn on each of the WIBs
+    os.system('python3 power_on_wib.py 0 on')
+    os.system('python3 power_on_wib.py 1 on')
+    os.system('python3 power_on_wib.py 2 on')
+    os.system('python3 power_on_wib.py 3 on')
+    os.system('python3 power_on_wib.py 4 on')
+    os.system('python3 power_on_wib.py 5 on')
+
+    #Check each sensor's voltage and current
+    for addr, resistor in component_list:
+        print("Testing monitor at " + addr)
+        volts, current = read_volt(addr, resistor)
+        volt_data = ["Voltage", addr, str(volts) + " V"]
+        test_results.append(volt_data)
+        amp_data = ["Current", addr, str(current) + " A"]
+        test_results.append(amp_data)
+        time.sleep(sleep)
+
+
+    return test_results
