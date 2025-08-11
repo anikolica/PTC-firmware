@@ -14,12 +14,6 @@ from eeprom import *
 sleep = 0.1
 module = '5EV'
 
-
-class PTC_Board:
-    def __init__(serial, eeprom, ip):
-        self.serial = serial
-        self.eeprom = eeprom
-        self.ip = ip
 #IMPORTANT: FOR MAIN PTC THE SWITCHES NEED PULLED OUT OF RESET DOES NOT APPLY FOR QC
 module = '5EV'
 if module == '2EG':

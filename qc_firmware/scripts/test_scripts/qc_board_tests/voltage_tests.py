@@ -3,7 +3,7 @@ import time
 import sys
 
 #I2C addresses for the QC board, double check resistor values
-IV_monitor_list = [(0x6E, 0.0025), (0x6F, 0.0025)]
+IV_monitor_list = [(0x6E, 0.0025), (0x6F, 0.0025), (0x67, 0.005)]
 sleep = 0.1
 
 def read_volt(addr, resistor):
