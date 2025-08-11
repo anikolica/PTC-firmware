@@ -2,7 +2,6 @@ import os
 import sys
 import time
 import csv
-#import pandas as pd
 
 from voltage_tests import *
 from temp_tests import *
@@ -14,12 +13,6 @@ from eeprom import *
 sleep = 0.1
 module = '5EV'
 
-
-class PTC_Board:
-    def __init__(serial, eeprom, ip):
-        self.serial = serial
-        self.eeprom = eeprom
-        self.ip = ip
 #IMPORTANT: FOR MAIN PTC THE SWITCHES NEED PULLED OUT OF RESET DOES NOT APPLY FOR QC
 module = '5EV'
 if module == '2EG':
@@ -34,6 +27,9 @@ time.sleep(sleep)
 os.system('i2cset -y -r 0 0x70 0x08')
 print('Selecting I2C switch for local sensor read')
 time.sleep(sleep)
+
+#TALK TO ADRIAN ABOUT HOW TO DEAL WITH THIS
+#dd if=/dev/zero bs=1M count=1000 status=progress | ssh root@192.168.200.something "dd of=/dev/null bs=1M"
 
 #Write/read on-board EEPROM (for serial number / MAC address)
 EEPROM_Serial = get_EEPROM()
