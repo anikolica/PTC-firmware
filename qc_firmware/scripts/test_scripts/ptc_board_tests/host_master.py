@@ -16,5 +16,5 @@ except:
 #SSH into the SoM
 os.system(f'ssh root@{ip_addr} "bash -l -c \'python3 ptc_board_tests/firmware_master.py\'"')
 
-#GbE throughput test
-os.system('dd if=/dev/zero bs=1M count=1000 status=progress | ssh root@' + ip_addr + ' "dd of=/dev/null bs=1M"')
+#GbE throughput test send 125000 8kb packets (ensure the rate is more than 12.5 MB/s)
+os.system('dd if=/dev/zero bs=8K count=125000 status=progress | ssh root@' + ip_addr + ' "dd of=/dev/null bs=8K"')
