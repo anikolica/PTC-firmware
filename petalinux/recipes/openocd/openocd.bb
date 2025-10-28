@@ -23,7 +23,7 @@ DEPENDS = "libusb1 libftdi"
 inherit autotools pkgconfig
 
 do_configure:prepend() {
-        (cd ${S} $$ ./bootstrap)
+        (cd ${S} && ./bootstrap)
 }
 
 EXTRA_OECONF = "--enable-ftdi \
