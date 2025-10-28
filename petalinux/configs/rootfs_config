@@ -4118,6 +4118,7 @@ CONFIG_Init-manager-systemd=y
 # apps 
 #
 CONFIG_regtest=y
+CONFIG_openocd=y
 
 #
 # user packages 
