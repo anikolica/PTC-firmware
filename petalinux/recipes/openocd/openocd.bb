@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=599d2d1ee7fc84c0467b3d19801db870"
 
 PV = "0.12.0"
 SRCREV = "v0.12.0"
-SRC_URI = "git://github.com/openocd-org/openocd.git;protocol=https;branch=master;submodules=1"
+SRC_URI = "git://github.com/ddrobner/openocd.git;protocol=https;branch=ptc=v0.12.0;submodules=1"
 
 S = "${WORKDIR}/git"
 B = "${S}"
@@ -24,9 +24,8 @@ DEPENDS = "libusb1 libftdi autoconf-native automake-native libtool-native"
 
 inherit pkgconfig
 
-EXTRA_OECONF = "--enable-ftdi \
-                --enable-jlink \
-                --enable-xilinx-xc7"
+EXTRA_OECONF = "--enable-remote-bitbang \
+                --enable-ptc" 
 
 
 do_configure:prepend() {
