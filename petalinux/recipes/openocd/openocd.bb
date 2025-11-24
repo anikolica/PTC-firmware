@@ -17,15 +17,14 @@ S = "${WORKDIR}/git"
 B = "${S}"
 
 AUTOTOOLS_BROKEN = "1"
-
 INHIBIT_AUTOTOOLS_DEPS = "1"
+
 
 DEPENDS = "libusb1 libftdi autoconf-native automake-native libtool-native"
 
 inherit pkgconfig
 
-EXTRA_OECONF = "--enable-remote-bitbang \
-                --enable-ptc" 
+EXTRA_OECONF = "--enable-ptc"
 
 
 do_configure:prepend() {
@@ -53,7 +52,15 @@ do_compile() {
     oe_runmake -C ${S}
 }
 do_install:append() {
-        echo ">>> compiling inside ${PWD}"
-        install -d ${D}${bindir}
-        install -m 0755 ${S}/src/openocd ${D}${bindir}/
+    echo ">>> compiling inside ${PWD}"
+    # program binaries
+    install -d ${D}${bindir}
+    install -m 0755 ${S}/src/openocd ${D}${bindir}/
+
+    # configuration / script files
+    install -d ${D}${datadir}/openocd/scripts
+    cp -r ${S}/tcl/* ${D}${datadir}/openocd/scripts/
+
+    # legacy search‑path
+    ln -sf /usr/share/openocd/scripts ${D}/usr/local/share/openocd
 }
