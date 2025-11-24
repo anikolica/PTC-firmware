@@ -60,7 +60,4 @@ do_install:append() {
     # configuration / script files
     install -d ${D}${datadir}/openocd/scripts
     cp -r ${S}/tcl/* ${D}${datadir}/openocd/scripts/
-
-    # legacy search‑path
-    ln -sf /usr/share/openocd/scripts ${D}/usr/local/share/openocd
 }
