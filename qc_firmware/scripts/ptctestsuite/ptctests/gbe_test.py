@@ -30,11 +30,12 @@ class gbe_test(test_base):
     def run_test(self):
         try:
             response = ping(self.ip_address, verbose=True, count=3)
+            print(response)
         except Exception as e:
             print(e)
             return qc_result.FAIL
         return qc_result.PASS
 
-    def test_end(self) -> bool:
+    def test_end(self):
         # No cleanup to do here.
         return True

@@ -11,6 +11,7 @@ Adrian Nikolica (nikolica@hep.upenn.edu)
 
 * Adrian Nikolica
 * Godwin Mayers
+* David Drobner
 
 ## Documentation
 
