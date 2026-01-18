@@ -28,7 +28,11 @@ class test_base(ABC):
         pass
 
     def __enter__(self):
-        self.test_init()
+        test_init_status = self.test_init()
+        if not test_init_status:
+            raise RuntimeError("Test Initialization Failed") 
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
-        self.test_end()
+        test_end_status = self.test_end()
+        if not test_end_status:
+            raise RuntimeError("Test Exit Failed")
