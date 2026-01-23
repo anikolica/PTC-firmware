@@ -4,6 +4,9 @@ from loguru import logger as lg
 
 from ptctestsuite import test_base, qc_result
 
+# I totally forgot that this will run externally....
+# TODO refactor so that it takes the readings via ssh/serial
+
 class temperature_test(test_base):
     
     def read_temp(self, addr):
