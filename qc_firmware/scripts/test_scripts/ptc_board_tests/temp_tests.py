@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 
 temp_monitor_list = ['0x48', '0x49', '0x4A', '0x4B']
