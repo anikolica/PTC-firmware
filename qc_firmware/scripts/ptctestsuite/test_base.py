@@ -19,12 +19,16 @@ test_pretty_names = {
 }
 
 class test_base(ABC):
+
+    # writing this so the method can be called easily from an overrided init
+    def log_test_init(self):
+        lg.info(f"Starting {test_pretty_names[self.__class__.__name__]} test...")
     
     @abstractmethod
     def test_init(self) -> bool:
         """ Test Init Stub. Returns boolean indicating if initialization passed or failed"""
         # Default of simply logging that test has initialized
-        lg.info(f"Starting {test_pretty_names[self.__class__.__name__]} test...")
+        self.log_test_init()
         return True
 
 
@@ -33,11 +37,15 @@ class test_base(ABC):
         """ Test run stub. Returns a `qc_result` object indication the outcome of the test"""
         pass
 
+    def log_test_end(self):
+        lg.info(f"Finished {test_pretty_names[self.__class__.__name__]} test.")
+
     @abstractmethod
     def test_end(self) -> bool:
         """Test de-init stub. Returns boolean indicating status"""
         # Similar to initialize method
-        lg.info(f"Finished {test_pretty_names[self.__class__.__name__]} test.")
+        self.log_test_end()
+        return True
 
     def __enter__(self):
         test_init_status = self.test_init()
