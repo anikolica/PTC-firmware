@@ -1,3 +1,4 @@
 pyserial
 pythonping
 loguru
+prompt_toolkit
