@@ -1,5 +1,6 @@
 from ptctestsuite import test_base
 from ptctestsuite import qc_result
+from loguru import Logger as lg
 
 class manual_test(test_base):
 
@@ -33,6 +34,18 @@ class manual_test(test_base):
     @test_status.setter
     def test_status(self, status: qc_result):
         self._test_status = status
+
+    # getter and setter method here in case we'd like
+    # the tester to supply a reading
+    # this will be a string so we can store repns of arbitrary
+    # types, and we will not be doing any checking
+    @property
+    def test_value(self):
+        return self._test_value
+    
+    @test_value.setter
+    def test_value(self, value: str):
+        self._test_value = value
 
     def run_test(self) -> qc_result:
         return self._test_status
