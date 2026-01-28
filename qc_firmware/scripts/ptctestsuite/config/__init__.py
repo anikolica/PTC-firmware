@@ -1,0 +1,1 @@
+from ptctestsuite.config.test_names import test_pretty_names, manual_tests

@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from ptctestsuite import qc_result
 
+from ptctestsuite.config.test_names import test_pretty_names
+
 from loguru import logger as lg
 
 # Here, we lay out the interface definition for a test.
@@ -11,12 +13,6 @@ from loguru import logger as lg
 #   << potentially do some work here >>
 #   t.run_test()
 #   << potentially more work here >>
-
-test_pretty_names = {
-    "eeprom": "EEPROM",
-    "temperature_test": "Temperature",
-    "gbe_test": "GBe"
-}
 
 class test_base(ABC):
 
