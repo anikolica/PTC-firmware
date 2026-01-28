@@ -42,7 +42,7 @@ class temperature_test(test_base):
             
         for a,r in self.readings.items():
             if self.temp_accept_low < r and r < self.temp_accept_high:
-                lg.error(f"Temperature readings outside of normal range. Sensor reported a value of {r}.")
+                lg.error(f"Temperature readings outside of normal range. Sensor {a} reported a value of {r}.")
                 return qc_result.FAIL
         lg.info("Temperature sensor test passed.")
         return qc_result.PASS
