@@ -48,6 +48,7 @@ class test_base(ABC):
         if not test_init_status:
             # TODO maybe change these to use logging instead of throwing a runtime error?
             raise RuntimeError(f"{test_pretty_names[self.__class__.__name__]} Test Initialization Failed") 
+        return self
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
         test_end_status = self.test_end()
