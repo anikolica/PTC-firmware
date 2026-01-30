@@ -1,6 +1,6 @@
-from ptctestsuite import test_base
-from ptctestsuite import qc_result
-from loguru import Logger as lg
+from .test_base import test_base
+from .qc_result import qc_result
+from loguru import logger as lg
 
 class manual_test(test_base):
 

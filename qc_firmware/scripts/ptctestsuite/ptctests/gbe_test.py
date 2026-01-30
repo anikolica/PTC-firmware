@@ -1,4 +1,4 @@
-from ptctestsuite.test_base import test_base
+from ptctestsuite.utils.test_base import test_base
 from ptctestsuite import qc_result
 
 import serial

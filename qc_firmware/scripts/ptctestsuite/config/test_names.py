@@ -3,7 +3,8 @@
 test_pretty_names = {
     "eeprom": "EEPROM",
     "temperature_test": "Temperature",
-    "gbe_test": "GBe"
+    "gbe_test": "GBe",
+    "dummy_test": "Dummy"
 }
 
 manual_tests = ['visual', 'ripple_hw', 'ripple_adc', 'bootup',

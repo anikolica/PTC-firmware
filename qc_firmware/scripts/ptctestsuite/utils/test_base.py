@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ptctestsuite import qc_result
+from .qc_result import qc_result
 
 from ptctestsuite.config.test_names import test_pretty_names
 

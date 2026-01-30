@@ -1,3 +1,2 @@
-from ptctestsuite.utils import qc_record
-from ptctestsuite.utils import qc_result
-from ptctestsuite.utils import test_base
+from .utils.qc_result import qc_result
+from .utils.test_base import test_base
