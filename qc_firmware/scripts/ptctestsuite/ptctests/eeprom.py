@@ -1,6 +1,4 @@
-from ptctestsuite import test_base
-from ptctestsuite import qc_result
-
+from ptctestsuite.utils import test_base, qc_result
 from loguru import logger as lg
 
 import os

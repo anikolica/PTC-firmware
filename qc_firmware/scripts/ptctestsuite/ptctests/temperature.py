@@ -2,7 +2,7 @@ import os
 from time import sleep
 from loguru import logger as lg
 
-from ptctestsuite import test_base, qc_result
+from ptctestsuite.utils import test_base, qc_result
 
 # I totally forgot that this will run externally....
 # TODO refactor so that it takes the readings via ssh/serial

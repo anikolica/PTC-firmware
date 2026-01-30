@@ -1,5 +1,5 @@
-from ptctestsuite.utils.test_base import test_base
-from ptctestsuite.utils.qc_result import qc_result
+from ptctestsuite.utils import test_base, qc_result
+from ptctestsuite.utils import qc_result
 from loguru import logger as lg
 
 class dummy_test(test_base):

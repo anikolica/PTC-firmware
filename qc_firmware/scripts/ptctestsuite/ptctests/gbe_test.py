@@ -1,8 +1,7 @@
-from ptctestsuite.utils.test_base import test_base
-from ptctestsuite import qc_result
+from ptctestsuite.utils import test_base, qc_result
+from pythonping import ping
 
 import serial
-from pythonping import ping
 
 class gbe_test(test_base):
 
