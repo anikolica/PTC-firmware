@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,xilinxvivado,vivado
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,xilinxvivado,vivado
 
+# project specific files
+reference_design/Mercury_XU5_PE1/*
+*.jou
+reference_design/ptc.linux/*
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
