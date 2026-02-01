@@ -42,7 +42,6 @@ async def run_ptc_test():
             await ws.send(json.dumps(t))
             msg = await ws.recv()
             msg = json.loads(msg)
-            print(qc_result(int(msg['test_result'])))
             q.test_status[msg['test_name']] = qc_result(int(msg['test_result']))
     #add_notes = await confirm("Do you want to add notes? ", async_=True)
     ans = await session.prompt_async("Do you want to add notes? (y/n): ")
