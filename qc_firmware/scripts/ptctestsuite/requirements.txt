@@ -3,3 +3,5 @@ pythonping
 loguru
 prompt_toolkit
 PyYAML
+websockets
+asyncio
