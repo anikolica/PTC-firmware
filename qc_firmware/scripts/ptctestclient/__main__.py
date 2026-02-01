@@ -1,4 +1,4 @@
-from ptctestclient.comm import send_result
+from ptctestclient.comm import send_test_result
 from ptctestclient.ptctests import dummy_client, temperature
 
 import asyncio
@@ -30,7 +30,7 @@ async def run_test(ws):
             print(f"Running Test {test_info['test_type']}") # type: ignore
             r = t.run_test()
             print(f"Test Result: {r}")
-            await ws.send(str(r.value))
+            await send_test_result(ws, test_info['test_type'], r)
 
 async def main():
     async with serve(run_test, "localhost", 8765) as server:
