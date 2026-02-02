@@ -11,6 +11,12 @@ from ptctestsuite.ptctests import dummy_test
 from ptctestsuite.utils import qc_result, qc_record, init_ptc
 from websockets.asyncio.client import connect
 
+from argparse import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument('--debug', action='store_true')
+
+args = parser.parse_args()
 
 lg.remove()
 lg.add("ptctests.log", rotation='500MB', level="INFO")
@@ -34,11 +40,11 @@ async def run_ptc_test():
     ptc_serial = await session.prompt_async("PTC Serial Number: ")
 
     # try to init the PTC on the default serial port
-    net_status = await init_ptc()
+    net_status = await init_ptc(debug_run=args.debug)
     if not net_status:
         ptc_serial_port = await session.prompt_async("Connection failed on the default serial port. Enter a different port to attempt connection again: ", default="/dev/ttyUSB1")
         # this is kind of goofy, maybe rework this?
-        net_status = await init_ptc(serial_port=ptc_serial_port)
+        net_status = await init_ptc(serial_port=ptc_serial_port, debug_run=args.debug)
         if not net_status:
             lg.critical("PTC Network Configuration Failed!")
             return
