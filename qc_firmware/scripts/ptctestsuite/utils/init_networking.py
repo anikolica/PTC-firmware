@@ -1,8 +1,9 @@
 import asyncio
 import serial_asyncio
-import serial
 
-async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=12800, timeout=1, ip_address = "192.168.20.112") -> bool:
+async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=12800, timeout=1, ip_address = "192.168.20.112", debug_run = False) -> bool:
+    if debug_run:
+        return True
     try:
         line_end = r'\r\n'
         # in case we actually need UTF-8

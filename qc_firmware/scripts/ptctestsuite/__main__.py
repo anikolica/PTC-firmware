@@ -1,5 +1,4 @@
 import prompt_toolkit as ptk
-from time import sleep
 import asyncio
 import json
 
@@ -9,7 +8,7 @@ from prompt_toolkit.shortcuts import choice, message_dialog, input_dialog, confi
 from prompt_toolkit.filters import is_done
 
 from ptctestsuite.ptctests import dummy_test
-from ptctestsuite.utils import qc_result, qc_record
+from ptctestsuite.utils import qc_result, qc_record, init_ptc
 from websockets.asyncio.client import connect
 
 
@@ -25,8 +24,6 @@ test_sequence = [
                 ]
 # TODO list of manual tests will go here.
 
-# TODO set up networking, then construct websocket address
-
 # for now, store these here. Can determine later if we want to go
 # direct to HWDB, or store them and then upload after verification
 test_runs = []
@@ -34,16 +31,25 @@ test_runs = []
 async def run_ptc_test():
     global tester_name, test_sequence 
     session = ptk.PromptSession()
-    ptc_serial = await session.prompt_async("PTC Serial: ")
+    ptc_serial = await session.prompt_async("PTC Serial Number: ")
+
+    # try to init the PTC on the default serial port
+    try:
+        await init_ptc()
+    except:
+        ptc_serial_port = await session.prompt_async("Connection failed on the default serial port. Enter a different port to attempt connection again: ", default="/dev/ttyUSB1")
+        await init_ptc(serial_port=ptc_serial_port)
+    
     q = qc_record(ptc_serial, tester_name)
     lg.info(f"Starting new PTC Test Session. PTC Serial is {ptc_serial}")
+    # do the manual tests here
     async with connect("ws://localhost:8765") as ws:
         for t in test_sequence:
             await ws.send(json.dumps(t))
             msg = await ws.recv()
             msg = json.loads(msg)
             q.test_status[msg['test_name']] = qc_result(int(msg['test_result']))
-    #add_notes = await confirm("Do you want to add notes? ", async_=True)
+    # or here....
     ans = await session.prompt_async("Do you want to add notes? (y/n): ")
     add_notes = ans.lower() in ('y', 'yes')
     if add_notes:
