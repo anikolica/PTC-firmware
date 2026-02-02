@@ -34,11 +34,14 @@ async def run_ptc_test():
     ptc_serial = await session.prompt_async("PTC Serial Number: ")
 
     # try to init the PTC on the default serial port
-    try:
-        await init_ptc()
-    except:
+    net_status = await init_ptc()
+    if not net_status:
         ptc_serial_port = await session.prompt_async("Connection failed on the default serial port. Enter a different port to attempt connection again: ", default="/dev/ttyUSB1")
-        await init_ptc(serial_port=ptc_serial_port)
+        # this is kind of goofy, maybe rework this?
+        net_status = await init_ptc(serial_port=ptc_serial_port)
+        if not net_status:
+            lg.critical("PTC Network Configuration Failed!")
+            return
     
     q = qc_record(ptc_serial, tester_name)
     lg.info(f"Starting new PTC Test Session. PTC Serial is {ptc_serial}")
