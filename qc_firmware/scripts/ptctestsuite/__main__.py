@@ -13,6 +13,8 @@ from websockets.asyncio.client import connect
 
 from argparse import ArgumentParser
 
+from ptctestsuite.config import parameters
+
 parser = ArgumentParser()
 parser.add_argument('--debug', action='store_true')
 
@@ -36,6 +38,8 @@ test_runs = []
 
 async def run_ptc_test():
     global tester_name, test_sequence 
+    ptc_ip = "localhost" if args.debug_run else parameters.ptc_ip
+    
     session = ptk.PromptSession()
     ptc_serial = await session.prompt_async("PTC Serial Number: ")
 
@@ -52,7 +56,7 @@ async def run_ptc_test():
     q = qc_record(ptc_serial, tester_name)
     lg.info(f"Starting new PTC Test Session. PTC Serial is {ptc_serial}")
     # do the manual tests here
-    async with connect("ws://localhost:8765") as ws:
+    async with connect(f"ws://{parameters.ptc_ip}:{parameters.ws_port}") as ws:
         for t in test_sequence:
             await ws.send(json.dumps(t))
             msg = await ws.recv()

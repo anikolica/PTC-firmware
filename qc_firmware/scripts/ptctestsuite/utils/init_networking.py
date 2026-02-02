@@ -1,7 +1,9 @@
 import asyncio
 import serial_asyncio
 
-async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=12800, timeout=1, ip_address = "192.168.20.112", debug_run = False) -> bool:
+from ptctestsuite.config import parameters
+
+async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=12800, timeout=1, ip_address = parameters.ptc_ip, debug_run = False) -> bool:
     if debug_run:
         return True
     try:
