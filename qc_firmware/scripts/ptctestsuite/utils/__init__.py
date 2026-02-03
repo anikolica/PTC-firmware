@@ -3,3 +3,4 @@ from ptctestsuite.utils.qc_result import qc_result
 from ptctestsuite.utils.test_base import test_base
 from ptctestsuite.utils.manual_test import manual_test
 from ptctestsuite.utils.init_networking import init_ptc
+from ptctestsuite.utils.custom_prompts import async_yesno
