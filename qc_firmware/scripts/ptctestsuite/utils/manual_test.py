@@ -4,13 +4,18 @@ from loguru import logger as lg
 
 class manual_test(test_base):
 
-    def __init__(self, test_name: str):
+    def __init__(self, test_name: str = "Manual Test", test_message: str = "Did the test pass? "):
         self._test_name = test_name 
         # overriding this for the dict of pretty print names
         self.__class__.__name__ = test_name
         # setting this as error by default
         self._test_status = qc_result.ERROR
         self._test_value = None
+        self._test_message = test_message
+        
+    @property
+    def message(self):
+        return self._test_message
     
     @property
     def test_name(self):
