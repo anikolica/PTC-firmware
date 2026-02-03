@@ -8,8 +8,9 @@ from prompt_toolkit.shortcuts import choice, message_dialog, input_dialog, confi
 from prompt_toolkit.filters import is_done
 
 from ptctestsuite.ptctests import dummy_test
-from ptctestsuite.utils import qc_result, qc_record, init_ptc
+from ptctestsuite.utils import qc_result, qc_record, init_ptc, async_yesno, manual_test
 from websockets.asyncio.client import connect
+from ptctestsuite.config import manual_tests, test_sequence
 
 from argparse import ArgumentParser
 
@@ -26,11 +27,7 @@ lg.add("ptctests.log", rotation='500MB', level="INFO")
 # keeping this for the entire run of the script
 tester_name = ptk.prompt("Tester Name: ")
 # test sequence for automated tests goes here. This is a list of tests and their parameters
-test_sequence = [
-                    {"test_type": "dummy_test", "test_params": {}},
-                    {"test_type": "dummy_test", "test_params": {"name": "test2"}}
-                ]
-# TODO list of manual tests will go here.
+
 
 # for now, store these here. Can determine later if we want to go
 # direct to HWDB, or store them and then upload after verification
@@ -38,7 +35,7 @@ test_runs = []
 
 async def run_ptc_test():
     global tester_name, test_sequence 
-    ptc_ip = "localhost" if args.debug_run else parameters.ptc_ip
+    ptc_ip = "localhost" if args.debug else parameters.ptc_ip
     
     session = ptk.PromptSession()
     ptc_serial = await session.prompt_async("PTC Serial Number: ")
@@ -56,15 +53,19 @@ async def run_ptc_test():
     q = qc_record(ptc_serial, tester_name)
     lg.info(f"Starting new PTC Test Session. PTC Serial is {ptc_serial}")
     # do the manual tests here
-    async with connect(f"ws://{parameters.ptc_ip}:{parameters.ws_port}") as ws:
+    async with connect(f"ws://{ptc_ip}:{parameters.ws_port}") as ws:
         for t in test_sequence:
             await ws.send(json.dumps(t))
             msg = await ws.recv()
             msg = json.loads(msg)
             q.test_status[msg['test_name']] = qc_result(int(msg['test_result']))
+    
+    for t in manual_tests:
+        with manual_test(**t) as test:
+            result = await async_yesno(session, test.message)
+            q.test_status[test.test_name] = qc_result(int(result))
     # or here....
-    ans = await session.prompt_async("Do you want to add notes? (y/n): ")
-    add_notes = ans.lower() in ('y', 'yes')
+    add_notes = await async_yesno(session, "Do you want to add notes?")
     if add_notes:
         note_text = await input_dialog(title="Notes", text="Enter tester notes here:").run_async()
         if note_text is not None:

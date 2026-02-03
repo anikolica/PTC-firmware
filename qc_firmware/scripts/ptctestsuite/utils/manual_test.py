@@ -40,6 +40,14 @@ class manual_test(test_base):
     def test_status(self, status: qc_result):
         self._test_status = status
 
+    # TODO figure out why the default implementation isn't e
+
+    def test_init(self):
+        return True
+    
+    def test_end(self):
+        return True
+
     # getter and setter method here in case we'd like
     # the tester to supply a reading
     # this will be a string so we can store repns of arbitrary
