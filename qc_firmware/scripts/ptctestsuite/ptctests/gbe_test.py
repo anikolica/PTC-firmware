@@ -1,37 +1,28 @@
 from ptctestsuite.utils import test_base, qc_result
+from ptctestsuite.config import parameters
 from pythonping import ping
 
-import serial
+from loguru import logger as lg
+
+
+# this is one of the few tests that needs to be run on the host machine
+# there is a slight break in the homogeneity of things (explicitly running this
+# instead of just throwing it in a list
+# but, it's part of the test plan, and we need to make sure networking functions before
+# running the rest of the tests
 
 class gbe_test(test_base):
 
     def test_init(self):
-        # TODO ensure serial shell is logged in - maybe do this on test suite init? Or make the tester do it
-        # bring up GbE Over Serial
-        serial_port = '/dev/ttyUSB0'
-        baudrate = 12800
-        self.ip_address = "192.168.20.112"
-
-        try:
-            with serial.Serial(port=serial_port, baudrate=baudrate, timeout=1) as ser:
-                print(f"Opened {serial_port} at {baudrate} baud")
-                line_end = r'\r\n'
-                # assign ip address to GbE interface
-                iface_str = f"ifconfig eth1 {self.ip_address} netmask 255.255.255.0{line_end}"
-                ser.write(iface_str.encode('ascii'))
-                # Enable GbE
-                ser.write(f"poke 0xff0c0004 0x092e2c4a{line_end}".encode('ascii'))
-        except:
-            return False
-
+        # nothing to init anymore
         return True
 
     def run_test(self):
         try:
-            response = ping(self.ip_address, verbose=True, count=3)
-            print(response)
+            response = ping(parameters.ptc_ip, verbose=True, count=3)
+            lg.info(f"Attempting to ping PTC. Response is: {response}")
         except Exception as e:
-            print(e)
+            lg.error(e)
             return qc_result.FAIL
         return qc_result.PASS
 
