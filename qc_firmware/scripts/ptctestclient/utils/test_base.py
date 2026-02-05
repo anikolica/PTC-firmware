@@ -20,7 +20,6 @@ class test_base(ABC):
     def log_test_init(self):
         lg.info(f"Starting {test_pretty_names[self.__class__.__name__]} test...")
     
-    @abstractmethod
     def test_init(self) -> bool:
         """ Test Init Stub. Returns boolean indicating if initialization passed or failed"""
         # Default of simply logging that test has initialized
@@ -36,7 +35,6 @@ class test_base(ABC):
     def log_test_end(self):
         lg.info(f"Finished {test_pretty_names[self.__class__.__name__]} test.")
 
-    @abstractmethod
     def test_end(self) -> bool:
         """Test de-init stub. Returns boolean indicating status"""
         # Similar to initialize method
