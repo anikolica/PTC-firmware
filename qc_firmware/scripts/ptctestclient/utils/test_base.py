@@ -32,7 +32,9 @@ class test_base(ABC):
         """ Test run stub. Returns a `qc_result` object indication the outcome of the test"""
         pass
 
-    def log_test_end(self):
+    def log_test_end(self) -> None:
+        """Add log message that the test has finished running.
+        """
         lg.info(f"Finished {test_pretty_names[self.__class__.__name__]} test.")
 
     def test_end(self) -> bool:
