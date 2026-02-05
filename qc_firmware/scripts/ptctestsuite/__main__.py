@@ -8,7 +8,7 @@ from prompt_toolkit.shortcuts import choice, message_dialog, input_dialog, confi
 from prompt_toolkit.filters import is_done
 
 from ptctestsuite.ptctests import dummy_test
-from ptctestsuite.utils import qc_result, qc_record, init_ptc, async_yesno, manual_test
+from ptctestsuite.utils import qc_result, qc_record, init_ptc, start_client, async_yesno, manual_test
 from websockets.asyncio.client import connect
 from ptctestsuite.config import manual_tests, test_sequence
 
@@ -49,6 +49,9 @@ async def run_ptc_test():
         if not net_status:
             lg.critical("PTC Network Configuration Failed!")
             return
+    
+    # start client task
+    client_task = asyncio.create_task(start_client())
     
     q = qc_record(ptc_serial, tester_name)
     lg.info(f"Starting new PTC Test Session. PTC Serial is {ptc_serial}")

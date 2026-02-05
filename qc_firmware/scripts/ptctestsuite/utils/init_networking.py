@@ -2,6 +2,8 @@ import asyncio
 import serial_asyncio
 
 from ptctestsuite.config import parameters
+from loguru import logger as lg
+import asyncssh
 
 async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=12800, timeout=1, ip_address = parameters.ptc_ip, debug_run = False) -> bool:
     if debug_run:
@@ -42,3 +44,15 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=12800, timeout=1, ip_add
         # something went wrong
         return False
     
+async def start_client(debug_run=False) -> bool:
+    if debug_run:
+        return True
+
+    try:
+        async with asyncssh.connect(f"root@{parameters.ptc_ip}") as conn:
+            await conn.run(f'source {parameters.ptc_client_path}/.env/bin/activate')
+            await conn.run(f'python -m {parameters.ptc_client_path}')
+    except asyncssh.Error as e:
+        lg.error(f"SSH connection failed with error {e}!")
+        return False
+    return True

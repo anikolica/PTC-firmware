@@ -1,4 +1,5 @@
 pythonping
+asyncssh
 loguru
 prompt_toolkit
 PyYAML
