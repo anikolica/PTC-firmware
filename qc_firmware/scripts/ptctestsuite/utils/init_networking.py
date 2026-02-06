@@ -10,7 +10,7 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_ad
         return True
     try:
         # double newline to ensure command gets executed 
-        line_end = '\n\n'
+        line_end = '\r\n'
         encoding = 'utf-8'
         # sleep time between commands
         sleep_time = 1
@@ -22,6 +22,12 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_ad
         writer.write(f"{line_end}".encode(encoding))
         await writer.drain()
         await asyncio.sleep(sleep_time)
+        try:
+                data = await asyncio.wait_for(reader.read(1024), timeout=0.5)
+                if data:
+                    print(f"Response:\n{data.decode(encoding, errors='ignore')}")
+        except asyncio.TimeoutError:
+            print("No response received.")
 
         # log into the ptc
         writer.write(f"root{line_end}".encode(encoding))
@@ -38,6 +44,14 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_ad
         writer.write(f"poke 0xff0c0004 0x092e2c4a{line_end}".encode(encoding))
         await writer.drain()
         await asyncio.sleep(sleep_time)
+
+        try:
+                # Read up to 1024 bytes with a short timeout so we don't hang
+                data = await asyncio.wait_for(reader.read(1024), timeout=0.5)
+                if data:
+                    print(f"Response:\n{data.decode(encoding, errors='ignore')}")
+        except asyncio.TimeoutError:
+            print("No response received.")
 
         # close the writer
         writer.close()
