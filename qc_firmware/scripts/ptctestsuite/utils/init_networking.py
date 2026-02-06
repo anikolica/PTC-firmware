@@ -5,21 +5,26 @@ from ptctestsuite.config import parameters
 from loguru import logger as lg
 import asyncssh
 
-async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=12800, timeout=1, ip_address = parameters.ptc_ip, debug_run = False) -> bool:
+async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_address = parameters.ptc_ip, debug_run = False) -> bool:
     if debug_run:
         return True
     try:
-        line_end = r'\r\n'
-        # in case we actually need UTF-8
-        encoding = 'ascii'
+        # double newline to ensure command gets executed 
+        line_end = '\n\n'
+        encoding = 'utf-8'
         # sleep time between commands
-        sleep_time = 2
+        sleep_time = 1
         
         # establish a serial connection
         reader, writer = await serial_asyncio.open_serial_connection(url=serial_port, baudrate=baudrate, timeout=timeout)
+        
+        # send newline to clear the buffer
+        writer.write(f"{line_end}".encode(encoding))
+        await writer.drain()
+        await asyncio.sleep(sleep_time)
 
         # log into the ptc
-        writer.write(f"ptc{line_end}".encode(encoding))
+        writer.write(f"root{line_end}".encode(encoding))
         await writer.drain()
         await asyncio.sleep(sleep_time)
 
@@ -30,7 +35,7 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=12800, timeout=1, ip_add
         await asyncio.sleep(sleep_time)
 
         # set correct bit to enable GbE
-        writer.write(f"poke 0xff0c0004 0x092e2c4a{line_end}".encode('ascii'))
+        writer.write(f"poke 0xff0c0004 0x092e2c4a{line_end}".encode(encoding))
         await writer.drain()
         await asyncio.sleep(sleep_time)
 
