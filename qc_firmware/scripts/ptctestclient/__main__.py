@@ -29,6 +29,7 @@ async def run_test(ws):
 
 async def main():
     async with serve(run_test, "localhost", 8765) as server:
+        print("Server Listening")
         await server.serve_forever()
 
 if __name__ == "__main__":
