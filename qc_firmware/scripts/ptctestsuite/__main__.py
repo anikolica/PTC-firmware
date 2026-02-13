@@ -51,13 +51,18 @@ async def run_ptc_test():
             return
     
     # start client task
-    client_task = asyncio.create_task(start_client())
+    if not args.debug:
+        client_task = asyncio.create_task(start_client())
+        # sleep for a few seconds to allow that to get started
+        await asyncio.sleep(5)
     
     q = qc_record(ptc_serial, tester_name)
     lg.info(f"Starting new PTC Test Session. PTC Serial is {ptc_serial}")
     # do the manual tests here
     async with connect(f"ws://{ptc_ip}:{parameters.ws_port}") as ws:
         for t in test_sequence:
+            print(f"Running {t['test_type']} with parameters {t['test_params']}")
+            lg.info(f"Running {t['test_type']} with parameters {t['test_params']}")
             await ws.send(json.dumps(t))
             msg = await ws.recv()
             msg = json.loads(msg)

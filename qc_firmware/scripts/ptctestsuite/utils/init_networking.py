@@ -66,11 +66,23 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_ad
 async def start_client(debug_run=False) -> bool:
     if debug_run:
         return True
+    
+    venv_python = f'{parameters.ptc_client_path}/.env/bin/python'
+
+    command = (
+        f"test -f {venv_python} &&"
+        f"cd /home/root && {venv_python} -u -m ptctestclient"
+    )
 
     try:
-        async with asyncssh.connect(f"root@{parameters.ptc_ip}") as conn:
+        # TODO potentially need to make user/pass configurable
+        # TODO set up STDERR handling
+        async with asyncssh.connect("{parameters.ptc_ip}", username='root', password='', known_hosts=None) as conn:
+            lg.info(f"Connected to PTC @ {parameters.ptc_ip}")
+            async with conn.create_process(command) as proc:
+                await proc.wait()
+                lg.info(f"PTC client application @ {parameters.ptc_ip} exited")
             await conn.run(f'source {parameters.ptc_client_path}/.env/bin/activate')
-            await conn.run(f'python -m {parameters.ptc_client_path}')
     except asyncssh.Error as e:
         lg.error(f"SSH connection failed with error {e}!")
         return False
