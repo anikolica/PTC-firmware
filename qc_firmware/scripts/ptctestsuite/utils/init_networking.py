@@ -62,7 +62,7 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_ad
         # something went wrong
         return False
     
-async def start_client(debug_run=False) -> bool:
+async def start_client(ready_signal: asyncio.Event, debug_run=False) -> bool:
     if debug_run:
         return True
     
@@ -78,7 +78,11 @@ async def start_client(debug_run=False) -> bool:
         # TODO set up STDERR handling
         async with asyncssh.connect(f"{parameters.ptc_ip}", username='root', password='', known_hosts=None) as conn:
             lg.info(f"Connected to PTC @ {parameters.ptc_ip}")
-            async with conn.create_process(command) as proc:
+            async with conn.create_process(command, stderr=asyncssh.STDOUT) as proc:
+                # look for server printout when ready and set signal
+                async for line in proc.stdout:
+                    if "listening" in line.lower():
+                        ready_signal.set()
                 await proc.wait()
                 lg.info(f"PTC client application @ {parameters.ptc_ip} exited")
             await conn.run(f'source {parameters.ptc_client_path}/.env/bin/activate')

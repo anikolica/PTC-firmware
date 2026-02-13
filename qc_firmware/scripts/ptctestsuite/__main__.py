@@ -52,9 +52,15 @@ async def run_ptc_test():
     
     # start client task
     if not args.debug:
-        client_task = asyncio.create_task(start_client())
-        # sleep for a few seconds to allow that to get started
-        await asyncio.sleep(5)
+        server_listening = asyncio.Event()
+        client_task = asyncio.create_task(start_client(server_listening, debug_run=args.debug))
+        try:
+            lg.info("Waiting for PTC Application to Initialize....")
+            await asyncio.wait_for(server_listening.wait(), timeout=20)
+        except asyncio.TimeoutError:
+            lg.critical("PTC Application failed to start within 20 seconds!")
+            client_task.cancel()
+   
     
     q = qc_record(ptc_serial, tester_name)
     lg.info(f"Starting new PTC Test Session. PTC Serial is {ptc_serial}")
