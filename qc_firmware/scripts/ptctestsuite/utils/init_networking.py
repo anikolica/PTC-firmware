@@ -77,7 +77,7 @@ async def start_client(debug_run=False) -> bool:
     try:
         # TODO potentially need to make user/pass configurable
         # TODO set up STDERR handling
-        async with asyncssh.connect("{parameters.ptc_ip}", username='root', password='', known_hosts=None) as conn:
+        async with asyncssh.connect(f"{parameters.ptc_ip}", username='root', password='', known_hosts=None) as conn:
             lg.info(f"Connected to PTC @ {parameters.ptc_ip}")
             async with conn.create_process(command) as proc:
                 await proc.wait()
