@@ -64,6 +64,7 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_ad
     
 async def start_client(ready_signal: asyncio.Event, debug_run=False) -> bool:
     if debug_run:
+        ready_signal.set()
         return True
     
     venv_python = f'{parameters.ptc_client_path}/.env/bin/python'
