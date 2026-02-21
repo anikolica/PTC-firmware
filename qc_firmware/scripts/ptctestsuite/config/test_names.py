@@ -12,11 +12,11 @@ test_pretty_names = {
 #                'uc_jtag', 'assert_addr', 'led_visual', 'temp_burn'
 #
 
-def man_test(name: str, message: str):
-    return {"test_name": name, "test_message": message}
+def man_test(name: str, message: str, accepts_val: bool = False):
+    return {"test_name": name, "test_message": message, "accepts_value": accepts_val}
 
 manual_tests = [
-    man_test("example_manual", "Example manual test")
+    man_test("example_manual", "Example manual test", True)
 ]
 
 test_sequence = [

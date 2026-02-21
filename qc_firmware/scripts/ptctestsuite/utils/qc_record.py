@@ -23,9 +23,13 @@ class qc_record:
 
     def gen_hwdb_datasheet(self):
 
+        def drop_none(obj: dict):
+            return {k: v for k,v in obj.items() if v is not None}
+
         def clean_enums(obj):
             if isinstance(obj, dict):
-                return {k: clean_enums(v) for k, v in obj.items()}
+                d = drop_none(obj)
+                return {k: clean_enums(v) for k, v in d.items()}
             elif isinstance(obj, list):
                 return [clean_enums(v) for v in obj]
             elif isinstance(obj, Enum):

@@ -50,10 +50,10 @@ async def run_ptc_test():
             lg.critical("PTC Network Configuration Failed!")
             return
     
+    server_listening = asyncio.Event()
+    client_task = asyncio.create_task(start_client(server_listening, debug_run=args.debug))
     # start client task
     if not args.debug:
-        server_listening = asyncio.Event()
-        client_task = asyncio.create_task(start_client(server_listening, debug_run=args.debug))
         try:
             lg.info("Waiting for PTC Application to Initialize....")
             await asyncio.wait_for(server_listening.wait(), timeout=20)
@@ -72,19 +72,32 @@ async def run_ptc_test():
             await ws.send(json.dumps(t))
             msg = await ws.recv()
             msg = json.loads(msg)
-            q.test_status[msg['test_name']] = qc_result(int(msg['test_result']))
+            # TODO need to implement value handling for auto tests - TODO
+            test_val = None
+            q.test_status[msg['test_name']] = {"result": qc_result(int(msg['test_result'])), "value": None}
     
     for t in manual_tests:
         with manual_test(**t) as test:
             result = await async_yesno(session, test.message)
-            q.test_status[test.test_name] = qc_result(int(result))
+            test_val = None
+            if test.accepts_value:
+                test_val = await session.prompt_async("What was the value of the tested parameter? ")
+            q.test_status[test.test_name] = {"result": qc_result(int(result)), "value": test_val}
     # or here....
+    # cancel client task
+    client_task.cancel()
     add_notes = await async_yesno(session, "Do you want to add notes?")
     if add_notes:
         note_text = await input_dialog(title="Notes", text="Enter tester notes here:").run_async()
         if note_text is not None:
             q.tester_notes = note_text
     test_runs.append(q)
+    # wait for client task to exit before finishing
+    try:
+        await client_task
+    except asyncio.CancelledError:
+        pass
+    # for now, print out datasheet
     print(q.gen_hwdb_datasheet())
 
 if __name__ == "__main__":
