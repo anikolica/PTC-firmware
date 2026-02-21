@@ -11,17 +11,17 @@ from ptctestsuite.utils.qc_result import qc_result
 
 # TODO take qc result or serial?
 # or is hwdb indexed differently
-def check_item_exists(item: qc_result) -> dict:
+def check_item_exists(item: qc_record) -> dict:
     return dict() 
 
-def create_item(item: qc_result) -> dict:
+def create_item(item: qc_record) -> dict:
     # will return response from REST api
     return dict()
 
-def upload_test_result(item: qc_result) -> dict:
+def upload_test_result(item: qc_record) -> dict:
     # will return response from REST api
     return dict()
 
-def upload_ptc_image(item: qc_result, image) -> dict:
+def upload_ptc_image(item: qc_record, image) -> dict:
     # will return response from REST api
     return dict()
