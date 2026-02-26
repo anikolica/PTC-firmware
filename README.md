@@ -127,6 +127,65 @@ You should printouts on the PTC terminal that show the state of various sensors.
 1. From host to PTC (from host): `rsync -avzh [file to transfer] root@[your IP address]:/home/root/`
 2. From PTC to host (from host): `rsync -avzh root@[your IP address]:/home/root/[file to transfer] .`
 
+### Register reads and writes
+At the root prompt, registers can be manually written using `poke [addr] [data]` from the table below. For example `poke 0x43c00000 0x00000020` will assert opad\_EXT\_RST. Test scripts (below) initiate sequences of register writes.
+
+1. Control registers (R/W). All register bit defaults are low at powerup.
+
+| reg. no. | AXI addr. | bit(s) | name | description |
+| ------ | ------ | ------ | ------ | ------ |
+| 0 | 0x80020000 | [0] | SOC_I2C_SW_RST | Reset 4-port I2C switch UT16 between SoC PS I2C, and PWR_SENSE and 3 SFPs. Active low (i.e. power-up in reset). |
+| 0 | 0x80020000 | [8] | MCU_I2C_OE | Enable outputs on I2C level translator UT25 to route WIB I2C to MCU instead of SoC. NOTE: needs resistor change in HW to work. |
+| 0 | 0x80020000 | [9] | WIB_I2C_OE | Enable outputs on I2C level translator UT29 to route WIB I2C to SoC. |
+| 0 | 0x80020000 | [16] | bp_io_oe | Tri-state buffer enable to BP_IO_EN (active low) on level translator UT36, from WIB priority encode into SoC. Reg bit inverse to "T" buffer input. Reg low -> tri-state hi-Z -> OE on-board pullup -> no input to SoC. Reg high -> drive OE low -> can read lines from SoC. Low is used in conjunction with wib_rx_sel_out and wib_pe_soc_en when overriding priority encoder.  |
+| 0 | 0x80020000 | [23] | crate_addr_en | Tri-state buffer enable to CRATE_ADDR_OE (active low) on level translator UB1, from backplane into SoC. Reg bit inverse to "T" buffer input. Reg low -> tri-state hi-Z -> OE on-board pullup -> no input to SoC. Reg high -> drive OE low -> can read lines from SoC. |
+| 0 | 0x80020000 | [24] | crate_addr_out |  Deprecated. (To drive crate address out to WIB. Would have required HW change on level translator direction pin.) |
+| - | - | - | - | - |
+| 1 | 0x80020004 | [2:0] | wib_rx_sel_out | Use to drive clock MUX UT30 to select which WIB timing TX to route to SFP. Used in conjunction with wib_pe_soc_en and bp_io_en when overriding priority encoder. |
+| 1 | 0x80020004 | [3] | wib_pe_soc_en | Tri-state buffer enable to level translator UT38, from priority encoder into clock MUX. Reg bit inverse to "T" buffer input. Reg low -> OE on-board pullup thru FET -> priority encoder output to clock MUX. Reg high -> OE pulled low thru FET -> can drive WIB_RX_SEL from FPGA. High is used in conjunction with wib_rx_sel_out and bp_io_en when overriding priority encoder. |
+| 1 | 0x80020004 | [8] | sfp2_tx_en_reg | High = timing SFP JT5 force transmit (SFP_TX_DISABLE = low). For test only. |
+| 1 | 0x80020004 | [9] | sfp2_tx_mux_ovr | High = timing SFP JT5 will transmit if any of BP_IO[5:0] driven from SoC are low. For test only. |
+| 1 | 0x80020004 | [10] | ep_srst | Resets the timing endpoint firmware block. |
+| 1 | 0x80020004 | [11] | ep_clk_sel | Switch BUFGMUX clk output in endpoint wrapper. Low = clk, high = rec_clk (bypass endpoint). Not currently used, as endpoint is for status indicator only. |
+| 1 | 0x80020004 | [16] | WIB_CLK_SEL | Controls input of clock fanout UT37. Low = SFP RX gets fanned out to WIBs. High = SOC_AUX_CLK (internally generated). |
+| 1 | 0x80020004 | [17] | mmcm_rst_n | Reset MMCM for SOC_AUX_CLK. Power-up: hold in reset. For test only. |
+| - | - | - | - | - |
+| 2 | 0x80020008 | [0] | EN_3V3 | Enable local 3.3V converter. Reg bit inverted. Power-up: OFF. |
+| - | - | - | - | - |
+| 3 | 0x8002000c | [0] | EN_2V5 | Enable local 2.5V converter. Reg bit inverted. Power-up: OFF. |
+| - | - | - | - | - |
+| 4 | 0x80020010 | [0] | VP12_EN0 | Enable WIB 0 power. Power-up: OFF. |
+| - | - | - | - | - |
+| 5 | 0x80020014 | [0] | VP12_EN1 | Enable WIB 1 power. Power-up: OFF. |
+| - | - | - | - | - |
+| 6 | 0x80020018 | [0] | VP12_EN2 | Enable WIB 2 power. Power-up: OFF. |
+| - | - | - | - | - |
+| 7 | 0x8002001c | [0] | VP12_EN3 | Enable WIB 3 power. Power-up: OFF. |
+| - | - | - | - | - |
+| 8 | 0x80020020 | [0] | VP12_EN4 | Enable WIB 4 power. Power-up: OFF. |
+| - | - | - | - | - |
+| 9 | 0x80020024 | [0] | VP12_EN5 | Enable WIB 5 power. Power-up: OFF. |
+| - | - | - | - | - |
+| 10 | 0x80020028 | [6:0] | vp12_sync_en[6:0] | Deprecated. (SYNC pin on all seven 12V converters. Requires resistor change in HW to work.) |
+| - | - | - | - | - |
+| 10 | 0x80020028 | [7] | lvsync_en | Deprecated. (SYNC pin on local 3.3V/2.5V converter. Requires resistor change in HW to work.)|
+| - | - | - | - | - |
+| 11 | 0x8002002c | [0] | xmc_jtag_en | Bit inverted. Low = all four buffers to control MCU JTAG interface are tri-stated so programming pod can be used. High = controlled by firmware. |
+| 11 | 0x8002002c | [4] | cpu_tms_out | Assert TMS. |
+| 11 | 0x8002002c | [5] | cpu_tck_out | Assert TCK. |
+| 11 | 0x8002002c | [6] | xmc_tdi_n | Assert TDI. |
+| 11 | 0x8002002c | [8] | xmc_reset_en | Active low reset to MCU. |
+| - | - | - | - | - |
+| 12 | 0x80020030 | [0] | SFP0_SPARE_LED | To be used as GbE link status controlled by SW. |
+| 12 | 0x80020030 | [1] | OVER_TEMP_LED | To be used as OR of all temp sensor alerts controlled by FPGA. |
+
+2. Status registers (R/O). 
+
+| reg. no. | AXI addr. | bit(s) | name | description |
+| ------ | ------ | ------ | ------ | ------ |
+| - | - | - | - | - |
+
+
 ## Footnotes
 1. This is done by creating an app template as in the [PetaLinux Yocto documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842475/PetaLinux+Yocto+Tips#PetaLinuxYoctoTips-CreatingApps(whichuseslibraries)inPetaLinuxProject)
 2. The Zynq GbE interface is on the PS side using the GEM controller. The software driver mode is defined through Petalinux using the system-user.dtsi device tree file, which sets it as `is-internal-pcspma`. For some reason, the Xilinx drivers do not automatically enable the GEM when it's in this mode, so the script writes the correct values to the [network_config](https://www.xilinx.com/htmldocs/registers/ug1087/ug1087-zynq-ultrascale-registers.html) register for GEM1. An alternate solution is to [change the driver code](https://github.com/DUNE-DAQ/dune-wib-firmware/blob/master/linux-2020.1/project-spec/meta-user/recipes-kernel/linux/linux-xlnx/macb-5.4.patch#L30) as was done on the WIB.
