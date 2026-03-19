@@ -183,8 +183,30 @@ At the root prompt, registers can be manually written using `poke [addr] [data]`
 
 | reg. no. | AXI addr. | bit(s) | name | description |
 | ------ | ------ | ------ | ------ | ------ |
+| 64 | 0x80020100 | [0] | SFP0_TX_FAULT | low = okay, high = fault detected |
+| 64 | 0x80020100 | [1] | SFP0_LOS | low = signal present, high = loss of signal |
+| 64 | 0x80020100 | [2] | SFP0_PRESENT | low = present, high = not present |
+| 64 | 0x80020100 | [8] | SFP1_TX_FAULT | low = okay, high = fault detected |
+| 64 | 0x80020100 | [9] | SFP1_LOS | low = signal present, high = loss of signal |
+| 64 | 0x80020100 | [10] | SFP1_PRESENT | low = present, high = not present |
+| 64 | 0x80020100 | [16] | SFP2_TX_FAULT | low = okay, high = fault detected |
+| 64 | 0x80020100 | [17] | SFP2_LOS | low = signal present, high = loss of signal |
+| 64 | 0x80020100 | [18] | SFP2_PRESENT | low = present, high = not present |
 | - | - | - | - | - |
-
+| 65 | 0x80020104 | [13:8] | BP_IO | Current status of priority encode lines from WIBs |
+| 65 | 0x80020104 | [18:16] | wib_rx_sel_in | Current status of priority encode lines from WIBs |
+| 65 | 0x80020104 | [27:24] | timing_stat | 4-bit status code from timing endpoint -- see Timing Integration document |
+| 65 | 0x80020104 | [28] | timing_lock | Timing status LED (high when timing_stat = 0x8) |
+| - | - | - | - | - |
+| 66 | 0x80020108 | [6:0] | VP_12_IV_ALERT | Low = alert. Bit [6] is local DC-DC converter, and bits [5:0] are WIBs 5-->0 respectively. |
+| 66 | 0x80020108 | [8] | VP2V5_ALERT | Low = alert. Local 2.5V DC-DC converter. |
+| 66 | 0x80020108 | [9] | VP3V3_ALERT | Low = alert. Local 2.5V DC-DC converter. |
+| 66 | 0x80020108 | [18:16] | OVER_TEMP | Low = alert. OR of temp sensor alerts. Bit [16] is OR of TU28, UT8, UT9, UT12. Bit [17] is OR of UT20, UT19, UT31, UT32. Bit [18] is currently unassigned. |
+| 66 | 0x80020108 | [24] | VP48_IV_ALERT | Low = alert. Main 48V input monitor. |
+| - | - | - | - | - |
+| 126 | 0x800201f8 | [0] | mmcm0_locked | Internal MMCM for "fake" timing clock -- for test only.|
+| - | - | - | - | - |
+| 127 | 0x800201fc | [31:0] | 0xdeadbeef | Test register|
 
 ## Footnotes
 1. This is done by creating an app template as in the [PetaLinux Yocto documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842475/PetaLinux+Yocto+Tips#PetaLinuxYoctoTips-CreatingApps(whichuseslibraries)inPetaLinuxProject)
