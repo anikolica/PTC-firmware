@@ -41,6 +41,7 @@
 v0.0 & 2025-11-21 & A. Nikolica & Initial draft \\
 v0.1 & 2025-12-03 & D. Drobner & Add JTAG in-situ programming \\
 v1.0 & 2025-12-03 & A. Nikolica & Add WEIC figure in last section \\
+v1.1 & 2026-03-26 & A. Nikolica & Corrections in dune-daq section \\
 \hline
 
 \end{tabularx}
@@ -372,19 +373,22 @@ Any bare PCBs rejected from the visual inspection process and placed in the box 
     \begin{enumerate}
         \item Run the following sequence of commands. \textbf{Note:} The \# symbol indicates an inline comment and is not part of the command sequence.
 \begin{verbatim}
+# the commands below need to be done every time the machine is rebooted
 bash # invoke bash to install
-cd /local_home
+cd [your setup directory]
 source /cvmfs/dunedaq.opensciencegrid.org/setup_dunedaq.sh
-setup_dbt dunedaq-v3.1.1 # up to here needs to be done every time
+setup_dbt dunedaq-v3.1.1
 
+# the commands below only need to be done once
 dbt-create -c -n N22-11-08 dune-daq-timing-dcsk # explicitly setup known 
                                                   working version
 cd dune-daq-timing-dcsk/sourcecode
 git clone https://github.com/DUNE-DAQ/timing.git
 cd timing
 git checkout tags/"nocdr_integration/b0"
-cd ..
- 
+cd ../../
+
+# The commands below need to be done every time the machine is rebooted
 source dbt-env.sh
 dbt-workarea-env # and also do these commands every time
 dbt-build
@@ -414,9 +418,11 @@ dbt-build
         \item Open Vivado on the Linux machine, and select Hardware Manager. The JTAG cable should be visible in the panel that appears. 
         \item Right click on the JTAG cable and select "Auto Connect". A Xilinx part number will appear -- this is the timing board's FPGA.
         \item Select "Program" and select the file downloaded in the previous step. Program the device.
-        \item Connect to the serial UART with \texttt{minicom}. The serial port will show up as /dev/ttyUSB[x] where x is probably 0 (if there are no other devices connected). The settings should be: 19,200 baud, 8 bits, no parity bits, 1 stop bit, no hardware flow control.
+        \item Connect to the serial UART with \texttt{minicom}. The serial port will show up as /dev/ttyUSB[x] where x is probably 0 (if there are no other devices connected -- you can use 
+        \texttt{sudo dmesg} to see what the last connected device was.) The settings should be: 19,200 baud, 8 bits, no parity bits, 1 stop bit, no hardware flow control. Use the key combo: Ctrl+A, then Z, and O to configure the setttings in \texttt{minicom}. Ctrl+A and X exits.
         \item \texttt{help} shows a list of commands. Confirm the serial port returns output.
-        \item \texttt{write} followed by \texttt{0xc0a8c810} on the following line will set the IP address as 192.168.200.16.
+        \item \texttt{write} and then Enter
+        \item followed by \texttt{0xc0a8c810} and Enter at the next prompt will set the IP address as 192.168.200.16.
         \item \texttt{ping} the board to confirm the setting took effect.
         \item The serial port can be disconnected at this point.
         \item Now at the Linux command prompt used above to setup \texttt{dune-daq}, issue the following sequence of commands. This will set up the timing board to send out a valid timing stream on its SFP.
