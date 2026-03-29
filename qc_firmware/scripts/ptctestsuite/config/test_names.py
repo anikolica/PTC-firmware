@@ -15,8 +15,40 @@ test_pretty_names = {
 def man_test(name: str, message: str, accepts_val: bool = False):
     return {"test_name": name, "test_message": message, "accepts_value": accepts_val}
 
+# these all get repeated so let's write a function to generate them, in case we
+# have to change anything
+def ripple_test(num: int):
+    return man_test(f'ripple{num}', f'RIPPLE_{num} Voltage Reading', True)
+
+def ripple_switch_freq(num: int):
+    return man_test(f'ripple{num}_switch_freq', f"RIPPLE_{num} Switching Frequency", True)
+
+def wib_led(num: int):
+    return man_test(f'wib{num}_led', f"WIB{num} Front Panel LED", False)
+
 manual_tests = [
-    man_test("example_manual", "Example manual test", True)
+    man_test("example_manual", "Example manual test", True),
+    man_test("bare_power", "Power consumption without SoM", True),
+    man_test("vp12_local", "VP12_LOCAL Voltage Reading", True),
+    man_test("local_led_12v", "VP12_LOCAL LED On/Off", False),
+    ripple_test(0),
+    ripple_switch_freq(0), 
+    wib_led(0),
+    ripple_test(1),
+    ripple_switch_freq(1), 
+    wib_led(1),
+    ripple_test(2),
+    ripple_switch_freq(2), 
+    wib_led(2),
+    ripple_test(3),
+    ripple_switch_freq(3), 
+    wib_led(3),
+    ripple_test(4),
+    ripple_switch_freq(4), 
+    wib_led(4),
+    ripple_test(5),
+    ripple_switch_freq(5), 
+    wib_led(5),
 ]
 
 test_sequence = [
