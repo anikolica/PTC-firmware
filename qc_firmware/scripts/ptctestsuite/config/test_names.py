@@ -51,6 +51,18 @@ manual_tests = [
     wib_led(5),
 ]
 
+# need to scan the enclustra QR  in between here to track the serial number
+
+manual_test_phase_2 = [
+    man_test("som_insertion", "Enclustra SoM Insertion Good? NOTE CONNECTOR KEYING", False),
+    man_test('12v_local_led_boot', "Is the 12V_LOCAL LED Illuminated?", False),
+    man_test('pg_led_boot', "Is the PG LED Illuminated?", False),
+    man_test('fpga_done_led_boot', "Is the FPGA_DONE LED Illuminated?", False),
+    # NOTE this test can be an automatic test
+    man_test('serial_connection', "Serial Connection Good?", False),
+    man_test('repeat_boots', "Repeat Bootup 5 times. Did it succeed each time?", False)
+]
+
 test_sequence = [
                     {"test_type": "dummy_test", "test_params": {}},
                     {"test_type": "dummy_test", "test_params": {"name": "test2"}}
