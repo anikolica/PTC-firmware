@@ -59,7 +59,7 @@ manual_test_phase_2 = [
     man_test('pg_led_boot', "Is the PG LED Illuminated?", False),
     man_test('fpga_done_led_boot', "Is the FPGA_DONE LED Illuminated?", False),
     # NOTE this test can be an automatic test
-    man_test('serial_connection', "Serial Connection Good?", False),
+    #man_test('serial_connection', "Serial Connection Good?", False),
     man_test('repeat_boots', "Repeat Bootup 5 times. Did it succeed each time?", False)
 ]
 
