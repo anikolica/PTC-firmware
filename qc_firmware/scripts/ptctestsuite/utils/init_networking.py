@@ -41,9 +41,9 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_ad
         await asyncio.sleep(sleep_time)
 
         # set correct bit to enable GbE
-        writer.write(f"poke 0xff0c0004 0x092e2c4a{line_end}".encode(encoding))
-        await writer.drain()
-        await asyncio.sleep(sleep_time)
+        #writer.write(f"poke 0xff0c0004 0x092e2c4a{line_end}".encode(encoding))
+        #await writer.drain()
+        #await asyncio.sleep(sleep_time)
 
         try:
             # again check to see if we are getting anything back
