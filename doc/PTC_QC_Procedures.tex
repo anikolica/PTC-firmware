@@ -42,6 +42,7 @@ v0.0 & 2025-11-21 & A. Nikolica & Initial draft \\
 v0.1 & 2025-12-03 & D. Drobner & Add JTAG in-situ programming \\
 v1.0 & 2025-12-03 & A. Nikolica & Add WEIC figure in last section \\
 v1.1 & 2026-03-26 & A. Nikolica & Corrections in dune-daq section \\
+v1.2 & 2026-04-01 & A. Nikolica & Clarifications in 4.2.2 and 4.4.5 for timing tests \\
 \hline
 
 \end{tabularx}
@@ -390,7 +391,7 @@ cd ../../
 
 # The commands below need to be done every time the machine is rebooted
 source dbt-env.sh
-dbt-workarea-env # and also do these commands every time
+dbt-workarea-env
 dbt-build
 \end{verbatim}
         \item Create the following file named \texttt{local.xml} inside the \texttt{ dune-daq-timing-dcsk} folder. \textbf{Note:} This only needs to be done once.
@@ -418,8 +419,8 @@ dbt-build
         \item Open Vivado on the Linux machine, and select Hardware Manager. The JTAG cable should be visible in the panel that appears. 
         \item Right click on the JTAG cable and select "Auto Connect". A Xilinx part number will appear -- this is the timing board's FPGA.
         \item Select "Program" and select the file downloaded in the previous step. Program the device.
-        \item Connect to the serial UART with \texttt{minicom}. The serial port will show up as /dev/ttyUSB[x] where x is probably 0 (if there are no other devices connected -- you can use 
-        \texttt{sudo dmesg} to see what the last connected device was.) The settings should be: 19,200 baud, 8 bits, no parity bits, 1 stop bit, no hardware flow control. Use the key combo: Ctrl+A, then Z, and O to configure the setttings in \texttt{minicom}. Ctrl+A and X exits.
+        \item Connect to the serial UART with \texttt{minicom -D /dev/ttyUSB[x]} where x is probably 0 if there are no other devices connected -- you can use 
+        \texttt{sudo dmesg} to see what the last connected device was. The settings should be: 19,200 baud, 8 bits, no parity bits, 1 stop bit, no hardware flow control. Use the key combo: Ctrl+A, then Z, and O to configure the setttings in \texttt{minicom}. Ctrl+A and X exits.
         \item \texttt{help} shows a list of commands. Confirm the serial port returns output.
         \item \texttt{write} and then Enter
         \item followed by \texttt{0xc0a8c810} and Enter at the next prompt will set the IP address as 192.168.200.16.
@@ -649,7 +650,7 @@ Note that the timing system was set up in a previous step, and should be in a st
     \begin{enumerate}
         \item \textbf{RX Test}. Run the following sequence of commands:
         \begin{enumerate}
-            \item Timing lock
+            \item Timing lock on PTC
 \begin{verbatim}
 root@ptc:~# python3 setup_timing.py
 root@ptc:~# poke 0x80020004 0x00010400
@@ -662,6 +663,14 @@ root@ptc:~# peek 0x80020104
         \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
             \item Front panel LINK LED. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
             \item Front panel RX LED. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
+            \item Timing lock on QC board (\texttt{\textcolor{red}{NOTE:}} Only for ch0; add steps for ch1-5.)
+\begin{verbatim}
+root@qc:~# poke 0x80020004 0x00000400
+root@qc:~# poke 0x80020004 0x00000000
+root@qc:~# peek 0x80020104
+0x18000000 # endpoint out of reset, and showing 0x8 status (good)
+\end{verbatim}
+        \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
         \end{enumerate}
         \item \textbf{TX Test}
             \begin{enumerate}
