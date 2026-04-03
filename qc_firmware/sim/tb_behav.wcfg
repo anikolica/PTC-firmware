@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="pdts_clock_defs" />
+            <top_module name="pdts_code8b10bpkg" />
+            <top_module name="pdts_defs" />
+            <top_module name="pdts_ep_defs" />
+            <top_module name="tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="75.366666 us"></ZoomStartTime>
+      <ZoomEndTime time="86.336667 us"></ZoomEndTime>
+      <Cursor1Time time="78.450000 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="136"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="35" />
+   <wvobject type="logic" fp_name="/tb/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/reg_rw_in">
+      <obj_property name="ElementShortName">reg_rw_in[2047:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_rw_in[2047:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/bp_io_en">
+      <obj_property name="ElementShortName">bp_io_en</obj_property>
+      <obj_property name="ObjectShortName">bp_io_en</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/crate_addr_en">
+      <obj_property name="ElementShortName">crate_addr_en</obj_property>
+      <obj_property name="ObjectShortName">crate_addr_en</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/top/crate_addr_out">
+      <obj_property name="ElementShortName">crate_addr_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">crate_addr_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/top/wib_rx_sel_out">
+      <obj_property name="ElementShortName">wib_rx_sel_out[2:0]</obj_property>
+      <obj_property name="ObjectShortName">wib_rx_sel_out[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/wib_pe_soc_en">
+      <obj_property name="ElementShortName">wib_pe_soc_en</obj_property>
+      <obj_property name="ObjectShortName">wib_pe_soc_en</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/sfp2_tx_en">
+      <obj_property name="ElementShortName">sfp2_tx_en</obj_property>
+      <obj_property name="ObjectShortName">sfp2_tx_en</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/sfp2_tx_en_reg">
+      <obj_property name="ElementShortName">sfp2_tx_en_reg</obj_property>
+      <obj_property name="ObjectShortName">sfp2_tx_en_reg</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/sfp2_tx_mux_ovr">
+      <obj_property name="ElementShortName">sfp2_tx_mux_ovr</obj_property>
+      <obj_property name="ObjectShortName">sfp2_tx_mux_ovr</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/ep_srst">
+      <obj_property name="ElementShortName">ep_srst</obj_property>
+      <obj_property name="ObjectShortName">ep_srst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/ep_clk_sel">
+      <obj_property name="ElementShortName">ep_clk_sel</obj_property>
+      <obj_property name="ObjectShortName">ep_clk_sel</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/mmcm0_rst_n">
+      <obj_property name="ElementShortName">mmcm0_rst_n</obj_property>
+      <obj_property name="ObjectShortName">mmcm0_rst_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/EN_3V3">
+      <obj_property name="ElementShortName">EN_3V3</obj_property>
+      <obj_property name="ObjectShortName">EN_3V3</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/EN_2V5">
+      <obj_property name="ElementShortName">EN_2V5</obj_property>
+      <obj_property name="ObjectShortName">EN_2V5</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/top/vp12_sync_en">
+      <obj_property name="ElementShortName">vp12_sync_en[6:0]</obj_property>
+      <obj_property name="ObjectShortName">vp12_sync_en[6:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/lvsync_en">
+      <obj_property name="ElementShortName">lvsync_en</obj_property>
+      <obj_property name="ObjectShortName">lvsync_en</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/xmc_jtag_en">
+      <obj_property name="ElementShortName">xmc_jtag_en</obj_property>
+      <obj_property name="ObjectShortName">xmc_jtag_en</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/xmc_reset_n">
+      <obj_property name="ElementShortName">xmc_reset_n</obj_property>
+      <obj_property name="ObjectShortName">xmc_reset_n</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group2191">
+      <obj_property name="label">PWM0</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb/PWM0">
+         <obj_property name="ElementShortName">PWM0</obj_property>
+         <obj_property name="ObjectShortName">PWM0</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_EN0">
+         <obj_property name="ElementShortName">PWM_EN0</obj_property>
+         <obj_property name="ObjectShortName">PWM_EN0</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_RST0">
+         <obj_property name="ElementShortName">PWM_RST0</obj_property>
+         <obj_property name="ObjectShortName">PWM_RST0</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_INC0">
+         <obj_property name="ElementShortName">PWM_INC0</obj_property>
+         <obj_property name="ObjectShortName">PWM_INC0</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_DEC0">
+         <obj_property name="ElementShortName">PWM_DEC0</obj_property>
+         <obj_property name="ObjectShortName">PWM_DEC0</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DUTY0">
+         <obj_property name="ElementShortName">PWM_DUTY0[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DUTY0[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DIV0">
+         <obj_property name="ElementShortName">PWM_DIV0[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DIV0[2:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2192">
+      <obj_property name="label">PWM1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb/PWM1">
+         <obj_property name="ElementShortName">PWM1</obj_property>
+         <obj_property name="ObjectShortName">PWM1</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_EN1">
+         <obj_property name="ElementShortName">PWM_EN1</obj_property>
+         <obj_property name="ObjectShortName">PWM_EN1</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_RST1">
+         <obj_property name="ElementShortName">PWM_RST1</obj_property>
+         <obj_property name="ObjectShortName">PWM_RST1</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_INC1">
+         <obj_property name="ElementShortName">PWM_INC1</obj_property>
+         <obj_property name="ObjectShortName">PWM_INC1</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_DEC1">
+         <obj_property name="ElementShortName">PWM_DEC1</obj_property>
+         <obj_property name="ObjectShortName">PWM_DEC1</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DUTY1">
+         <obj_property name="ElementShortName">PWM_DUTY1[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DUTY1[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DIV1">
+         <obj_property name="ElementShortName">PWM_DIV1[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DIV1[2:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2193">
+      <obj_property name="label">PWM2</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb/PWM2">
+         <obj_property name="ElementShortName">PWM2</obj_property>
+         <obj_property name="ObjectShortName">PWM2</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_EN2">
+         <obj_property name="ElementShortName">PWM_EN2</obj_property>
+         <obj_property name="ObjectShortName">PWM_EN2</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_RST2">
+         <obj_property name="ElementShortName">PWM_RST2</obj_property>
+         <obj_property name="ObjectShortName">PWM_RST2</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_INC2">
+         <obj_property name="ElementShortName">PWM_INC2</obj_property>
+         <obj_property name="ObjectShortName">PWM_INC2</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_DEC2">
+         <obj_property name="ElementShortName">PWM_DEC2</obj_property>
+         <obj_property name="ObjectShortName">PWM_DEC2</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DUTY2">
+         <obj_property name="ElementShortName">PWM_DUTY2[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DUTY2[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DIV2">
+         <obj_property name="ElementShortName">PWM_DIV2[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DIV2[2:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2194">
+      <obj_property name="label">PWM3</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb/PWM3">
+         <obj_property name="ElementShortName">PWM3</obj_property>
+         <obj_property name="ObjectShortName">PWM3</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_EN3">
+         <obj_property name="ElementShortName">PWM_EN3</obj_property>
+         <obj_property name="ObjectShortName">PWM_EN3</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_RST3">
+         <obj_property name="ElementShortName">PWM_RST3</obj_property>
+         <obj_property name="ObjectShortName">PWM_RST3</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_INC3">
+         <obj_property name="ElementShortName">PWM_INC3</obj_property>
+         <obj_property name="ObjectShortName">PWM_INC3</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_DEC3">
+         <obj_property name="ElementShortName">PWM_DEC3</obj_property>
+         <obj_property name="ObjectShortName">PWM_DEC3</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DUTY3">
+         <obj_property name="ElementShortName">PWM_DUTY3[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DUTY3[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DIV3">
+         <obj_property name="ElementShortName">PWM_DIV3[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DIV3[2:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2195">
+      <obj_property name="label">PWM4</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb/PWM4">
+         <obj_property name="ElementShortName">PWM4</obj_property>
+         <obj_property name="ObjectShortName">PWM4</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_EN4">
+         <obj_property name="ElementShortName">PWM_EN4</obj_property>
+         <obj_property name="ObjectShortName">PWM_EN4</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_RST4">
+         <obj_property name="ElementShortName">PWM_RST4</obj_property>
+         <obj_property name="ObjectShortName">PWM_RST4</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_INC4">
+         <obj_property name="ElementShortName">PWM_INC4</obj_property>
+         <obj_property name="ObjectShortName">PWM_INC4</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_DEC4">
+         <obj_property name="ElementShortName">PWM_DEC4</obj_property>
+         <obj_property name="ObjectShortName">PWM_DEC4</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DUTY4">
+         <obj_property name="ElementShortName">PWM_DUTY4[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DUTY4[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DIV4">
+         <obj_property name="ElementShortName">PWM_DIV4[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DIV4[2:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2196">
+      <obj_property name="label">PWM5</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb/PWM5">
+         <obj_property name="ElementShortName">PWM5</obj_property>
+         <obj_property name="ObjectShortName">PWM5</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_EN5">
+         <obj_property name="ElementShortName">PWM_EN5</obj_property>
+         <obj_property name="ObjectShortName">PWM_EN5</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_RST5">
+         <obj_property name="ElementShortName">PWM_RST5</obj_property>
+         <obj_property name="ObjectShortName">PWM_RST5</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_INC5">
+         <obj_property name="ElementShortName">PWM_INC5</obj_property>
+         <obj_property name="ObjectShortName">PWM_INC5</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb/top/PWM_DEC5">
+         <obj_property name="ElementShortName">PWM_DEC5</obj_property>
+         <obj_property name="ObjectShortName">PWM_DEC5</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DUTY5">
+         <obj_property name="ElementShortName">PWM_DUTY5[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DUTY5[2:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb/top/PWM_DIV5">
+         <obj_property name="ElementShortName">PWM_DIV5[2:0]</obj_property>
+         <obj_property name="ObjectShortName">PWM_DIV5[2:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="divider2197" type="divider">
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/top/reg_ro_out">
+      <obj_property name="ElementShortName">reg_ro_out[2047:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_ro_out[2047:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/top/wib_rx_sel_in">
+      <obj_property name="ElementShortName">wib_rx_sel_in[2:0]</obj_property>
+      <obj_property name="ObjectShortName">wib_rx_sel_in[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/top/timing_stat">
+      <obj_property name="ElementShortName">timing_stat[7:0]</obj_property>
+      <obj_property name="ObjectShortName">timing_stat[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/timing_lock">
+      <obj_property name="ElementShortName">timing_lock</obj_property>
+      <obj_property name="ObjectShortName">timing_lock</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/top/VP12_IV_ALERT">
+      <obj_property name="ElementShortName">VP12_IV_ALERT[6:0]</obj_property>
+      <obj_property name="ObjectShortName">VP12_IV_ALERT[6:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/VP2V5_ALERT">
+      <obj_property name="ElementShortName">VP2V5_ALERT</obj_property>
+      <obj_property name="ObjectShortName">VP2V5_ALERT</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/VP3V3_ALERT">
+      <obj_property name="ElementShortName">VP3V3_ALERT</obj_property>
+      <obj_property name="ObjectShortName">VP3V3_ALERT</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/VP48_IV_ALERT">
+      <obj_property name="ElementShortName">VP48_IV_ALERT</obj_property>
+      <obj_property name="ObjectShortName">VP48_IV_ALERT</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/top/mmcm0_locked">
+      <obj_property name="ElementShortName">mmcm0_locked</obj_property>
+      <obj_property name="ObjectShortName">mmcm0_locked</obj_property>
+   </wvobject>
+</wave_config>

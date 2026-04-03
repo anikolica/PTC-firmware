@@ -91,6 +91,10 @@ module top_RTL(
     
     output [64*32-1:0]  reg_ro_out          
     );
+
+    // Default Boot Values for JTAG lines
+    localparam BOOT_TMS = 1'b1;
+    localparam BOOT_TCK = 1'b0;
     
     // *** Declarations ***
     wire [6:0]      vp12_sync_en;
@@ -110,8 +114,19 @@ module top_RTL(
     wire [2:0]      wib_rx_sel_out;
     wire [2:0]      wib_rx_sel_in;
     wire [7:0]      crate_addr_out;
+    wire cpu_tms_out;
+    wire cpu_tck_out;
+    wire xmc_tdo_n;
+    wire xmc_tdi_n;
+    // Control flag that goes high after reset release
+    wire jtag_runtime_en = xmc_reset_n;
+
+    // select boot defaults or runtime control for JTAG lines
+    wire tms_drive_val = jtag_runtime_en ? cpu_tms_out : BOOT_TMS;
+    wire tck_drive_val = jtag_runtime_en ? cpu_tck_out : BOOT_TCK;
     
     reg             timing_lock;
+
     
     // *** R/W Register map ***
     // Reg 0, I2C and level translator control
@@ -144,6 +159,10 @@ module top_RTL(
     // Reg 11, XMC control
     assign xmc_jtag_en      = reg_rw_in[11 * 32 +  0];
     assign xmc_reset_n      = reg_rw_in[11 * 32 +  8];
+    assign cpu_tms_out      = reg_rw_in[11 * 32 +  4];
+    assign cpu_tck_out      = reg_rw_in[11 * 32 +  5];
+    assign xmc_tdi_n        = reg_rw_in[11 * 32 +  6];
+    //assign xmc_tdo_n        = XMC_JTAG_TDO;
     // Reg 12, LED TEST
     assign SFP0_SPARE_LED   = reg_rw_in[11 * 32 +  0]; // wire to PS for GbE indicator?
     assign OVER_TEMP_LED    = reg_rw_in[11 * 32 +  1];
@@ -154,6 +173,8 @@ module top_RTL(
     // *************
     
     // *** RO Register map ***
+    // Reg 11, XMC Control
+    assign reg_ro_out[11 * 32 +  16] = xmc_tdo_n;
     // Reg 64, SFP status
     assign reg_ro_out [ 0 * 32 +  0] = SFP0_TX_FAULT; // low = no fault
     assign reg_ro_out [ 0 * 32 +  1] = SFP0_LOS;      // low = no loss of signal
@@ -178,6 +199,9 @@ module top_RTL(
     //
     assign reg_ro_out [ 62 * 32 +  0] = mmcm0_locked; // TEST
     assign reg_ro_out [ 63 * 32 +  31 : 63 * 32 +  0] = 32'hdeadbeef; // TEST
+
+
+
     
     // *** Buffers ***
     // Keep SYNC lines to LTM8064 tri-stated if not using (requires resistor stuffing option)
@@ -194,10 +218,11 @@ module top_RTL(
     
     // Keep XMC4300 JTAG interface tri-stated to use on-board 10-pin connector
     IOBUF rst_buf (.T(~xmc_jtag_en), .I(xmc_reset_n), .O(), .IO(XMC_JTAG_RST)); // Actually PORST_N
-    IOBUF tms_buf (.T(~xmc_jtag_en), .I(1'b1), .O(), .IO(XMC_JTAG_TMS)); // controls boot mode
-    IOBUF tck_buf (.T(~xmc_jtag_en), .I(1'b0), .O(), .IO(XMC_JTAG_TCK)); // controls boot mode
-    IOBUF tdo_buf (.T(~xmc_jtag_en), .I(), .O(    ), .IO(XMC_JTAG_TDO)); // FIXME: wire Output to code block
-    IOBUF tdi_buf (.T(~xmc_jtag_en), .I(1'b0), .O(), .IO(XMC_JTAG_TDI)); // FIXME: wire Input to code block
+    IOBUF tms_buf (.T(~xmc_jtag_en), .I(tms_drive_val), .O(), .IO(XMC_JTAG_TMS)); // controls boot mode
+    IOBUF tck_buf (.T(~xmc_jtag_en), .I(tck_drive_val), .O(), .IO(XMC_JTAG_TCK)); // controls boot mode
+    // IOBUF tdo_buf (.T(~xmc_jtag_en), .I(), .O(xmc_tdo_n), .IO(XMC_JTAG_TDO)); // FIXME: wire Output to code block
+    IOBUF tdi_buf (.T(~xmc_jtag_en), .I(xmc_tdi_n), .O(), .IO(XMC_JTAG_TDI)); // FIXME: wire Input to code block
+    assign xmc_tdo_n        = XMC_JTAG_TDO;
     
     // WIB priority encoder select
     // tri-state = TXB0104 controls MUX (default)

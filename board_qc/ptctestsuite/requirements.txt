@@ -1,0 +1,9 @@
+pythonping
+asyncssh
+loguru
+prompt_toolkit
+PyYAML
+websockets
+asyncio
+pyserial-asyncio
+httpx
