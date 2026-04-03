@@ -1,1 +1,0 @@
-from ptctestclient.comm.send_result import send_test_result
