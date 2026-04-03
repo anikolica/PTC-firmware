@@ -26,7 +26,7 @@ async def init_ptc(serial_port="/dev/ttyUSB0", baudrate=115200, timeout=1, ip_ad
             # read some data to see if we are getting anything back
             data = await asyncio.wait_for(reader.read(1024), timeout=0.5)
         except asyncio.TimeoutError:
-            print("No response received.")
+            lg.error("No response received.")
             return False
 
         # log into the ptc

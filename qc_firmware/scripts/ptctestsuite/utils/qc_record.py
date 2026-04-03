@@ -18,6 +18,7 @@ class qc_record:
     tester_name: str
     test_status: dict = field(default_factory=dict)
     tester_notes: str = ""
+    # I'm assuming the testing will be done here at Penn - but we can reconfigure if necessary
     test_location: str = "University of Pennsylvania"
     test_datetime: datetime = field(default_factory=datetime.now)
 
