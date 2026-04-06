@@ -192,6 +192,9 @@ module top_RTL(
     assign vp12_sync_en     = reg_rw_in[10 * 32 +  6 : 10 * 32];
     assign lvsync_en        = reg_rw_in[10 * 32 +  7];
     
+    // Reg 11 - timing MUX?DEMUX
+    assign MUX_SEL          = reg_rw_in[11 * 32 +  5 : 11 * 32];
+    
     // PWM register mapping
     //Reg 14
     assign PWM_EN0           = reg_rw_in[14 * 32 +  9];
@@ -322,18 +325,16 @@ module top_RTL(
     .y5(SYS_CMD_P5)
     );
     
-    //BP_IO_DEMUX
-    demux_1_8 bp_io_demux(
-    .sel(MUX_SEL),
-    .i(BP_IO_ENDPOINT),
-    .y0(BP_IO[0]),
-    .y1(BP_IO[1]),
-    .y2(BP_IO[2]),
-    .y3(BP_IO[3]),
-    .y4(BP_IO[4]),
-    .y5(BP_IO[5])
-    );
-    
+    // BP_IO_DEMUX 
+    // Priority encode lines are active high
+    reg [5:0] BP_IO_reg = 6'b000000;
+    always @(*) 
+    begin
+        BP_IO_reg = 6'b111111;
+        if (MUX_SEL < 6)
+            BP_IO_reg[MUX_SEL] = BP_IO_ENDPOINT;
+    end
+    assign BP_IO = BP_IO_reg;
     
     //List of PWM Modules 0-5
     PWM pwm_inst0
