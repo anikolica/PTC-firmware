@@ -227,7 +227,8 @@ module top_RTL(
     // WIB priority encoder select
     // tri-state = TXB0104 controls MUX (default)
     // low = SoC controls MUX through WIB_RX_SEL lines (do not drive high!)
-    IOBUF pesel_buf (.T(~wib_pe_soc_en), .I(1'b0), .O(), .IO(WIB_PE_SEL));
+    //IOBUF pesel_buf (.T(~wib_pe_soc_en), .I(1'b0), .O(), .IO(WIB_PE_SEL));
+    assign WIB_PE_SEL = wib_pe_soc_en;
     IOBUF wib_rx_buf0 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[0]), .O(wib_rx_sel_in[0]), .IO(WIB_RX_SEL[0]));
     IOBUF wib_rx_buf1 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[1]), .O(wib_rx_sel_in[1]), .IO(WIB_RX_SEL[1]));
     IOBUF wib_rx_buf2 (.T(~wib_pe_soc_en), .I(wib_rx_sel_out[2]), .O(wib_rx_sel_in[2]), .IO(WIB_RX_SEL[2]));

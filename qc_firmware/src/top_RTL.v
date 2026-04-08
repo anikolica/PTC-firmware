@@ -195,6 +195,9 @@ module top_RTL(
     // Reg 11 - timing MUX?DEMUX
     assign MUX_SEL          = reg_rw_in[11 * 32 +  5 : 11 * 32];
     
+    // Reg 12 - override BP_IO priority encode lines (test only)
+    assign BP_OVR           = reg_rw_in[12 * 32 +  5 : 12 * 32];
+    
     // PWM register mapping
     //Reg 14
     assign PWM_EN0           = reg_rw_in[14 * 32 +  9];
@@ -334,7 +337,7 @@ module top_RTL(
         if (MUX_SEL < 6)
             BP_IO_reg[MUX_SEL] = BP_IO_ENDPOINT;
     end
-    assign BP_IO = BP_IO_reg;
+    assign BP_IO = BP_IO_reg & ~BP_OVR;
     
     //List of PWM Modules 0-5
     PWM pwm_inst0
