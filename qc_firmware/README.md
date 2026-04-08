@@ -54,8 +54,10 @@ Because the FPGA runs petalinux, you can use peek and poke to view its registers
 | 10              | [6:0]   | vp12_sync_en    |                                                          |            |         
 | 10              | [7]     | lvsync_en       |                                                          |            |         
 |                 |         |                 |                                                          |            |         
-| 11              | [5:0]   | MUX_SEL         | Select to U14   clock MUX and internal BP_IO DEMUX       |            |         
-|                 |         |                 |                                                          |            |         
+| 11              | [5:0]   | MUX_SEL         | Select to U14 clock MUX and internal BP_IO DEMUX         |            |         
+|                 |         |                 |                                                          |            |
+| 12              | [5:0]   | BP_OVR          | Overrides behavior of BP_IO, e.g. BP_OVR[1]=1 pulls down |            |         
+|                 |         |                 |                                                          |            | 
 | 14              | [9]     | PWM_EN0         | Allows the PWM module to produce an output               | enable     |         
 | 14              | [8]     | PWM_RST0        | Sets the duty cycle to what is set in bits 5:3           | rst        |         
 | 14              | [7]     | PWM_INC0        | Increases the duty cycle by 12.5%                        | inc        |         
