@@ -26,6 +26,8 @@ inherit pkgconfig
 
 EXTRA_OECONF = "--enable-ptc"
 
+do_configure[network] = "1"
+
 
 do_configure:prepend() {
     # generate configure + jimtcl files
