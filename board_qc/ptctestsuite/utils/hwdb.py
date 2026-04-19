@@ -1,11 +1,12 @@
 import asyncio
 import httpx
+import aiofiles
 
 from pathlib import Path
 
 from ptctestsuite.utils.qc_record import qc_record
 from ptctestsuite.utils.qc_result import qc_result
-from ptctestsuite.config.parameters import ptc_part_type_id, bearer_token_path, dune_hwdb_api_path
+from ptctestsuite.config.parameters import ptc_part_type_id, bearer_token_path, dune_hwdb_api_path, local_cache_file
 
 # rolling my own implementation for the HWDB here, since I see no need to pull in the entire library
 # for what we need to do
@@ -19,7 +20,10 @@ with open(Path(bearer_token_path)) as bt:
 request_header = {"Authorization": f"Bearer {bearer_token}"}
 
 # TODO take qc result or serial?
-# or is hwdb indexed differently
+# we are NOT doing this - afaik the HWDB is structured in a way that makes this
+# very expensive. We will store locally, and can spin up a REDIS instance in
+# case we have multiple testers
+"""
 async def check_item_exists(item: qc_record) -> dict:
     # For this one, it looks like I have to get a list of hwitems matching the PTC Component type ID, parse the datasheet
     # and then check if an item with the serial already exists
@@ -38,6 +42,15 @@ async def check_item_exists(item: qc_record) -> dict:
 
 
     return dict() 
+"""
+
+async def check_item_exists(item: qc_record) -> bool:
+    serial_number = item.serial_number
+    async with aiofiles.open(Path(local_cache_file), 'r') as f:
+        existing_boards = [l.strip() async for l in f]
+    if serial_number in existing_boards:
+        return True
+    return False
 
 def create_item(item: qc_record) -> dict:
     # will return response from REST api
