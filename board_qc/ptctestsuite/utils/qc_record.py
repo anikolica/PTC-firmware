@@ -44,4 +44,4 @@ class qc_record:
         dd['test_time'] = f"{dd['test_datetime'].strftime('%H:%M:%S')} {time.tzname[0]}"
         dd.pop('test_datetime')
         #return yaml.dump(dd, sort_keys=False)
-        return json.dumps(dd, sort_keys=False)
+        return dd

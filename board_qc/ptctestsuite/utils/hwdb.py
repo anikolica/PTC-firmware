@@ -92,10 +92,9 @@ async def create_hwdb_item(item: qc_record) -> dict:
         'component_type': {"part_type_id": ptc_part_type_id},
         'specifications': {'DATA': {}}
     }
-    print(req_payload)
     ah = await auth_header()
     async with httpx.AsyncClient() as client:
-        print("Making Request")
+        lg.info(f'Creating HWDB entry for board {item.serial_number}')
         resp = await client.post(p, json=req_payload, headers=ah)
 
     if resp.status_code == httpx.codes.OK:
@@ -110,16 +109,32 @@ async def create_hwdb_item(item: qc_record) -> dict:
 
 async def upload_test_result(item: qc_record, part_id: str) -> dict:
     p = f"{dune_hwdb_api_path}/components/{part_id}/tests"
+
+    # TODO get Martin to update the HWDB keys
+    test_res = item.gen_hwdb_datasheet()
+    test_res['Test Date'] = test_res['test_date']
+    test_res['Test Time'] = test_res['test_time']
+    test_res.pop('test_date')
+    test_res.pop('test_time')
+    test_res['Operator Name'] = test_res['tester_name']
+    test_res.pop('tester_name')
+    test_res['Test Location'] = 'University of Pennsylvania'
+    test_res.pop('test_location')
+    test_res.pop('tester_notes')
+
     req_payload = {
         'comments': item.tester_notes,
-        'test_data': item.gen_hwdb_datasheet(),
-        'test_type': ptc_qc_test_id
+        #'test_data': {'': str(item.gen_hwdb_datasheet())},
+        #'test_data': item.gen_hwdb_datasheet(),
+        'test_data': test_res,
+        'test_type': 'QC Test'
     }
     lg.info(f"Posting test result for board {item.serial_number} to HWDB")
 
     ah = await auth_header()
     async with httpx.AsyncClient() as client:
-        resp = await client.post(p, data=req_payload, headers=ah)
+        resp = await client.post(p, json=req_payload, headers=ah)
+    #print(resp.json())
     if resp.status_code == httpx.codes.OK:
         lg.info(f"Successfully posted test results for board {item.serial_number}")
         return resp.json()
