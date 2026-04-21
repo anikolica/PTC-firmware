@@ -143,7 +143,20 @@ async def upload_test_result(item: qc_record, part_id: str) -> dict:
         return dict()
 
 
-def upload_ptc_image(part_id: str, image: Buffer) -> dict:
-    # going to handle image capture separately, want to isolate HWDB upload here
-    # will return response from REST api
-    return dict()
+async def upload_ptc_image(part_id: str, image: Buffer) -> dict:
+    p = f"{dune_hwdb_api_path}/components/{part_id}/images"
+    data = {'image': ('boardimage.png', image, 'application/png')}
+    json_payload = {"comments": "Board Image"}
+
+    ah = await auth_header()
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(p, headers=ah, data=json_payload, files=data)
+    
+    print(resp)
+
+    if resp.status_code == httpx.codes.OK:
+        lg.info(f"Successfully uploaded image for part {part_id}")
+        return resp.json()
+    else:
+        lg.critical(f"Failed to upload image for part {part_id}!")
+        return dict()
