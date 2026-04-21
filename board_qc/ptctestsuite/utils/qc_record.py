@@ -2,6 +2,7 @@ from dataclasses import dataclass, asdict, field
 from datetime import datetime
 from enum import Enum
 import yaml
+import json
 import time
 
 # this may be unnecessary. Need to check how the HWDB REST API works
@@ -42,4 +43,5 @@ class qc_record:
         dd['test_date'] = dd['test_datetime'].strftime("%Y-%m-%d")
         dd['test_time'] = f"{dd['test_datetime'].strftime('%H:%M:%S')} {time.tzname[0]}"
         dd.pop('test_datetime')
-        return yaml.dump(dd, sort_keys=False)
+        #return yaml.dump(dd, sort_keys=False)
+        return json.dumps(dd, sort_keys=False)
