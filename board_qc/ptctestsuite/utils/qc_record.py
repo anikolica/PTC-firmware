@@ -15,7 +15,7 @@ class hwdb_record:
 
 @dataclass
 class qc_record:
-    serial_number: str
+    #serial_number: str
     tester_name: str
     test_status: dict = field(default_factory=dict)
     tester_notes: str = ""

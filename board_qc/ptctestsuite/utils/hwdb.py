@@ -162,7 +162,7 @@ async def upload_test_result(item: qc_record, part_id: str) -> dict:
 
 async def upload_ptc_image(part_id: str, image: Buffer) -> dict:
     p = f"{dune_hwdb_api_path}/components/{part_id}/images"
-    data = {'image': ('boardimage.png', image, 'application/png')}
+    data = {'image': (f'boardimage-{part_id}.png', image, 'application/png')}
     json_payload = {"comments": "Board Image"}
 
     ah = await auth_header()

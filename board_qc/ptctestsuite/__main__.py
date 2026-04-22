@@ -12,6 +12,7 @@ from ptctestsuite.utils import qc_result, qc_record, init_ptc, start_client, asy
 from websockets.asyncio.client import connect
 from ptctestsuite.config import manual_tests, test_sequence
 from ptctestsuite.utils.hwdb import upload_ptc_image, upload_test_result, create_hwdb_item, renew_token
+from ptctestsuite.utils.image_capture import get_board_image
 
 from argparse import ArgumentParser
 
@@ -54,7 +55,7 @@ async def run_ptc_test():
     ptc_ip = "localhost" if args.debug else parameters.ptc_ip
     
     session = ptk.PromptSession()
-    ptc_serial = await session.prompt_async("PTC Serial Number: ")
+    # ptc_serial = await session.prompt_async("PTC Serial Number: ")
 
     # try to init the PTC on the default serial port
     net_status = await init_ptc(debug_run=args.debug)
@@ -78,8 +79,8 @@ async def run_ptc_test():
             client_task.cancel()
    
     
-    q = qc_record(ptc_serial, tester_name)
-    lg.info(f"Starting new PTC Test Session. PTC Serial is {ptc_serial}")
+    q = qc_record(tester_name)
+    lg.info(f"Starting new PTC Test Session.")
     # do the manual tests here
     async with connect(f"ws://{ptc_ip}:{parameters.ws_port}") as ws:
         for t in test_sequence:
@@ -113,9 +114,12 @@ async def run_ptc_test():
         await client_task
     except asyncio.CancelledError:
         pass
-    # for now, print out datasheet
+    # we will take the HWDB entry number as the source for serial - no point in
+    # using two separate things to track a board
     r = await create_hwdb_item(q)
     await upload_test_result(q, r['part_id'])
+    # now, image capture
+    #await get_board_image()
 
 async def async_entry():
     test_again = True
