@@ -11,10 +11,18 @@ from ptctestsuite.ptctests import dummy_test
 from ptctestsuite.utils import qc_result, qc_record, init_ptc, start_client, async_yesno, manual_test
 from websockets.asyncio.client import connect
 from ptctestsuite.config import manual_tests, test_sequence
+from ptctestsuite.utils.hwdb import upload_ptc_image, upload_test_result, create_hwdb_item, renew_token
 
 from argparse import ArgumentParser
 
 from ptctestsuite.config import parameters
+
+renewal_needed = asyncio.Event()
+
+async def token_renew_signal():
+    while True:
+        await asyncio.sleep(parameters.token_renewal_interval)
+        renewal_needed.set()
 
 parser = ArgumentParser()
 parser.add_argument('--debug', action='store_true')
@@ -33,8 +41,16 @@ tester_name = ptk.prompt("Tester Name: ")
 # direct to HWDB, or store them and then upload after verification
 test_runs = []
 
+# always renew the to on launch
+renewal_needed.set()
+
 async def run_ptc_test():
     global tester_name, test_sequence 
+
+    if renewal_needed.is_set():
+        await renew_token()
+        renewal_needed.clear()
+        
     ptc_ip = "localhost" if args.debug else parameters.ptc_ip
     
     session = ptk.PromptSession()
@@ -98,10 +114,17 @@ async def run_ptc_test():
     except asyncio.CancelledError:
         pass
     # for now, print out datasheet
-    print(q.gen_hwdb_datasheet())
+    r = await create_hwdb_item(q)
+    await upload_test_result(q, r['part_id'])
+
+async def async_entry():
+    test_again = True
+    renewal_task = asyncio.create_task(token_renew_signal())
+    while(test_again):
+        await run_ptc_test()
+        resp = input("Do you want to run another test? (y/n)")
+        test_again = resp.lower() in ('y', 'yes')
+    renewal_task.cancel()
 
 if __name__ == "__main__":
-    test_again = True
-    while(test_again):
-        asyncio.run(run_ptc_test())
-        test_again = bool(confirm("Do you want to run another test?"))
+    asyncio.run(async_entry()) 

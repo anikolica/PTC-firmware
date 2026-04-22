@@ -8,7 +8,7 @@ from loguru import logger as lg
 
 from ptctestsuite.utils.qc_record import qc_record
 from ptctestsuite.utils.qc_result import qc_result
-from ptctestsuite.config.parameters import ptc_part_type_id, ptc_qc_test_id, bearer_token_path, dune_hwdb_api_path, local_cache_file
+from ptctestsuite.config.parameters import ptc_part_type_id, ptc_qc_test_id, bearer_token_path, dune_hwdb_api_path, local_cache_file, token_renewal_interval
 from collections.abc import Buffer
 
 from datetime import datetime
@@ -50,6 +50,23 @@ async def check_item_exists(item: qc_record) -> dict:
 
     return dict() 
 """
+
+
+async def renew_token():
+    lg.info('Renewing HWDB Token')
+    process = await asyncio.create_subprocess_exec(
+        'htgettoken', '--vaultserver=htvaultprod.fnal.gov', '--issuer=fermilab',
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    ) 
+    print("HWDB Token Needs Renewal --- follow the instructions below")
+    while True:
+        line = await process.stdout.readline()
+        line = line.decode('utf-8').strip()
+        if not line:
+            break
+        print(line)
+    await process.wait()
 
 async def auth_header():
     async with aiofiles.open(Path(bearer_token_path), 'r') as f:

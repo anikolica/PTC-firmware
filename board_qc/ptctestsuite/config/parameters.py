@@ -10,3 +10,4 @@ ptc_qc_test_id = 880
 bearer_token_path = "/run/user/1000/bt_u1000"
 dune_hwdb_api_path = "https://dbwebapi2.fnal.gov:8443/cdbdev/api/v1" 
 local_cache_file = "tested_boards"
+token_renewal_interval = 3600
