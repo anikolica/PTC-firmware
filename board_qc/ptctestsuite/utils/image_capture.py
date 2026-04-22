@@ -3,14 +3,13 @@ import cv2
 
 import io
 
-from ptctestsuite.config.parameters import webcam_id
+from ptctestsuite.config.parameters import webcam_id, image_width, image_height
 
 def image_proc():
     cap = cv2.VideoCapture(webcam_id)
     
-    # camera will default to max resolution
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 10000)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 10000)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, image_width)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, image_height)
 
     while True:
         ret, frame = cap.read()
