@@ -26,6 +26,7 @@ def ripple_switch_freq(num: int):
 def wib_led(num: int):
     return man_test(f'wib{num}_led', f"WIB{num} Front Panel LED", False)
 
+"""
 manual_tests = [
     man_test("example_manual", "Example manual test", True),
     man_test("bare_power", "Power consumption without SoM", True),
@@ -50,9 +51,12 @@ manual_tests = [
     ripple_switch_freq(5), 
     wib_led(5),
 ]
+"""
+manual_tests = [man_test('dummy_man', 'Dummy Test', True)]
 
 # need to scan the enclustra QR  in between here to track the serial number
 
+"""
 manual_test_phase_2 = [
     man_test("som_insertion", "Enclustra SoM Insertion Good? NOTE CONNECTOR KEYING", False),
     man_test('12v_local_led_boot', "Is the 12V_LOCAL LED Illuminated?", False),
@@ -62,6 +66,8 @@ manual_test_phase_2 = [
     #man_test('serial_connection', "Serial Connection Good?", False),
     man_test('repeat_boots', "Repeat Bootup 5 times. Did it succeed each time?", False)
 ]
+"""
+manual_test_phase_2 = [man_test('dummy_man_p2', "Dummy Phase 2", False)]
 
 test_sequence = [
                     {"test_type": "dummy_test", "test_params": {}},

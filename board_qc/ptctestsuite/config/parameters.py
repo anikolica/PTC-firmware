@@ -13,5 +13,7 @@ token_renewal_interval = 3600
 
 # Image Capture
 webcam_id = 0
-image_width = 1080
-image_height = 720
+image_capture_width = 1280
+image_capture_height = 720
+image_crop_width = 1080
+image_crop_height = 720

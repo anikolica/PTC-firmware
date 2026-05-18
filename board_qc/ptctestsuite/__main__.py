@@ -55,7 +55,7 @@ async def run_ptc_test():
     ptc_ip = "localhost" if args.debug else parameters.ptc_ip
     
     session = ptk.PromptSession()
-    # ptc_serial = await session.prompt_async("PTC Serial Number: ")
+    ptc_serial = await session.prompt_async("PTC Serial Number: ")
 
     # try to init the PTC on the default serial port
     net_status = await init_ptc(debug_run=args.debug)
@@ -79,7 +79,7 @@ async def run_ptc_test():
             client_task.cancel()
    
     
-    q = qc_record(tester_name)
+    q = qc_record(ptc_serial, tester_name)
     lg.info(f"Starting new PTC Test Session.")
     # do the manual tests here
     async with connect(f"ws://{ptc_ip}:{parameters.ws_port}") as ws:
@@ -119,7 +119,8 @@ async def run_ptc_test():
     r = await create_hwdb_item(q)
     await upload_test_result(q, r['part_id'])
     # now, image capture
-    #await get_board_image()
+    board_img = await get_board_image()
+    await upload_ptc_image(r['part_id'], board_img)
 
 async def async_entry():
     test_again = True

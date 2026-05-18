@@ -1,21 +1,11 @@
 from dataclasses import dataclass, asdict, field
 from datetime import datetime
 from enum import Enum
-import yaml
-import json
 import time
-
-# this may be unnecessary. Need to check how the HWDB REST API works
-@dataclass
-class hwdb_record:
-    version: int
-    created_date: datetime
-    created_by: str
-    datasheet: dict
 
 @dataclass
 class qc_record:
-    #serial_number: str
+    serial_number: str
     tester_name: str
     test_status: dict = field(default_factory=dict)
     tester_notes: str = ""
