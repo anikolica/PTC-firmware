@@ -169,7 +169,6 @@ async def upload_ptc_image(part_id: str, image: Buffer) -> dict:
     async with httpx.AsyncClient() as client:
         resp = await client.post(p, headers=ah, data=json_payload, files=data)
     
-    print(resp)
 
     if resp.status_code == httpx.codes.OK:
         lg.info(f"Successfully uploaded image for part {part_id}")
