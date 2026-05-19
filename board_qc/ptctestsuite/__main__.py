@@ -37,7 +37,6 @@ lg.add("ptctests.log", rotation='500MB', level="INFO")
 tester_name = ptk.prompt("Tester Name: ")
 # test sequence for automated tests goes here. This is a list of tests and their parameters
 
-
 # for now, store these here. Can determine later if we want to go
 # direct to HWDB, or store them and then upload after verification
 test_runs = []
@@ -114,8 +113,6 @@ async def run_ptc_test():
         await client_task
     except asyncio.CancelledError:
         pass
-    # we will take the HWDB entry number as the source for serial - no point in
-    # using two separate things to track a board
     r = await create_hwdb_item(q)
     await upload_test_result(q, r['part_id'])
     # now, image capture

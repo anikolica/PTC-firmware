@@ -17,3 +17,8 @@ image_capture_width = 1280
 image_capture_height = 720
 image_crop_width = 1080
 image_crop_height = 720
+
+# ptc authentication settings
+# NOTE: if this ever becomes important, read this from environment variables
+ptc_user = 'root'
+ptc_password = 'root'
