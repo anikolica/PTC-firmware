@@ -27,6 +27,7 @@ async def token_renew_signal():
 
 parser = ArgumentParser()
 parser.add_argument('--debug', action='store_true')
+parser.add_argument('--disable-hwdb', action='store_true')
 
 args = parser.parse_args()
 
@@ -46,10 +47,12 @@ renewal_needed.set()
 
 async def run_ptc_test():
     global tester_name, test_sequence 
+    hwdb_disabled = args.disable_hwdb
 
-    if renewal_needed.is_set():
-        await renew_token()
-        renewal_needed.clear()
+    if not hwdb_disabled:
+        if renewal_needed.is_set():
+            await renew_token()
+            renewal_needed.clear()
         
     ptc_ip = "localhost" if args.debug else parameters.ptc_ip
     
@@ -113,11 +116,12 @@ async def run_ptc_test():
         await client_task
     except asyncio.CancelledError:
         pass
-    r = await create_hwdb_item(q)
-    await upload_test_result(q, r['part_id'])
-    # now, image capture
-    board_img = await get_board_image()
-    await upload_ptc_image(r['part_id'], board_img)
+    if not hwdb_disabled:
+        r = await create_hwdb_item(q)
+        await upload_test_result(q, r['part_id'])
+        # now, image capture
+        board_img = await get_board_image()
+        await upload_ptc_image(r['part_id'], board_img)
 
 async def async_entry():
     test_again = True

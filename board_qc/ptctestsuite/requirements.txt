@@ -8,3 +8,5 @@ asyncio
 pyserial-asyncio
 httpx
 aiofiles
+opencv-python
+htgettoken
