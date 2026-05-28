@@ -43,6 +43,7 @@ v0.1 & 2025-12-03 & D. Drobner & Add JTAG in-situ programming \\
 v1.0 & 2025-12-03 & A. Nikolica & Add WEIC figure in last section \\
 v1.1 & 2026-03-26 & A. Nikolica & Corrections in dune-daq section \\
 v1.2 & 2026-04-01 & A. Nikolica & Clarifications in 4.2.2 and 4.4.5 for timing tests \\
+v1.3 & 2026-05-28 & C. Zuschmidt & Modified testing based on first runthrough of procedures \\
 \hline
 
 \end{tabularx}
@@ -394,7 +395,7 @@ source dbt-env.sh
 dbt-workarea-env
 dbt-build
 \end{verbatim}
-        \item Create the following file named \texttt{local.xml} inside the \texttt{ dune-daq-timing-dcsk} folder. \textbf{Note:} This only needs to be done once.
+        \item Create the following file named \texttt{local.xml} inside the \texttt{dune-daq-timing-dcsk} folder. \textbf{Note:} This only needs to be done once.
 \begin{verbatim}
 <?xml version="1.0" encoding="UTF-8"?>
 <connections>
@@ -446,20 +447,21 @@ dtsbutler -c local.xml mst MST_FMC control-timestamp-broadcast
             \begin{enumerate}
                 \item Confirm that the latest version of QC board firmware (not PTC firmware) is loaded on the SD card plugged into the QC board.
                 \item Power on the QC board by turning on the 24V lab supply. Initial current consumption should be about 400mA. After a few seconds, the amber LED on the Enclustra board will start blinking at a few Hz and remain blinking. If the amber LED is solid on, or fails to come on, contact a UPenn electronics engineer for assistance.
-                \item Establish an Ethernet connection with the QC board. It should come up as 192.168.200.12 on the network. You can ssh into the QC board as user root. \textbf{Note:} if the Ethernet connection fails to link, the serial UART can be used to diagnose. It will come up as /dev/ttyUSB[x], where x is typically 0 or 1 (since there are two serial interfaces in the system -- PTC and QC board). The settings should be: 115,200 baud, 8 bits, no parity bits, 1 stop bit, no hardware flow control. Consult a UPenn electronics engineer for assistance if the link fails.
+                \item Establish an Ethernet connection with the QC board. It should come up as 192.168.200.10 on the network. You can ssh into the QC board as user root. \textbf{Note:} if the Ethernet connection fails to link, the serial UART can be used to diagnose. It will come up as /dev/ttyUSB[x], where x is typically 0 or 1 (since there are two serial interfaces in the system -- PTC and QC board). The settings should be: 115,200 baud, 8 bits, no parity bits, 1 stop bit, no hardware flow control. Consult a UPenn electronics engineer for assistance if the link fails.
                 \item Turn on the 12V to the QC board heatsink fans (this is CH2 on the lab supply).
             \end{enumerate}
         \item Next, prepare the bootable SD card for the DUT (these steps are listed on the github page for the PTC firmware, but are repeated here for clarity):
             \begin{enumerate}
                 \item There will be a standard reference image for the firmware. The image consists of 4 files, explained below.
+                \item Ensure that the networking-stack package is enabled for later ethernet testing
                 \item Format the SD card by using \texttt{sudo gparted} to create two partitions on an SDHC micro-SD card: a 256MB FAT32 partition named BOOT, and the remainder of the disk should be an EXT4 partition called ROOT.
                 \item Copy the following files to the BOOT partition: BOOT.bin, image.ub, boot.scr. These files load the FPGA image, and start the initial Linux boos.
                 \item Copy the file rootfs.tar.gz to the ROOT partition. Then \texttt{gunzip} and \texttt{tar -xvf} the file to uncompress the entire contents. This is the root filesystem.
             \end{enumerate}
-        \item Next, insert the SD card prepared in the previous step into the PTC's SD card slot. Ensure the SD card clicks firmly into place with little force. If the SD card is not engaging, it may be inserted upside down. Do not force the card.
+        \item Next, insert the SD card prepared in the previous step into the PTC's SD card slot. Ensure the SD card clicks firmly into place with little force. Use tweezers if necessary. If the SD card is not engaging, it may be inserted upside down. Do not force the card.
         \item Next, install the jumpers and prep the board:
             \begin{enumerate}
-                \item As per Figure ~\ref{assembled_pcb}, install the following 3 blue 2-position jumpers:
+                \item As per Figure~\ref{assembled_pcb}, install the following 3 blue 2-position jumpers:
                 \item Timing jumper JT11: position 2--3
                 \item 3.3V enable jumper JT9: position 2--3
                 \item 2.5V enable jumper JT10: position 2--3
@@ -479,7 +481,7 @@ dtsbutler -c local.xml mst MST_FMC control-timestamp-broadcast
             \begin{enumerate}
                 \item Turn on the 48V power supply. The PTC without SoM installed should consume less than 100mA. \textcolor{blue}{\textbf{Acceptance criteria: $\leq 100mA$}}.
                 \item Temporarily remove the clear plastic plate on the QC test stand so that probe points can be reached.
-                \item Voltage check: measure with the DVM at the test point on PTC labeled VP12\_LOCAL and ensure it is 12V. \textcolor{blue}{\textbf{Acceptance criteria: 12.00--12.35V}}.
+                \item Voltage check: measure with the DVM at the test point on the PTC labeled VP12\_LOCAL and ensure it is 12V. \textcolor{blue}{\textbf{Acceptance criteria: 12.00--12.35V}}.
                 \item Ensure that the front panel LED labeled 12V\_LOCAL is on. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
             \end{enumerate}
         
@@ -491,6 +493,7 @@ dtsbutler -c local.xml mst MST_FMC control-timestamp-broadcast
     \begin{enumerate}
         \item \textbf{Voltage Check} 
             \begin{enumerate}
+                \item\textcolor{red}{Ensure the Enclustra SoM is NOT installed on PTC board at this point.}
                 \item Using tweezers or a small flat head screwdriver, set SWT1 in the first position (that is: 8b 0000 0001).
                 \item On the QC board, measure with the DVM at the test point labeled RIPPLE\_0 and ensure it is 12V. \textcolor{blue}{\textbf{Acceptance criteria: 12.00--12.35V}}.
             \end{enumerate}
@@ -528,7 +531,7 @@ dtsbutler -c local.xml mst MST_FMC control-timestamp-broadcast
                 \item Ensure front panel FPGA DONE LED is illuminated. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
                 \item Ensure the serial port can be connected to. It will come up as /dev/ttyUSB[x], where x is typically 0 or 1 (since there are two serial interfaces in the system -- PTC and QC board). The settings should be: 115,200 baud, 8 bits, no parity bits, 1 stop bit, no hardware flow control. The login name is root. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
             \end{enumerate}
-        \item \textbf{Repeat Boot} Issue the command \texttt{init 0 } at the DUT serial port and wait for the prompt to return a message that it has stopped all services. Turn power off for 60 seconds, and then back on again. Repeat the bootup procedure 5 times. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
+        \item \textbf{Repeat Boot} Issue the command \texttt{init 0} at the DUT serial port and wait for the prompt to return a message that it has stopped all services. Turn power off for 60 seconds, and then back on again. Repeat the bootup procedure 5 times. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
     \end{enumerate}    
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -541,17 +544,17 @@ dtsbutler -c local.xml mst MST_FMC control-timestamp-broadcast
     \begin{enumerate}
         \item \textbf{Setup} Boot up the DUT again while it is plugged into the powered-on QC board. Now commands will be issued on the DUT and QC board to exercise different loads.
         \item \textbf{Turn on PTC} While ssh'd into the DUT, type \texttt{python3 power\_on\_wib.py 0 on} for the first DC-DC converter.
-        \item \textbf{Enable PWM driver} While ssh'd into the QC board, type \texttt{poke 0x80020038 0x316} followed by the value \texttt{0x216}. This sets the PWM driver to 2MHz and 25\% duty cycle.
+        \item \textbf{Enable PWM driver} While ssh'd into the QC board, type \texttt{poke 0x8002004c 0x316} followed by the value \texttt{0x216}. This sets the PWM driver to 2MHz and 25\% duty cycle. It can be tested by measuring the PWM probe point. 
         \item \textbf{Measure current draw} The DUT should be drawing approximately 1.5A. Confirm on the 48V power supply that the current consumption has increased by 500mA (Note that the current consumption of 2A at 12V is equivalent to 500mA at 48V. There is some inefficiency in the converter -- the load side current will be measured more accurately with I2C sensors in the next section.) \textcolor{blue}{\textbf{Acceptance criteria: $1.5A\pm100mA$}}.
-        \item \textbf{Repeat with other load values} The values of \texttt{0x226, 0x236, 0x23e} will test 50\%, 75\%, and approximately 100\% load on the converter. Confirm the coresponding current draws are 3A, 4.5A, and 6A. \textcolor{blue}{\textbf{Acceptance criteria: $3A\pm100mA$, $4.5A\pm100mA$, $6A\pm100mA$}}.
-        \item \textbf{Measure voltage ripple} At the highest load, measure the test point RIPPLE\_0 with the scope set on 200mV scale, 200ns period, and AC coupling, and note the AC ripple. \textcolor{blue}{\textbf{Acceptance criteria: $\pm200mV$}}. An example is shown in Figure~\ref{dcdc_ripple}.
+        \item \textbf{Repeat with other load values} The values of \texttt{0x226, 0x236, 0x23e} will test 50\%, 75\%, and approximately 100\% load on the converter. Do not leave tests over 50\% running for more than a few minutes. Confirm the coresponding current draws are 3A, 4.5A, and 6A. \textcolor{blue}{\textbf{Acceptance criteria: $3A\pm100mA$, $4.5A\pm100mA$, $6A\pm100mA$}}.
+        \item \textbf{Measure voltage ripple} At the highest load, measure the test point RIPPLE\_0 with the scope set on 200mV scale, 200ns period, and AC coupling, and note the AC ripple with an RMS measurement. \textcolor{blue}{\textbf{Acceptance criteria: $\pm200mV$}}. An example is shown in Figure~\ref{dcdc_ripple}.
             \begin{figure}[h!]
                 \centering             
                 \includegraphics[scale=0.75]{images/dcdc_ripple.png}
                     \caption{Example of ripple measurement (CH2, blue)}
                 \label{dcdc_ripple}
             \end{figure}
-        \item \textbf{Repeat with other converters} The addresses of \texttt{0x8002003c, 0x80020040, 0x80020044, 0x80020048, 0x8002004c} correspond to converters 1 through 5. Repeat the test for all converters. Acceptance criteria are same as above.
+        \item \textbf{Repeat with other converters} The addresses of \texttt{0x80020048, 0x80020044, 0x80020040, 0x8002003c, 0x80020038} correspond to converters 1 through 5. Repeat the test for all converters. Acceptance criteria are same as above.
     \end{enumerate}
 
 \subsubsection{I2C Sensor Tests}
@@ -591,7 +594,7 @@ dtsbutler -c local.xml mst MST_FMC control-timestamp-broadcast
         \item \textbf{Sensor Extended Functionality}
             \begin{enumerate}
                 \item ALARM. From the QC\_DEV branch of the github repository, run the \\ 
-                \verb|qc_firmware\scripts\test_scripts\alert_assert.py| script. This will go through each sensor, program a threshold such that the ALERT pin is asserted, and readback the ALERT register over I2C. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
+                \verb|qc_firmware\scripts\test_scripts\qc_board_tests\alert_assert.py| script. This will go through each sensor, program a threshold such that the ALERT pin is asserted, and readback the ALERT register over I2C. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
                 \item Front panel OVER TEMP LED. For any of the above ALARM line asserts, the OVER TEMP LED should illuminate in RED on the front panel. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
             \end{enumerate}
     \end{enumerate}   
@@ -618,7 +621,7 @@ dtsbutler -c local.xml mst MST_FMC control-timestamp-broadcast
         \item \textbf{Setup} The complete setup instructions are shown on the PTC github page README, and are repeated here for clarity:
             \begin{enumerate}
                 \item The EtherCAT microcontroller project is based on the Infineon reference design. Ensure that the same version of tools are installed. Beckhoff TwinCAT3 is needed to initiate a connection to PTC. Infineon DAVE v4.1.4 or higher and the Beckhoff SSC tool v5.12 are used for creating the initial project, but is only needed for development.
-                \item The first time the link is set up, or if any configuration changes, copy the XMC\_ESC.xml file (the "ESI file") to \\
+                \item The first time the link is set up, or if any configuration changes, copy the XMC\_ESC.xml file (the "ESI file") from \verb|ethercat/xmc4300_proj/xmc4300_proj/SSC/XMC_ESC.xml| to
                 \verb|C:\TwinCAT\3.1\Config\Io\EtherCAT| on the host PC.
                 \item Connect a 100Base-FX SFP to SFP1, with an LC-to-SC fiber connection. For bench testing, this can be connected to a optical-to-fiber converter (like the tp-link MC100CM). 
                 \item From the main branch in github, open up the TwinCAT project in the \texttt{ethercat/} directory.
@@ -693,9 +696,9 @@ dtsbutler -c local.xml mst MST_FMC align toggle-tx 0 --on|off
         \item \textbf{Ping Test}
             \begin{enumerate}
                 \item Front panel LINK LED. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
-                \item Ping. The DUT should come up as 192.168.200.10 on the network. Issue the \texttt{ping} commands from the Linux test machine and ensure the DUT responds. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
+                \item Ping. The DUT should come up as 192.168.200.12 on the network. Issue the \texttt{ping} commands from the Linux test machine and ensure the DUT responds. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
             \end{enumerate}
-        \item \textbf{Throughput Test}. You can ssh into the PTC as user root. 
+        \item \textbf{Throughput Test}. Using iPerf3, run the command \texttt{iperf3 -s} on the DUT through minicom, followed by \texttt{iperf3 -c 192.168.200.12} on the Linux test machine. Alternatively, You can ssh into the PTC as user root. 
         Use the \texttt{dd} command to transfer the 1GB file called \texttt{thru\_test.bin} to \verb|/dev/null|. \textcolor{blue}{\textbf{Acceptance criteria: $>12.5MB/s$}}.
         \item \textbf{Front Panel AUX LED}. Illuminate the LED by writing the register address \texttt{\textcolor{red}{TBD}}. Note: this is a spare LED that may have a future functionality related to the GbE interface. For now, it is toggled with a register bit. \textcolor{blue}{\textbf{Acceptance criteria: PASS/FAIL}}.
     \end{enumerate}
