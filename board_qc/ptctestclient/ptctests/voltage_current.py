@@ -31,22 +31,23 @@ class voltage_curr_test(test_base):
         
  
     def test_init(self) -> bool:
-        lg.info("Starting volate and current sensor test...")
-        iv_monitors = ['0x67', '0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6e', '0x6f']
-        self.readings = {v: {"v": float(0), 'i': float(0)} for v in iv_monitors}
-        
-        # regs_3v3_2v5_monitors = ['0x6e', '0x6f']
-        
-        self.sleep_time = 0.1
 
-        # for 25% PWM duty cycle (0x216)
-        self.voltage_min = 12
-        self.volatge_max = 12.35
-        self.current_min = 1.4
-        self.current_max = 1.6
+        lg.info("Starting voltage and current sensor test...")
         
+        sensors = ['0x67', '0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6d', '0x6e', '0x6f']
         
-        # just going to return true here since all we're doing is setting up some values
+        default_limits = {'v_min': 12.0, 'v_max': 12.35, 'i_min': 1.4, 'i_max': 1.6}
+        
+        exceptions = {
+            '0x6e': {'v_min': 2.4, 'v_max': 2.6,  'i_min': 0.0, 'i_max': 2.0}, # 2.5V rail
+            '0x6f': {'v_min': 3.2, 'v_max': 3.4,  'i_min': 0.0, 'i_max': 2.0}, # 3.3V rail
+            '0x6d': {'v_min': 12.0, 'v_max': 12.35, 'i_min': 1.4, 'i_max': 1.6} # SoM Sensor
+        }
+        
+        self.limits = {a: exceptions.get(a, default_limits) for a in sensors}
+        self.readings = {a: {'v': 0.0, 'i': 0.0} for a in sensors}
+        self.sleep_time = 0.1
+        
         return True
 
     def run_test(self) -> qc_result:
@@ -65,11 +66,13 @@ class voltage_curr_test(test_base):
                 return qc_result.FAIL
             
         for a, vs in self.readings.items():
-            if self.voltage_min > vs['v'] or vs['v'] > self.voltage_max:
-                lg.error(f"Voltage readings outside of normal range. Sensor {a} reported a voltage of {vs['v']}.")
+            lim = self.limits[a]
+            if vs['v'] < lim['v_min'] or vs['v'] > lim['v_max']:
+                lg.error(f"Voltage out of range on {a}: {vs['v']}V")
                 return qc_result.FAIL
-            if self.current_min > vs['i'] or vs['i'] > self.current_max:
-                lg.error(f"Current readings outside of normal range. Sensor {a} reported a current of {vs['i']}.")
+            if vs['i'] < lim['i_min'] or vs['i'] > lim['i_max']:
+                lg.error(f"Current out of range on {a}: {vs['i']}A")
                 return qc_result.FAIL
+
         lg.info("Voltage and current monitoring test passed.")
         return qc_result.PASS
