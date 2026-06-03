@@ -34,29 +34,51 @@ class voltage_curr_test(test_base):
 
         lg.info("Starting voltage and current sensor test...")
         
-        sensors = ['0x67', '0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6d', '0x6e', '0x6f']
-        
-        default_limits = {'v_min': 12.0, 'v_max': 12.35, 'i_min': 1.4, 'i_max': 1.6}
-        
+        sensors = ['0x67', '0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6d']
+        aux_sensors = ['0x6e', '0x6f'] 
+
+        default_limits = {'v_min': 12.0, 'v_max': 12.35, 'i_min': 1.35, 'i_max': 1.65} # review current bounds
         exceptions = {
-            '0x6e': {'v_min': 2.4, 'v_max': 2.6,  'i_min': 0.0, 'i_max': 2.0}, # 2.5V rail
-            '0x6f': {'v_min': 3.2, 'v_max': 3.4,  'i_min': 0.0, 'i_max': 2.0}, # 3.3V rail
-            '0x6d': {'v_min': 12.0, 'v_max': 12.35, 'i_min': 1.4, 'i_max': 1.6} # SoM Sensor
+            '0x6d': {'v_min': 12.0, 'v_max': 12.35, 'i_min': 0, 'i_max': 2}, # SoM Sensor
+            '0x6e': {'v_min': 2.4, 'v_max': 2.6,  'i_min': 0.5, 'i_max': 2.0}, # 2.5V rail +- .1V
+            '0x6f': {'v_min': 3.2, 'v_max': 3.4,  'i_min': 0.5, 'i_max': 2.0} # 3.3V rail +- .1V
+ 
         }
         
         self.limits = {a: exceptions.get(a, default_limits) for a in sensors}
         self.readings = {a: {'v': 0.0, 'i': 0.0} for a in sensors}
         self.sleep_time = 0.1
         
-        return True
+
 
     def run_test(self) -> qc_result:
+        
+        # from ecat test 1b - repeated 
+        module = '5EV'
+        if module == '2EG':
+            base_addr = '0xa003'
+        else:
+            base_addr = '0x8002'
+
+        os.system('poke ' + base_addr + '0000 0x00000201')
+        # Taking I2C switches out of reset'
+        sleep(1)
+
+        
         for addr in self.readings.keys():
             try:
                 self.readings[addr]["v"] = self.read_voltage(addr)
-                if addr in ['0x6e', '0x6f']:
+                if addr in ['0x6e', '0x6f']: 
+                    # change to aux sensor channel from mux
+                    os.system('i2cset -y -r 0 0x70 0x04')
+                    sleep(1)
+
                     self.readings[addr]["i"] = self.read_current(addr, .02)
+                
                 else: 
+                    os.system('i2cset -y -r 0 0x70 0x08')
+                    sleep(1)
+    
                     self.readings[addr]["i"] = self.read_current(addr, .005)
 
                 sleep(self.sleep_time)
