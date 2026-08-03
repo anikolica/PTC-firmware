@@ -27,18 +27,22 @@ class qc_sensors_test(test_base):
         self.readings = {mux: {'v': 0.0, 'i': 0.0} for mux in self.mux_map}
         self.sleep_time = 0.1
 
-        self.RST_PIN = 17
+        
 
         return True
 
     def reset_mux_bus(self):
-        try:
-            # Pull low, hold for 1us (> 5ns tWL(rst) min from ds), release high, exit
-            os.popen(f'gpioset -t 1us,0 gpiochip0 {self.rst_gpio}=0').read()
-            sleep(0.001)  
-        except Exception as e:
-            lg.error("Failed to toggle BP_I2C_RESET")
-            lg.exception(e)
+        # reset pin not wired in hardware 
+
+        # has register - set high 
+        # try:
+        #     # Pull low, hold for 1us (> 5ns tWL(rst) min from ds), release high, exit
+        #     os.popen(f'gpioset -t 1us,0 gpiochip0 {self.RST_PIN}=0').read()
+        #     sleep(0.001)  
+        # except Exception as e:
+        #     lg.error("Failed to toggle BP_I2C_RESET")
+        #     lg.exception(e)
+        pass
 
     def open_mux_channel(self, mux_addr, channel=0):
         try:
@@ -86,7 +90,7 @@ class qc_sensors_test(test_base):
         for mux_addr, sensor_addr in self.mux_map.items():
             try:
                 self.open_mux_channel(mux_addr, channel=0)
-                sleep(0.05)  # let bus settle after switching
+                sleep(0.05)
 
                 self.readings[mux_addr]['v'] = self.read_voltage(sensor_addr)
                 self.readings[mux_addr]['i'] = self.read_current(sensor_addr, self.RESISTOR)
