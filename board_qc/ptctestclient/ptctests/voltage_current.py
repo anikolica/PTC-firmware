@@ -8,29 +8,56 @@ from ptctestclient.utils import test_base, qc_result
 class voltage_curr_test(test_base):
     
     def read_voltage(self, addr):
+        """Reads i2c volage bits from the iv sensor, 
+                    parses into decimal, and calculates voltage
+        
+        Args:
+            sensor_addr (str): hex address of the iv sensor
+
+        Returns:
+            voltage (float): voltage reading in volts
+        """
+
         try:
             i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x1e w').read()
             i2c_dec =((int((i2c_raw)[4:6], 16) << 8) + int((i2c_raw)[2:4], 16)) >> 4
             voltage = i2c_dec * 0.025
             return voltage
-        except Exception as e:
+        except ValueError as e:
             lg.error(f"Voltage reading failed for sensor {addr}")
             lg.exception(e)
             return None
     
     def read_current(self, addr, resistor):
+        """Reads i2c current bits from the iv sensor, 
+            parses into decimal, and calculates current
+
+        Args:
+        sensor_addr (str): hex address of the iv sensor
+        resistor (float): resistance value for current calculation
+
+        Returns:
+        current (float): current reading in amps
+        """
+
         try:
             i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x14 w').read()
             i2c_dec =((int((i2c_raw)[4:6], 16) << 8) + int((i2c_raw)[2:4], 16)) >> 4
             current = i2c_dec * 0.000025 / resistor
             return current
-        except Exception as e:
+        except ValueError as e:
             lg.error(f"Current reading failed for sensor {addr}")
             lg.exception(e)
             return None
         
  
     def test_init(self) -> bool:
+        """initialize the test, sensor addreses, 
+        and respective ranges with exceptions for aux and SoM sensors
+
+        Returns:
+            bool: successful init
+        """
 
         lg.info("Starting voltage and current sensor test...")
         
@@ -45,13 +72,20 @@ class voltage_curr_test(test_base):
  
         }
         
-        self.limits = {a: exceptions.get(a, default_limits) for a in sensors}
-        self.readings = {a: {'v': 0.0, 'i': 0.0} for a in sensors}
+        all_sensors = sensors + aux_sensors                                     
+        self.limits = {a: exceptions.get(a, default_limits) for a in all_sensors}  
+        self.readings = {a: {'v': 0.0, 'i': 0.0} for a in all_sensors}  
         self.sleep_time = 0.1
         
 
 
     def run_test(self) -> qc_result:
+        """iterates through the muxes and associated iv sensors, 
+        reads voltage and current, and evaluates if they are within the acceptable range. 
+
+        Returns:
+            qc_result: pass or fail based on the readings/ranges
+        """
         
         # from ecat test 1b - repeated 
         module = '5EV'
@@ -82,7 +116,7 @@ class voltage_curr_test(test_base):
                     self.readings[addr]["i"] = self.read_current(addr, .005)
 
                 sleep(self.sleep_time)
-            except Exception as e:
+            except OSError as e:
                 lg.error(f"Voltage/current reading failed: {addr}")
                 lg.exception(e)
                 return qc_result.FAIL
