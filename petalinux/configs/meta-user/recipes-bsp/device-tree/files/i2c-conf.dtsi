@@ -1,0 +1,43 @@
+/include/ "system-conf.dtsi"
+/ {
+};
+
+&i2c0 {
+    status = "okay";
+    clock-frequency = <400000>;
+
+    tca9546@70 {
+        compatible = "ti,tca9546a";
+        reg = <0x70>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        /* Channel 0: First SFP Cage */
+        i2c_ch0: i2c@0 {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            reg = <0>;
+            /* Standard SFP EEPROM data map */
+        };
+
+        /* Channel 1: Second SFP Cage */
+        i2c_ch1: i2c@1 {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            reg = <1>;
+        };
+
+        i2c_ch2: i2c@2 {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            reg = <2>;
+        };
+
+        /* Channel 3: Unknown for now (Leave empty) */
+        i2c_ch3: i2c@3 {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            reg = <3>;
+        };
+    };
+};

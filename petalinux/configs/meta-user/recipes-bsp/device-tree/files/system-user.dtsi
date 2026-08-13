@@ -1,0 +1,6 @@
+#include "system-conf.dtsi"
+#include "net-conf.dtsi"
+#include "sd-conf.dtsi"
+#include "pwr-conf.dtsi"
+/ {
+};

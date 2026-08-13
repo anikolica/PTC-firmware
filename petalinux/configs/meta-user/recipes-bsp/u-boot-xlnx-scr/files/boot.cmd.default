@@ -1,0 +1,14 @@
+# Disable TFTP autoload and get an IP
+if test -z "${ipaddr}"; then
+    setenv autoload no
+    dhcp
+fi
+
+# Set kernel args for initramfs
+setenv bootargs "console=ttyPS0,115200 earlycon"
+
+# Download image.ub via legacy wget using $serverip
+wget @@FIT_IMAGE_LOAD_ADDRESS@@ ${serverip}:/@@FIT_IMAGE@@
+
+# Boot image.ub
+bootm @@FIT_IMAGE_LOAD_ADDRESS@@
