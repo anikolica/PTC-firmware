@@ -1,0 +1,3 @@
+
+# <filesystem> | <mount point> | <filesystem type> | <options> | <dump (almost always 0> | <fsck> (2 for local, 1 for rootfs, 0 for network)
+/dev/mmcblk1p1 /mnt/persist ext4 defaults,noatime,nofail,x-systemd.device-timeout=5s 0 2
