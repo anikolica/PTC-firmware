@@ -60,21 +60,107 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 7. Copy `system-user.dtsi` file in this repo to `project-spec/meta-user/recipes-bsp/device-tree/files/`. This ensures that the SD card controller, GEM (gigabit ethernet MAC that the PS uses for the SFP connection), and the I2C device on the PS, all get configured correctly.
 8. From the `petalinux/recipes/` directory, copy the `regtest/` directory to `ptc.linux/project-spec/meta-user/recipes-apps/`. This adds a simple user application to the build <sup>1</sup>. Also copy `user-rootfsconfig` to `project-spec/meta-user/conf/` (this ensures that user applications are included in the root filesystem).
 9. `petalinux-build -p ptc.linux` will take many tens of minutes to build the first time.
-10. `petalinux-package -p ptc.linux/ --boot --u-boot --fsbl ptc.linux/images/linux/zynqmp_fsbl.elf --fpga ptc.linux/images/linux/system.bit -o ptc.linux/images/linux/BOOT.bin` will package the output into a bootable image
+10. Package the bootloader with the command `petalinux-package -p ptc.linux --boot --fsbl ptc.linux/images/linux/zynqmp_fsbl.elf --pmufw ptc.linux/images/linux/pmufw.elf --atf ptc.linux/images/linux/bl31.elf --u-boot ptc.linux/images/linux/u-boot.elf --force`
 11. From the `ptc.linux/` directory, you can test the build by using `petalinux-boot --qemu --u-boot`. The image will boot virtually, and you can login with password `root` (change this in the config menu from step 5). You can test if simple command line utilities -- like `peek` and `i2cdetect` -- were built into the image correctly by typing them at the prompt after logging in. CTRL+A, and then X, will exit a QEMU session.
 
 ### Booting software
-1. Using your favorite partition editor (e.g. `gparted`), create two partitions on an SDHC micro-SD card: a 256MB FAT32 partition named `BOOT`, and the remainder of the disk should be an EXT4 partition called `ROOT`.
-2. Copy the following files from `ptc-linux/images/linux/` to the `BOOT` partition: `BOOT.bin`, `image.ub`, `boot.scr`
-3. Copy the file `rootfs.tar.gz` to the `ROOT` partition. `gunzip` and then `tar -xvf` the file to uncompress the entire contents.
-4. Install the SD card, and install the Enclustra XU5 module into the PTC. Ensure default jumper settings are as per schematic. Ensure a microUSB cable is attached to the front panel UART connector, and open a connection to the COM port at 115kbaud.
-5. Apply 48V to the main power connector, and stop the boot when the message `Hit any key to stop autoboot` appears. This will show the `ZynqMP` prompt.
-6. `setenv bootargs root=/dev/mmcblk1p2`
-7. `saveenv`
-8. `boot` will continue the boot process. A `ptc login:` prompt should appear.
+#### Network Boot
+1. Copy or symlink the files `boot.scr` and `image.ub` to a new folder.
+2. Start an http server serving that folder as it's root
+    1. An easy way to do this is to go to the directory with your files, and run
+       `sudo python3 -m http.server --bind 192.168.(PTC Subnet).(PC IP) 80`.
+       Note that root access is required to bind to port 80.
+    2. One may also set up a more production-ready webserver such as nginx or
+       apache to do so if desired
+3. Load u-boot
+    1. SD Card
+        1. Create a new 256MB FAT32 partition called BOOT
+        2. Copy `BOOT.bin` to the new partition
+        3. Insert the SD card into the PTC
+    2. QSPI
+        1. For the initial boot, create a bootable SD card following the
+           instructions above
+        2. When the message to do so appears, press any key to stop autoboot
+        3. Load the u-boot image into memory using `fatload mmc 1 0x10000000
+           BOOT.bin`
+        4. Probe the qSPI flash: `sf probe 0 0 0`
+        5. Erase the flash: `sf erase 0x0 +${filesize}`
+        6. Write the u-boot image to flash: `sf write 0x10000000 0x0
+           ${filesize}`
+        7. Ensure the jumpers are set correctly to use qSPI boot. On header J15, the
+           top left pin should be jumped to the pin directly below it.
+        8. For instructions on how to update the qSPI flash, see [Updating qSPI Flash](#updating-qspi-flash)
+4. Set up a local DHCP server
+    1. Linux
+        1. `dnsmasq` is one good option among many and is my personal choice.
+           Install it via your package manager (e.g. `sudo apt install dnsmasq`) 
+        2. Edit the configuration, usually located at `/etc/dnsmasq.conf` (Note
+           that this location may vary distro-to-distro), insert the
+           configuration given at the end of this section, ensuring to modify
+           the values for your system
+        3. Start the service: `sudo systemctl start dnsmasq`
+        4. **(Optional, not recommended)** Enable `dnsmasq` as a service so it
+           starts automatically at boot: `sudo systemctl enable dnsmasq`
+    2. Windows
+        1. Set up the Windows Subsystem for Linux, and follow the above instructions
+5. Apply 48V to the main power connector
+
+#### SD/MMC Boot
+TODO: this requires changing the u-boot configuration.
+
+##### dnsmasq Configuration
+Here is a template for the dnsmasq configuration
+```properties
+listen-address=192.168.(PTC Subnet).(PC IP)
+interface=(check using ip a)
+dhcp-range=192.168.(PTC subnet).50, 192.168.(PTC subnet).150, 12h
+bind-interfaces
+```
+**Important**: Make sure that you restart dnsmasq after any configuration
+changes by running `sudo systemctl restart dnsmasq`
+
+Note that this provides 100 addresses which may be inadequate for production or
+QC,
+but is more than enough for some quick local tests.
+
+##### Firewall Configuration
+Note that the system's firewall may block dns requests. On Fedora, I had to
+either disable the firewall using `sudo systemctl stop firewalld`, or set the
+interface I am running the server on to trusted, via `sudo firewall-cmd
+--permanent --zone=trusted --change-interface=(interface)`, and then `sudo
+firewall-cmd --reload`. 
+
+On Ubuntu, the firewall can be disabled by running `sudo ufw disable`.
+
+For Windows, **Adrian**: if you ever get a chance to test this could you let me
+know? It may be enough to set the network interface to trusted, but I have no
+way to check. Also make sure you disable the firewall in WSL by using the above
+linux instructions.
+
+#### Updating qSPI Flash
+Note that one can also use an SD card and follow the instructions in the
+[Network Boot](#network-boot) section, but this is not strictly necessary.
+1. Copy the new BOOT.bin to a webserver (the same one you boot from works)
+2. Write the new image
+    1. From u-boot
+        1. Get an IP address: `setenv autoload no; dhcp`
+        2. Download the new binary: `wget 0x10000000 192.168.(PTC subnet).(Server
+           IP):/BOOT.bin`
+        3. Probe the qSPI flash: `sf probe 0 0 0`
+        4. Erase the qSPI flash: `sf erase 0x0 +${filesize}`
+        5. Write the qSPI flash: `sf write 0x10000000 0x0 ${filesize}`
+    2. From Linux (TODO: enable Linux drivers for mtd devices and update device tree)
+        1. Download the new u-boot image: `wget http://{server ip}/BOOT.bin`
+        2. Flash the image: `flashcp -v BOOT.bin /dev/mtd0`
+3. Reboot
+
+*N.B.* The instructions above can be run from u-boot already on the qSPI. The
+bootloader is loaded into memory upon powerup, so it does not conflict with the
+running environment.
+
 
 ### Starting PTC in a WEIC
-1. Ensure lower nibble of SW is set to preferred backplane address (defauls is 0xF; all pulled up), and all default jumpers are installed on PTC. Connect microUSB to the front panel to a terminal emulator. Connect 1000Base-BX from SFP2 to a Bristol timing master. Connect a 1000Base-LX SFP from SFP0 to a fiber to topical converter (like 10GTek A7S2-33-1GX1GT-SFP/GT3) and then to the PC.
+1. Ensure lower nibble of SW is set to preferred backplane address (default is 0xF; all pulled up), and all default jumpers are installed on PTC. Connect microUSB to the front panel to a terminal emulator. Connect 1000Base-BX from SFP2 to a Bristol timing master. Connect a 1000Base-LX SFP from SFP0 to a fiber to topical converter (like 10GTek A7S2-33-1GX1GT-SFP/GT3) and then to the PC.
 3. After applying 48V, it will take a few seconds for the FPGA to power. You’ll see 3 green LEDs on the front go on: 12V_LOCAL, SOC_PG, and FPGA_DONE. You may see a red OVER_TEMP LED go on at powerup, but it will turn off after the FPGA powers on. You’ll also see a blinking amber LED on the Enclustra FPGA mezzanine after a few seconds.
 4. Connect to the front panel UART at 115,200 baud, 8-bit data, 1 stop bit, no parity or flow control. You may need to install the [MaxLinear XR21V1410 drivers]( https://www.maxlinear.com/product/interface/uarts/usb-uarts/xr21v1410).
 5. Run the following scripts:
