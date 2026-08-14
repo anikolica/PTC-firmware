@@ -212,7 +212,26 @@ You should printouts on the PTC terminal that show the state of various sensors.
 
 ### To transfer files to and from PTC:
 1. From host to PTC (from host): `rsync -avzh [file to transfer] root@[your IP address]:/home/root/`
-2. From PTC to host (from host): `rsync -avzh root@[your IP address]:/home/root/[file to transfer] .`
+2. From PTC to host (from host): `rsync -avzh root@[your IP
+   address]:/home/root/[file to transfer] .`
+
+### Netboot Technical Notes
+Here, we give a more complete description of how the network boot is configured
+as it is slightly nonstandard. Due to some issues with the new u-boot IP stack,
+we must use the legacy stack which does not support `bootmeth_http` allowing the
+standard bootflow using http boot. We avoid this by using the
+legacy<sup>[3](#footnotes)</sup> BOOT.scr format. The flow is as follows:
+1. u-boot is compiled with default boot command set to `setenv autoload no;
+   dhcp; wget ${scriptaddr} ${serverip}:/boot.scr; source ${scriptaddr}`
+   1. This: disables autoboot after getting an ip from dhcp
+   2. Gets an ip from dhcp 
+   3. Downloads boot.scr from the dhcp server and puts it at
+       `${scriptaddr}`
+   4. Executes the script at `${scriptaddr}`
+2. `boot.scr` (see `recipes-bsp/u-boot-xlnx-scr`) does the following:
+   1. Sets the linux kernel cmdline
+   2. Downloads the initramfs to `0x40000000` via http
+   3. Boots the image at `0x40000000`
 
 ### Register reads and writes
 At the root prompt, registers can be manually written using `poke [addr] [data]` from the table below. For example `poke 0x43c00000 0x00000020` will assert opad\_EXT\_RST. Test scripts (below) initiate sequences of register writes.
@@ -298,3 +317,5 @@ At the root prompt, registers can be manually written using `poke [addr] [data]`
 ## Footnotes
 1. This is done by creating an app template as in the [PetaLinux Yocto documentation](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18842475/PetaLinux+Yocto+Tips#PetaLinuxYoctoTips-CreatingApps(whichuseslibraries)inPetaLinuxProject)
 2. The Zynq GbE interface is on the PS side using the GEM controller. The software driver mode is defined through Petalinux using the system-user.dtsi device tree file, which sets it as `is-internal-pcspma`. For some reason, the Xilinx drivers do not automatically enable the GEM when it's in this mode, so the script writes the correct values to the [network_config](https://www.xilinx.com/htmldocs/registers/ug1087/ug1087-zynq-ultrascale-registers.html) register for GEM1. An alternate solution is to [change the driver code](https://github.com/DUNE-DAQ/dune-wib-firmware/blob/master/linux-2020.1/project-spec/meta-user/recipes-kernel/linux/linux-xlnx/macb-5.4.patch#L30) as was done on the WIB.
+3. This should not cause issues if we ever upgrade, as the issues with PSGTR
+   ethernet will likely be fixed, so we can move to `bootmeth_http`
