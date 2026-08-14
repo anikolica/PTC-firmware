@@ -149,7 +149,14 @@ Note that one can also use an SD card and follow the instructions in the
         3. Probe the qSPI flash: `sf probe 0 0 0`
         4. Erase the qSPI flash: `sf erase 0x0 +${filesize}`
         5. Write the qSPI flash: `sf write 0x10000000 0x0 ${filesize}`
-    2. From Linux (TODO: enable Linux drivers for mtd devices and update device tree)
+        6. Optionally, verify the flash was written correctly
+           1. Read the flash into a new memory location: `sf read 0x20000000
+              ${filesize}`
+           2. Generate crc32 for the image: `crc32 0x10000000 ${filesize}`
+           3. Generate crc32 for the flash: `crc32 0x20000000 ${filesize}`
+           4. Ensure they both match. If not, try repeating all of the steps
+              again. If that fails, it is likely a hardware issue.
+    2. From Linux
         1. Download the new u-boot image: `wget http://{server ip}/BOOT.bin`
         2. Flash the image: `flashcp -v BOOT.bin /dev/mtd0`
 3. Reboot
