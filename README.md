@@ -65,8 +65,10 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 
 ### Booting software
 #### Network Boot
+TODO: lwIP works now???? Set up pxeboot properly on Monday and do away with
+whatever this is
 1. Copy or symlink the files `boot.scr` and `image.ub` to a new folder.
-2. Start an http server serving that folder as it's root
+2. Start an http server on the host PC serving that folder as it's root
     1. An easy way to do this is to go to the directory with your files, and run
        `sudo python3 -m http.server --bind 192.168.(PTC Subnet).(PC IP) 80`.
        Note that root access is required to bind to port 80.
@@ -87,10 +89,10 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
         5. Erase the flash: `sf erase 0x0 +${filesize}`
         6. Write the u-boot image to flash: `sf write 0x10000000 0x0
            ${filesize}`
-        7. Ensure the jumpers are set correctly to use qSPI boot. On header J15, the
-           top left pin should be jumped to the pin directly below it.
+        7. Ensure the jumpers are set correctly to use qSPI boot. On header
+           J15,jump pins 1 and 3. 
         8. For instructions on how to update the qSPI flash, see [Updating qSPI Flash](#updating-qspi-flash)
-4. Set up a local DHCP server
+4. Set up a local DHCP server on the host PC
     1. Linux
         1. `dnsmasq` is one good option among many and is my personal choice.
            Install it via your package manager (e.g. `sudo apt install dnsmasq`) 
@@ -99,14 +101,11 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
            configuration given at the end of this section, ensuring to modify
            the values for your system
         3. Start the service: `sudo systemctl start dnsmasq`
-        4. **(Optional, not recommended)** Enable `dnsmasq` as a service so it
+        4. **(Optional, not recommended for development)** Enable `dnsmasq` as a service so it
            starts automatically at boot: `sudo systemctl enable dnsmasq`
     2. Windows
         1. Set up the Windows Subsystem for Linux, and follow the above instructions
 5. Apply 48V to the main power connector
-
-#### SD/MMC Boot
-TODO: this requires changing the u-boot configuration.
 
 ##### dnsmasq Configuration
 Here is a template for the dnsmasq configuration
@@ -165,6 +164,8 @@ Note that one can also use an SD card and follow the instructions in the
 bootloader is loaded into memory upon powerup, so it does not conflict with the
 running environment.
 
+#### qSPI Boot Jumper Settings
+<img src=".images/boot-mode-qspi.jpg" width="20%"/>
 
 ### Starting PTC in a WEIC
 1. Ensure lower nibble of SW is set to preferred backplane address (default is 0xF; all pulled up), and all default jumpers are installed on PTC. Connect microUSB to the front panel to a terminal emulator. Connect 1000Base-BX from SFP2 to a Bristol timing master. Connect a 1000Base-LX SFP from SFP0 to a fiber to topical converter (like 10GTek A7S2-33-1GX1GT-SFP/GT3) and then to the PC.
