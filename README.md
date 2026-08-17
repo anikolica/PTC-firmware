@@ -90,7 +90,7 @@ whatever this is
         6. Write the u-boot image to flash: `sf write 0x10000000 0x0
            ${filesize}`
         7. Ensure the jumpers are set correctly to use qSPI boot. On header
-           J15,jump pins 1 and 3. 
+           J15,jump pins 1 and 3. See [below for an image](#qspi-boot-jumper-settings)
         8. For instructions on how to update the qSPI flash, see [Updating qSPI Flash](#updating-qspi-flash)
 4. Set up a local DHCP server on the host PC
     1. Linux
