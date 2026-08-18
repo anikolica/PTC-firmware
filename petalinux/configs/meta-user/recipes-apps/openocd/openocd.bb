@@ -1,5 +1,5 @@
 #
-# This is the openocd apllication recipe
+# This is the openocd application recipe
 #
 #
 

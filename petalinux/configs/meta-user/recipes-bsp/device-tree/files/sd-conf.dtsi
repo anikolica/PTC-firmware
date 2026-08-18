@@ -1,5 +1,9 @@
-/include/ "system-conf.dtsi"
+#include "system-conf.dtsi"
 / {
+        aliases {
+                mmc0 = &sdhci1; /* SD Card */
+                mmc1 = &sdhci0; /* eMMC */
+        };
 };
 
 

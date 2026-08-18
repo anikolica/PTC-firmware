@@ -5,22 +5,29 @@ SRC_URI:append = " file://boot.cmd.default"
 do_compile() {
     cat << 'EOF' > ${S}/boot.cmd
 setenv autoload no
-setenv netretry yes
+setenv netretry no
+
 
 echo "=== Starting HTTP Netboot ==="
-echo "Server IP is: ${serverip}"
-echo "Board IP is:  ${ipaddr}"
+setenv netbootip ${serverip}
+if test "x$httpip" != "x"; then 
+    echo "Using HTTP server IP loaded from environment for initramfs";
+    setenv netbootip ${httpip}; 
+fi
 
-setenv bootargs "console=ttyPS0,115200 earlycon"
+echo "Server IP is: ${netbootip}"
+ping ${netbootip}
 
-sleep 1
+setenv bootargs "console=ttyPS0,115200 ip=dhcp clk_ignore_unused earlycon"
 
-# Download image.ub to 0x40000000 (1GB offset) to avoid memory collision
-echo "Downloading image.ub over HTTP..."
-wget 0x40000000 ${serverip}:/image.ub
+# Loop until wget succeeds
+echo "Fetching image.ub over HTTP..."
+until wget 0x40000000 ${netbootip}:/image.ub; do
+    echo ">>> wget timed out or failed! Retrying in 1s... <<<"
+    sleep 1
+done
 
-# Boot FIT image from 0x40000000
-echo "Booting image.ub..."
+echo "Download complete! Booting image.ub..."
 bootm 0x40000000
 EOF
 

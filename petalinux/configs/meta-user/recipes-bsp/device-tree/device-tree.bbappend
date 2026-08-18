@@ -14,5 +14,7 @@ SRC_URI:append = " file://system-user.dtsi"
 SRC_URI:append = " file://net-conf.dtsi"
 SRC_URI:append = " file://sd-conf.dtsi"
 SRC_URI:append = " file://pwr-conf.dtsi"
+SRC_URI:append = " file://mtd-conf.dtsi"
+SRC_URI:append = " file://i2c-conf.dtsi"
 
 require ${@'device-tree-sdt.inc' if d.getVar('SYSTEM_DTFILE') != '' else ''}
