@@ -1,9 +1,0 @@
-#include "system-conf.dtsi"
-/ {
-    firmware {
-        zynqmp-power {
-            compatible = "xlnx,zynqmp-power";
-            xlnx,has-poweroff;
-        };
-    };
-};
