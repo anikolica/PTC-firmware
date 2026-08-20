@@ -25,7 +25,7 @@ class IVSensorChannel:  # pylint: disable=too-many-instance-attributes
     current: float | None = 0.0
 
 
-class qc_sensors_test(test_base): # pylint: disable=invalid-name
+class qc_iv_sensors_test(test_base): # pylint: disable=invalid-name
     """Test script that runs on the PTC to read the IV sensors
     located on the QC board for monitoring purposes.
     """
