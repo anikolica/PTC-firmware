@@ -65,14 +65,12 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 
 ### Booting software
 #### Network Boot
-TODO: lwIP works now???? Set up pxeboot properly on Monday and do away with
-whatever this is
 1. Copy or symlink the files `boot.scr` and `image.ub` to a new folder.
 2. Start an http server on the host PC serving that folder as it's root
     1. An easy way to do this is to go to the directory with your files, and run
        `sudo python3 -m http.server --bind 192.168.(PTC Subnet).(PC IP) 80`.
        Note that root access is required to bind to port 80.
-    2. One may also set up a more production-ready webserver such as nginx or
+    2. One may also set up a more production-ready webserver such as [nginx](#nginx-configuration) or
        apache to do so if desired
 3. Load u-boot
     1. SD Card
@@ -90,7 +88,7 @@ whatever this is
         6. Write the u-boot image to flash: `sf write 0x10000000 0x0
            ${filesize}`
         7. Ensure the jumpers are set correctly to use qSPI boot. On header
-           J15,jump pins 1 and 3. See [below for an image](#qspi-boot-jumper-settings)
+           J15, jump pins 1 and 3. See [below for an image](#qspi-boot-jumper-settings)
         8. For instructions on how to update the qSPI flash, see [Updating qSPI Flash](#updating-qspi-flash)
 4. Set up a local DHCP server on the host PC
     1. Linux
@@ -122,6 +120,34 @@ Note that this provides 100 addresses which may be inadequate for production or
 QC,
 but is more than enough for some quick local tests.
 
+#### nginx Configuration
+On most distros, the nginx configuration is located at `/etc/nginx`. Generally,
+you want to create a file in the `sites-available` folder for the server
+configuration, and then symlink it into `sites-enabled`. On Fedora, the sites
+are located at `/etc/nginx/conf.d/`. A valid server configuration is as follows:
+
+##### netboot.conf
+```nginx
+server {
+	listen <address>:80;
+	server_name <address>;
+   root <network boot folder>;
+	disable_symlinks off;
+	autoindex on;
+
+	location / {
+	    autoindex on;
+	    
+	    # Disable Keep-Alive for U-Boot compatibility
+	    keepalive_timeout 0;
+	    add_header Connection "close";
+	}
+
+	tcp_nodelay on;
+	tcp_nopush off;
+}
+```
+
 ##### Firewall Configuration
 Note that the system's firewall may block dns requests. On Fedora, I had to
 either disable the firewall using `sudo systemctl stop firewalld`, or set the
@@ -131,10 +157,9 @@ firewall-cmd --reload`.
 
 On Ubuntu, the firewall can be disabled by running `sudo ufw disable`.
 
-For Windows, **Adrian**: if you ever get a chance to test this could you let me
-know? It may be enough to set the network interface to trusted, but I have no
-way to check. Also make sure you disable the firewall in WSL by using the above
-linux instructions.
+For Windows, either disable Windows Firewall, or set the network interface to
+trusted. Also make sure you disable the firewall in WSL by using the above linux
+instructions.
 
 #### Updating qSPI Flash
 Note that one can also use an SD card and follow the instructions in the
@@ -197,6 +222,7 @@ You should printouts on the PTC terminal that show the state of various sensors.
 4. If the DAVE project is modified, it must be reloaded onto the XMC4300 using the [KITXMCLINKSEGGERV1TOBO1 JTAG pod](https://www.digikey.com/en/products/detail/infineon-technologies/KITXMCLINKSEGGERV1TOBO1/5970448?s=N4IgTCBcDaIB4FsDGACANgSwHYGsQF0BfIA) connected to J6 on the PTC. (There is a provision to reprogram from the FPGA, but this is not implemented at the time of this writing). This only needs to be done once, and successive power-ups will retian the programming. To program the XMC4300 without using DAVE, the [J-Flash Lite](https://www.segger.com/downloads/jlink/) utility will still need to be used with the Infineon programming pod. The `.hex` file generated in `ethercat/xmc_proj/Debug` is used.
 5. A preliminary data exchange test exists. To run it, use `python3 ecat_test1.py`, which will send one temperature reading and the 48V line current across the EtherCAT link. The IN_GENERIC_INT values in TwinCAT will show: TMP117 ADC counts, LTC2945 ADC counts, an alignment word (0xcafe), and a sequence number 0-65535 that updates once per second with the ADC reads and rolls over. Provision to exhange further data between the FPGA an XMC4300 is pending.
 
+<!-- 
 ### To set up a permanent IP address:
 1. Change the `setup_timing.py` script to use your IP address of choice.
 2. Create a script `/etc/init.d/start_network.sh` with the following lines, which will run the above script to enable the Zynq GbE controller <sup>2</sup>and eth1 interface (and enable the timing interface):
@@ -217,7 +243,7 @@ You should printouts on the PTC terminal that show the state of various sensors.
 `ln -s /etc/init.d/start_network.sh /etc/rc5.d/S99start_network.sh`
 
 5. Test by powering down PTC with `init 0` and turning off the main 48V supply, waiting a minute for the supply capacitors to discharge, and then powering on again. The PTC should show eth1 up and running with the IP address chosen in step 1. 
-
+-->
 ### To transfer files to and from PTC:
 1. From host to PTC (from host): `rsync -avzh [file to transfer] root@[your IP address]:/home/root/`
 2. From PTC to host (from host): `rsync -avzh root@[your IP
