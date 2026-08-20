@@ -1,133 +1,187 @@
-import os
+"""Test script that runs on the PTC to read the IV sensors
+located on the QC board for voltage and current monitoring.
+"""
+
+import subprocess
+from dataclasses import dataclass
+from subprocess import CalledProcessError
 from time import sleep
 from loguru import logger as lg
 
 from ptctestclient.utils import test_base, qc_result
 
 
-class voltage_curr_test(test_base):
-    
-    def read_voltage(self, addr):
-        """Reads i2c volage bits from the iv sensor, 
-                    parses into decimal, and calculates voltage
-        
-        Args:
-            sensor_addr (str): hex address of the iv sensor
+@dataclass
+class IVSensorChannel:  # pylint: disable=too-many-instance-attributes
+    """A single IV sensor channel on the QC board."""
+
+    sensor_addr: str
+    v_min: float
+    v_max: float
+    i_min: float
+    i_max: float
+    resistor: float
+    voltage: float | None = 0.0
+    current: float | None = 0.0
+
+
+class iv_sensors_test(test_base):  # pylint: disable=invalid-name
+    """Test script that runs on the PTC to read the IV sensors
+    located on the QC board for voltage and current monitoring.
+    """
+
+    def __init__(self):
+        self.channels = []
+        self.sleep_time = 0.1
+        super().__init__()
+
+    def test_init(self) -> bool:
+        """Initialize the sensor addresses and respective ranges
+        with exceptions for aux and SoM sensors.
 
         Returns:
-            voltage (float): voltage reading in volts
+            bool: successful initialization
         """
+        lg.info("Starting voltage and current sensor test...")
+
+        self.channels = [
+            # Main sensors (12V rail, 0.005 ohm sense resistor)
+            IVSensorChannel("0x67", 12.0, 12.35, 1.35, 1.65, 0.005),
+            IVSensorChannel("0x68", 12.0, 12.35, 1.35, 1.65, 0.005),
+            IVSensorChannel("0x69", 12.0, 12.35, 1.35, 1.65, 0.005),
+            IVSensorChannel("0x6a", 12.0, 12.35, 1.35, 1.65, 0.005),
+            IVSensorChannel("0x6b", 12.0, 12.35, 1.35, 1.65, 0.005),
+            IVSensorChannel("0x6c", 12.0, 12.35, 1.35, 1.65, 0.005),
+            # SoM sensor (wider current range)
+            IVSensorChannel("0x6d", 12.0, 12.35, 0.0, 2.0, 0.005),
+            # Aux sensors (2.5V and 3.3V rails, 0.02 ohm sense resistor)
+            IVSensorChannel("0x6e", 2.4, 2.6, 0.5, 2.0, 0.02),
+            IVSensorChannel("0x6f", 3.2, 3.4, 0.5, 2.0, 0.02),
+        ]
+
+        self.sleep_time = 0.1
+        return True
+
+    def read_voltage(self, addr: str) -> float | None:
+        """Reads I2C voltage bits from the IV sensor,
+        parses into decimal, and calculates voltage.
+
+        Args:
+            addr (str): hex address of the IV sensor
+
+        Returns:
+            voltage (float | None): voltage reading in volts, or None on failure
+        """
+        voltage_lsb = 0.025
 
         try:
-            i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x1e w').read()
-            i2c_dec =((int((i2c_raw)[4:6], 16) << 8) + int((i2c_raw)[2:4], 16)) >> 4
-            voltage = i2c_dec * 0.025
+            i2c_raw_cmd = subprocess.run(
+                ["i2cget", "-y", "0", str(addr), "0x1e", "w"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            i2c_raw = i2c_raw_cmd.stdout
+            i2c_dec = ((int(i2c_raw[4:6], 16) << 8) + int(i2c_raw[2:4], 16)) >> 4
+            voltage = i2c_dec * voltage_lsb
             return voltage
-        except ValueError as e:
+        except CalledProcessError as e:
             lg.error(f"Voltage reading failed for sensor {addr}")
             lg.exception(e)
             return None
-    
-    def read_current(self, addr, resistor):
-        """Reads i2c current bits from the iv sensor, 
-            parses into decimal, and calculates current
+        except ValueError as e:
+            lg.error(f"Invalid voltage reading from sensor {addr}")
+            lg.exception(e)
+            return None
+
+    def read_current(self, addr: str, resistor: float) -> float | None:
+        """Reads I2C current bits from the IV sensor,
+        parses into decimal, and calculates current.
 
         Args:
-        sensor_addr (str): hex address of the iv sensor
-        resistor (float): resistance value for current calculation
+            addr (str): hex address of the IV sensor
+            resistor (float): resistance value for current calculation
 
         Returns:
-        current (float): current reading in amps
+            current (float | None): current reading in amps, or None on failure
         """
+        sense_voltage_lsb = 0.000025
 
         try:
-            i2c_raw = os.popen('i2cget -y 0 ' + addr + ' 0x14 w').read()
-            i2c_dec =((int((i2c_raw)[4:6], 16) << 8) + int((i2c_raw)[2:4], 16)) >> 4
-            current = i2c_dec * 0.000025 / resistor
+            i2c_raw_cmd = subprocess.run(
+                ["i2cget", "-y", "0", str(addr), "0x14", "w"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            i2c_raw = i2c_raw_cmd.stdout
+            i2c_dec = ((int(i2c_raw[4:6], 16) << 8) + int(i2c_raw[2:4], 16)) >> 4
+            current = i2c_dec * sense_voltage_lsb / resistor
             return current
-        except ValueError as e:
+        except CalledProcessError as e:
             lg.error(f"Current reading failed for sensor {addr}")
             lg.exception(e)
             return None
-        
- 
-    def test_init(self) -> bool:
-        """initialize the test, sensor addreses, 
-        and respective ranges with exceptions for aux and SoM sensors
-
-        Returns:
-            bool: successful init
-        """
-
-        lg.info("Starting voltage and current sensor test...")
-        
-        sensors = ['0x67', '0x68', '0x69', '0x6a', '0x6b', '0x6c', '0x6d']
-        aux_sensors = ['0x6e', '0x6f'] 
-
-        default_limits = {'v_min': 12.0, 'v_max': 12.35, 'i_min': 1.35, 'i_max': 1.65} # review current bounds
-        exceptions = {
-            '0x6d': {'v_min': 12.0, 'v_max': 12.35, 'i_min': 0, 'i_max': 2}, # SoM Sensor
-            '0x6e': {'v_min': 2.4, 'v_max': 2.6,  'i_min': 0.5, 'i_max': 2.0}, # 2.5V rail +- .1V
-            '0x6f': {'v_min': 3.2, 'v_max': 3.4,  'i_min': 0.5, 'i_max': 2.0} # 3.3V rail +- .1V
- 
-        }
-        
-        all_sensors = sensors + aux_sensors                                     
-        self.limits = {a: exceptions.get(a, default_limits) for a in all_sensors}  
-        self.readings = {a: {'v': 0.0, 'i': 0.0} for a in all_sensors}  
-        self.sleep_time = 0.1
-        
-
+        except ValueError as e:
+            lg.error(f"Invalid current reading from sensor {addr}")
+            lg.exception(e)
+            return None
 
     def run_test(self) -> qc_result:
-        """iterates through the muxes and associated iv sensors, 
-        reads voltage and current, and evaluates if they are within the acceptable range. 
+        """Iterates through the IV sensors,
+        reads voltage and current, and evaluates if they are
+        within the acceptable range.
 
         Returns:
             qc_result: pass or fail based on the readings/ranges
         """
-        
-        # from ecat test 1b - repeated 
-        module = '5EV'
-        if module == '2EG':
-            base_addr = '0xa003'
-        else:
-            base_addr = '0x8002'
+        mux_addr = "0x70"
+        aux_mux_channel = 0x04
+        main_mux_channel = 0x08
 
-        os.system('poke ' + base_addr + '0000 0x00000201')
-        # Taking I2C switches out of reset'
-        sleep(1)
-
-        
-        for addr in self.readings.keys():
+        for ch in self.channels:
             try:
-                self.readings[addr]["v"] = self.read_voltage(addr)
-                if addr in ['0x6e', '0x6f']: 
-                    # change to aux sensor channel from mux
-                    os.system('i2cset -y -r 0 0x70 0x04')
+                ch.voltage = self.read_voltage(ch.sensor_addr)
+
+                if ch.sensor_addr in ["0x6e", "0x6f"]:
+                    subprocess.run(
+                        ["i2cset", "-y", "-r", "0", mux_addr, hex(aux_mux_channel)],
+                        check=True,
+                    )
+                    sleep(1)
+                else:
+                    subprocess.run(
+                        ["i2cset", "-y", "-r", "0", mux_addr, hex(main_mux_channel)],
+                        check=True,
+                    )
                     sleep(1)
 
-                    self.readings[addr]["i"] = self.read_current(addr, .02)
-                
-                else: 
-                    os.system('i2cset -y -r 0 0x70 0x08')
-                    sleep(1)
-    
-                    self.readings[addr]["i"] = self.read_current(addr, .005)
-
+                ch.current = self.read_current(ch.sensor_addr, ch.resistor)
                 sleep(self.sleep_time)
-            except OSError as e:
-                lg.error(f"Voltage/current reading failed: {addr}")
+
+            # A catch-all exception is acceptable here, as we are looking for any
+            # sort of failure.
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                # The previous functions will return more detailed errors,
+                # making this error test-specific.
+                lg.critical(
+                    "Reading at least one voltage or current sensor"
+                    " was unsuccessful! Marking test as failed"
+                )
                 lg.exception(e)
                 return qc_result.FAIL
-            
-        for a, vs in self.readings.items():
-            lim = self.limits[a]
-            if vs['v'] < lim['v_min'] or vs['v'] > lim['v_max']:
-                lg.error(f"Voltage out of range on {a}: {vs['v']}V")
+
+        for ch in self.channels:
+            if ch.voltage is None or ch.current is None:
+                lg.error(f"Null reading on sensor {ch.sensor_addr}")
                 return qc_result.FAIL
-            if vs['i'] < lim['i_min'] or vs['i'] > lim['i_max']:
-                lg.error(f"Current out of range on {a}: {vs['i']}A")
+
+            if ch.voltage < ch.v_min or ch.voltage > ch.v_max:
+                lg.error(f"Voltage out of range on {ch.sensor_addr}: {ch.voltage}V")
+                return qc_result.FAIL
+
+            if ch.current < ch.i_min or ch.current > ch.i_max:
+                lg.error(f"Current out of range on {ch.sensor_addr}: {ch.current}A")
                 return qc_result.FAIL
 
         lg.info("Voltage and current monitoring test passed.")

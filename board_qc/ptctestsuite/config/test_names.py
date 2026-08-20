@@ -6,7 +6,8 @@ test_pretty_names = {
     "gbe_test": "GBe",
     "dummy_test": "Dummy",
     "dummy_client": "Dummy Client",
-    "qc_sensors_test": "QC Board Sensors"
+    "qc_sensors_test": "QC Board Sensors",
+    "iv_sensors_test": "IV Sensors"
 }
 
 #manual_tests = ['visual', 'ripple_hw', 'ripple_adc', 'bootup',
