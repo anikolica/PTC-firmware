@@ -5,7 +5,8 @@ test_pretty_names = {
     "temperature_test": "Temperature",
     "gbe_test": "GBe",
     "dummy_test": "Dummy",
-    "dummy_client": "Dummy Client"
+    "dummy_client": "Dummy Client",
+    "qc_sensors_test": "QC Board Sensors"
 }
 
 #manual_tests = ['visual', 'ripple_hw', 'ripple_adc', 'bootup',
@@ -54,7 +55,7 @@ manual_tests = [
 """
 manual_tests = [man_test('dummy_man', 'Dummy Test', True)]
 
-# need to scan the enclustra QR  in between here to track the serial number
+# need to scan the enclustra QR in between here to track the serial number
 
 """
 manual_test_phase_2 = [
