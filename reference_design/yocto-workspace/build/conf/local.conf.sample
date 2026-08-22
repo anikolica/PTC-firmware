@@ -15,16 +15,14 @@
 
 XILINX_WITH_ESW = "xsct"
 LICENSE_FLAGS_ACCEPTED:append = " xilinx"
-DISTRO_FEATURES:append = " virtualization"
 
 # Use the newly generated MACHINE
 MACHINE = "zynqmp-ptc"
 
 HDF_BASE = "file://"
-HDF_PATH = "/home/david/.peta2025-home/PTC-firmware/reference_design/Mercury_XU5_PE1/Mercury_XU5_PE1.xsa"
-HDF_PATH = "${TOPDIR}/../hw-description/Mercury_XU5_PE1.xsa"
+HDF_PATH = "/home/david/Projects/PTC-firmware/reference_design/yocto-workspace/hw-description/Mercury_XU5_PE1.xsa" 
 
-XILINX_VER_MAIN = "2025.2"
+XILINX_VER_MAIN = "2025.1"
 
 PACKAGE_CLASSES = "package_ipk"
 IMAGE_FSTYPES = "cpio.gz"

@@ -18,9 +18,7 @@ BBLAYERS ?= " \
   ${TOPDIR}/../meta-xilinx/meta-xilinx-vendor \
   ${TOPDIR}/../meta-xilinx/meta-xilinx-standalone \
   ${TOPDIR}/../meta-openembedded/meta-filesystems \
-  ${TOPDIR}/../meta-virtualization \
   ${TOPDIR}/../meta-xilinx/meta-microblaze \
-  ${TOPDIR}/../meta-xilinx/meta-xilinx-standalone-sdt \
   ${TOPDIR}/../meta-xilinx/meta-xilinx-bsp \
   ${TOPDIR}/../meta-custom \
   ${TOPDIR}/../meta-xilinx-tools \
