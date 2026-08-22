@@ -1,0 +1,13 @@
+[Unit]
+Description=Initialize and Reset SFP SerDes PHY
+DefaultDependencies=no
+Requires=sys-subsystem-net-devices-end1.device
+After=sys-subsystem-net-devices-end1.device local-fs.target network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/sfp-init.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+# Ignore cloned upstream layers (they are pulled via setup script)
+/poky/
+/meta-openembedded/
+/meta-arm/
+/meta-virtualization/
+/meta-xilinx/
+/meta-xilinx-tools/
+/gen-machine-conf/
+
+# Ignore the build output and caches
+/build/
+/sstate-cache/
+/downloads/

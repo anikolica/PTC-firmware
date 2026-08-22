@@ -1,0 +1,15 @@
+[Unit]
+Description=BusyBox DHCP Client for end1 (Post-SFP Init)
+DefaultDependencies=no
+Requires=sfp-init.service
+After=sfp-init.service
+
+[Service]
+Type=forking
+ExecStart=/sbin/udhcpc -i end1 -b -R
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+# Matches the late-boot execution framework
+WantedBy=multi-user.target
