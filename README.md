@@ -38,6 +38,7 @@ This respository contains firmware and software source for PTCv4. Firmware runs 
 | reference_design/src/ | Verilog source files, pin/timing constraint files |
 | reference_design/scripts/ | Build scripts |
 | reference_design/ip_repo/ | User-generated IP |
+| reference_design/yocto-workspace | yocto firmware workspace |
 
 ### Git instructions and building firmware
 This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubuntu 20.04.1 is used for development).
@@ -76,6 +77,28 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 11. To build the firmware, run `bitbake ptc-image`.
     1. Note that it is not necessary to manually package `BOOT.bin`, this will
        build the rootfs as well as bootloader.
+
+### Developing With Yocto
+The yocto build system is based on the concept of a 'layer', which is a modular
+repository containing metadata, recipes and configurations that tell the build
+system how to assemble the embedded Linux operating system.
+
+All layers aside from `meta-custom` are provided from upstream, covering the
+base linux packages, processor-specific package and Xilinx board-specific
+packages. Any firmware development that we have done and will do resides in
+`meta-custom`.
+
+For example, the device tree overrides are in
+`meta-custom/recipes-bsp/device-tree`, the u-boot patches are in
+`meta-custom/recipes-bsp/u-boot`, and the openocd application is in
+`meta-custom/recipes-apps/openocd`.
+
+To create a new recipe, copy the proper recipe type from
+`poky/meta-skeleton/recipes-<type>` to `meta-custom/recipes-<type>`, and modify
+it accordingly. If the recipe is a new component and not an override, update
+`meta-custom/recipes-core/images/ptc-image.bb` accordingly. For example, to add
+a new user application, update the option `IMAGE_INSTALL:append` with a new line
+for the application.
 
 ### Booting software
 #### Network Boot
