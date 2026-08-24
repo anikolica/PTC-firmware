@@ -8,4 +8,8 @@ SRC_URI += "file://u-boot-merged.cfg \
 do_configure:prepend() {
     install -d ${S}/include/configs
     cp ${WORKDIR}/platform-top.h ${S}/include/configs/platform-top.h
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
