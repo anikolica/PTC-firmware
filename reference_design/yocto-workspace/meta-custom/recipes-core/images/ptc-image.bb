@@ -3,6 +3,16 @@ LICENSE = "MIT"
 
 inherit core-image
 
+KERNEL_CLASSES += "kernel-fitimage"
+KERNEL_IMAGETYPE = "fitImage"
+
+FITIMAGE_PACK_RAMDISK = "1"
+INITRAMFS_IMAGE = "ptc-image-minimal"
+INITRAMFS_IMAGE_NAME = "ptc-image-minimal-zynqmp-ptc.rootfs"
+CONFIG_BLK_DEV_INITRD = "n"
+IMAGE_ROOTFS_EXTRA_SPACE = "0"
+IMAGE_OVERHEAD_FACTOR = "1.0"
+
 # -------------------------------------------------------------
 # Core & Package Groups
 # -------------------------------------------------------------
