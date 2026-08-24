@@ -6,20 +6,20 @@ BBPATH = "${TOPDIR}"
 BBFILES ?= ""
 
 BBLAYERS ?= " \
-  ${TOPDIR}/../poky/meta \
-  ${TOPDIR}/../poky/meta-poky \
-  ${TOPDIR}/../poky/meta-yocto-bsp \
-  ${TOPDIR}/../meta-openembedded/meta-oe \
-  ${TOPDIR}/../meta-openembedded/meta-python \
-  ${TOPDIR}/../meta-openembedded/meta-networking \
-  ${TOPDIR}/../meta-arm/meta-arm-toolchain \
-  ${TOPDIR}/../meta-arm/meta-arm \
-  ${TOPDIR}/../meta-xilinx/meta-xilinx-core \
-  ${TOPDIR}/../meta-xilinx/meta-xilinx-vendor \
-  ${TOPDIR}/../meta-xilinx/meta-xilinx-standalone \
-  ${TOPDIR}/../meta-openembedded/meta-filesystems \
-  ${TOPDIR}/../meta-xilinx/meta-microblaze \
-  ${TOPDIR}/../meta-xilinx/meta-xilinx-bsp \
-  ${TOPDIR}/../meta-custom \
-  ${TOPDIR}/../meta-xilinx-tools \
+  /workdir/poky/meta \
+  /workdir/poky/meta-poky \
+  /workdir/poky/meta-yocto-bsp \
+  /workdir/meta-openembedded/meta-oe \
+  /workdir/meta-openembedded/meta-python \
+  /workdir/meta-openembedded/meta-networking \
+  /workdir/meta-arm/meta-arm-toolchain \
+  /workdir/meta-arm/meta-arm \
+  /workdir/meta-xilinx/meta-xilinx-core \
+  /workdir/meta-xilinx/meta-xilinx-vendor \
+  /workdir/meta-xilinx/meta-xilinx-standalone \
+  /workdir/meta-openembedded/meta-filesystems \
+  /workdir/meta-xilinx/meta-microblaze \
+  /workdir/meta-xilinx/meta-xilinx-bsp \
+  /workdir/meta-custom \
+  /workdir/meta-xilinx-tools \
   "

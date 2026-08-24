@@ -20,7 +20,7 @@ LICENSE_FLAGS_ACCEPTED:append = " xilinx"
 MACHINE = "zynqmp-ptc"
 
 HDF_BASE = "file://"
-HDF_PATH = "/home/david/Projects/PTC-firmware/reference_design/yocto-workspace/hw-description/Mercury_XU5_PE1.xsa" 
+HDF_PATH = "/workdir/hw-description/Mercury_XU5_PE1.xsa"
 
 XILINX_VER_MAIN = "2025.1"
 
