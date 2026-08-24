@@ -2,7 +2,7 @@ SUMMARY = "PTC Production Minimal Image"
 require recipes-core/images/core-image-minimal.bb
 
 # Stripping rules
-IMAGE_FEATURES = "read-only-rootfs"
+IMAGE_FEATURES = "read-only-rootfs ssh-server-dropbear empty-root-password allow-empty-password"
 IMAGE_LINGUAS = ""
 USE_NLS = "no"
 NO_RECOMMENDATIONS = "1"
