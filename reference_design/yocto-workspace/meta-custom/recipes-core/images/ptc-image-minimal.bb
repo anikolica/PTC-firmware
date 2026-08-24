@@ -11,12 +11,12 @@ IMAGE_FSTYPES = "cpio.gz"
 # Add only runtime dependencies
 # Ignoring OpenOCD - potentially want to include this in the minimal image for
 when deployed?
+# Likewise for setting the u-boot env
 IMAGE_INSTALL += " \
     systemd-timesyncd \
     systemd-networkd \
     mtd-utils-flashcp \
     mtd-utils-flash-erase \
-    libubootenv-bin \
     sfp-init \
     genskeleton \
 "
