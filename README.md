@@ -50,18 +50,32 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 6. All other HDL files should be kept in the src/ directory.
 7. `git commit` all changes and `git push`.
 
-### Building software
+### Building Software
 1. First, from Vivado: **File - Export - Export Hardware - Include Bitstream** and export to the default *Mercury_XU5_PE1/* project directory (this will export an .xsa file).
-2. **File - Export - Export Hardware - Export Bitstream File** and choose the same default directory as above. Name the file *Mercury_XU5_PE1.bit*.
-3. From the `reference_design/` directory on the Linux machine:`petalinux-create -t project -n ptc.linux --template zynqMP`
-4. From the `petalinux/configs/` directory in this repo, copy the `config` and `rootfs_config` files to the `ptc.linux/project-spec/configs/` folder. 
-5. `petalinux-config -p ptc.linux/ --get-hw-description Mercury_XU5_PE1/`. This will grab the exported .xsa and .bit files from before. In the graphical menu that pops up, select **Image Packaging Configuration - Root filesystem type - EXT4**. (This ensures the image will boot from an ext4 partition on the SD card.) This option should have been read from the `config` file copied earlier.
-6. `petalinux-config -p ptc.linux/ -c rootfs` will bring up a graphical menu, and you can confirm that the choices in the `rootfs_config` file are reflected here. (There are several filesystem utilities that will be marked for install based on the file.)
-7. Copy `system-user.dtsi` file in this repo to `project-spec/meta-user/recipes-bsp/device-tree/files/`. This ensures that the SD card controller, GEM (gigabit ethernet MAC that the PS uses for the SFP connection), and the I2C device on the PS, all get configured correctly.
-8. From the `petalinux/recipes/` directory, copy the `regtest/` directory to `ptc.linux/project-spec/meta-user/recipes-apps/`. This adds a simple user application to the build <sup>1</sup>. Also copy `user-rootfsconfig` to `project-spec/meta-user/conf/` (this ensures that user applications are included in the root filesystem).
-9. `petalinux-build -p ptc.linux` will take many tens of minutes to build the first time.
-10. Package the bootloader with the command `petalinux-package -p ptc.linux --boot --fsbl ptc.linux/images/linux/zynqmp_fsbl.elf --pmufw ptc.linux/images/linux/pmufw.elf --atf ptc.linux/images/linux/bl31.elf --u-boot ptc.linux/images/linux/u-boot.elf --force`
-11. From the `ptc.linux/` directory, you can test the build by using `petalinux-boot --qemu --u-boot`. The image will boot virtually, and you can login with password `root` (change this in the config menu from step 5). You can test if simple command line utilities -- like `peek` and `i2cdetect` -- were built into the image correctly by typing them at the prompt after logging in. CTRL+A, and then X, will exit a QEMU session.
+2. **File - Export - Export Hardware - Export Bitstream File** and choose the
+   same default directory as above. Name the file *Mercury_XU5_PE1.bit*.
+3. In `yocto-workspace`, create the folder `hw-description`. Copy
+   `Mercury_XU5_PE1.bit` to that folder
+4. Change directory to hw-description and generate a sha256 checksum for the bitstream file: `sha256sum
+   Mercury_XU5_PE1.bit > Mercury_XU5_PE1.bit.sha256`
+5. In `yocto-workspace`, run `setup-yocto.sh` to clone the required layers
+6. Go up a directory and then into `container`. Build the container using
+   docker: `docker build -t crops-poky-xilinx:latest .`
+7. Go back into `yocto-workspace`, and execute `run-container.sh` to enter the
+   docker container. It will mount the yocto project as `/workdir`
+8. Setup the yocto environment: run `source poky/oe-init-build-env build/`
+9. Overwrite the pre-generated yocto configure with the example files: Run `cp
+   conf/bblayers.conf.sample conf/bblayers.conf` and `cp conf/local.conf.sample
+   conf/local.conf`. If asked if you want to overwrite, say yes.
+    1. If you are running in the container, the bitbake layers will already be
+       configured correctly. If not, edit bblayers.conf and update the paths
+       accordingly.
+10. Update the machine configuration by running
+    `./gen-machine-conf/gen-machineconf parse-xsa --hw-description
+    /workdir/hw-description/Mercury_XU5_PE1.bit --machine zynqmp-ptc`
+11. To build the firmware, run `bitbake ptc-image`.
+    1. Note that it is not necessary to manually package `BOOT.bin`, this will
+       build the rootfs as well as bootloader.
 
 ### Booting software
 #### Network Boot
