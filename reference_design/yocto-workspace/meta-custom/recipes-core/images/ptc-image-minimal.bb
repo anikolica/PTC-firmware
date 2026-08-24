@@ -8,6 +8,11 @@ USE_NLS = "no"
 NO_RECOMMENDATIONS = "1"
 IMAGE_FSTYPES = "cpio.gz"
 
+INITRAMFS_IMAGE = "ptc-image-minimal"
+INITRAMFS_IMAGE_BUNDLE = "1"
+IMAGE_ROOTFS_EXTRA_SPACE = "0"
+IMAGE_OVERHEAD_FACTOR = "1.0"
+
 # Add only runtime dependencies
 # Ignoring OpenOCD - potentially want to include this in the minimal image for
 when deployed?
