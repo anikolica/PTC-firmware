@@ -1,4 +1,3 @@
-#include "system-conf.dtsi"
 / {
         aliases {
                 mmc0 = &sdhci1; /* SD Card */

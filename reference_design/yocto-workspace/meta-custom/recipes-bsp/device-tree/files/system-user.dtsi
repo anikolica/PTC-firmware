@@ -1,4 +1,3 @@
-#include "system-conf.dtsi"
 #include "i2c-conf.dtsi"
 #include "net-conf.dtsi"
 #include "sd-conf.dtsi"
