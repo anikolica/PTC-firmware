@@ -1,0 +1,60 @@
+XILINX_WITH_ESW = "xsct"
+LICENSE_FLAGS_ACCEPTED:append = " xilinx"
+
+# Use the newly generated MACHINE
+MACHINE = "zynqmp-ptc"
+DISTRO = "ptc-distro"
+
+HDF_BASE = "file://"
+HDF_PATH = "/workdir/hw-description/Mercury_XU5_PE1.xsa"
+
+PREFERRED_PROVIDER_virtual/kernel = "linux-xlnx"
+PREFERRED_PROVIDER_virtual/bootloader = "u-boot-xlnx"
+PREFERRED_PROVIDER_u-boot = "u-boot-xlnx"
+
+XILINX_VER_MAIN = "2025.1"
+
+SFPFIX_I2C_BUS = "3"
+SFPFIX_IFACE = "end1"
+
+USER_CLASSES ?= "buildstats"
+
+#
+# Interactive shell configuration
+#
+OE_TERMINAL = "auto"
+# By default disable interactive patch resolution (tasks will just fail instead):
+PATCHRESOLVE = "noop"
+
+BB_DISKMON_DIRS ??= "\
+    STOPTASKS,${TMPDIR},1G,100K \
+    STOPTASKS,${DL_DIR},1G,100K \
+    STOPTASKS,${SSTATE_DIR},1G,100K \
+    STOPTASKS,/tmp,100M,100K \
+    HALT,${TMPDIR},100M,1K \
+    HALT,${DL_DIR},100M,1K \
+    HALT,${SSTATE_DIR},100M,1K \
+    HALT,/tmp,10M,1K"
+
+#
+# Yocto Project SState Mirror
+#
+BB_HASHSERVE_UPSTREAM = 'wss://hashserv.yoctoproject.org/ws'
+SSTATE_MIRRORS ?= "file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH"
+
+
+#
+# Hash Equivalence
+#
+BB_HASHSERVE = "auto"
+BB_SIGNATURE_HANDLER = "OEEquivHash"
+
+#
+# Memory Resident Bitbake
+#
+BB_SERVER_TIMEOUT = "60"
+
+# CONF_VERSION is increased each time build/conf/ changes incompatibly and is used to
+# track the version of this file when it was generated. This can safely be ignored if
+# this doesn't mean anything to you.
+CONF_VERSION = "2"
