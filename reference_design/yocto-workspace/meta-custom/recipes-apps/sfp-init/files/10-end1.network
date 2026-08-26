@@ -1,9 +1,0 @@
-[Match]
-Name=end1 eth1
-
-[Network]
-DHCP=yes
-LinkOnline=yes
-
-[DHCPv4]
-RouteMetric=100
