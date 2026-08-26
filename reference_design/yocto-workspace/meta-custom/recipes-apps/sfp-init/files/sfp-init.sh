@@ -1,8 +1,14 @@
 #!/bin/sh
 
-I2C_BUS=3
+ARG_STRING="$1"
+
+#I2C_BUS=3
+I2C_BUS="${ARG_STRING%%-*}"
 PHY_ADDR=0x56
 SLEEP_TIME=0.2
+
+# Pull interface from argument
+IFACE="${ARG_STRING#*-}"
 
 retry_command() {
     local max_attempts=2
@@ -55,7 +61,7 @@ if [ "$PHY_ID" = "0x01 0x41" ]; then
     sleep 6
 
     # Reconfigure interface so systemd takes over
-    networkctl reconfigure end1
+    networkctl reconfigure ${IFACE}
     echo "SFP PHY initialization complete."
 else
     echo "No Marvell PHY detected on I2C bus $I2C_BUS (ID: '$PHY_ID'). Skipping reset."
