@@ -1,8 +1,8 @@
 [Match]
-Name=end1
+Name=end1 eth1
 
 [Network]
-DHCP=no
+DHCP=yes
 LinkOnline=yes
 
 [DHCPv4]

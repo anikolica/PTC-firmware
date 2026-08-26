@@ -51,7 +51,11 @@ if [ "$PHY_ID" = "0x01 0x41" ]; then
     retry_command i2cset -y $I2C_BUS $PHY_ADDR 0x00 0x4091 w
 
     # Allow PHY PLLs and copper autoneg to stabilize
-    sleep 3
+    # Set link to down so systemd doesn't think it's up
+    sleep 6
+
+    # Reconfigure interface so systemd takes over
+    networkctl reconfigure end1
     echo "SFP PHY initialization complete."
 else
     echo "No Marvell PHY detected on I2C bus $I2C_BUS (ID: '$PHY_ID'). Skipping reset."

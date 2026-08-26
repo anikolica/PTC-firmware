@@ -7,7 +7,6 @@ SRC_URI = " \
     file://sfp-init.sh \
     file://sfp-init.service \
     file://10-end1.network \
-	file://udhcpc-end1.service \
 "
 
 S = "${WORKDIR}"
@@ -15,8 +14,8 @@ S = "${WORKDIR}"
 inherit systemd
 
 SYSTEMD_PACKAGES = "${PN}"
-SYSTEMD_SERVICE:${PN} = "sfp-init.service udhcpc-end1.service"
-SYSTEMD_AUTO_ENABLE = "enable"
+SYSTEMD_SERVICE:${PN} = "sfp-init.service"
+SYSTEMD_AUTO_ENABLE:${PN} = "enable"
 
 RDEPENDS:${PN} += "i2c-tools"
 
@@ -28,7 +27,6 @@ do_install() {
     # Install systemd services
     install -d ${D}${systemd_system_unitdir}
     install -m 0644 ${S}/sfp-init.service ${D}${systemd_system_unitdir}/sfp-init.service
-	install -m 0644 ${S}/udhcpc-end1.service ${D}${systemd_system_unitdir}/udhcpc-end1.service
 
     # Install systemd-networkd DHCP configuration
     install -d ${D}${sysconfdir}/systemd/network
@@ -36,5 +34,7 @@ do_install() {
 }
 
 FILES:${PN} += " \
+    ${sbindir}/sfp-init.sh \
+    ${systemd_system_unitdir}/sfp-init.service \
     ${sysconfdir}/systemd/network/10-end1.network \
 "
