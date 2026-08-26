@@ -11,3 +11,4 @@ git clone -b scarthgap https://git.yoctoproject.org/meta-virtualization
 git clone -b ${XIL_REL} https://github.com/Xilinx/meta-xilinx
 git clone -b ${XIL_REL} https://github.com/Xilinx/meta-xilinx-tools
 git clone -b ${XIL_REL} https://github.com/Xilinx/gen-machine-conf.git
+git clone -b ${XIL_REL} https://github.com/ddrobner/meta-dune.git
