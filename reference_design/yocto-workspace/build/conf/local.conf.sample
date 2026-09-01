@@ -5,6 +5,8 @@ LICENSE_FLAGS_ACCEPTED:append = " xilinx"
 MACHINE = "zynqmp-ptc"
 DISTRO = "ptc-distro"
 
+BBMULTICONFIG = "micro nano systemd full"
+
 HDF_BASE = "file://"
 HDF_PATH = "/workdir/hw-description/Mercury_XU5_PE1.xsa"
 
@@ -15,7 +17,7 @@ PREFERRED_PROVIDER_u-boot = "u-boot-xlnx"
 XILINX_VER_MAIN = "2025.1"
 
 SFPFIX_I2C_BUS = "3"
-SFPFIX_IFACE = "end1"
+# SFPFIX_IFACE defaults by init system (systemd: end1, sysvinit: eth1)
 
 USER_CLASSES ?= "buildstats"
 
