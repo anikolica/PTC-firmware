@@ -74,9 +74,32 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 10. Update the machine configuration by running
     `./gen-machine-conf/gen-machineconf parse-xsa --hw-description
     /workdir/hw-description/Mercury_XU5_PE1.bit --machine zynqmp-ptc`
-11. To build the firmware, run `bitbake ptc-image`.
+11. To build the development firmware, run `bitbake mc:systemd:ptc-image`.
     1. Note that it is not necessary to manually package `BOOT.bin`, this will
        build the rootfs as well as bootloader.
+
+#### Build Targets
+There are four image targets available, for different purposes and with
+different system features.
+
+1. `ptc-image-dev` is a standard development image. It contains useful dev
+   tools, such as text editors and hardware inspection tools. The resultant
+   fitImage is approximately 200MB. It can be built by running `bitbake mc:systemd:ptc-image`
+2. `ptc-image-minimal` is a reasonably stripped production image using systemd.
+   It does not include any development tools, and a minimal amount of userspace
+   packages, but the core system is the same as `ptc-image-dev`. The resultant
+   fitImage is approximately 50MB. It can be built by running `bitbake
+   mc:systemd:ptc-image-minimal`
+3. `ptc-image-micro` is similar to `ptc-image-minimal`, but reduces size by XX%,
+   due to using the busybox init system instead of systemd. Aside from the init
+   system, the rest of the core system is the same. The resultant fitImage is
+   approximately 40MB. It can be built by running `bitbake mc:micro:ptc-image-micro`.
+4. `ptc-image-nano` is the slimmest image, but has the largest chance of causing
+   issues due to using musl (busybox) instead of glibc (standard). musl is a
+   first-class citizen in yocto, and existing custom recipes have full support for
+   musl. However there may be issues integrating recipes that require C
+   compilation in the future without extra patches. The resultant fitImage is
+   approximately XXMB. It can be built by running `bitbake mc:nano:ptc-image-nano`.
 
 ### Developing With Yocto
 The yocto build system is based on the concept of a 'layer', which is a modular
@@ -96,7 +119,7 @@ For example, the device tree overrides are in
 To create a new recipe, copy the proper recipe type from
 `poky/meta-skeleton/recipes-<type>` to `meta-custom/recipes-<type>`, and modify
 it accordingly. If the recipe is a new component and not an override, update
-`meta-custom/recipes-core/images/ptc-image.bb` accordingly. For example, to add
+`meta-custom/recipes-core/images/ptc-image-<image>.bb` accordingly. For example, to add
 a new user application, update the option `IMAGE_INSTALL:append` with a new line
 for the application.
 

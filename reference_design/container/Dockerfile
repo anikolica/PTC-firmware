@@ -9,3 +9,4 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-cache-dir "websockets>=11.0"
+RUN pip3 install pyyaml
