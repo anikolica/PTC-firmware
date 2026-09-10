@@ -16,11 +16,12 @@ BBLAYERS ?= " \
   /workdir/meta-arm/meta-arm \
   /workdir/meta-xilinx/meta-xilinx-core \
   /workdir/meta-xilinx/meta-xilinx-vendor \
-  /workdir/meta-xilinx/meta-xilinx-standalone \
   /workdir/meta-openembedded/meta-filesystems \
+  /workdir/meta-xilinx/meta-xilinx-standalone \
   /workdir/meta-xilinx/meta-microblaze \
   /workdir/meta-xilinx/meta-xilinx-bsp \
-  /workdir/meta-custom \
   /workdir/meta-xilinx-tools \
+  /workdir/meta-ptc/meta-ptc-software \
+  /workdir/meta-ptc/meta-ptc-hardware \
   /workdir/meta-dune \
   "

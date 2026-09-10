@@ -2,13 +2,14 @@ XILINX_WITH_ESW = "xsct"
 LICENSE_FLAGS_ACCEPTED:append = " xilinx"
 
 # Use the newly generated MACHINE
-MACHINE = "zynqmp-ptc"
 DISTRO = "ptc-distro"
+MACHINE = "zynqmp-ptc"
 
-BBMULTICONFIG = "micro nano systemd full"
+#BBMULTICONFIG = "micro nano systemd full"
+BBMULTICONFIG = "systemd sysv"
 
-HDF_BASE = "file://"
-HDF_PATH = "/workdir/hw-description/Mercury_XU5_PE1.xsa"
+#HDF_BASE = "file://"
+#HDF_PATH = "/workdir/hw-description/Mercury_XU5_PE1.xsa"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-xlnx"
 PREFERRED_PROVIDER_virtual/bootloader = "u-boot-xlnx"
@@ -41,8 +42,8 @@ BB_DISKMON_DIRS ??= "\
 #
 # Yocto Project SState Mirror
 #
-BB_HASHSERVE_UPSTREAM = 'wss://hashserv.yoctoproject.org/ws'
-SSTATE_MIRRORS ?= "file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH"
+#BB_HASHSERVE_UPSTREAM = 'wss://hashserv.yoctoproject.org/ws'
+#SSTATE_MIRRORS ?= "file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH"
 
 
 #
