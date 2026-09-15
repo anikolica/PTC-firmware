@@ -22,6 +22,6 @@ BBLAYERS ?= " \
   /workdir/meta-xilinx/meta-xilinx-bsp \
   /workdir/meta-xilinx-tools \
   /workdir/meta-ptc/meta-ptc-software \
-  /workdir/meta-ptc/meta-ptc-hardware \
+  /workdir/meta-ptc/meta-ptc-bsp \
   /workdir/meta-dune \
   "

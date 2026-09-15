@@ -51,55 +51,58 @@ This project uses Vivado 2022.2 and petalinux 2022.2 in a Linux environment (Ubu
 6. All other HDL files should be kept in the src/ directory.
 7. `git commit` all changes and `git push`.
 
+### Updating The Hardware Definition/Bitstream
+1. From Vivado: **File - Export - Export Hardware - Include Bitstream** and
+   export to the default *Mercury_XU5_PE1/* project directory (this will export
+   an .xsa file).
+2. Finish the yocto environment setup in [Building Software](#building-software)
+3. Copy the updated .xsa file to meta-ptc/meta-ptc-bsp/hw-description.
+   1. If you have only changed the bitstream, you can overwrite the existing
+      file, and update the hashes in `zynqmp-ptc.conf`. It may be committed to
+      GitHub if you desire.
+   2. If you have made more significant changes, change the build target back to
+      `zynqmp-generic` in local.conf, and continue following the instructions to
+      regenerate the machine configuration.
+4. Generate a sha256sum for the hardware definition: run `sha256sum \[path to xsa\].xsa > \[path to xsa\].xsa.sha256`
+5. (If required, based on the above instructions): Update the machine
+   configuration. After setting up the yocto workspace, run
+   `./meta-xilinx-gen-machine-conf/gen-machineconf parse-xsa --hw-description
+   \<path-to-xsa\> --config-dir meta-ptc/meta-ptc-bsp/conf --machine-name
+   \<machine name, eg. zynqmp-ptc\> --soc-family zynqmp`
+6. Update local.conf to use the new machine definition by updating the `MACHINE` variable.
+
+
 ### Building Software
-1. First, from Vivado: **File - Export - Export Hardware - Include Bitstream** and export to the default *Mercury_XU5_PE1/* project directory (this will export an .xsa file).
-2. **File - Export - Export Hardware - Export Bitstream File** and choose the
-   same default directory as above. Name the file *Mercury_XU5_PE1.bit*.
-3. In `yocto-workspace`, create the folder `hw-description`. Copy
-   `Mercury_XU5_PE1.bit` to that folder
-4. Change directory to hw-description and generate a sha256 checksum for the bitstream file: `sha256sum
-   Mercury_XU5_PE1.bit > Mercury_XU5_PE1.bit.sha256`
-5. In `yocto-workspace`, run `setup-yocto.sh` to clone the required layers
-6. Go up a directory and then into `container`. Build the container using
+1. In `yocto-workspace`, run `setup-yocto.sh` to clone the required layers
+2. Go up a directory and then into `container`. Build the container using
    docker: `docker build -t crops-poky-xilinx:latest .`
-7. Go back into `yocto-workspace`, and execute `run-container.sh` to enter the
+3. Go back into `yocto-workspace`, and execute `run-container.sh` to enter the
    docker container. It will mount the yocto project as `/workdir`
-8. Setup the yocto environment: run `source poky/oe-init-build-env build/`
-9. Overwrite the pre-generated yocto configure with the example files: Run `cp
+4. Setup the yocto environment: run `source poky/oe-init-build-env build/`
+5. Overwrite the pre-generated yocto configuration with the example files: Run `cp
    conf/bblayers.conf.sample conf/bblayers.conf` and `cp conf/local.conf.sample
    conf/local.conf`. If asked if you want to overwrite, say yes.
     1. If you are running in the container, the bitbake layers will already be
        configured correctly. If not, edit bblayers.conf and update the paths
        accordingly.
-10. Update the machine configuration by running
-    `./gen-machine-conf/gen-machineconf parse-xsa --hw-description
-    /workdir/hw-description/Mercury_XU5_PE1.bit --machine zynqmp-ptc`
-11. To build the development firmware, run `bitbake mc:systemd:ptc-image`.
+6. To build the development firmware, run `bitbake ptc-image-full`.
     1. Note that it is not necessary to manually package `BOOT.bin`, this will
        build the rootfs as well as bootloader.
+7. Gather the images from `build/tmp-glibc/deploy/images/<machine
+   name>/{boot.bin, boot.scr}` and `build/tmp-glibc/deploy/images/<machine
+   name>/{full, minimal}/image.ub`.
 
 #### Build Targets
-There are four image targets available, for different purposes and with
-different system features.
+There are two build targets available:
 
-1. `ptc-image-dev` is a standard development image. It contains useful dev
+1. `ptc-image-full` is a standard development image. It contains useful dev
    tools, such as text editors and hardware inspection tools. The resultant
-   fitImage is approximately 200MB. It can be built by running `bitbake mc:systemd:ptc-image`
+   fitImage is approximately 200MB. It can be built by running `bitbake ptc-image-full`
 2. `ptc-image-minimal` is a reasonably stripped production image using systemd.
    It does not include any development tools, and a minimal amount of userspace
-   packages, but the core system is the same as `ptc-image-dev`. The resultant
-   fitImage is approximately 50MB. It can be built by running `bitbake
-   mc:systemd:ptc-image-minimal`
-3. `ptc-image-micro` is similar to `ptc-image-minimal`, but reduces size by XX%,
-   due to using the busybox init system instead of systemd. Aside from the init
-   system, the rest of the core system is the same. The resultant fitImage is
-   approximately 40MB. It can be built by running `bitbake mc:micro:ptc-image-micro`.
-4. `ptc-image-nano` is the slimmest image, but has the largest chance of causing
-   issues due to using musl (busybox) instead of glibc (standard). musl is a
-   first-class citizen in yocto, and existing custom recipes have full support for
-   musl. However there may be issues integrating recipes that require C
-   compilation in the future without extra patches. The resultant fitImage is
-   approximately XXMB. It can be built by running `bitbake mc:nano:ptc-image-nano`.
+   packages, but the core system is the same as `ptc-image-full`. The resultant
+   fitImage is approximately 60MB. It can be built by running `bitbake
+   ptc-image-minimal`
 
 ### Developing With Yocto
 The yocto build system is based on the concept of a 'layer', which is a modular
@@ -125,13 +128,14 @@ for the application.
 
 ### Booting software
 #### Network Boot
-1. Copy or symlink the files `boot.scr` and `image.ub` to a new folder.
-2. Start an http server on the host PC serving that folder as it's root
+1. Start an http server on the host PC serving some folder as it's root
     1. An easy way to do this is to go to the directory with your files, and run
        `sudo python3 -m http.server --bind 192.168.(PTC Subnet).(PC IP) 80`.
        Note that root access is required to bind to port 80.
     2. One may also set up a more production-ready webserver such as [nginx](#nginx-configuration) or
        apache to do so if desired
+2. Place `boot.scr` and `image.ub` from the minimal image in
+   `<webroot>/ptc/minimal`, and from the full image in `<webroot>/ptc/full`.
 3. Load u-boot
     1. SD Card
         1. Create a new 256MB FAT32 partition called BOOT
@@ -164,6 +168,23 @@ for the application.
     2. Windows
         1. Set up the Windows Subsystem for Linux, and follow the above instructions
 5. Apply 48V to the main power connector
+6. In u-boot, a menu will appear allowing a choice of `Network Boot` or `SD
+   Boot`, defaulting to network boot. When network boot is selected, another
+   menu will appear allowing image selection, defaulting to the minimal image.
+
+#### Fallback SD Boot
+This is a fallback, and as such these instructions assume you have followed the
+[Network Boot](#network-boot) instructions.
+1. Prepare the SD: First, make a 256MB FAT32 partition with the label `BOOT`,
+   and fill the rest of the card with an ext4 partition named `persist`
+   1. **Important**: Ensure the labels are correct! It is how the `fstab`
+      identifies and mounts the partitions after boot. The board will still boot
+      without them, but the persistent storage area will not be available.
+2. From the deploy directory for the minimal image, copy `boot_sd.scr`,
+   `BOOT.BIN` (make sure to rename it if the capitalization is incorrect) and
+   `image.ub` to the `BOOT` partition on the SD card.
+3. Power on the PTC.
+4. To test SD boot, select `SD Boot` from the boot menu.
 
 ##### dnsmasq Configuration
 Here is a template for the dnsmasq configuration
