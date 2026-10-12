@@ -44,6 +44,7 @@ v1.0 & 2025-12-03 & A. Nikolica & Add WEIC figure in last section \\
 v1.1 & 2026-03-26 & A. Nikolica & Corrections in dune-daq section \\
 v1.2 & 2026-04-01 & A. Nikolica & Clarifications in 4.2.2 and 4.4.5 for timing tests \\
 v1.3 & 2026-05-28 & C. Zuschmidt & Modified testing based on first runthrough of procedures \\
+v1.4 & 2026-09-30 & C. Zuschmidt & Integrated procedure for automated tests; testing redundancies not yet removed until further finalization \\
 \hline
 
 \end{tabularx}
@@ -555,6 +556,40 @@ dtsbutler -c local.xml mst MST_FMC control-timestamp-broadcast
                 \label{dcdc_ripple}
             \end{figure}
         \item \textbf{Repeat with other converters} The addresses of \texttt{0x80020048, 0x80020044, 0x80020040, 0x8002003c, 0x80020038} correspond to converters 1 through 5. Repeat the test for all converters. Acceptance criteria are same as above.
+    \end{enumerate}
+
+\subsection{Automated Test Setup}
+\label{section:automated_test}
+
+    \begin{enumerate}
+        \item Ensure the Linux PC is connected to the DUT via USB, and is listed as /dev/ttyUSB0. Confirm physical ethernet link. 
+        \item Open 2 terminals on the Linux test machine and cd into \textbf{PTC-Firmware/board\_qc directory} in each
+        \item In one terminal, run: 
+            \begin{enumerate}
+                \item \texttt{python3 -m venv .env}
+                \item \texttt{source .env/bin/activate}
+                \item \texttt{pip install -r ptctestclient/requirements.txt -r ptctestsuite/requirements.txt}
+            \end{enumerate}
+        \item In the test suite terminal, run: 
+            \begin{enumerate}
+                \item \texttt{source .env/bin/activate}
+                \item \texttt{python -m ptctestsuite}
+            \end{enumerate}  
+        \item \textbf{Confirm network parameters} in ptctestsuite/config/parameters.py match the bench: PTC at 192.168.20.100, WebSocket port 8765
+        \item \textbf{Authenticate to the HWDB.} On launch, the suite runs htgettoken against htvaultprod.fnal.gov. Follow the printed instructions to log in with your Fermilab Services account. 
+        \item Note: \textbf{Board network bring-up.} The suite opens the serial port (/dev/ttyUSB0), logs into the PTC, and assigns eth1 its IP. Note: if it reports a failure on the default port, enter an alternate (e.g. /dev/ttyUSB1) when prompted, but confirm it’s PTC serial. If it fails again it logs PTC Network Configuration Failed! and aborts the session. 
+        \item \textbf{Client launch}. The suite SSHes into the DUT and starts ptctestclient, then waits up to 20 seconds for the client's Server Listening message. Note: if the client does not report ready in time, the session logs a critical error and the WebSocket connection will fail. \textcolor{blue}{\textbf{Acceptance criteria: [PASS/FAIL]}}.
+        \item \textbf{Automated tests run.} The suite connects to ws://192.168.20.100:8765, printing Running <test\_names> with parameters. Each result is recorded as \textcolor{blue} {\textbf {PASS / FAIL / ERROR}} against the serial number.
+            \begin{enumerate}
+                \item Automated test suite includes: IV sensors on PTC, IV sensors on QC board, temperature sensing, EEPROM,  memory 
+            \end{enumerate}
+        \item Manual tests. The suite prompts the tester with a (y/n) question and, where the test accepts a reading, a value prompt. Enter observed result and measurement. \textcolor{blue} {\textbf {PASS/FAIL per test}}
+            \begin{enumerate}
+                \item Manual tests include ethercat, GbE, [TBD] 
+            \end{enumerate}
+        \item \textbf{Notes.} Answer the notes prompt; if yes, a full-screen text box opens for shift comments
+        \item \textbf{Confirm upload} The suite writes the record to the HWDB in three POSTs: create the component entry (returns a part ID), post the test datasheet, then capture a webcam image of the board and post it. Confirm the log reports each upload succeeded. \textcolor{blue} {\textbf {[PASS/FAIL]}}
+
     \end{enumerate}
 
 \subsubsection{I2C Sensor Tests}
