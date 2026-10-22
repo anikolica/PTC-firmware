@@ -23,3 +23,88 @@ image_crop_height = 720
 # NOTE: if this ever becomes important, read this from environment variables
 ptc_user = 'root'
 ptc_password = 'root'
+
+# QC board load control (procedure 4.4.1). Since procedures v1.4 the registers run backwards:
+# converter 0 is 0x8002004c and converter 5 is 0x80020038, so converter n uses qc_load_conv0_addr - 4*n
+qc_user = 'root'
+qc_password = ''
+qc_load_conv0_addr = 0x8002004c
+# written before each load value, as in the procedure (poke 0x316 then 0x2xx)
+qc_load_enable_value = 0x316
+# TODO confirm the value that turns the load off
+qc_load_off_value = 0x0
+load_settle_time = 1.0
+
+# QC board timing endpoint lock (procedure 4.5.4, channel 0 only for now)
+qc_timing_ctrl_addr = 0x80020004
+qc_timing_status_addr = 0x80020104
+qc_timing_locked_value = 0x18000000
+
+# GbE throughput test (procedure 4.5.5.2)
+throughput_test_mb = 1000
+throughput_min_mb_s = 12.5
+
+# Shipment reception checks (procedure 4.1), recorded once per delivery
+reception_log_file = "reception_records.jsonl"
+# Each shipment gets its own entry in the same HWDB as the boards, with serial
+# number reception_serial_prefix + PO number, and the checks are attached to it.
+# TODO a dedicated shipment part type would keep these out of the PTC board list
+reception_part_type_id = ptc_part_type_id
+reception_serial_prefix = "SHIPMENT-"
+
+# Results that failed to upload to the HWDB are kept here, one JSON record per line
+unuploaded_results_file = "unuploaded_results.jsonl"
+
+# GUI (python -m ptctestsuite). The GUI is a local web page served on this port.
+gui_port = 8080
+gui_title = "PTC QC Test Station"
+gui_station = "Penn, bench 1"
+
+# Board photos (procedure 4.1.3): the front and back of every board, uploaded to the HWDB.
+# A copy of every photo is also kept in photo_dir on this computer.
+photo_dir = "board_photos"
+# Alignment guides shown over the camera view, one per side. Set from the GUI.
+ghost_image_dir = "ghost_images"
+photo_max_mb = 20
+# The browser asks the camera for this resolution and gets the closest it supports
+camera_width = 3840
+camera_height = 2160
+
+# This station's record of every board it tested, one JSON file per serial. Used for the
+# lookup lists, as a fallback when the HWDB can't be reached, and to spot a SoM or EEPROM
+# seen on two boards. The HWDB stays the master copy.
+board_records_dir = "board_records"
+# HWDB test type for repair records. It must exist on the PTC component type in the HWDB.
+repair_test_type = "Repair"
+qc_test_type = "QC Test"
+max_repair_photos = 6
+
+# 4.2.3 test stand checklist: the QC board's 24 V supply as read from the supply's display.
+# Outside these the checklist row is saved as FAIL (the procedure only says "about 400 mA").
+qc_board_supply_v_limits = (23.5, 24.5)
+qc_board_current_ma_limits = (350.0, 450.0)
+# Seconds to wait for the QC board's SSH port in the checklist's network check
+qc_board_network_timeout = 3.0
+
+# Component orientation check on the board photos (utils/inspection.py). The reference photo and
+# the marked parts for each side are kept in inspection_dir/<side>/ and set on the /inspection page.
+inspection_dir = "inspection"
+inspection_align_width = 2000      # photos are lined up at this width (faster, still accurate)
+inspection_features = 6000
+inspection_min_matches = 60        # fewer matching features than this: the photo can't be lined up
+inspection_search_px = 8           # placement tolerance when comparing a part with the reference
+inspection_reverse_margin = 0.10   # turned round must match this much better to flag "reversed"
+inspection_min_match = 0.60        # below this a part doesn't look like the reference: "check it"
+# Tune these on real boards photographed on the camera stand before relying on the check.
+
+# The board design for the orientation check: polarised parts, fiducials and outline, made by
+#   python -m ptctestsuite.design_import --odb <design>_odb.tgz --bom <BOM>.csv
+board_design_file = "board_design.json"   # in ptctestsuite/config/, beside this file
+# How the board lies in each photo, as signs from board axes to photo axes (photo y points down):
+# front side up with the D-sub at the top, then turned over top to bottom for the back.
+inspection_orientation = {"front": ("top", 1, -1), "back": ("bot", 1, 1)}
+inspection_min_part_px = 14        # parts smaller than this in the photo can't be checked
+
+# Vendor certificates uploaded with bare and assembled PCB shipments are also kept here
+shipment_docs_dir = "shipment_documents"
+max_certificate_files = 5

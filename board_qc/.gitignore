@@ -1,0 +1,8 @@
+# The top-level .gitignore ignores every file type it does not list.
+# The test station also needs its GUI page, fonts and docs.
+!*.html
+!*.md
+!*.woff2
+!*.txt
+!reference_photos/*.jpg
+!ptctestsuite/config/*.json

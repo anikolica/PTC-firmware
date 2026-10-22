@@ -113,7 +113,6 @@ async def start_client(ready_signal: asyncio.Event, ip_address: str, debug_run=F
                         ready_signal.set()
                 await proc.wait()
                 lg.info(f"PTC client application @ {ip_address} exited")
-            await conn.run(f'source {parameters.ptc_client_path}/.env/bin/activate')
     except asyncssh.Error as e:
         lg.error(f"SSH connection failed with error {e}!")
         return False

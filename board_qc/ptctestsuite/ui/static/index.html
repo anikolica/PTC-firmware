@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PTC QC Test Station</title>
+<style>
+/* IBM Plex is bundled in static/fonts so the page works without internet */
+@font-face { font-family: "IBM Plex Sans"; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 500; font-display: swap; src: url("fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 600; font-display: swap; src: url("fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-display: swap; src: url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 600; font-display: swap; src: url("fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2"); }
+/* Design from the PTC QC GUI designer. Names match the designer summary.
+   Preset: Lab dark. Text size 100 %. Step list left. Large buttons. Rounded corners.
+   Acceptance limits shown. Database keys hidden. */
+:root {
+  --g-bg: #0F1418;     /* Window */
+  --g-panel: #172026;  /* Main panel */
+  --g-side: #121A1F;   /* Step list and bars */
+  --g-line: #2A363E;   /* Lines */
+  --g-ink: #E6EDF1;    /* Main text */
+  --g-dim: #8A9AA5;    /* Secondary text */
+  --g-accent: #3BA7C9; /* Accent */
+  --g-pass: #3FB767;   /* Pass */
+  --g-fail: #E5534B;   /* Fail */
+  --g-warn: #E0A33A;   /* Manual check */
+  --g-auto: #9A8AEA;   /* Automatic test */
+  --g-field: #0B1013;  /* Input boxes */
+  --g-on-accent: #0B0D0E; --g-on-pass: #0B0D0E; --g-on-fail: #FFFFFF;
+  --g-s: 1;            /* text size */
+  --g-r: 6px;          /* corners */
+  --g-bh: 62px;        /* button height */
+  --g-side-w: 320px;
+  --g-font: "IBM Plex Sans", "Segoe UI", Ubuntu, Arial, sans-serif;
+  --g-mono: "IBM Plex Mono", Consolas, "DejaVu Sans Mono", Menlo, monospace;
+  --show-limits: 1; --show-keys: 0;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--g-bg); color: var(--g-ink); font-family: var(--g-font); font-size: calc(15px * var(--g-s)); line-height: 1.4; }
+.mono { font-family: var(--g-mono); }
+#app { height: 100%; display: flex; flex-direction: column; }
+
+.top { display: flex; align-items: center; gap: 22px; min-height: 62px; padding: 8px 22px; border-bottom: 1px solid var(--g-line); background: var(--g-side); flex: none; }
+.title { font-weight: 600; font-size: 1.15em; }
+.sub { color: var(--g-dim); font-size: .86em; }
+.meta { display: flex; gap: 26px; margin-left: auto; color: var(--g-dim); font-size: .78em; }
+.meta b { display: block; color: var(--g-ink); font: 500 1.15em var(--g-mono); }
+.pill { border: 1px solid var(--g-line); border-radius: var(--g-r); padding: 4px 10px; font-size: .8em; color: var(--g-dim); white-space: nowrap; }
+.pill i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 0; background: var(--g-dim); }
+.pill.on i { background: var(--g-pass); }
+.top .stop { height: 36px; padding: 0 14px; font-size: .88em; }
+.only-run { display: none; }
+.run .only-run { display: inline-block; }
+.top .pill.first { margin-left: auto; }
+
+.conn { display: none; padding: 8px 22px; background: color-mix(in srgb, var(--g-fail) 22%, var(--g-bg)); color: var(--g-ink); font-size: .9em; }
+.conn.show { display: block; }
+
+.body { flex: 1; display: flex; min-height: 0; }
+.side { width: var(--g-side-w); flex: none; background: var(--g-side); border-right: 1px solid var(--g-line); overflow: auto; padding: 8px 0 18px; }
+.grp { padding: 14px 18px 4px; color: var(--g-dim); font-size: .78em; font-weight: 600; }
+.item { display: flex; align-items: center; gap: 10px; padding: 5px 18px; font-size: .88em; color: var(--g-dim); }
+.item.done { color: var(--g-ink); }
+.item.cur { background: color-mix(in srgb, var(--g-accent) 16%, transparent); color: var(--g-ink); box-shadow: inset 3px 0 var(--g-accent); font-weight: 500; }
+.dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--g-dim); flex: none; }
+.dot.PASS { background: var(--g-pass); border-color: var(--g-pass); }
+.dot.FAIL, .dot.ERROR { background: var(--g-fail); border-color: var(--g-fail); }
+.dot.SAVED { background: var(--g-dim); border-color: var(--g-dim); }
+.dot.SKIPPED { border-style: dashed; opacity: .6; }
+.dot.cur { border-color: var(--g-accent); background: var(--g-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--g-accent) 30%, transparent); }
+.tag { margin-left: auto; font-size: .76em; color: var(--g-auto); border: 1px solid color-mix(in srgb, var(--g-auto) 60%, transparent); border-radius: var(--g-r); padding: 0 5px; }
+
+.main { flex: 1; min-width: 0; padding: 36px 52px 24px; display: flex; flex-direction: column; gap: 16px; overflow: auto; background: var(--g-panel); }
+.sec { color: var(--g-dim); font: 500 .9em var(--g-mono); display: flex; gap: 12px; align-items: center; min-height: 1.4em; }
+.kind { font-family: var(--g-font); font-size: .9em; border-radius: var(--g-r); padding: 1px 8px; }
+.kind.manual { color: var(--g-warn); background: color-mix(in srgb, var(--g-warn) 14%, transparent); }
+.kind.auto { color: var(--g-auto); background: color-mix(in srgb, var(--g-auto) 14%, transparent); }
+h1.name { font-size: 2em; font-weight: 600; line-height: 1.15; margin: 0; }
+.prompt { font-size: 1.12em; max-width: 64ch; margin: 0; }
+.limits { display: flex; flex-wrap: wrap; gap: 22px; font-size: .92em; color: var(--g-dim); }
+.limits b { color: var(--g-ink); font: 500 1.05em var(--g-mono); margin-left: 6px; }
+.key { font: .82em var(--g-mono); color: var(--g-dim); }
+.entry { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-top: 6px; }
+.fl { display: flex; flex-direction: column; gap: 5px; font-size: .82em; color: var(--g-dim); }
+.field { background: var(--g-field); border: 1px solid var(--g-line); border-radius: var(--g-r); color: var(--g-ink); font: 500 1.45em var(--g-mono); padding: 0 14px; height: var(--g-bh); width: 240px; }
+.field:focus { outline: 2px solid var(--g-accent); outline-offset: 1px; }
+textarea.field { font: 1.05em var(--g-font); height: 140px; width: 100%; max-width: 680px; padding: 10px 14px; resize: vertical; }
+.unit { align-self: center; font: 1.25em var(--g-mono); color: var(--g-dim); }
+.btn { height: var(--g-bh); padding: 0 26px; border-radius: var(--g-r); border: 1px solid var(--g-line); background: transparent; color: var(--g-ink); font: 600 1.05em var(--g-font); cursor: pointer; }
+.btn:hover:not(:disabled) { filter: brightness(1.1); }
+.btn:focus-visible { outline: 2px solid var(--g-ink); outline-offset: 2px; }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn.pri { background: var(--g-accent); border-color: var(--g-accent); color: var(--g-on-accent); }
+.btn.pri:disabled { background: var(--g-line); border-color: var(--g-line); color: var(--g-dim); opacity: 1; cursor: not-allowed; }
+.btn.opt { min-width: 170px; background: transparent; }
+.btn.opt.y { border-color: var(--g-accent); color: var(--g-ink); } .btn.opt.y.on { background: var(--g-accent); color: var(--g-on-accent); }
+.btn.opt.p { border-color: var(--g-pass); color: var(--g-pass); } .btn.opt.p.on { background: var(--g-pass); color: var(--g-on-pass); }
+.btn.opt.f { border-color: var(--g-fail); color: var(--g-fail); } .btn.opt.f.on { background: var(--g-fail); color: var(--g-on-fail); }
+.main.with-how { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 26px; align-items: start; }
+.stepcol { display: flex; flex-direction: column; gap: 16px; min-width: 0; min-height: 100%; }
+.howcard { background: var(--g-side); border: 1px solid var(--g-line); border-radius: var(--g-r); padding: 14px 16px; font-size: .9em; position: sticky; top: 0; }
+.howhd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.howhd span { font-size: .84em; font-weight: 600; color: var(--g-dim); letter-spacing: .05em; text-transform: uppercase; }
+.howbtn { background: none; border: 1px solid var(--g-line); border-radius: var(--g-r); color: var(--g-dim); font: .85em var(--g-font); padding: 3px 9px; cursor: pointer; }
+.howcard ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 7px; }
+.howcard li::marker { color: var(--g-dim); font-family: var(--g-mono); }
+.nextbar { margin-top: auto; display: flex; align-items: flex-end; gap: 16px; padding-top: 8px; }
+.nextbar .last { margin-top: 0; flex: 1; min-width: 0; }
+.nextwrap { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; margin-left: auto; }
+.btn.next { min-width: 220px; }
+.nexthint { font-size: .86em; color: var(--g-dim); min-height: 1.2em; text-align: right; }
+.nexthint.warn { color: var(--g-warn); }
+.autores { display: flex; gap: 14px; align-items: center; font-size: 1.1em; flex-wrap: wrap; }
+.autores b { font-family: var(--g-mono); font-weight: 500; }
+.clh { display: flex; justify-content: space-between; align-items: baseline; }
+.clh span { font: .85em var(--g-mono); color: var(--g-dim); }
+.cl { display: flex; flex-direction: column; gap: 6px; max-width: 900px; }
+.ci { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 8px 12px; border: 1px solid var(--g-line); border-radius: var(--g-r); background: var(--g-field); cursor: pointer; }
+.ci:focus-visible { outline: 2px solid var(--g-accent); outline-offset: 1px; }
+.ci .box { width: 26px; height: 26px; border: 2px solid var(--g-dim); border-radius: calc(var(--g-r) / 2 + 1px); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--g-on-pass); }
+.ci.on { border-color: color-mix(in srgb, var(--g-pass) 55%, var(--g-line)); }
+.ci.on .box { background: var(--g-pass); border-color: var(--g-pass); }
+.ci.auto { cursor: default; border-style: dashed; }
+.ci.auto.ok .box { background: var(--g-auto); border-color: var(--g-auto); color: #fff; }
+.ci.auto.bad { border-color: var(--g-fail); } .ci.auto.bad .box { border-color: var(--g-fail); color: var(--g-fail); }
+.ci .t { font-weight: 500; } .ci .d { display: block; font-size: .84em; color: var(--g-dim); }
+.ci .tag2 { font-size: .78em; color: var(--g-auto); white-space: nowrap; }
+.ci .pw { display: flex; gap: 6px; align-items: center; }
+.ci .pw .field { height: 42px; width: 92px; font-size: 1.05em; padding: 0 10px; }
+.ci .pw .unit { font-size: 1em; }
+.pg { display: flex; flex-direction: column; gap: 10px; }
+.pg-t { border-collapse: collapse; width: 100%; font-size: .94em; }
+.pg-t th, .pg-t td { padding: 5px 10px 5px 0; text-align: left; vertical-align: middle; border-bottom: 1px solid color-mix(in srgb, var(--g-line) 60%, transparent); }
+.pg-t tbody th { font-weight: 500; width: 36%; }
+.pg-t th span { display: block; font-weight: 400; font-size: .8em; color: var(--g-dim); }
+.pg-t thead th { color: var(--g-dim); font-weight: 500; font-size: .86em; }
+.pg-grid tbody th { width: 18%; }
+.pg-cell { display: inline-flex; gap: 6px; align-items: center; }
+.pg-in { height: 40px; width: 104px; font-size: 1.1em; padding: 0 10px; }
+.pg-in.wide { width: 220px; }
+.pg-in.ok { border-color: color-mix(in srgb, var(--g-pass) 70%, var(--g-line)); }
+.pg-in.warn { border-color: var(--g-warn); box-shadow: 0 0 0 1px var(--g-warn); }
+.pg-acc { color: var(--g-dim); font-size: .86em; }
+.pg-yn { display: inline-flex; gap: 6px; }
+.pg-yn .btn.opt { min-width: 66px; height: 38px; padding: 0 12px; font-size: .95em; }
+.pg-run { color: var(--g-auto); } .pg-dim { color: var(--g-dim); }
+.filedrop { border: 2px dashed var(--g-line); border-radius: var(--g-r); padding: 22px; display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; max-width: 720px; background: var(--g-field); }
+.filedrop.over { border-color: var(--g-accent); background: color-mix(in srgb, var(--g-accent) 12%, var(--g-field)); }
+.filelist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; max-width: 720px; }
+.filelist li { display: flex; gap: 12px; align-items: center; padding: 8px 12px; border: 1px solid var(--g-line); border-radius: var(--g-r); background: var(--g-field); }
+.filelist .fn { flex: 1; font-family: var(--g-mono); font-size: .92em; word-break: break-all; }
+.filelist .fs { color: var(--g-dim); font-size: .85em; }
+.insp { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
+.insp-img { display: block; width: min(100%, 540px); border: 1px solid var(--g-line); border-radius: var(--g-r); }
+.insp-side { flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 12px; }
+.insp-sum { font-size: 1.05em; }
+.flag { border: 1px solid var(--g-line); border-radius: var(--g-r); padding: 10px 12px; background: var(--g-field); display: flex; flex-direction: column; gap: 8px; }
+.flag-h { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.flag-h b { font-family: var(--g-mono); font-size: 1.1em; }
+.flag-st { font-size: .9em; font-weight: 600; } .flag-st.reversed, .flag-st.rotated { color: var(--g-fail); } .flag-st.check { color: var(--g-warn); }
+.flag-crops { display: flex; gap: 10px; }
+.flag-crops figure { margin: 0; font-size: .78em; color: var(--g-dim); }
+.flag-crops img { display: block; width: 150px; height: auto; border: 1px solid var(--g-line); border-radius: var(--g-r); margin-top: 3px; }
+.flag-btns { display: flex; gap: 10px; }
+.flag-btns .btn { min-width: 130px; height: 46px; }
+.btn.pass { background: var(--g-pass); border-color: var(--g-pass); color: var(--g-on-pass); min-width: 170px; }
+.btn.fail { background: var(--g-fail); border-color: var(--g-fail); color: var(--g-on-fail); min-width: 170px; }
+.msg { font-size: .95em; min-height: 1.4em; }
+.msg.err { color: var(--g-fail); } .msg.warn { color: var(--g-warn); } .msg.run { color: var(--g-auto); }
+.keys { font-size: .8em; color: var(--g-dim); }
+.last { margin-top: auto; padding: 10px 14px; border: 1px solid var(--g-line); border-radius: var(--g-r); font-size: .9em; color: var(--g-dim); display: flex; gap: 12px; align-items: center; }
+.last b { color: var(--g-ink); font-weight: 500; }
+.badge { font: 600 .82em var(--g-mono); padding: 2px 8px; border-radius: var(--g-r); white-space: nowrap; }
+.badge.PASS { background: color-mix(in srgb, var(--g-pass) 20%, transparent); color: var(--g-pass); }
+.badge.FAIL, .badge.ERROR { background: color-mix(in srgb, var(--g-fail) 20%, transparent); color: var(--g-fail); }
+.badge.SAVED, .badge.SKIPPED, .badge.PENDING { background: color-mix(in srgb, var(--g-dim) 20%, transparent); color: var(--g-dim); }
+@keyframes pulse { 50% { opacity: .35; } }
+.spin { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--g-auto); margin-right: 8px; animation: pulse 1s infinite; }
+@media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+
+.foot { height: 36px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 22px; border-top: 1px solid var(--g-line); background: var(--g-side); font-size: .82em; color: var(--g-dim); }
+.bar { flex: 1; height: 6px; background: var(--g-line); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--g-accent); transition: width .3s; }
+
+.center { flex: 1; display: flex; align-items: center; justify-content: center; background: var(--g-panel); overflow: auto; padding: 24px; }
+.form { width: 560px; max-width: 100%; display: flex; flex-direction: column; gap: 20px; }
+.form h1 { margin: 0; font-size: 1.7em; font-weight: 600; }
+.form .field { width: 100%; font-size: 1.2em; }
+.lbl { display: block; font-size: .86em; color: var(--g-dim); margin-bottom: 6px; }
+.seg { display: flex; border: 1px solid var(--g-line); border-radius: var(--g-r); overflow: hidden; }
+.seg button { flex: 1; height: var(--g-bh); background: transparent; border: 0; color: var(--g-dim); font: 600 1em var(--g-font); cursor: pointer; padding: 0 10px; }
+.seg button + button { border-left: 1px solid var(--g-line); }
+.seg button.on { background: var(--g-accent); color: var(--g-on-accent); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.res { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 16px; padding: 26px 40px 20px; background: var(--g-panel); }
+.verdict { display: flex; align-items: center; gap: 20px; }
+.word { font: 600 2.6em var(--g-mono); padding: 2px 18px; border-radius: var(--g-r); }
+.word.PASS { color: var(--g-on-pass); background: var(--g-pass); }
+.word.FAIL, .word.ERROR { color: var(--g-on-fail); background: var(--g-fail); }
+.tbl { flex: 1; min-height: 0; overflow: auto; border: 1px solid var(--g-line); border-radius: var(--g-r); }
+table { width: 100%; border-collapse: collapse; font-size: .9em; }
+th { position: sticky; top: 0; background: var(--g-side); text-align: left; color: var(--g-dim); font-weight: 500; padding: 8px 12px; border-bottom: 1px solid var(--g-line); }
+td { padding: 6px 12px; border-bottom: 1px solid color-mix(in srgb, var(--g-line) 60%, transparent); vertical-align: top; }
+td.mono { font-family: var(--g-mono); word-break: break-word; }
+tr.grp-row td { color: var(--g-dim); font-size: .85em; font-weight: 600; padding-top: 12px; }
+.upload { padding: 10px 14px; border-radius: var(--g-r); border: 1px solid var(--g-line); }
+.upload.ok { border-color: color-mix(in srgb, var(--g-pass) 60%, transparent); }
+.upload.bad { border-color: var(--g-fail); color: var(--g-ink); }
+.actions { display: flex; gap: 12px; }
+[hidden] { display: none !important; }
+
+/* lookup, history, retest and repair */
+.start2 { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 36px; padding: 28px 40px; background: var(--g-panel); overflow: auto; align-items: start; }
+.start2 .form { width: auto; }
+.sh { font-size: .78em; font-weight: 600; color: var(--g-dim); letter-spacing: .05em; text-transform: uppercase; margin: 0 0 8px; }
+.rows { display: flex; flex-direction: column; border: 1px solid var(--g-line); border-radius: var(--g-r); overflow: hidden; }
+.row { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 9px 14px; background: var(--g-field); border: 0; border-top: 1px solid var(--g-line); cursor: pointer; text-align: left; color: var(--g-ink); font: inherit; width: 100%; }
+.row:first-child { border-top: 0; }
+.row:hover { background: color-mix(in srgb, var(--g-accent) 8%, var(--g-field)); }
+.row:focus-visible { outline: 2px solid var(--g-accent); outline-offset: -2px; }
+.row .s { font-family: var(--g-mono); font-weight: 500; }
+.row .d { color: var(--g-dim); font-size: .85em; }
+.empty { color: var(--g-dim); font-size: .9em; padding: 10px 0; }
+.pane { flex: 1; min-height: 0; overflow: auto; padding: 22px 36px; background: var(--g-panel); display: flex; flex-direction: column; gap: 14px; }
+.pane h1 { margin: 0; font-size: 1.6em; font-weight: 600; }
+.hhead { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.hhead .ser { font: 600 1.6em var(--g-mono); }
+.hhead .acts { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+.hhead .acts .btn { height: 46px; }
+.facts { display: flex; gap: 26px; color: var(--g-dim); font-size: .8em; flex-wrap: wrap; }
+.facts b { display: block; color: var(--g-ink); font: 500 1.15em var(--g-mono); }
+.hcols { flex: 1; min-height: 0; display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 18px; }
+.tl { display: flex; flex-direction: column; gap: 6px; overflow: auto; }
+.tli { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 12px; border: 1px solid var(--g-line); border-radius: var(--g-r); background: var(--g-field); cursor: pointer; text-align: left; color: var(--g-ink); font: inherit; }
+.tli.sel { border-color: var(--g-accent); box-shadow: inset 3px 0 var(--g-accent); }
+.tli .k { font-weight: 600; } .tli .d { display: block; font-size: .82em; color: var(--g-dim); }
+.tli .ic { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 600 .76em var(--g-mono); background: var(--g-side); border: 1px solid var(--g-line); color: var(--g-dim); }
+.tli .ic.rep { color: var(--g-warn); border-color: color-mix(in srgb, var(--g-warn) 60%, transparent); }
+.det { min-height: 0; overflow: auto; border: 1px solid var(--g-line); border-radius: var(--g-r); padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; background: var(--g-side); }
+.det h2 { margin: 0; font-size: 1.25em; font-weight: 600; display: flex; gap: 10px; align-items: center; }
+.kv { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 6px 16px; font-size: .92em; margin: 0; }
+.kv dt { color: var(--g-dim); } .kv dd { margin: 0; white-space: pre-wrap; }
+table.mini { width: 100%; border-collapse: collapse; font-size: .9em; }
+.mini th { position: static; background: none; text-align: left; color: var(--g-dim); font-weight: 500; padding: 5px 10px 5px 0; border-bottom: 1px solid var(--g-line); }
+.mini td { padding: 6px 10px 6px 0; border-bottom: 1px solid color-mix(in srgb, var(--g-line) 60%, transparent); }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 820px; }
+.choice { min-height: var(--g-bh); padding: 12px 18px; text-align: left; border: 1px solid var(--g-line); border-radius: var(--g-r); background: var(--g-field); color: var(--g-ink); font: inherit; cursor: pointer; }
+.choice b { display: block; font-size: 1.05em; font-weight: 600; } .choice span { color: var(--g-dim); font-size: .86em; }
+.choice.on { border-color: var(--g-accent); box-shadow: inset 0 0 0 2px var(--g-accent); background: color-mix(in srgb, var(--g-accent) 18%, var(--g-field)); }
+.choices.three { grid-template-columns: repeat(3, 1fr); max-width: 980px; }
+.choices.three .choice { min-height: 110px; }
+.choice.pri { border-color: var(--g-accent); background: color-mix(in srgb, var(--g-accent) 14%, var(--g-field)); }
+.choice:focus-visible { outline: 2px solid var(--g-ink); outline-offset: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 6px 12px; border: 1px solid var(--g-line); border-radius: var(--g-r); background: var(--g-field); font: inherit; font-size: .9em; color: var(--g-dim); cursor: pointer; }
+.chip.on { border-color: var(--g-fail); color: var(--g-ink); background: color-mix(in srgb, var(--g-fail) 14%, var(--g-field)); }
+.ta, .in { background: var(--g-field); border: 1px solid var(--g-line); border-radius: var(--g-r); color: var(--g-ink); font: 1em var(--g-font); width: 100%; }
+.ta { padding: 8px 12px; resize: vertical; min-height: 76px; }
+.in { padding: 0 12px; height: 44px; }
+.ta:focus, .in:focus { outline: 2px solid var(--g-accent); outline-offset: 1px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; max-width: 980px; }
+.grid2 .wide { grid-column: 1 / -1; }
+.warnbox { border: 1px solid var(--g-warn); border-radius: var(--g-r); padding: 10px 14px; background: color-mix(in srgb, var(--g-warn) 10%, var(--g-panel)); font-size: .92em; }
+.thumbs a:focus-visible { outline: 2px solid var(--g-accent); }
+
+/* board photo step */
+.cam { display: flex; flex-direction: column; gap: 12px; }
+.cam-box { position: relative; width: min(100%, calc(50vh * var(--ar, 1.7778))); aspect-ratio: var(--ar, 1.7778); background: #000; border: 1px solid var(--g-line); border-radius: var(--g-r); overflow: hidden; }
+.cam-box video, .cam-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.cam-box .ghost { pointer-events: none; }
+.cam-badge { position: absolute; left: 10px; top: 10px; font-size: .78em; padding: 2px 8px; border-radius: var(--g-r); background: rgba(0,0,0,.6); color: #fff; }
+.cam-empty { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 14px; align-items: center; justify-content: center; padding: 24px; text-align: center; color: var(--g-dim); background: var(--g-field); }
+.cam-tools { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; font-size: .9em; color: var(--g-dim); }
+.cam-tools label { display: flex; gap: 8px; align-items: center; }
+.cam-tools select { background: var(--g-field); color: var(--g-ink); border: 1px solid var(--g-line); border-radius: var(--g-r); height: 40px; padding: 0 8px; font: .95em var(--g-font); max-width: 260px; }
+.cam-tools input[type=range] { width: 170px; accent-color: var(--g-accent); }
+.btn.small { height: 40px; padding: 0 14px; font-size: .9em; }
+.check { display: flex; gap: 10px; align-items: center; font-size: .95em; cursor: pointer; }
+.check input { width: 22px; height: 22px; accent-color: var(--g-accent); }
+.thumbs { display: flex; gap: 14px; align-items: flex-end; }
+.thumbs figure { margin: 0; font-size: .8em; color: var(--g-dim); }
+.thumbs img { display: block; height: 110px; border: 1px solid var(--g-line); border-radius: var(--g-r); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="top" id="top"></div>
+  <div class="conn" id="conn" role="status">Lost connection to the test program. Reconnecting… If this doesn’t clear, check that the terminal running ptctestsuite is still open.</div>
+  <div id="screen" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+</div>
+<script>
+const SHOW_LIMITS = getComputedStyle(document.documentElement).getPropertyValue("--show-limits").trim() !== "0";
+const SHOW_KEYS = getComputedStyle(document.documentElement).getPropertyValue("--show-keys").trim() === "1";
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const unitText = u => u === "us" ? "µs" : (u || "");
+const accText = s => s && s.acceptance ? s.acceptance.replace(/ us$/, " µs") : null;
+
+let ws, S = null, sentId = null, viewKey = "", pendingWarn = null, startMode = "board";
+const top = document.getElementById("top"), screen = document.getElementById("screen"), conn = document.getElementById("conn");
+
+function connect() {
+  ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.onopen = () => conn.classList.remove("show");
+  ws.onmessage = e => { const m = JSON.parse(e.data); if (m.type === "state") { S = m.state; render(); } };
+  ws.onclose = () => { conn.classList.add("show"); setTimeout(connect, 1000); };
+}
+function answer(value) {
+  if (!S.ask || sentId === S.ask.id || ws.readyState !== 1) return;
+  sentId = S.ask.id;
+  ws.send(JSON.stringify({ type: "answer", id: S.ask.id, value }));
+  screen.querySelectorAll("button.btn, .seg button").forEach(b => b.disabled = true);
+}
+
+// ---- top bar ----
+function renderTop() {
+  const plan = (S.plan || []).filter(p => !p.hidden), done = plan.filter(p => S.results[p.key]).length;
+  const isRun = S.screen === "run";
+  const meta = S.screen === "start" ? "" : `<div class="meta"><div>Tester<b>${esc(S.tester)}</b></div>
+    <div>${S.mode === "ship" ? "Purchase order" : "PTC serial"}<b>${esc(S.ident)}</b></div>
+    ${isRun && S.run_label ? `<div>Run<b>${esc(S.run_label)}</b></div>` : ""}${isRun ? `<div>Step<b>${Math.min(done + 1, plan.length)} of ${plan.length}</b></div>` : ""}</div>`;
+  top.className = "top" + (isRun ? " run" : "");
+  top.innerHTML = `<div><div class="title">${esc(S.title)}</div><div class="sub">${esc(S.station)}</div></div>${meta}
+    <div class="pill ${S.hwdb.on ? "on" : ""} ${meta ? "" : "first"}"><i></i>${esc(S.hwdb.label)}</div>
+    <button class="btn stop only-run" id="stop" type="button">Stop test</button>`;
+  const stop = document.getElementById("stop");
+  if (stop) stop.onclick = () => {
+    if (confirm("Stop this test? Nothing will be uploaded for this run.")) ws.send(JSON.stringify({ type: "abort" }));
+  };
+}
+
+// ---- step list ----
+function currentKey() { return S.ask && S.ask.step ? S.ask.step.key : S.running ? S.running.key : null; }
+function renderSide() {
+  const cur = currentKey(); let html = "", grp = null;
+  const shown = S.plan.filter(p => !p.hidden);
+  const firstPending = (shown.find(p => !S.results[p.key]) || {}).key;
+  const hl = cur && shown.some(p => p.key === cur) ? cur : firstPending;
+  shown.forEach(p => {
+    if (p.group !== grp) { grp = p.group; html += `<div class="grp">${esc(grp)}</div>`; }
+    const r = S.results[p.key], isCur = p.key === hl;
+    html += `<div class="item ${isCur ? "cur" : r ? "done" : ""}" ${isCur ? 'id="cur"' : ""}><span class="dot ${isCur ? "cur" : r ? r.result : ""}"></span><span>${esc(p.title)}</span>${p.kind === "auto" ? '<span class="tag">auto</span>' : ""}</div>`;
+  });
+  return html;
+}
+
+// ---- main panel ----
+function stepHead(st, kindLabel) {
+  const kind = kindLabel === "auto" ? '<span class="kind auto">Automatic</span>' : kindLabel === "manual" ? '<span class="kind manual">Manual check</span>' : kindLabel === "photo" ? '<span class="kind manual">Photo</span>' : kindLabel === "checklist" ? '<span class="kind manual">Checklist</span>' : kindLabel === "inspect" ? '<span class="kind auto">Checked automatically</span>' : kindLabel === "page" ? '<span class="kind manual">All on one page</span>' : kindLabel === "autopage" ? '<span class="kind auto">Automatic</span>' : "";
+  const acc = accText(st);
+  return `<div class="sec">${st.section ? `<span>Section ${esc(st.section)}</span>` : ""}${kind}</div>
+    <h1 class="name">${esc(st.title)}</h1><p class="prompt">${esc(st.prompt)}</p>
+    ${SHOW_LIMITS && acc ? `<div class="limits"><span>Accept<b>${esc(acc)}</b></span></div>` : ""}
+    ${SHOW_KEYS ? `<div class="key">Database key: ${esc(st.key)}</div>` : ""}`;
+}
+let pend = { choice: null, ticks: {}, answers: {} };
+function optBtns(kind) {
+  const y = kind === "yesno", L1 = y ? "Yes" : "Pass", L0 = y ? "No" : "Fail", c = pend.choice;
+  return `<button class="btn opt ${y ? "y" : "p"} ${c === true ? "on" : ""}" type="button" data-pick="1" data-label="${L1}" aria-pressed="${c === true}">${c === true ? "✓ " : ""}${L1}</button>` +
+         `<button class="btn opt ${y ? "y" : "f"} ${c === false ? "on" : ""}" type="button" data-pick="0" data-label="${L0}" aria-pressed="${c === false}">${c === false ? "✓ " : ""}${L0}</button>`;
+}
+function checklistHTML(a) {
+  const prev = a.previous || {}, ticks = pend.ticks;
+  const rows = a.items.map(it => {
+    if (it.kind === "network") {
+      const n = a.network;
+      return `<div class="ci auto ${n.ok ? "ok" : "bad"}"><span class="box">${n.ok ? "✓" : "!"}</span><span><span class="t">${esc(it.title)}</span><span class="d">${esc(n.detail)}</span></span>${n.ok ? '<span class="tag2">Checked automatically</span>' : '<button class="btn small" type="button" id="recheck">Check again</button>'}</div>`;
+    }
+    const on = !!ticks[it.key];
+    const pw = it.kind === "power" ? `<span class="pw"><input class="field mono" id="ck-v" inputmode="decimal" autocomplete="off" placeholder="24.0" value="${esc(prev.voltage ?? "")}" aria-label="QC board supply voltage"><span class="unit">V</span><input class="field mono" id="ck-i" inputmode="decimal" autocomplete="off" placeholder="400" value="${esc(prev.current ?? "")}" aria-label="QC board current"><span class="unit">mA</span></span>` : "";
+    return `<div class="ci ${on ? "on" : ""}" role="checkbox" tabindex="0" aria-checked="${on}" data-tick="${esc(it.key)}"><span class="box">${on ? "✓" : ""}</span><span><span class="t">${esc(it.title)}</span><span class="d">${esc(it.detail)}</span>${SHOW_KEYS ? `<span class="d mono">Database key: ${esc(it.key)}</span>` : ""}</span>${pw}</div>`;
+  }).join("");
+  return `<div class="clh"><b>Checklist</b><span id="ckcount"></span></div><div class="cl">${rows}</div>`;
+}
+const FLAG_TEXT = { reversed: "Looks reversed", rotated: "Looks turned", check: "Doesn’t match the reference" };
+function inspectHTML(a) {
+  if (!a.aligned) return `<div class="warnbox">${esc(a.message)}</div>
+    <div class="entry"><button class="btn pri" data-a="retake" type="button">Retake photo</button><button class="btn" data-a="skipcheck" type="button">Carry on without the check</button></div>`;
+  const ok = a.checked - a.flagged.length;
+  const flags = a.flagged.map(f => `<div class="flag">
+      <div class="flag-h"><b>${esc(f.ref)}</b><span>${esc(f.kind_name)}</span><span class="flag-st ${esc(f.status)}">${FLAG_TEXT[f.status]}${f.status === "rotated" ? ` ${f.turn}°` : ""}</span></div>
+      <div class="flag-crops"><figure>Reference<img src="${f.crops.reference}" alt="${esc(f.ref)} on the reference board"></figure><figure>This board<img src="${f.crops.board}" alt="${esc(f.ref)} on this board"></figure></div>
+      <div class="flag-btns"><button class="btn opt y" type="button" data-ans="correct" data-ref="${esc(f.ref)}" aria-pressed="false">Correct</button><button class="btn opt f" type="button" data-ans="reversed" data-ref="${esc(f.ref)}" aria-pressed="false">Reversed</button></div></div>`).join("");
+  return `<div class="insp"><a href="/inspect/${a.side}?v=${a.id}" target="_blank" rel="noopener"><img class="insp-img" src="/inspect/${a.side}?v=${a.id}" alt="The ${a.side} photo with each checked part outlined"></a>
+    <div class="insp-side"><div class="insp-sum">${a.flagged.length ? `${a.checked} parts checked: ${ok} look right, <b>${a.flagged.length} to confirm</b>.` : `All ${a.checked} parts look the right way round.`}</div>
+      ${flags}<div><button class="btn small" data-a="retake" type="button">Retake photo</button></div></div></div>`;
+}
+// ---- several checks on one page ----
+function pageValue(f) {   // the current answer for a field, from the page
+  if (f.kind === "yesno") return pend.page[f.key];
+  const el = document.querySelector(`[data-pk="${f.key}"]`), raw = el ? el.value.trim() : "";
+  if (f.kind === "judged") return { ok: pend.page[f.key + "#ok"], value: raw };
+  return raw;
+}
+function pageState(f) {
+  const v = pageValue(f);
+  if (f.kind === "yesno") return v === undefined ? "empty" : v ? "ok" : "warn";
+  if (f.kind === "judged") return !v.value || v.ok === undefined ? "empty" : v.ok ? "ok" : "warn";
+  if (v === "") return "empty";
+  if (f.kind === "text") return f.key === "som_serial" && !/^\d{10}$/.test(v) ? "warn" : "ok";
+  const n = Number(v); if (!isFinite(n)) return "empty";
+  if (!f.limits) return "ok";
+  const [lo, hi] = f.limits; return n < lo || (hi !== null && n > hi) ? "warn" : "ok";
+}
+function pgYN(key, labels) {
+  const v = pend.page[key], [L1, L0] = labels || ["Yes", "No"];
+  return `<span class="pg-yn">${[[true, L1, "y"], [false, L0, "y"]].map(([val, L]) => `<button class="btn opt ${labels ? (val ? "p" : "f") : "y"} ${v === val ? "on" : ""}" type="button" data-pv="${val ? 1 : 0}" data-pkey="${esc(key)}" data-label="${L}" aria-pressed="${v === val}">${v === val ? "✓ " : ""}${L}</button>`).join("")}</span>`;
+}
+function pgField(f) {
+  if (f.kind === "yesno") return pgYN(f.key);
+  const prev = (S.ask.previous || {})[f.key];
+  const val = prev === undefined ? "" : f.kind === "judged" ? prev.value : prev;
+  const box = `<span class="pg-cell"><input class="field pg-in ${f.kind === "text" ? "wide" : ""}" data-pk="${esc(f.key)}" ${f.kind === "text" ? "" : 'inputmode="decimal"'} autocomplete="off" value="${esc(val)}" aria-label="${esc(f.label)}">${f.unit ? `<span class="unit">${esc(f.unit)}</span>` : ""}</span>`;
+  return f.kind === "judged" ? box + " " + pgYN(f.key + "#ok", ["Pass", "Fail"]) : box;
+}
+function progressHTML(page) {
+  return `<table class="pg-t"><tbody>${page.tests.map(t => `<tr><th>${esc(t.label)}</th><td>${
+    t.status === "WAIT" ? '<span class="pg-dim">Waiting</span>' : t.status === "RUN" ? '<span class="pg-run"><span class="spin"></span>Running…</span>'
+      : `${badge(t.status)} <span class="mono">${esc(t.value)}</span>`}</td></tr>`).join("")}</tbody></table>`;
+}
+function pageHTML(a) {
+  const F = Object.fromEntries(a.fields.map(f => [f.key, f])), L = a.layout;
+  const rows = (L.rows || []).map(k => { const f = F[k];
+    return `<tr><th>${esc(f.label)}${f.hint ? `<span>${esc(f.hint)}</span>` : ""}</th><td>${pgField(f)}</td><td class="pg-acc">${esc(f.acceptance || "")}</td></tr>`; }).join("");
+  const grid = L.grid ? `<table class="pg-t pg-grid"><thead><tr><th>Converter</th>${L.grid.columns.map(c => `<th>${esc(c.label)}<span>${esc(c.hint)}</span></th>`).join("")}</tr></thead>
+      <tbody>${L.grid.rows.map(r => `<tr><th>${esc(r.label)}<span>${esc(r.hint)}</span></th>${r.keys.map(k => `<td>${pgField(F[k])}</td>`).join("")}</tr>`).join("")}</tbody></table>` : "";
+  return stepHead(a.step, L.progress ? "autopage" : "page") + (a.note ? `<div class="warnbox">${esc(a.note)}</div>` : "")
+    + `<div class="pg">${L.progress && S.page ? progressHTML(S.page) : ""}${rows ? `<table class="pg-t"><tbody>${rows}</tbody></table>` : ""}${grid}</div>`;
+}
+function askHTML(a) {
+  const st = a.step, u = st ? unitText(st.unit) : "";
+  const unit = u ? `<span class="unit">${esc(u)}</span>` : "";
+  switch (a.kind) {
+    case "number": return stepHead(st, "manual") + `<div class="entry"><input class="field" id="v" inputmode="decimal" autocomplete="off">${unit}</div>`;
+    case "yesno": return stepHead(st, "manual") + `<div class="entry">${optBtns("yesno")}</div><div class="keys">Keys: Y for Yes, N for No, Enter for Next test.</div>`;
+    case "judged": return stepHead(st, "manual") + `<div class="entry"><input class="field" id="v" inputmode="decimal" autocomplete="off">${unit}${optBtns("judged")}</div>`;
+    case "text": return stepHead(st, "manual") + `<div class="entry"><input class="field" id="v" autocomplete="off" style="width:360px" value="${esc(a.default)}"></div>`;
+    case "counts": return stepHead(st, "manual") + `<div class="entry"><label class="fl">Ordered<input class="field" id="a" inputmode="numeric" autocomplete="off" style="width:160px"></label><label class="fl">Received<input class="field" id="b" inputmode="numeric" autocomplete="off" style="width:160px"></label></div>`;
+    case "photo": return stepHead(st, "photo") + photoHTML(a.side, a.optional);
+    case "checklist": return stepHead(st, "checklist") + checklistHTML(a);
+    case "inspect": return stepHead(st, "inspect") + inspectHTML(a);
+    case "page": return pageHTML(a);
+    case "files": return stepHead(st, "manual") + `<div class="filedrop" id="drop"><b>Drag the files here</b><div>or <button class="btn small" type="button" id="pickfiles">Choose files…</button></div>
+        <div class="keys">PDF, Excel, PNG or JPEG, up to ${a.max_mb} MB each, at most ${a.max_files} files</div>
+        <input type="file" id="filein" multiple accept="${a.accept.join(",")}" hidden></div><ul class="filelist" id="filelist"></ul>`;
+    case "choice": return stepHead(st, "manual") + `<div class="choices three">${a.options.map((o, i) =>
+        `<button class="choice ${pend.opt === o.key ? "on" : ""}" type="button" data-opt="${esc(o.key)}" aria-pressed="${pend.opt === o.key}"><b>${pend.opt === o.key ? "✓ " : ""}${i + 1}. ${esc(o.label)}</b><span>${esc(o.detail)}</span></button>`).join("")}</div>
+        <div class="keys">Keys: ${a.options.map((_, i) => i + 1).join(", ")} to choose, Enter for Next test.</div>`;
+    case "autodone": return stepHead(st, "auto") + `<div class="autores"><span>Result</span><b>${esc(a.value || "No value")}</b>${badge(a.result)}</div>`;
+    case "retest": return retestHTML(a.board);
+    case "repair": return repairHTML(a.form);
+    case "notes": return stepHead(st, "") + `<div class="entry" style="flex-direction:column;align-items:stretch"><textarea class="field" id="v" placeholder="Anything unusual about this run"></textarea></div>`;
+    case "instruct": return `<div class="sec"><span class="kind manual">Do this now</span></div><h1 class="name">${esc(a.title)}</h1><p class="prompt">${esc(a.text)}</p><div class="entry"><button class="btn pri" data-a="ok">Done, continue</button></div>`;
+    case "confirm": return `<div class="sec"></div><h1 class="name">${esc(a.title)}</h1><p class="prompt">${esc(a.text)}</p><div class="entry"><button class="btn pri" data-a="yes">${esc(a.yes)}</button><button class="btn" data-a="no">${esc(a.no)}</button></div>`;
+  }
+  return "";
+}
+// what the current page still needs before Next test unlocks
+const NEXT_KINDS = ["number", "yesno", "judged", "text", "counts", "photo", "checklist", "autodone", "notes", "inspect", "page", "choice", "files"];
+function fieldVal(id) { const el = document.getElementById(id); return el ? el.value.trim() : ""; }
+function ready(a) {
+  const st = a.step || {};
+  switch (a.kind) {
+    case "number": {
+      const raw = fieldVal("v"), n = Number(raw);
+      if (raw === "") return { ok: false, hint: "Enter the reading." };
+      if (!isFinite(n)) return { ok: false, hint: "Enter a number." };
+      if (st.limits) { const [lo, hi] = st.limits; if (n < lo || (hi !== null && n > hi)) return { ok: true, warn: true, hint: `Outside ${accText(st)}, so it will be saved as FAIL. Check it first.` }; }
+      return { ok: true };
+    }
+    case "yesno": return pend.choice === null ? { ok: false, hint: "Answer Yes or No." } : { ok: true };
+    case "judged":
+      if (fieldVal("v") === "") return { ok: false, hint: "Enter the reading." };
+      return pend.choice === null ? { ok: false, hint: "Choose Pass or Fail." } : { ok: true };
+    case "text": {
+      const raw = fieldVal("v");
+      if (!raw) return st.key === "batch_number" ? { ok: true } : { ok: false, hint: "Scan or type it." };
+      if (st.key === "som_serial" && !/^\d{10}$/.test(raw)) return { ok: true, warn: true, hint: "That isn’t 10 digits. Check it before going on." };
+      return { ok: true };
+    }
+    case "counts": {
+      const x = fieldVal("a"), y = fieldVal("b");
+      if (x === "" || y === "" || !isFinite(+x) || !isFinite(+y)) return { ok: false, hint: "Enter both quantities." };
+      return +x === +y ? { ok: true } : { ok: true, warn: true, hint: "The counts differ, so it will be saved as FAIL." };
+    }
+    case "photo": return cam.shot ? { ok: true } : { ok: false, hint: a.optional ? "Take a photo, or press Done." : "Take the photo or choose a file." };
+    case "checklist": {
+      const left = a.items.filter(i => i.kind !== "network" && !pend.ticks[i.key]).length;
+      if (left) return { ok: false, hint: `${left} ${left === 1 ? "row" : "rows"} left to tick.` };
+      const V = fieldVal("ck-v"), I = fieldVal("ck-i");
+      if (V === "" || I === "" || !isFinite(+V) || !isFinite(+I)) return { ok: false, hint: "Enter the QC board voltage and current." };
+      const [vl, vh] = a.limits.voltage, [il, ih] = a.limits.current;
+      if (+V < vl || +V > vh || +I < il || +I > ih) return { ok: true, warn: true, hint: `Outside ${vl}–${vh} V or ${il}–${ih} mA, so it will be saved as FAIL.` };
+      if (!a.network.ok) return { ok: true, warn: true, hint: "The QC board isn’t answering, so that row will be saved as FAIL." };
+      return { ok: true };
+    }
+    case "inspect": {
+      if (!a.aligned) return { ok: false, hint: "Retake the photo, or carry on without the check." };
+      const left = a.flagged.filter(f => !pend.answers[f.ref]).length;
+      if (left) return { ok: false, hint: `${left} flagged ${left === 1 ? "part" : "parts"} to answer.` };
+      return Object.values(pend.answers).includes("reversed") ? { ok: true, warn: true, hint: "Reversed parts are saved as FAIL." } : { ok: true };
+    }
+    case "page": {
+      const states = a.fields.map(pageState), left = states.filter(x => x === "empty").length;
+      const bad = a.fields.filter((f, i) => states[i] === "warn" && f.kind !== "text").length;
+      const serial = a.fields.some((f, i) => states[i] === "warn" && f.kind === "text");
+      if (left) return { ok: false, hint: `${left} of ${a.fields.length} left to fill in.` };
+      const parts = [];
+      if (bad) parts.push(`${bad} ${bad === 1 ? "entry is" : "entries are"} outside the limits or No; saved as FAIL.`);
+      if (serial) parts.push("The SoM serial isn’t 10 digits; you’ll be asked to check it.");
+      return parts.length ? { ok: true, warn: true, hint: parts.join(" ") } : { ok: true };
+    }
+    case "choice": return pend.opt ? { ok: true } : { ok: false, hint: "Choose one of the options." };
+    case "files": return pend.files.length ? { ok: true } : { ok: false, hint: "Add the certificate file." };
+    case "autodone": case "notes": return { ok: true };
+  }
+  return { ok: false, hint: "" };
+}
+function nextValue(a) {
+  switch (a.kind) {
+    case "number": return Number(fieldVal("v"));
+    case "yesno": return pend.choice;
+    case "judged": return { ok: pend.choice, value: fieldVal("v") };
+    case "text": case "notes": return fieldVal("v");
+    case "counts": return { ordered: +fieldVal("a"), received: +fieldVal("b") };
+    case "photo": return { image: cam.shot, source: cam.source, ghost: !!($("asGhost") && $("asGhost").checked) };
+    case "checklist": return { ticks: { ...pend.ticks }, voltage: +fieldVal("ck-v"), current: +fieldVal("ck-i") };
+    case "autodone": return true;
+    case "inspect": return { answers: { ...pend.answers } };
+    case "choice": return pend.opt;
+    case "files": return { files: pend.files.map(f => ({ name: f.name, data: f.data })) };
+    case "page": return Object.fromEntries(a.fields.map(f => { const v = pageValue(f); return [f.key, f.kind === "number" ? Number(v) : v]; }));
+  }
+}
+function updateNext() {
+  const b = document.getElementById("next"), h = document.getElementById("nexthint"), bar = document.getElementById("nextbar");
+  if (!b || !bar) return;
+  const a = S.ask;
+  const hide = a && !NEXT_KINDS.includes(a.kind);
+  bar.querySelector(".nextwrap").hidden = !!hide;
+  if (!a) { b.disabled = true; h.textContent = S.page ? "The tests are running." : S.running ? "The test is running." : "Please wait."; h.className = "nexthint"; return; }
+  if (hide) return;
+  const r = ready(a);
+  b.disabled = !r.ok || sentId === a.id;
+  b.textContent = a.kind === "notes" ? "Finish and save" : "Next test";
+  h.textContent = r.hint || ""; h.className = "nexthint" + (r.warn ? " warn" : "");
+  const cnt = document.getElementById("ckcount");
+  if (cnt && a.kind === "checklist") cnt.textContent = `${a.items.filter(i => i.kind === "network" || pend.ticks[i.key]).length} of ${a.items.length} done`;
+}
+function pressNext() {
+  const a = S.ask; if (!a || !NEXT_KINDS.includes(a.kind)) return;
+  if (!ready(a).ok) { updateNext(); return; }
+  answer(nextValue(a));
+}
+// ---- adding files (vendor certificates) ----
+function showFiles() {
+  const ul = document.getElementById("filelist"); if (!ul) return;
+  const size = n => n > 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " kB";
+  ul.innerHTML = pend.files.map((f, i) => `<li><span class="fn">${esc(f.name)}</span><span class="fs">${size(f.size)}</span><button class="btn small" type="button" data-rm="${i}" aria-label="Remove ${esc(f.name)}">Remove</button></li>`).join("");
+  ul.querySelectorAll("[data-rm]").forEach(b => b.onclick = () => { pend.files.splice(+b.dataset.rm, 1); showFiles(); updateNext(); });
+}
+function bindFiles(a) {
+  const drop = document.getElementById("drop"), input = document.getElementById("filein");
+  const add = list => [...list].forEach(file => {
+    const ext = "." + file.name.split(".").pop().toLowerCase();
+    if (!a.accept.includes(ext)) { say(`${file.name}: use a PDF, Excel, PNG or JPEG file.`, "err"); return; }
+    if (file.size > a.max_mb * 1048576) { say(`${file.name} is larger than ${a.max_mb} MB.`, "err"); return; }
+    if (pend.files.length >= a.max_files) { say(`Add at most ${a.max_files} files.`, "err"); return; }
+    if (pend.files.some(f => f.name === file.name && f.size === file.size)) return;
+    const r = new FileReader();
+    r.onload = () => { pend.files.push({ name: file.name, size: file.size, data: r.result }); say(""); showFiles(); updateNext(); };
+    r.onerror = () => say(`${file.name} couldn’t be read.`, "err");
+    r.readAsDataURL(file);
+  });
+  document.getElementById("pickfiles").onclick = () => input.click();
+  input.onchange = () => { add(input.files); input.value = ""; };
+  drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
+  drop.ondragleave = () => drop.classList.remove("over");
+  drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); add(e.dataTransfer.files); };
+  showFiles();
+}
+function chooseOpt(key) {
+  pend.opt = key;
+  screen.querySelectorAll("[data-opt]").forEach(b => {
+    const on = b.dataset.opt === key; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+    const t = b.querySelector("b"); t.textContent = (on ? "✓ " : "") + t.textContent.replace(/^✓ /, "");
+  });
+  updateNext();
+}
+function pick(v) {
+  pend.choice = v;
+  screen.querySelectorAll("[data-pick]").forEach(b => { const on = (b.dataset.pick === "1") === v; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); b.textContent = (on ? "✓ " : "") + b.dataset.label; });
+  updateNext();
+}
+const badge = r => `<span class="badge ${esc(r)}">${esc(r === "PENDING" ? "NOT RUN" : r)}</span>`;
+function failedTable(rows) {
+  return `<table class="mini"><thead><tr><th>Step</th><th>Value</th><th>Accept</th><th>Result</th></tr></thead><tbody>${rows.map(r =>
+    `<tr><td>${esc(r.title)}</td><td class="mono">${esc(r.value)}</td><td>${esc(r.accept || "")}</td><td>${badge(r.result)}</td></tr>`).join("")}</tbody></table>`;
+}
+function retestHTML(b) {
+  const last = b.items.find(i => i.kind === "run" && b.latest && i.n === b.latest.n);
+  const lines = b.items.slice(0, 4).map(i => `<div>${esc(i.date)}  <b>${esc(i.title)}</b>  ${esc(i.who)} ${i.result ? badge(i.result) : ""}</div>`).join("");
+  return `<div class="sec"><span class="kind manual">Tested before</span></div>
+    <h1 class="name"><span class="mono">${esc(b.serial)}</span> has been tested before</h1>
+    ${b.warning ? `<div class="warnbox">${esc(b.warning)}</div>` : ""}
+    <div style="display:flex;flex-direction:column;gap:4px;font-size:.95em">${lines}</div>
+    ${last && last.failed.length ? `<div style="max-width:820px"><div class="sh">Failed in run ${last.n}</div>${failedTable(last.failed)}</div>` : ""}
+    <div class="keys">This will be run ${b.next_run}. Earlier runs stay in the HWDB unchanged.</div>
+    <div class="choices">
+      <button class="choice pri" data-a="choose" data-v="repair" type="button"><b>Record a repair, then retest</b><span>Fill in what was fixed. The retest becomes run ${b.next_run}.</span></button>
+      <button class="choice" data-a="choose" data-v="retest" type="button"><b>Retest without a repair</b><span>For example a loose cable or a setup mistake. You’ll be asked why.</span></button>
+      <button class="choice" data-a="choose" data-v="repair_only" type="button"><b>Record a repair only</b><span>Retest the board later.</span></button>
+      <button class="choice" data-a="choose" data-v="cancel" type="button"><b>Cancel</b><span>Back to the start screen. Nothing is saved.</span></button>
+    </div>`;
+}
+function repairHTML(f) {
+  return `<div class="sec"><span class="kind manual">Repair</span></div>
+    <h1 class="name">Repair ${f.n} for <span class="mono">${esc(f.serial)}</span></h1>
+    <p class="prompt">${f.after_run ? `After run ${f.after_run}, ${esc(f.after_date)}.` : ""} Close-up photos come next.</p>
+    ${f.failed.length ? `<div><div class="sh">What the repair was for</div><div class="chips">${f.failed.map(x =>
+      `<button class="chip on" type="button" data-a="chip" data-v="${esc(x.key)}" aria-pressed="true">${esc(x.title)}</button>`).join("")}</div></div>` : ""}
+    <div class="grid2">
+      <label><span class="lbl">Repaired by</span><input class="in" id="r-by" value="${esc(f.repaired_by)}" autocomplete="off"></label>
+      <label><span class="lbl">Parts replaced (reference designators)</span><input class="in" id="r-parts" placeholder="For example U43, C112. Empty if none." autocomplete="off"></label>
+      <label><span class="lbl">Fault found</span><textarea class="ta" id="r-fault" placeholder="What was wrong, and where on the board"></textarea></label>
+      <label><span class="lbl">What was done</span><textarea class="ta" id="r-action" placeholder="Reworked, replaced, cleaned, reseated…"></textarea></label>
+      <label class="wide"><span class="lbl">Notes</span><input class="in" id="r-notes" autocomplete="off"></label>
+    </div>
+    <div class="entry"><button class="btn pri" data-a="saverep" type="button">Next: close-up photos</button></div>`;
+}
+function lastHTML() {
+  const k = S.last, r = k && S.results[k]; if (!r) return "";
+  const p = S.plan.find(x => x.key === k);
+  return `<div class="last"><span>Last step</span><b>${esc(p ? p.title : k)}</b><span class="mono">${esc(r.value)}</span><span class="badge ${r.result}">${r.result}</span></div>`;
+}
+function mainHTML() {
+  if (S.ask) return askHTML(S.ask);
+  if (S.page) return stepHead(S.page.step, "autopage") + `<div class="pg">${progressHTML(S.page)}</div>` + (S.status ? `<div class="msg run"><span class="spin"></span>${esc(S.status)}</div>` : "");
+  if (S.running) return stepHead(S.running, "auto") + `<div class="msg run"><span class="spin"></span>Running on the PTC…</div>`;
+  if (S.status) return `<div class="sec"></div><h1 class="name">Please wait</h1><div class="msg run"><span class="spin"></span>${esc(S.status)}</div>`;
+  return `<div class="msg run"><span class="spin"></span>Working…</div>`;
+}
+
+function renderRun() {
+  const plan = S.plan.filter(p => !p.hidden), done = plan.filter(p => S.results[p.key]).length;
+  const key = JSON.stringify(["run", S.ask && S.ask.id, S.running && S.running.key, S.status, !S.ask && S.page ? S.page.tests.map(t => t.status) : null]);
+  if (key !== viewKey || !screen.querySelector(".body")) {
+    viewKey = key; pendingWarn = null;
+    const keep = S.ask && S.ask.previous && S.ask.previous.ticks ? { ...S.ask.previous.ticks } : {};
+    const prevPage = {};
+    if (S.ask && S.ask.kind === "page") Object.entries(S.ask.previous || {}).forEach(([k, v]) => { if (typeof v === "boolean") prevPage[k] = v; else if (v && typeof v === "object") prevPage[k + "#ok"] = v.ok; });
+    pend = { choice: null, ticks: keep, answers: {}, page: prevPage, opt: null, files: [] };
+    const st = (S.ask && S.ask.step) || S.running, how = st && st.how && st.how.length ? st.how : null;
+    const howKey = st && st.kind === "page" ? "ptc-how-page-open" : "ptc-how-open";
+    const open = store.get(howKey, st && st.kind === "page" ? "0" : "1") === "1";
+    screen.innerHTML = `<div class="body"><aside class="side" id="side"></aside><main class="main ${how && open ? "with-how" : ""}"><div class="stepcol"><div id="mainc" style="display:flex;flex-direction:column;gap:16px"></div><div class="msg" id="msg" role="status"></div>
+        <div class="nextbar" id="nextbar"><div id="lastc" style="flex:1;min-width:0"></div><div class="nextwrap"><button class="btn pri next" id="next" type="button" disabled>Next test</button><span class="nexthint" id="nexthint" role="status"></span></div></div></div>
+        ${how && open ? `<aside class="howcard" aria-label="How to run this test"><div class="howhd"><span>How to run this test</span><button class="howbtn" type="button" id="howhide">Hide</button></div><ol>${how.map(h => `<li>${esc(h)}</li>`).join("")}</ol></aside>` : ""}</main></div>
+      <div class="foot"><span id="cnt"></span><div class="bar"><i id="barfill"></i></div><span id="footmode"></span></div>`;
+    // keep the camera running from the front photo to the back photo, stop it otherwise
+    if ((S.ask && !["photo", "inspect"].includes(S.ask.kind)) || S.running) stopCamera();
+    document.getElementById("mainc").innerHTML = mainHTML();
+    if (how && !open) { const sec = screen.querySelector("#mainc .sec"); if (sec) sec.insertAdjacentHTML("beforeend", '<button class="howbtn" type="button" id="howshow" style="margin-left:auto">How to run this test</button>'); }
+    const hh = document.getElementById("howhide"), hs = document.getElementById("howshow");
+    if (hh) hh.onclick = () => { store.set(howKey, "0"); viewKey = ""; render(); };
+    if (hs) hs.onclick = () => { store.set(howKey, "1"); viewKey = ""; render(); };
+    document.getElementById("next").onclick = pressNext;
+    bindMain();
+    if (S.ask && S.ask.kind === "photo") bindPhoto(S.ask.side);
+    const f = screen.querySelector("#v, #a") || [...screen.querySelectorAll("[data-pk]")].find(x => !x.value.trim()); if (f) f.focus();
+  }
+  document.getElementById("side").innerHTML = renderSide();
+  document.getElementById("lastc").innerHTML = lastHTML();
+  document.getElementById("footmode").textContent = S.run_label || (S.mode === "ship" ? "Shipment entry" : "Production board");
+  document.getElementById("cnt").textContent = `${done} of ${plan.length} recorded`;
+  document.getElementById("barfill").style.width = `${Math.round(done / Math.max(1, plan.length) * 100)}%`;
+  showError();
+  updateNext();
+  if (S.ask && S.ask.kind === "photo") updateGhost(S.ask.side);
+  const cur = document.getElementById("cur"); if (cur) cur.scrollIntoView({ block: "nearest" });
+}
+function say(text, kind) { const m = document.getElementById("msg"); if (m) { m.textContent = text; m.className = "msg " + (kind || ""); } }
+function showError() {
+  if (S.ask && S.ask.error) { say(S.ask.error, "err"); sentId = null; screen.querySelectorAll("button.btn, .seg button").forEach(b => b.disabled = false); }
+}
+
+function bindMain() {
+  const a = S.ask; if (!a) return;
+  const val = fieldVal;
+  const act = (name, el) => {
+    switch (name) {
+      case "yes": answer(true); return;
+      case "no": answer(false); return;
+      case "ok": answer(true); return;
+      case "retake": answer({ retake: true }); return;
+      case "skipcheck": answer({ skip: true }); return;
+      case "choose": answer(el.dataset.v); return;
+      case "chip": { const on = !el.classList.contains("on"); el.classList.toggle("on", on); el.setAttribute("aria-pressed", on); return; }
+      case "saverep": {
+        const r = { repaired_by: val("r-by"), parts_replaced: val("r-parts"), fault_found: val("r-fault"),
+                    action_taken: val("r-action"), notes: val("r-notes"),
+                    for_steps: [...screen.querySelectorAll(".chip.on")].map(c => c.dataset.v) };
+        if (!r.repaired_by) { say("Enter who repaired the board.", "err"); return; }
+        if (!r.fault_found && !r.action_taken) { say("Describe the fault found or what was done.", "err"); return; }
+        answer(r); return; }
+    }
+  };
+  screen.querySelectorAll("[data-a]").forEach(b => b.onclick = () => act(b.dataset.a, b));
+  screen.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => pick(b.dataset.pick === "1"));
+  screen.querySelectorAll("[data-opt]").forEach(b => b.onclick = () => chooseOpt(b.dataset.opt));
+  if (a.kind === "files") bindFiles(a);
+  screen.querySelectorAll("[data-pkey]").forEach(b => b.onclick = () => {
+    const v = b.dataset.pv === "1"; pend.page[b.dataset.pkey] = v;
+    b.parentElement.querySelectorAll("[data-pkey]").forEach(o => { const on = (o.dataset.pv === "1") === v; o.classList.toggle("on", on); o.setAttribute("aria-pressed", on); o.textContent = (on ? "✓ " : "") + o.dataset.label; });
+    updateNext();
+  });
+  screen.querySelectorAll("[data-ans]").forEach(b => b.onclick = () => {
+    pend.answers[b.dataset.ref] = b.dataset.ans;
+    b.closest(".flag-btns").querySelectorAll("[data-ans]").forEach(o => { const on = o === b; o.classList.toggle("on", on); o.setAttribute("aria-pressed", on); });
+    updateNext();
+  });
+  screen.querySelectorAll("[data-tick]").forEach(row => {
+    const toggle = () => {
+      const on = !pend.ticks[row.dataset.tick]; pend.ticks[row.dataset.tick] = on;
+      row.classList.toggle("on", on); row.setAttribute("aria-checked", on); row.querySelector(".box").textContent = on ? "✓" : "";
+      updateNext();
+    };
+    row.onclick = e => { if (!(e.target instanceof Element && e.target.closest("input"))) toggle(); };
+    row.onkeydown = e => { if ((e.key === " " || e.key === "Enter") && e.target === row) { e.preventDefault(); toggle(); } };
+  });
+  const re = document.getElementById("recheck");
+  if (re) re.onclick = () => { if (ws.readyState === 1) { sentId = a.id; ws.send(JSON.stringify({ type: "answer", id: a.id, value: { recheck: true, keep: nextValue(a) } })); updateNext(); } };
+  screen.querySelectorAll("input.field, textarea.field").forEach(f => {
+    f.oninput = () => {
+      if (document.getElementById("msg").className.includes("err")) say("");
+      if (f.dataset.pk && a.fields) { const fld = a.fields.find(x => x.key === f.dataset.pk); f.classList.remove("ok", "warn"); const st = pageState(fld); if (st !== "empty") f.classList.add(st); }
+      updateNext();
+    };
+    f.onkeydown = e => {
+      if (e.key !== "Enter" || f.tagName === "TEXTAREA") return;
+      e.preventDefault();
+      if (a.kind === "counts" && f.id === "a") { document.getElementById("b").focus(); return; }
+      if (a.kind === "checklist" && f.id === "ck-v") { document.getElementById("ck-i").focus(); return; }
+      if (f.dataset.pk) {   // on a page, Enter moves to the next empty box
+        const boxes = [...screen.querySelectorAll("[data-pk]")], i = boxes.indexOf(f);
+        const next = boxes.slice(i + 1).concat(boxes.slice(0, i)).find(x => !x.value.trim());
+        if (next) { next.focus(); return; }
+      }
+      pressNext();
+    };
+  });
+}
+document.addEventListener("keydown", e => {
+  if (!S || S.screen !== "run" || !S.ask || e.ctrlKey || e.metaKey || e.altKey) return;
+  const t = e.target instanceof Element ? e.target : null;
+  if (S.ask.kind === "choice" && t && t.closest("[data-opt]")) {   // a choice button keeps focus after a click
+    if (e.key === "Enter") { e.preventDefault(); pressNext(); return; }
+    if (/^[1-9]$/.test(e.key) && S.ask.options[+e.key - 1]) { e.preventDefault(); chooseOpt(S.ask.options[+e.key - 1].key); return; }
+  }
+  if (t && t.closest("input, textarea, select, button, [data-tick]")) return;
+  const k = e.key.toLowerCase();
+  if (S.ask.kind === "yesno" && (k === "y" || k === "n")) { e.preventDefault(); pick(k === "y"); }
+  else if (S.ask.kind === "choice" && /^[1-9]$/.test(k) && S.ask.options[+k - 1]) { e.preventDefault(); chooseOpt(S.ask.options[+k - 1].key); }
+  else if (e.key === "Enter" && S.ask.kind !== "photo") { e.preventDefault(); pressNext(); }
+});
+
+// ---- start screen ----
+function renderStart() {
+  const key = JSON.stringify(["start", S.ask && S.ask.id]);
+  if (key === viewKey && screen.querySelector(".form")) { showStartError(); return; }
+  viewKey = key;
+  const draw = () => {
+    const b = startMode === "board", look = startMode === "lookup";
+    const keep = id => { const el = document.getElementById(id); return el ? el.value : ""; };
+    const tester = keep("f-tester") || (S.ask && S.ask.tester) || "";
+    const boards = (S.ask && S.ask.boards) || { waiting: [], recent: [] };
+    const list = (rows, none) => rows.length ? `<div class="rows">${rows.map(r => `<button class="row" type="button" data-q="${esc(r.serial)}"><span class="s">${esc(r.serial)}</span><span class="d">${esc(r.failed.length ? "Run " + r.run + ": " + r.failed.slice(0, 3).join(", ") + (r.failed.length > 3 ? "…" : "") : "Run " + r.run)}${r.repaired_since ? ", repaired" : ""}<br>${esc(r.date)}</span>${badge(r.result)}</button>`).join("")}</div>` : `<div class="empty">${none}</div>`;
+    const seg = `<div><span class="lbl">What are you doing?</span>
+        <div class="seg"><button type="button" data-m="board" class="${b ? "on" : ""}">Production board</button><button type="button" data-m="ship" class="${startMode === "ship" ? "on" : ""}">Production shipment</button><button type="button" data-m="lookup" class="${look ? "on" : ""}">Look up a board</button></div></div>`;
+    if (look) {
+      screen.innerHTML = `<div class="start2"><div class="form">
+        <h1>Look up a board</h1>${seg}
+        <label><span class="lbl">PTC serial number</span><input class="field" id="f-query" autocomplete="off" placeholder="Scan or type, * matches any part"></label>
+        <input type="hidden" id="f-tester" value="${esc(tester)}">
+        <div class="msg" id="msg" role="status"></div>
+        <button class="btn pri" id="go" type="button">Show history</button>
+        <div class="keys">Read-only. Board history comes from the HWDB, and from this station’s records if the HWDB can’t be reached.</div>
+        <div class="keys">Engineers: <a href="/inspection" style="color:var(--g-accent)">set up the orientation check</a> (reference photos and the parts to check).</div>
+      </div><div style="display:flex;flex-direction:column;gap:18px">
+        <div><div class="sh">Waiting for a retest</div>${list(boards.waiting, "No boards are waiting for a retest.")}</div>
+        <div><div class="sh">Recently tested on this station</div>${list(boards.recent, "No boards tested on this station yet.")}</div>
+      </div></div>`;
+      screen.querySelectorAll("[data-m]").forEach(x => x.onclick = () => { startMode = x.dataset.m; draw(); });
+      const goL = q => { if (!q) return say("Scan or type a serial to look up.", "err"); answer({ mode: "lookup", query: q, tester }); };
+      document.getElementById("go").onclick = () => goL(document.getElementById("f-query").value.trim());
+      document.getElementById("f-query").onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); goL(e.target.value.trim()); } };
+      screen.querySelectorAll("[data-q]").forEach(r => r.onclick = () => goL(r.dataset.q));
+      document.getElementById("f-query").focus();
+      return;
+    }
+    screen.innerHTML = `<div class="center"><div class="form">
+      <h1>Start a test</h1>
+      ${seg}
+      <label><span class="lbl">Tester name</span><input class="field" id="f-tester" autocomplete="off" value="${esc(tester)}"></label>
+      ${b ? `<label><span class="lbl">PTC serial number</span><input class="field" id="f-serial" autocomplete="off" placeholder="Scan the PTC barcode"></label>`
+          : `<div class="two"><label><span class="lbl">Purchase order</span><input class="field" id="f-po" autocomplete="off"></label><label><span class="lbl">Batch number, if any</span><input class="field" id="f-batch" autocomplete="off"></label></div>`}
+      <div class="msg" id="msg" role="status"></div>
+      <button class="btn pri" id="go" type="button">${b ? "Start board test" : "Start shipment entry"}</button>
+    </div></div>`;
+    screen.querySelectorAll("[data-m]").forEach(x => x.onclick = () => { startMode = x.dataset.m; draw(); });
+    const go = () => {
+      const v = id => (document.getElementById(id) || { value: "" }).value.trim();
+      const val = { mode: startMode, tester: v("f-tester"), serial: v("f-serial"), po: v("f-po"), batch: v("f-batch") };
+      if (!val.tester) return say("Enter the tester name first.", "err");
+      if (startMode === "board" && !val.serial) return say("Scan the PTC serial first.", "err");
+      if (startMode === "ship" && !val.po) return say("Enter the purchase order number first.", "err");
+      answer(val);
+    };
+    document.getElementById("go").onclick = go;
+    screen.querySelectorAll("input.field").forEach(f => f.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); go(); } });
+    const first = tester ? document.getElementById(b ? "f-serial" : "f-po") : document.getElementById("f-tester");
+    if (first) first.focus();
+  };
+  draw();
+  showStartError();
+}
+function showStartError() { if (S.ask && S.ask.error) { say(S.ask.error, "err"); sentId = null; screen.querySelectorAll("button").forEach(b => b.disabled = false); } }
+
+// ---- results and stopped ----
+function renderResults() {
+  const key = JSON.stringify(["results", S.ask && S.ask.id, S.final]);
+  if (key === viewKey) return; viewKey = key;
+  const F = S.final, ov = F.overall;
+  const failed = S.plan.filter(p => { const r = S.results[p.key]; return r && (r.result === "FAIL" || r.result === "ERROR"); }).length;
+  const words = { PASS: "Every step passed.", FAIL: `${failed} ${failed === 1 ? "step" : "steps"} failed. Check the rows marked FAIL.`, ERROR: `${failed} ${failed === 1 ? "step" : "steps"} couldn’t run. Check the rows marked ERROR.` };
+  let rows = "", grp = null;
+  const planKeys = new Set(S.plan.map(p => p.key));
+  const items = S.plan.filter(p => p.kind !== "notes").concat(Object.keys(S.results).filter(k => !planKeys.has(k)).map(k => ({ key: k, title: k, group: "Other results" })));
+  items.forEach(p => {
+    if (p.group !== grp) { grp = p.group; rows += `<tr class="grp-row"><td colspan="${SHOW_KEYS ? 5 : 4}">${esc(grp)}</td></tr>`; }
+    const r = S.results[p.key] || { result: "PENDING", value: "Not run" };
+    rows += `<tr><td>${esc(p.title)}</td>${SHOW_KEYS ? `<td class="mono">${esc(p.key)}</td>` : ""}<td class="mono">${esc(r.value)}</td>${SHOW_LIMITS ? `<td>${esc(accText(p) || "")}</td>` : ""}<td><span class="badge ${r.result}">${r.result === "PENDING" ? "NOT RUN" : r.result}</span></td></tr>`;
+  });
+  const up = F.ok === true ? "ok" : F.ok === false ? "bad" : "";
+  screen.innerHTML = `<div class="res">
+    <div class="verdict"><span class="word ${ov}">${ov}</span><div><div style="font-size:1.4em;font-weight:600">${esc(S.mode === "ship" ? "Shipment " + S.ident : S.ident)}${S.run_label ? `<span style="font-weight:400;color:var(--g-dim);font-size:.7em">  ${esc(S.run_label)}</span>` : ""}</div><div style="color:var(--g-dim)">${esc(words[ov] || "")}</div></div></div>
+    ${F.message ? `<div class="upload ${up}">${esc(F.message)}</div>` : ""}
+    <div class="tbl"><table><thead><tr><th>Step</th>${SHOW_KEYS ? "<th>Database key</th>" : ""}<th>Value</th>${SHOW_LIMITS ? "<th>Accept</th>" : ""}<th>Result</th></tr></thead><tbody>${rows}</tbody></table></div>
+    ${F.notes ? `<div><span class="lbl">Notes</span>${esc(F.notes)}</div>` : ""}
+    ${Object.keys(S.photos || {}).length ? `<div class="thumbs">${["front", "back", "front_panel", "bare_front", "bare_back"].filter(sd => S.photos[sd]).map(sd => `<figure><a href="/photo/${sd}?v=${S.photos[sd]}" target="_blank" rel="noopener">${{ front: "Front", back: "Back", front_panel: "Front panel", bare_front: "Bare PCB, front", bare_back: "Bare PCB, back" }[sd]}<img src="/photo/${sd}?v=${S.photos[sd]}" alt="${{ front: "Front", back: "Back", front_panel: "Front panel", bare_front: "Bare PCB, front", bare_back: "Bare PCB, back" }[sd]} photo"></a></figure>`).join("")}</div>` : ""}
+    <div class="actions"><button class="btn pri" id="next" type="button">${S.mode === "ship" ? "New entry" : "Test next board"}</button></div></div>`;
+  document.getElementById("next").onclick = () => answer(true);
+  document.getElementById("next").focus();
+}
+function renderStopped() {
+  const key = JSON.stringify(["stopped", S.ask && S.ask.id, S.final]);
+  if (key === viewKey) return; viewKey = key;
+  screen.innerHTML = `<div class="center"><div class="form"><h1>${esc(S.final.title || "The test stopped")}</h1><p class="prompt">${esc(S.final.message)}</p>
+    <div><button class="btn pri" id="next" type="button">Back to start</button></div></div></div>`;
+  document.getElementById("next").onclick = () => answer(true);
+  document.getElementById("next").focus();
+}
+
+// ---- board photo step ----
+const cam = { stream: null, deviceId: null, shot: null, source: null };
+const $ = id => document.getElementById(id);
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } },
+                set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+function photoHTML(side, optional) {
+  const ghosted = side !== "closeup";
+  return `<div class="cam">
+    <div class="cam-box" id="camBox">
+      <video id="video" autoplay playsinline muted></video>
+      <img id="shot" alt="The photo just taken" hidden>
+      <img id="ghost" class="ghost" alt="" hidden>
+      <span class="cam-badge" id="camBadge">Live</span>
+      <div class="cam-empty" id="camEmpty"><span id="camEmptyText">Starting the camera…</span><button class="btn small" data-p="retry" type="button" hidden>Retry</button></div>
+    </div>
+    <div class="cam-tools">
+      <label>Camera <select id="camSel" aria-label="Camera"></select></label>
+      ${ghosted ? `<label>Ghost <input type="range" id="ghostOp" min="0" max="100" step="5" aria-label="Ghost image opacity"><span id="ghostOpOut" class="mono"></span></label>
+      <span id="ghostInfo"></span>
+      <button class="btn small" data-p="ghostset" type="button" id="ghostSetBtn"></button>
+      <button class="btn small" data-p="ghostclear" type="button" id="ghostClearBtn">Remove ghost</button>` : ""}
+    </div>
+    <div class="entry" id="liveBtns"><button class="btn pri" data-p="take" type="button" id="takeBtn" disabled>Take photo</button><button class="btn" data-p="file" type="button">Choose file…</button>${optional ? '<button class="btn" data-p="done" type="button">Done, no more photos</button>' : ""}</div>
+    <div class="entry" id="reviewBtns" hidden><button class="btn" data-p="retake" type="button">Retake</button>
+      ${ghosted ? '<label class="check"><input type="checkbox" id="asGhost"><span id="asGhostLbl"></span></label>' : ""}</div>
+    <div class="keys" id="photoKeys">Space takes the photo.</div>
+    <input type="file" id="fileIn" accept="image/jpeg,image/png" hidden>
+    <input type="file" id="ghostIn" accept="image/jpeg,image/png" hidden>
+  </div>`;
+}
+
+function stopCamera() {
+  if (cam.stream) { cam.stream.getTracks().forEach(t => t.stop()); cam.stream = null; }
+}
+function setAspect(w, h) { const box = $("camBox"); if (box && w && h) box.style.setProperty("--ar", (w / h).toFixed(4)); }
+function camMessage(text, retry) {
+  $("camEmpty").hidden = false; $("camEmptyText").textContent = text;
+  $("camEmpty").querySelector('[data-p="retry"]').hidden = !retry;
+  $("takeBtn").disabled = true;
+}
+
+async function startCamera(deviceId) {
+  const askId = S.ask && S.ask.id;
+  const stillHere = () => S.ask && S.ask.id === askId && S.ask.kind === "photo" && $("video");
+  if (!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    camMessage("The camera only works when this page is opened at http://localhost on the test station. You can still choose a photo file.", false);
+    return;
+  }
+  if (cam.stream && deviceId && deviceId !== cam.deviceId) stopCamera();
+  try {
+    if (!cam.stream) {
+      const want = deviceId || store.get("ptc-camera", null);
+      const size = { width: { ideal: S.camera.width }, height: { ideal: S.camera.height } };
+      try {
+        cam.stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: want ? { ...size, deviceId: { exact: want } } : size });
+      } catch (e) {
+        if (!want || !["NotFoundError", "OverconstrainedError"].includes(e.name)) throw e;
+        cam.stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: size });  // saved camera is gone
+      }
+      cam.deviceId = cam.stream.getVideoTracks()[0].getSettings().deviceId || want;
+      if (cam.deviceId) store.set("ptc-camera", cam.deviceId);
+    }
+    if (!stillHere()) { if (!(S.ask && S.ask.kind === "photo")) stopCamera(); return; }
+    const v = $("video");
+    v.onloadedmetadata = () => setAspect(v.videoWidth, v.videoHeight);
+    v.srcObject = cam.stream;
+    await v.play().catch(() => {});
+    if (!stillHere()) return;
+    if (v.videoWidth) setAspect(v.videoWidth, v.videoHeight);
+    $("camEmpty").hidden = true; $("takeBtn").disabled = !!cam.shot;
+    const sel = $("camSel"), cams = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
+    sel.innerHTML = cams.map((d, i) => `<option value="${esc(d.deviceId)}">${esc(d.label || "Camera " + (i + 1))}</option>`).join("");
+    sel.value = cam.deviceId || "";
+    sel.disabled = cams.length < 2;
+  } catch (e) {
+    stopCamera();
+    if (!stillHere()) return;
+    const why = e.name === "NotAllowedError" ? "The browser isn’t allowed to use the camera. Allow it from the camera icon in the address bar and press Retry, or choose a photo file."
+      : e.name === "NotFoundError" || e.name === "OverconstrainedError" ? "No camera was found. Plug in the USB camera and press Retry, or choose a photo file."
+      : e.name === "NotReadableError" ? "The camera is busy. Close any other program using it and press Retry, or choose a photo file."
+      : `The camera couldn’t start (${e.name || e}). Press Retry, or choose a photo file.`;
+    camMessage(why, true);
+  }
+}
+
+function updateGhost(side) {
+  const g = $("ghost"); if (!g) return;
+  if (!$("ghostOp")) { g.hidden = true; return; }   // close-ups have no ghost
+  const ver = S.ghosts[side], name = { front: "front", back: "back", front_panel: "front panel", bare_front: "bare PCB front", bare_back: "bare PCB back" }[side] || side;
+  if (ver) {
+    const src = `/ghost/${side}?v=${ver}`;
+    if (g.dataset.src !== src) {
+      g.dataset.src = src; g.src = src;
+      g.onload = () => { if (!cam.stream && !cam.shot) setAspect(g.naturalWidth, g.naturalHeight); };
+    }
+    g.hidden = false;
+  } else { g.hidden = true; g.removeAttribute("src"); delete g.dataset.src; }
+  g.style.opacity = $("ghostOp").value / 100;
+  $("ghostInfo").textContent = ver ? "" : `No ${name} ghost yet`;
+  $("ghostSetBtn").textContent = ver ? "Change ghost…" : "Set ghost from file…";
+  $("ghostClearBtn").hidden = !ver;
+  $("ghostOp").disabled = !ver;
+  if (S.ghost_error) say(S.ghost_error, "err");
+}
+
+function showReview(dataUrl, source, side) {
+  cam.shot = dataUrl; cam.source = source;
+  const shot = $("shot");
+  shot.onload = () => setAspect(shot.naturalWidth, shot.naturalHeight);
+  shot.src = dataUrl; shot.hidden = false; $("video").hidden = true; $("camEmpty").hidden = true;
+  $("camBadge").textContent = source === "file" ? "Chosen file" : "Photo";
+  $("liveBtns").hidden = true; $("reviewBtns").hidden = false;
+  const hasGhost = !!S.ghosts[side];
+  if ($("asGhost")) {
+    $("asGhost").checked = !hasGhost;
+    $("asGhostLbl").textContent = hasGhost ? "Replace the ghost with this photo"
+      : `Save as the ghost for the next ${["front_panel", "bare_front", "bare_back"].includes(side) ? "deliveries" : "boards"}`;
+  }
+  $("photoKeys").textContent = "Next test (or Enter) keeps this photo. The ghost isn’t part of the photo.";
+  updateNext();
+  say("");
+}
+function showLive() {
+  cam.shot = null; cam.source = null;
+  $("shot").hidden = true; $("shot").removeAttribute("src"); $("video").hidden = false;
+  $("camBadge").textContent = "Live";
+  $("liveBtns").hidden = false; $("reviewBtns").hidden = true;
+  $("takeBtn").disabled = !cam.stream;
+  if (!cam.stream) startCamera();
+  $("photoKeys").textContent = "Space takes the photo.";
+  updateNext();
+}
+
+function readImageFile(file, done) {
+  if (!file) return;
+  if (!/^image\/(jpeg|png)$/.test(file.type)) { say("Choose a JPEG or PNG image.", "err"); return; }
+  if (file.size > S.camera.max_mb * 1024 * 1024) { say(`That image is larger than ${S.camera.max_mb} MB.`, "err"); return; }
+  const r = new FileReader();
+  r.onload = () => done(r.result);
+  r.onerror = () => say("That file couldn’t be read.", "err");
+  r.readAsDataURL(file);
+}
+
+function bindPhoto(side) {
+  cam.shot = null;
+  const op = $("ghostOp") || { value: "40" };
+  op.value = store.get("ptc-ghost-opacity", "40");
+  if ($("ghostOpOut")) $("ghostOpOut").textContent = op.value + " %";
+  op.oninput = () => { $("ghostOpOut").textContent = op.value + " %"; $("ghost").style.opacity = op.value / 100; store.set("ptc-ghost-opacity", op.value); };
+  updateGhost(side);
+  $("camSel").onchange = e => { stopCamera(); startCamera(e.target.value); };
+  $("fileIn").onchange = e => { readImageFile(e.target.files[0], url => showReview(url, "file", side)); e.target.value = ""; };
+  $("ghostIn").onchange = e => {
+    readImageFile(e.target.files[0], url => { ws.send(JSON.stringify({ type: "ghost", side, action: "set", image: url })); say("Ghost image updated.", ""); });
+    e.target.value = "";
+  };
+  const act = {
+    take() {
+      const v = $("video");
+      if (!cam.stream || !v.videoWidth) { say("The camera isn’t ready yet.", "err"); return; }
+      const c = document.createElement("canvas");
+      c.width = v.videoWidth; c.height = v.videoHeight;
+      c.getContext("2d").drawImage(v, 0, 0);
+      showReview(c.toDataURL("image/jpeg", 0.92), "camera", side);
+    },
+    file() { $("fileIn").click(); },
+    retake() { showLive(); },
+    retry() { stopCamera(); $("camEmptyText").textContent = "Starting the camera…"; startCamera($("camSel").value || undefined); },
+    use() { if (cam.shot) pressNext(); },
+    done() { answer({ done: true }); },
+    ghostset() { $("ghostIn").click(); },
+    ghostclear() {
+      if (confirm(`Remove the ${side} ghost image? The next good photo can set a new one.`))
+        ws.send(JSON.stringify({ type: "ghost", side, action: "clear" }));
+    },
+  };
+  screen.querySelectorAll("[data-p]").forEach(b => b.onclick = () => act[b.dataset.p]());
+  photoKeys = e => {
+    if (e.target instanceof Element && e.target.closest("input, textarea, select, button")) return;
+    if (e.key === " " && !cam.shot) { e.preventDefault(); act.take(); }
+    else if (e.key === "Enter" && cam.shot) { e.preventDefault(); act.use(); }
+  };
+  startCamera();
+}
+let photoKeys = null;
+document.addEventListener("keydown", e => { if (S && S.ask && S.ask.kind === "photo" && photoKeys && !e.ctrlKey && !e.metaKey && !e.altKey) photoKeys(e); });
+
+let boardSel = 0, boardAll = false;
+function boardDetail(it) {
+  if (!it) return "";
+  const photos = names => names.length ? `<div><div class="sh">Photos</div><div class="thumbs">${names.map(n =>
+      `<figure><a href="/stored/${encodeURIComponent(n)}" target="_blank" rel="noopener">${esc(n.replace(/\.(jpg|png)$/, ""))}<img src="/stored/${encodeURIComponent(n)}" alt="" loading="lazy"></a></figure>`).join("")}</div></div>` : "";
+  const local = it.uploaded === false ? `<div class="warnbox">Saved on this station only. It wasn’t uploaded to the HWDB.</div>` : "";
+  if (it.kind === "run") {
+    const rows = boardAll ? it.all : it.failed;
+    return `<h2>${esc(it.title)} ${badge(it.result)}</h2>${local}
+      <dl class="kv"><dt>Date</dt><dd>${esc(it.date)}</dd><dt>Tester</dt><dd>${esc(it.who)}</dd>
+        ${it.reason ? `<dt>Why retested</dt><dd>${esc(it.reason)}</dd>` : ""}
+        <dt>Steps</dt><dd>${it.steps ? (it.failed.length ? `${it.steps - it.failed.length} of ${it.steps} passed` : `All ${it.steps} passed`) : "Details not available"}</dd>
+        ${it.notes ? `<dt>Notes</dt><dd>${esc(it.notes)}</dd>` : ""}</dl>
+      ${rows.length ? `<div><div class="sh">${boardAll ? "All steps" : "Failed steps"}</div>${failedTable(rows)}</div>` : ""}
+      ${it.steps ? `<div><button class="btn small" type="button" id="allsteps">${boardAll ? "Show failed steps only" : `Show all ${it.steps} steps`}</button></div>` : ""}
+      ${photos(Object.values(it.photos || {}))}`;
+  }
+  return `<h2>${esc(it.title)}</h2>${local}
+    <dl class="kv"><dt>Date</dt><dd>${esc(it.date)}</dd><dt>Repaired by</dt><dd>${esc(it.who)}</dd>
+      ${it.after_run ? `<dt>After</dt><dd>Run ${it.after_run}</dd>` : ""}
+      ${it.for_steps.length ? `<dt>For</dt><dd>${esc(it.for_steps.join(", "))}</dd>` : ""}
+      <dt>Fault found</dt><dd>${esc(it.fault || "-")}</dd><dt>What was done</dt><dd>${esc(it.action || "-")}</dd>
+      <dt>Parts replaced</dt><dd>${esc(it.parts || "None")}</dd>${it.notes ? `<dt>Notes</dt><dd>${esc(it.notes)}</dd>` : ""}</dl>
+    ${photos(it.photos || [])}`;
+}
+function renderBoard() {
+  const a = S.ask; if (!a) return;
+  const key = JSON.stringify(["board", a.id]);
+  if (key === viewKey) { showError(); return; }
+  viewKey = key;
+  if (a.kind === "pick") {
+    screen.innerHTML = `<div class="pane"><h1>Boards matching <span class="mono">${esc(a.query)}</span></h1>
+      ${a.rows.length ? `<div class="rows" style="max-width:860px">${a.rows.map(r => `<button class="row" type="button" data-q="${esc(r.serial)}"><span class="s">${esc(r.serial)}</span><span class="d">${esc(r.run ? "Run " + r.run + (r.failed.length ? ": " + r.failed.slice(0, 3).join(", ") : "") : "No runs")}<br>${esc(r.date)}</span>${badge(r.result)}</button>`).join("")}</div>`
+        : `<div class="empty">No boards on this station match. Exact serials are also checked in the HWDB.</div>`}
+      <div class="msg" id="msg" role="status"></div>
+      <div><button class="btn" type="button" id="back">Back to start</button></div></div>`;
+    screen.querySelectorAll("[data-q]").forEach(r => r.onclick = () => answer(r.dataset.q));
+    document.getElementById("back").onclick = () => answer("");
+    return;
+  }
+  const b = a.board; boardSel = 0; boardAll = false;
+  const draw = () => {
+    const tl = b.items.map((x, i) => `<button class="tli ${i === boardSel ? "sel" : ""}" type="button" data-i="${i}">
+        <span class="ic ${x.kind === "repair" ? "rep" : ""}">${x.kind === "repair" ? "R" : ""}${x.n}</span>
+        <span><span class="k">${esc(x.title)}</span><span class="d">${esc(x.date)}, ${esc(x.who)}</span></span>${x.result ? badge(x.result) : ""}</button>`).join("");
+    screen.innerHTML = `<div class="pane">
+      <div class="hhead"><span class="ser">${esc(b.serial)}</span>${b.latest ? badge(b.latest.result) + `<span style="color:var(--g-dim)">Latest: run ${b.latest.n}</span>` : ""}
+        <span class="acts"><button class="btn" type="button" data-b="repair">Record a repair</button><button class="btn pri" type="button" data-b="retest">Retest this board</button><button class="btn" type="button" data-b="back">Back to start</button></span></div>
+      <div class="facts"><div>HWDB part ID<b>${esc(b.part_ids.length > 1 ? b.part_ids.join(", ") : b.part_id || "None yet")}</b></div><div>SoM serial<b>${esc(b.som || "-")}</b></div><div>EEPROM ID<b>${esc(b.eeprom || "-")}</b></div><div>Runs<b>${b.runs}</b></div><div>Repairs<b>${b.repairs}</b></div><div>From<b style="font-family:var(--g-font)">${esc(b.source)}</b></div></div>
+      ${b.part_ids.length > 1 ? `<div class="warnbox">This serial has ${b.part_ids.length} HWDB entries. It can’t be retested until the extra entry is removed.</div>` : ""}
+      ${b.warning ? `<div class="warnbox">${esc(b.warning)}</div>` : ""}
+      <div class="msg" id="msg" role="status"></div>
+      <div class="hcols"><div class="tl">${tl || '<div class="empty">No runs or repairs recorded.</div>'}</div><div class="det">${boardDetail(b.items[boardSel])}</div></div></div>`;
+    screen.querySelectorAll("[data-i]").forEach(x => x.onclick = () => { boardSel = +x.dataset.i; boardAll = false; draw(); screen.querySelector(`[data-i="${boardSel}"]`).focus(); });
+    screen.querySelectorAll("[data-b]").forEach(x => x.onclick = () => answer(x.dataset.b));
+    const all = document.getElementById("allsteps"); if (all) all.onclick = () => { boardAll = !boardAll; draw(); };
+  };
+  draw();
+}
+
+function render() {
+  document.title = S.title;
+  if (!S.ask || S.ask.id !== sentId) sentId = null;
+  renderTop();
+  if (S.screen !== "run") stopCamera();
+  if (S.screen === "start") renderStart();
+  else if (S.screen === "run") renderRun();
+  else if (S.screen === "results") renderResults();
+  else if (S.screen === "board") renderBoard();
+  else renderStopped();
+}
+connect();
+</script>
+</body>
+</html>
