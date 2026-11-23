@@ -28,7 +28,7 @@ async def run_test(ws):
             await send_test_result(ws, test_info['test_type'], r) # type: ignore
 
 async def main():
-    async with serve(run_test, "localhost", 8765) as server:
+    async with serve(run_test, "0.0.0.0", 8765) as server:
         print("Server Listening")
         await server.serve_forever()
 
