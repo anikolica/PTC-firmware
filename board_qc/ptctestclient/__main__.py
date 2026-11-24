@@ -7,6 +7,15 @@ from websockets.asyncio.server import serve
 
 from loguru import logger as lg
 
+from argparse import ArgumentParser
+
+parser = ArgumentParser(prog="PTCTestClient")
+parser.add_argument('--debug', action='store_true')
+
+args = parser.parse_args()
+
+listen_address = "localhost" if args.debug else "0.0.0.0"
+
 test_registry = {
     "dummy_test": dummy_client,
     "temperature": temperature
@@ -28,7 +37,7 @@ async def run_test(ws):
             await send_test_result(ws, test_info['test_type'], r) # type: ignore
 
 async def main():
-    async with serve(run_test, "0.0.0.0", 8765) as server:
+    async with serve(run_test, listen_address, 8765) as server:
         print("Server Listening")
         await server.serve_forever()
 
